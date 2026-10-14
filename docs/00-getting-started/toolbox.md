@@ -1,6 +1,8 @@
-# Toolbox: everything used to take the game apart
+# Tools and resources
 
-Every tool, data source and assistant used to write these guides, what each was used for, and where to get it. Versions are in [setup](setup.md).
+Every tool, data source, website, assistant and trick used to research and write these guides: what each was used for, and where to get it. Versions are in [setup](setup.md).
+
+**This page belongs to everyone.** If you used something that made your research faster or easier (a tool, a script, a website, a CodeWalker trick, a VS Code extension, an AI skill, a forum thread, a video), add it to [Contributed tools and resources](#contributed-tools-and-resources) at the bottom, in the same pull request as your research. Link to the official page; never upload the tool itself (see the [file rules](/CONTRIBUTING.md#file-rules)).
 
 ## Reading the game files
 
@@ -61,3 +63,18 @@ Claude Code **skills** are packaged instructions for a kind of task (https://doc
 | `mashup-mods` | Cross-game mods and total conversions |
 
 If you use another assistant, give it `CLAUDE.md` as its instructions; nothing in the workflow depends on Claude.
+
+## Contributed tools and resources
+
+Add one row per tool or resource, newest at the bottom. Keep it to things you actually used.
+
+| Tool or resource | Version | Link (official page only) | What it helped with | Used for topic | Added by |
+| --- | --- | --- | --- | --- | --- |
+| *Example:* CodeWalker | 30 dev46 | https://github.com/dexyfex/CodeWalker/releases | Extracting `handling.meta` and `materials.dat` from the encrypted archives | R2.1, R2.2 | @Goodvibes74 |
+
+**Rules for this table**
+
+- **Links only.** The official site, the author's GitHub releases page, or the official store or documentation page. No re-uploads, mirrors, shared-drive links or attachments.
+- **Say what it did for you** in a few words, so others can tell whether it fits their topic.
+- **Workflows count too.** A clever `git grep` pattern, a CodeWalker export setting or a regex that saved you an hour can go here with a one-line description, or as a short section above if it needs more room.
+- If a tool turns out to be unsafe or abandoned, open an issue instead of deleting its row, so the reason is recorded.

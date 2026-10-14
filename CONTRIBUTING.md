@@ -21,7 +21,7 @@ Every piece of research has an **ID** in the [roadmap](/ROADMAP.md) (`R1.4`, `R1
 | --- | --- | --- |
 | 1. Claim | Open an issue titled `R1.4: Memory, pools and limits`, or comment on the existing one, and say you're taking it. A maintainer sets the roadmap row to **Claimed** (`@you`, branch name). Claims with no activity for 3 weeks go back to **Open** | The row says Claimed |
 | 2. Research | Read the existing guides first, then the sources (decompile, data files, natives, tests). Keep notes outside the repo | You can answer the topic's "What to find out" column |
-| 3. Write | Copy [`templates/entry-template.md`](/templates/entry-template.md) into the right folder, fill every section, mark Verified and Known, end with "What this means for modders" and "Open questions" | The page reads on its own |
+| 3. Write | Copy [`templates/entry-template.md`](/templates/entry-template.md) into the right folder, fill every section, mark Verified and Known, end with "What this means for modders" and "Open questions". Add any tool or resource you used that isn't listed yet to [tools and resources](/docs/00-getting-started/toolbox.md#contributed-tools-and-resources) (link only) | The page reads on its own |
 | 4. Pull request | Push the branch and open a PR (template below). Update the roadmap row to **Done (first pass)** with a link, and the folder's README table | Checks pass, review done |
 | 5. Merge | A maintainer squash-merges into `main` | The topic is on `main` |
 | 6. Second pass (optional) | Anyone can pick rows from a guide's "Open questions" table as a new small branch | |
@@ -52,6 +52,7 @@ Always branch from the latest `main`. Keep a branch to one topic; if you find so
   - [ ] No personal paths, emails or save data
   - [ ] Links work (use repo-root links like `/docs/core/runtime-scripts.md`)
   - [ ] Roadmap row and folder README updated
+  - [ ] New tools or resources I used are added to [tools and resources](/docs/00-getting-started/toolbox.md#contributed-tools-and-resources), with official links only
 - Two topics never share a PR. Small fixes can share one.
 
 ### Reviews and merging
