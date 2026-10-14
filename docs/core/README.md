@@ -1,6 +1,6 @@
 # Core engine
 
-The game loop and the scripts that keep it running, memory pools and limits, streaming, archives and the content system, and saves. Start with [runtime scripts](runtime-scripts.md) and the [global variable map](global-map.md).
+The game loop and the scripts that keep it running, memory pools and limits, streaming, archives and the content system, and saves. Start with [runtime scripts](runtime-scripts.md), the [global variable map](global-map.md) and [surviving game updates](surviving-updates.md).
 
 ## Topics for this folder
 
@@ -14,10 +14,10 @@ The game loop and the scripts that keep it running, memory pools and limits, str
 | R1.6 | **Archives and the content system** | Open |
 | R1.7 | **Saves** | Open |
 | R5.3 | **Saves, completion and autosave** | Open |
-| R11.1 | **What an update breaks** | Open |
-| R11.2 | **An update-check tool** | Open |
-| R11.3 | **Protecting a working install** | Open |
-| R11.4 | **Update-day checklist** | Open |
-| R11.5 | **Rules for update-proof code** | Open |
+| R11.1 | **What an update breaks** | **Done** (first pass): [guide](/docs/core/surviving-updates.md) |
+| R11.2 | **An update-check tool** | **Started**: [guide](/docs/core/surviving-updates.md) |
+| R11.3 | **Protecting a working install** | **Started**: [guide](/docs/core/surviving-updates.md) |
+| R11.4 | **Update-day checklist** | **Done** (first pass): [guide](/docs/core/surviving-updates.md) |
+| R11.5 | **Rules for update-proof code** | **Done** (first pass): [guide](/docs/core/surviving-updates.md) |
 
 Pick an open topic, claim it and send a pull request: see [CONTRIBUTING.md](/CONTRIBUTING.md). Write new pages with the [entry template](/templates/entry-template.md).
