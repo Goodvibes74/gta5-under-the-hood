@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **32 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **33 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -34,6 +34,7 @@ Every research topic, its status, and what is left to find out. **32 of 106 topi
 | R5.2 | [Mission anatomy](/docs/gameplay/missions/mission-anatomy.md): stages, checkpoints, retry, fail, pass, cleanup |
 | R5.6 | [Cutscenes and dialogue](/docs/gameplay/missions/cutscenes-and-dialogue.md): the cutscene sequence, dressing actors, exit states, Online `MP_1` handles, how every conversation is built |
 | R5.7 | [Story systems in an Online mode](/docs/online/story-systems-in-online-mode.md): what keeps running, force cleanup and brain sets, `shop_controller` and its shops |
+| R6.1 | [Character switching](/docs/gameplay/player/character-switching.md) (first pass): the wheel, the script that performs the switch, the swoop natives step by step, arrival scenes |
 | R7.1 | [Inside freemode](/docs/online/07-freemode.md): GTA Online's main script |
 | R11 | [Surviving game updates](/docs/core/surviving-updates.md): what an update breaks, the update-day checklist, rules for update-proof code, how to find risky code in a mod |
 | R12.4 | [Languages for modding](/scripting/languages.md): what to learn for which kind of mod, and in what order |
@@ -128,7 +129,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 
 | ID | Topic | What to find out | Size | Status |
 | --- | --- | --- | --- | --- |
-| R6.1 | **Character switching** | `selector`, the swoop camera, what each character's state holds (position, outfit, weapons, vehicle, money), player scenes (`player_controller`, `player_timetable_scene`, `family_scene_*`). | M | Open |
+| R6.1 | **Character switching** | `selector`, the swoop camera, what each character's state holds (position, outfit, weapons, vehicle, money), player scenes (`player_controller`, `player_timetable_scene`, `family_scene_*`). | M | **Done** (first pass): [guide](/docs/gameplay/player/character-switching.md) |
 | R6.2 | **Respawn, death and arrest** | `respawn_controller`, hospitals and police stations, what is lost, how Online's respawn differs. | S | Open |
 | R6.3 | **Appearance and clothing** | Ped components and props, freemode ped models (`mp_m_freemode_01`), head blend, overlays, tattoos, the shop catalogues (`shop_ped_apparel` and its DLC files), outfits. | L | Open |
 | R6.4 | **Controls and camera** | Control IDs and how scripts disable them, camera modes, first person, the phone and menus fighting over inputs. | S | Open |
