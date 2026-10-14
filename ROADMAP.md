@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **24 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **25 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -27,6 +27,7 @@ Every research topic, its status, and what is left to find out. **24 of 106 topi
 | R1.2 | [Boot](/docs/00-getting-started/boot.md): launch to control, new vs loaded game, story to Online and back |
 | R2.1 | [Collision and materials](/docs/physics/collision-and-materials.md): 213 materials, shape tests, collision streaming |
 | R2.2 | [Vehicle handling](/docs/physics/vehicle-handling.md): handling.meta, flags, damage, upgrades, DLC handling |
+| R2.7 | [Physics cost](/docs/performance/physics-cost.md) (first pass): physics pools vanilla vs modded, what each simulation costs, how Rockstar keeps physics cheap, proposed budgets and tests |
 | R3.1 | [Weapons](/docs/gameplay/weapons/weapons.md): weapons.meta, damage model, ammo, story Ammu-Nation unlocks |
 | R3.2 | [Combat and perception](/docs/ai/combat-and-perception.md): relationships, events, combat profiles, accuracy, melee |
 | R5.1 | [Story flow](/docs/gameplay/missions/story-flow.md): the 94-mission table and the flow program |
@@ -76,7 +77,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R2.4 | **Water, buoyancy and swimming** | Water data (`water.xml`), waves, boats and submarine buoyancy, how swimming and diving work underneath. | M | Open |
 | R2.5 | **Fire, explosions and projectiles** | `explosion.meta`, fire spread, projectiles and thrown weapons, damage falloff. | S | Open |
 | R2.6 | **Time, weather and wind** | The clock, `weather.xml`, timecycle modifiers, wind and how it affects physics, how scripts lock weather and time. | S | Open |
-| R2.7 | **Physics cost on a low-end PC** | Which simulations cost the most (ragdolls, debris, vehicle crashes, fire), measured through tests, written as spawn and effect budgets for mods. | M | Open |
+| R2.7 | **Physics cost on a low-end PC** | Which simulations cost the most (ragdolls, debris, vehicle crashes, fire), measured through tests, written as spawn and effect budgets for mods. | M | **Done** (first pass): [guide](/docs/performance/physics-cost.md) |
 
 ## R3. Gameplay mechanics
 

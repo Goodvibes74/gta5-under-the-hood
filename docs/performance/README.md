@@ -15,6 +15,6 @@ Limits, pool sizes, what costs frame time, common causes of freezes and crashes,
 | R18.7 | **Profiles for different PCs** | Open |
 | R18.8 | **Load times and stutter** | Open |
 | R1.4 | **Memory, pools and limits** | **Done** (first pass): [guide](/docs/core/memory-and-pools.md) |
-| R2.7 | **Physics cost on a low-end PC** | Open |
+| R2.7 | **Physics cost on a low-end PC** | **Done** (first pass): [guide](/docs/performance/physics-cost.md) |
 
 Pick an open topic, claim it and send a pull request: see [CONTRIBUTING.md](/CONTRIBUTING.md). Write new pages with the [entry template](/templates/entry-template.md).
