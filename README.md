@@ -1,6 +1,6 @@
 # GTA V Under the Hood: how Grand Theft Auto V works underneath
 
-An open, growing reference on how **GTA V (PC, Legacy edition, build 1.0.3725.0)** works inside: the engine, scripts, physics, AI, the world, story mode, GTA Online, the UI and audio. Written so that anyone can mod the game with a real understanding of what they're changing, and so that the next modder doesn't have to start from zero.
+An open, growing reference on how **GTA V (PC, Legacy edition)** works inside: the engine, scripts, physics, AI, the world, story mode, GTA Online, the UI and audio. Written so that anyone can mod the game with a real understanding of what they're changing, and so that the next modder doesn't have to start from zero.
 
 Every page says where its facts come from and marks each claim **Verified** (read in the game files or a decompile of this build) or **Known** (community knowledge, not checked). Nothing here is Rockstar's code or data, and nothing here is a mod.
 
