@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **18 of 105 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **19 of 105 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -18,6 +18,7 @@ Every research topic, its status, and what is left to find out. **18 of 105 topi
 | R0.1 | [Story and shared script catalog](/docs/gameplay/missions/story-script-catalog.md): the 584 non-Online scripts in 12 groups |
 | R0.2 | [Runtime scripts](/docs/core/runtime-scripts.md): boot order, the always-running scripts, stack pools, global blocks |
 | R0.4 | [Global variable map](/docs/core/global-map.md): the 21 global blocks, the busiest globals and their roles, story mode's traced globals |
+| R1.4 | [Memory, pools and limits](/docs/core/memory-and-pools.md): the pools in `gameconfig.xml`, the 256-ped and 300-vehicle limits, what limit adjusters change, how scripts stay under the limits |
 | R0.5 (started) | [Script launch graph](/scripting/script-launch-graph.md): 679 "who starts whom" edges |
 | R1.1 | [The script VM](/scripting/script-vm.md): script format, threads, waits, events, force cleanup |
 | R1.2 | [Boot](/docs/00-getting-started/boot.md): launch to control, new vs loaded game, story to Online and back |
@@ -55,7 +56,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R1.1 | **The script VM** | The YSC format (header, code pages, statics, globals, natives, strings), threads and stack sizes, how a script waits (`WAIT`), how many scripts can run, what a script costs per frame. How ScriptHookV and SHVDN run next to it (fibers on the main thread), and why a slow mod freezes the game. | M | **Done** (first pass): [guide](/scripting/script-vm.md) |
 | R1.2 | **Boot and script control** | What happens from launch to control: `startup`, `main`, `main_persistent`, `initial`, `landing_pre_startup`, title update and DLC registration scripts, and how story mode hands over to Online (`maintransition`). | M | **Done** (first pass): [guide](/docs/00-getting-started/boot.md) |
 | R1.3 | **Natives as the engine API** | The namespaces, which ones matter for modding, what each family can and can't do, natives that are unsafe or slow. Builds on guide 05-Natives. | M | Open |
-| R1.4 | **Memory, pools and limits** | `gameconfig.xml` pool sizes, what HeapAdjuster, PackfileLimitAdjuster, PoolManager and the other adjusters change, how many peds, vehicles, objects and blips the game can hold, and what happens at the limit. | M | Open |
+| R1.4 | **Memory, pools and limits** | `gameconfig.xml` pool sizes, what HeapAdjuster, PackfileLimitAdjuster, PoolManager and the other adjusters change, how many peds, vehicles, objects and blips the game can hold, and what happens at the limit. | M | **Done** (first pass): [guide](/docs/core/memory-and-pools.md) |
 | R1.5 | **Streaming** | How models, textures, maps (`ymap`, `ytyp`), interiors and IPLs are requested and loaded, LOD distances, `REQUEST_MODEL` timing, load scenes, why pop-in happens and how to preload. | M | Open |
 | R1.6 | **Archives and the content system** | How RPFs, `dlclist.xml`, each pack's `content.xml` and `setup2.xml` decide what loads, the order DLC data overrides base data, what OpenIV's `Mods/` folder does, and how add-on vs replacement mods work. | S | Open |
 | R1.7 | **Saves** | The story save file (what is in it, how scripts write it, autosave), and how Online stores the same data in stats. Where mods should keep their own saves. | M | Open |
