@@ -66,6 +66,7 @@ gta5-under-the-hood/
 - [Story flow](docs/gameplay/missions/story-flow.md) and [mission anatomy](docs/gameplay/missions/mission-anatomy.md): how story missions unlock and how every mission script is built.
 - [Vehicle handling](docs/physics/vehicle-handling.md), [collision and materials](docs/physics/collision-and-materials.md), [weapons](docs/gameplay/weapons/weapons.md), [combat and perception](docs/ai/combat-and-perception.md).
 - [Runtime scripts](docs/core/runtime-scripts.md) and the [script launch graph](scripting/script-launch-graph.md): which scripts always run and who starts whom.
+- [Native usage](scripting/native-usage.md): which of the 1,013 scripts call each of 6,575 natives, 12.3 million calls, with a [per-namespace index](scripting/native-usage-index.md).
 
 ## Ground rules
 

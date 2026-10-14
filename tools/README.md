@@ -13,6 +13,7 @@ Nothing here is bundled: install each dependency from its official page. No tool
 | `dlc-scan.ps1` | Same as `rpf-cw.ps1` | Same |
 | `rpf.ps1` | PowerShell only. Uses an inline C# helper (`Add-Type`). Works on unencrypted archives only | Nothing to install |
 | `script-launch-graph.ps1` | PowerShell; **Git** on the PATH; a **clone of the community decompiled-scripts repository with its history** (pass `-Repo` and the `-Commit` of your build). Inline C# for the `joaat` hash | Git: https://git-scm.com/downloads. Decompile: search GitHub for `GTA-V-Decompiled-Scripts` |
+| `native-usage.ps1` | PowerShell; **Git** on the PATH; the same **decompile clone** as `script-launch-graph.ps1`; NativeDB's **`natives.json`** saved by hand. Inline C# helper (`Add-Type`) | NativeDB data: https://github.com/alloc8or/gta5-nativedb-data |
 | `check-system.ps1` | **Windows** only (reads the registry and `System32`); PowerShell 5.1 or 7. `-Dev` also checks for the .NET SDK and Visual Studio | Nothing to install; it tells you what's missing and where to get it ([system requirements](/docs/00-getting-started/system-requirements.md)) |
 
 None of the tools needs administrator rights, an internet connection, or the game running (closed is safest for the archive tools).
@@ -65,11 +66,21 @@ powershell -ExecutionPolicy Bypass -File tools\script-launch-graph.ps1 -Repo ..\
 
 **How it works.** Runs `git grep` over a decompile clone at the given commit (no checkout needed) for every `START_NEW_SCRIPT*` call and every wrapper call that passes a script name or its hash with a stack size. Hashes are turned back into names with the game's `joaat` hash (implemented inline). Each launch becomes an edge `caller → callee (stack)`; the stack size is named from the pools in `gameconfig.xml`. Launches whose name comes from a variable or table are not resolved. Output: `launches.tsv` and `launch-graph.md`, which became the [script launch graph](/scripting/script-launch-graph.md). Under a minute.
 
+### `native-usage.ps1`: which scripts call which natives
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\native-usage.ps1 -NativesJson <natives.json> -Native "CUTSCENE::START_CUTSCENE$"   # who uses a native
+powershell -ExecutionPolicy Bypass -File tools\native-usage.ps1 -NativesJson <natives.json> -Script armenian1                     # what a script uses
+powershell -ExecutionPolicy Bypass -File tools\native-usage.ps1 -NativesJson <natives.json> -Out "$env:TEMP\natives"              # the reference pages
+```
+
+**How it works.** Reads every script's native table (`native_tables/<script>.txt` in the decompile repository) and every native call in the decompiled scripts with `git grep` at the given commit, through an inline C# helper that streams git's output (about 12 million lines). The tables hold NativeDB hashes, so names come from NativeDB's `natives.json` (save it by hand from https://github.com/alloc8or/gta5-nativedb-data; the tool downloads nothing). Calls are matched to hashes inside each script: `unk_0x<hash>` calls directly, then by name without namespace (the decompiler uses older namespace names), then by elimination for the few names the decompiler and NativeDB disagree on. Output: `native-usage.tsv`, `script-natives.tsv`, `aliases.tsv`, and the Markdown pages that became the [native usage index](/scripting/native-usage-index.md). About two minutes. Guide: [native usage](/scripting/native-usage.md).
+
 ### `check-system.ps1`: what Windows needs
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File toolseck-system.ps1        # play and mods
-powershell -ExecutionPolicy Bypass -File toolseck-system.ps1 -Dev   # also the modding tools
+powershell -ExecutionPolicy Bypass -File tools\check-system.ps1        # play and mods
+powershell -ExecutionPolicy Bypass -File tools\check-system.ps1 -Dev   # also the modding tools
 ```
 
 **How it works.** Checks, read-only, for each thing outside the game folder that the game and its mods need: the DirectX June 2010 files in `System32`, the Visual C++ runtimes, .NET Framework 4.8 (from the registry), Media Foundation, and with `-Dev` the .NET SDK and Visual Studio. The list comes from the import tables of the game and mod files ([system requirements](/docs/00-getting-started/system-requirements.md)). Prints OK or MISSING with what to install. Changes nothing.
@@ -78,7 +89,6 @@ powershell -ExecutionPolicy Bypass -File toolseck-system.ps1 -Dev   # also the 
 
 | Tool | What it would do | Roadmap |
 | --- | --- | --- |
-| Native crossmap | Turn the hashed native tables of compiled scripts into names for a given build | R0.3 |
 | Global map | List which script registers each global block and what fields the big blocks hold | R0.4 |
 | Update check | Compare a new build with the last one: version, DLC packs, script sizes, data files | R11.2 |
 | Data-file differ | Compare two copies of a `.meta` file entry by entry (by name), the way the vehicle and weapon guides compared modded files | R0.7 |
