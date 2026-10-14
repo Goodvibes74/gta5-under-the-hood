@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **36 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **37 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -39,6 +39,7 @@ Every research topic, its status, and what is left to find out. **36 of 106 topi
 | R7.1 | [Inside freemode](/docs/online/07-freemode.md): GTA Online's main script |
 | R7.2 | [Transitions and sessions](/docs/online/transitions-and-sessions.md) (first pass): `maintransition`'s 70 named states, the paths into freemode, the creator and back, session and server natives, what 382 scripts read |
 | R7.3 | [Stats, tunables and the server's role](/docs/online/stats-and-tunables.md) (first pass): 17,928 stats by type and family, 28,502 tunables with their defaults in one script, transactions, what an offline mode must replace |
+| R7.4 | [UGC mission files](/file-formats/ugc-json.md) (first pass): 16,500 key paths in the 1,001 local files, content files vs classic creator missions, and which scripts read each |
 | R11 | [Surviving game updates](/docs/core/surviving-updates.md): what an update breaks, the update-day checklist, rules for update-proof code, how to find risky code in a mod |
 | R12.4 | [Languages for modding](/scripting/languages.md): what to learn for which kind of mod, and in what order |
 | R12.6 | [Modding path](/modding/README.md): from nothing to a first data edit and a first C#, Lua and C++ mod, debugging, and releasing a mod safely |
@@ -144,7 +145,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R7.1 | **`freemode` inside** | Its main loop, the systems it runs (blips, personal vehicles, properties, events, the player list), the order it starts them, what it reads from globals and stats. | L | **Done** (first pass): [guide](/docs/online/07-freemode.md) |
 | R7.2 | **Transitions and sessions** | `maintransition`, joining and leaving, the character select, what "network game in progress" switches on, what fails without a session. | M | **Done** (first pass): [guide](/docs/online/transitions-and-sessions.md) |
 | R7.3 | **Stats, tunables and the server's role** | `mpstatssetup.xml` stat families, what is server-authoritative, tunables and their defaults, the transaction (basket) flow, what we must replace locally. | M | **Done** (first pass): [guide](/docs/online/stats-and-tunables.md) |
-| R7.4 | **The UGC mission format and controllers** | Map every key in the local `.ugc` files, how `fm_mission_controller` and `_2020` read rules, objectives, teams and spawns. | L | Open |
+| R7.4 | **The UGC mission format and controllers** | Map every key in the local `.ugc` files, how `fm_mission_controller` and `_2020` read rules, objectives, teams and spawns. | L | **Done** (first pass): [guide](/file-formats/ugc-json.md) |
 | R7.5 | **The job lobby (`fmmc_launcher`)** | How a job is chosen, set up, launched and ended, and how the lobby screens are filled. | M | Open |
 | R7.6 | **Properties** | `am_mp_property_ext/int`, the property table, entering, buying, garages, the business properties. | L | Open |
 | R7.7 | **Organisations and businesses** | VIP, CEO and MC work (`gb_*`), the business loop (supplies, stock, sell), the business computers (`app*`). | L | Open |
