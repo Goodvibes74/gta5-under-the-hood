@@ -14,6 +14,7 @@ Nothing here is bundled: install each dependency from its official page. No tool
 | `rpf.ps1` | PowerShell only. Uses an inline C# helper (`Add-Type`). Works on unencrypted archives only | Nothing to install |
 | `script-launch-graph.ps1` | PowerShell; **Git** on the PATH; a **clone of the community decompiled-scripts repository with its history** (pass `-Repo` and the `-Commit` of your build). Inline C# for the `joaat` hash | Git: https://git-scm.com/downloads. Decompile: search GitHub for `GTA-V-Decompiled-Scripts` |
 | `native-usage.ps1` | PowerShell; **Git** on the PATH; the same **decompile clone** as `script-launch-graph.ps1`; NativeDB's **`natives.json`** saved by hand. Inline C# helper (`Add-Type`) | NativeDB data: https://github.com/alloc8or/gta5-nativedb-data |
+| `ugc-keys.ps1` | PowerShell 5.1 (uses .NET's built-in JSON reader); `.ugc` files extracted first with `rpf-cw.ps1` | Nothing to install |
 | `check-system.ps1` | **Windows** only (reads the registry and `System32`); PowerShell 5.1 or 7. `-Dev` also checks for the .NET SDK and Visual Studio | Nothing to install; it tells you what's missing and where to get it ([system requirements](/docs/00-getting-started/system-requirements.md)) |
 
 None of the tools needs administrator rights, an internet connection, or the game running (closed is safest for the archive tools).
@@ -75,6 +76,15 @@ powershell -ExecutionPolicy Bypass -File tools\native-usage.ps1 -NativesJson <na
 ```
 
 **How it works.** Reads every script's native table (`native_tables/<script>.txt` in the decompile repository) and every native call in the decompiled scripts with `git grep` at the given commit, through an inline C# helper that streams git's output (about 12 million lines). The tables hold NativeDB hashes, so names come from NativeDB's `natives.json` (save it by hand from https://github.com/alloc8or/gta5-nativedb-data; the tool downloads nothing). Calls are matched to hashes inside each script: `unk_0x<hash>` calls directly, then by name without namespace (the decompiler uses older namespace names), then by elimination for the few names the decompiler and NativeDB disagree on. Output: `native-usage.tsv`, `script-natives.tsv`, `aliases.tsv`, and the Markdown pages that became the [native usage index](/scripting/native-usage-index.md). About two minutes. Guide: [native usage](/scripting/native-usage.md).
+
+### `ugc-keys.ps1`: every key in the mission files
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\rpf-cw.ps1 -Archive update\update2.rpf -Pattern "common\data\ugc\*" -ExtractTo "$env:TEMP\ugc"
+powershell -ExecutionPolicy Bypass -File tools\ugc-keys.ps1 -Dir "$env:TEMP\ugc" -Out "$env:TEMP"
+```
+
+**How it works.** Parses each `.ugc` file with .NET's JSON reader, walks every object and array (arrays collapsed to `[]` in the path), and counts how many files contain each key path. Output: `ugc-keys.tsv` (path, files). About five minutes for the 1,001 local files. Guide: [UGC mission files](/file-formats/ugc-json.md).
 
 ### `check-system.ps1`: what Windows needs
 
