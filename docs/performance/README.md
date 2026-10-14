@@ -7,7 +7,7 @@ Limits, pool sizes, what costs frame time, common causes of freezes and crashes,
 | ID | Topic | Status |
 | --- | --- | --- |
 | R18.1 | **Measuring performance** | **Done** (first pass): [guide](/docs/performance/measuring.md) |
-| R18.2 | **Graphics settings, one by one** | Open |
+| R18.2 | **Graphics settings, one by one** | **Done** (first pass): [guide](/docs/performance/graphics-settings.md) |
 | R18.3 | **Streaming, memory and VRAM** | Open |
 | R18.4 | **CPU: population, AI, physics and scripts** | Open |
 | R18.5 | **Mod overhead** | Open |
