@@ -12,7 +12,7 @@ Limits, pool sizes, what costs frame time, common causes of freezes and crashes,
 | R18.4 | **CPU: population, AI, physics and scripts** | **Done** (first pass): [guide](/docs/performance/cpu.md) |
 | R18.5 | **Mod overhead** | **Done** (first pass): [guide](/docs/performance/mod-overhead.md) |
 | R18.6 | **Windows and drivers** | **Done** (first pass): [guide](/docs/performance/windows-and-drivers.md) |
-| R18.7 | **Profiles for different PCs** | Open |
+| R18.7 | **Profiles for different PCs** | **Done** (first pass): [guide](/docs/performance/pc-profiles.md) |
 | R18.8 | **Load times and stutter** | Open |
 | R1.4 | **Memory, pools and limits** | **Done** (first pass): [guide](/docs/core/memory-and-pools.md) |
 | R2.7 | **Physics cost on a low-end PC** | **Done** (first pass): [guide](/docs/performance/physics-cost.md) |
