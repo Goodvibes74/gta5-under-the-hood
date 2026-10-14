@@ -1,13 +1,13 @@
 # Core engine
 
-The game loop and the scripts that keep it running, memory pools and limits, streaming, archives and the content system, and saves. Start with [runtime scripts](runtime-scripts.md).
+The game loop and the scripts that keep it running, memory pools and limits, streaming, archives and the content system, and saves. Start with [runtime scripts](runtime-scripts.md) and the [global variable map](global-map.md).
 
 ## Topics for this folder
 
 | ID | Topic | Status |
 | --- | --- | --- |
 | R0.2 | **Script cards for the runtime scripts** | **Done** (first pass): [guide](/docs/core/runtime-scripts.md) |
-| R0.4 | **Global variable map** | Started: [block table](/docs/core/runtime-scripts.md) |
+| R0.4 | **Global variable map** | **Done** (first pass): [guide](/docs/core/global-map.md) |
 | R1.3 | **Natives as the engine API** | Open |
 | R1.4 | **Memory, pools and limits** | Open |
 | R1.5 | **Streaming** | Open |
