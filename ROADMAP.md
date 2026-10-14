@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **21 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **21 of 105 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -8,7 +8,7 @@ Every research topic, its status, and what is left to find out. **21 of 106 topi
 
 - **New to this?** Want to make a mod first? Follow the [modding path](/modding/README.md). Want to research? Read [getting started](/docs/00-getting-started/README.md), then one finished guide in an area you like (for example [mission anatomy](/docs/gameplay/missions/mission-anatomy.md) or [vehicle handling](/docs/physics/vehicle-handling.md)) to see how a topic is written up.
 - **Good first topics** (S or M, mostly data files, no deep script reading): R2.6 time and weather, R3.8 health and arrest, R9.3 music and radio, R13.2 timecycles, R14.4 text and names, R8.3 text labels, R18.6 Windows and drivers.
-- **Topics that unblock others:** R0.3 native names and R0.4 the global map (tools every later topic uses), R1.4 memory and pools, R17.1 the AI architecture.
+- **Topics that unblock others:** R0.8 the native namespace map, R0.7 the data file atlas, R17.1 the AI architecture.
 - **Second passes:** every finished guide ends with an "Open questions" table. Each row is a ready-made small task.
 
 ## What is done (first pass)
@@ -20,6 +20,7 @@ Every research topic, its status, and what is left to find out. **21 of 106 topi
 | R0.4 | [Global variable map](/docs/core/global-map.md): the 21 global blocks, the busiest globals and their roles, story mode's traced globals |
 | R1.4 | [Memory, pools and limits](/docs/core/memory-and-pools.md): the pools in `gameconfig.xml`, the 256-ped and 300-vehicle limits, what limit adjusters change, how scripts stay under the limits |
 | R1.6 | [Archives and the content system](/docs/core/archives-and-content.md): RPFs, `dlclist.xml`, `setup2.xml` orders, `content.xml` file types, the mods folder, add-on vs replacement |
+| R0.3 | [Native usage](/scripting/native-usage.md): the native tables hold NativeDB hashes; 1,013 scripts import 6,575 natives and make 12.3 million calls, with a [per-namespace index](/scripting/native-usage-index.md) of who uses what |
 | R0.5 (started) | [Script launch graph](/scripting/script-launch-graph.md): 679 "who starts whom" edges |
 | R1.1 | [The script VM](/scripting/script-vm.md): script format, threads, waits, events, force cleanup |
 | R1.2 | [Boot](/docs/00-getting-started/boot.md): launch to control, new vs loaded game, story to Online and back |
@@ -44,7 +45,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | --- | --- | --- | --- | --- |
 | R0.1 | **Script catalog, story and shared scripts** | Break the 584 scripts outside the Online groups into groups (story missions by strand, strangers and freaks, random events, minigames, activities, launchers, controllers and systems, world objects, arcade games, debug and test), with one line per script on what it does. Extends guide 2. | M | **Done** (first pass): [guide](/docs/gameplay/missions/story-script-catalog.md) |
 | R0.2 | **Script cards for the runtime scripts** | A short card for each script that runs always or controls others (`startup`, `main`, `main_persistent`, `standard_global_init`, `flow_controller`, `respawn_controller`, `cellphone_controller`, `shop_controller`, `selector`, `maintransition`, `freemode`, `ingamehud` ...): when it starts, what starts it, what it starts, globals it owns, its main loop. | M | **Done** (first pass): [guide](/docs/core/runtime-scripts.md) |
-| R0.3 | **Native names for the native tables** | Turn each script's native table (hashes for this build) into names with a crossmap, so we can list every script that uses a native family (`NET_GAMESERVER_*`, `STAT_*`, `TASK_*`, `CUTSCENE_*`). Output: a per-script native list and a per-native script list. | M | Open |
+| R0.3 | **Native names for the native tables** | Turn each script's native table (hashes for this build) into names with a crossmap, so we can list every script that uses a native family (`NET_GAMESERVER_*`, `STAT_*`, `TASK_*`, `CUTSCENE_*`). Output: a per-script native list and a per-native script list. | M | **Done** (first pass): [guide](/scripting/native-usage.md) |
 | R0.4 | **Global variable map** | Which global blocks exist, which script registers each (`standard_global_init`, `globals_fmmc_struct_registration`, `tunables_registration`), and what the big blocks hold (player data, tunables, flow flags). Read only. | L | **Done** (first pass): [guide](/docs/core/global-map.md) |
 | R0.5 | **Script launch graph** | Who starts whom (`REQUEST_SCRIPT` and `START_NEW_SCRIPT` with stack sizes), and the script brains placed in the world (`ambient*.ipl`, `scriptbrains` data), drawn as one graph for story and one for Online. | M | Started: [launch graph](/scripting/script-launch-graph.md) |
 | R0.6 | **Research toolkit guide** | Update guide 5 with the new tools and a "how to research a new topic in an hour" checklist. | S | Open |
