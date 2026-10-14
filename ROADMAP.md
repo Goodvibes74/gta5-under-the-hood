@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **21 of 105 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **23 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -36,6 +36,7 @@ Every research topic, its status, and what is left to find out. **21 of 105 topi
 | R11 | [Surviving game updates](/docs/core/surviving-updates.md): what an update breaks, the update-day checklist, rules for update-proof code, how to find risky code in a mod |
 | R12.4 | [Languages for modding](/scripting/languages.md): what to learn for which kind of mod, and in what order |
 | R12.6 | [Modding path](/modding/README.md): from nothing to a first data edit and a first C#, Lua and C++ mod, debugging, and releasing a mod safely |
+| R18.1 | [Measuring performance](/docs/performance/measuring.md): frame time and hitches, the game's 5-scene benchmark script, frame timing from a script, reading a session, Windows tools |
 
 Also written before the topic list existed: [how Online works](/docs/online/01-how-online-works.md), the [Online script catalog](/docs/online/02-script-catalog.md) (all 1,143 scripts), [Online data files on disk](/docs/online/03-online-data-files.md), [DLC packs and their vehicles](/docs/entities/vehicles/dlc-packs.md), and the [scripting guides](/scripting/README.md).
 
