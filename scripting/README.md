@@ -1,6 +1,6 @@
 # Scripting
 
-The script language the game is written in, the natives, and the ways mods run code: C# with ScriptHookVDotNet, Lua, menus. Start with [languages](languages.md) (what to learn for which job), then [script VM](script-vm.md), [natives](natives.md), [C# with SHVDN 3](csharp-shvdn3.md), [Lua](lua.md), [menus and UI](menus-and-ui.md), [legacy SHVDN 2](legacy-shvdn2.md) and the [script launch graph](script-launch-graph.md).
+The script language the game is written in, the natives, and the ways mods run code: C# with ScriptHookVDotNet, Lua, menus. New to modding? Follow the [modding path](/modding/README.md) first. Start with [languages](languages.md) (what to learn for which job), then [script VM](script-vm.md), [natives](natives.md), [C# with SHVDN 3](csharp-shvdn3.md), [Lua](lua.md), [menus and UI](menus-and-ui.md), [legacy SHVDN 2](legacy-shvdn2.md) and the [script launch graph](script-launch-graph.md).
 
 ## Topics for this folder
 

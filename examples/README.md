@@ -1,6 +1,6 @@
 # Examples
 
-Small worked mods that show a guide in practice. Each example is also a small programming lesson: events and per-frame code ([01](01_HelloWorld.cs)), objects and properties ([02](02_PlayerAndWorld.cs)), calling an external API ([03](03_Natives.cs)), building a UI from objects ([04](04_LemonMenu.cs)), callbacks ([05](05_PhoneContact.cs)), reading settings files ([06](06_SettingsAndText.cs)). The six C# samples here are SHVDN v3 scripts: copy one into your `scripts` folder as a `.cs` file and SHVDN compiles it at load.
+Small worked mods that show a guide in practice. Each example is also a small programming lesson: events and per-frame code ([01](01_HelloWorld.cs)), objects and properties ([02](02_PlayerAndWorld.cs)), calling an external API ([03](03_Natives.cs)), building a UI from objects ([04](04_LemonMenu.cs)), callbacks ([05](05_PhoneContact.cs)), reading settings files ([06](06_SettingsAndText.cs)). The six C# samples here are SHVDN v3 scripts: copy one into your `scripts` folder as a `.cs` file and SHVDN compiles it at load. New to this? The [modding path](/modding/README.md) builds a first mod step by step before you get here.
 
 ## Topics for this folder
 
