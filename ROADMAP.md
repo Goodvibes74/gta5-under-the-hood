@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **31 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **32 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -45,6 +45,7 @@ Every research topic, its status, and what is left to find out. **31 of 106 topi
 | R18.5 | [Mod overhead](/docs/performance/mod-overhead.md) (first pass): load time, memory and frame time by kind of mod, a heavily modded startup step by step, finding the heavy mod, idle-free patterns |
 | R18.6 | [Windows and drivers](/docs/performance/windows-and-drivers.md) (first pass): power, Game Mode, background recording, startup programs, page file and free space, drivers, integrated vs dedicated graphics, a pre-play checklist |
 | R18.7 | [Profiles for different PCs](/docs/performance/pc-profiles.md) (first pass): settings for a low-end laptop, a mid-range and a strong PC, and mod sets per use |
+| R18.8 | [Load times and stutter](/docs/performance/load-times.md) (first pass): what a load is made of, why the first minutes hitch, shader cache, what helps |
 
 Also written before the topic list existed: [how Online works](/docs/online/01-how-online-works.md), the [Online script catalog](/docs/online/02-script-catalog.md) (all 1,143 scripts), [Online data files on disk](/docs/online/03-online-data-files.md), [DLC packs and their vehicles](/docs/entities/vehicles/dlc-packs.md), and the [scripting guides](/scripting/README.md).
 
@@ -228,7 +229,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R18.5 | **Mod overhead** | What each kind of mod costs (ASI plugins, SHVDN scripts, Lua, add-on packs, map mods, graphics mods), how to find the heavy one, and how to write mods that cost nothing when idle (the script-brain pattern from core guide 1). | M | **Done** (first pass): [guide](/docs/performance/mod-overhead.md) |
 | R18.6 | **Windows and drivers** | Power plans, background apps, Game Mode, GPU driver settings, integrated vs dedicated graphics on laptops, page file, storage (HDD vs SSD load times). | S | **Done** (first pass): [guide](/docs/performance/windows-and-drivers.md) |
 | R18.7 | **Profiles for different PCs** | Ready settings for a low-end laptop, a mid-range PC and a strong PC, with the reasons; how to switch mod sets per use. | S | **Done** (first pass): [guide](/docs/performance/pc-profiles.md) |
-| R18.8 | **Load times and stutter** | What happens during loading, why the first minutes stutter, shader cache, and what helps. | S | Open |
+| R18.8 | **Load times and stutter** | What happens during loading, why the first minutes stutter, shader cache, and what helps. | S | **Done** (first pass): [guide](/docs/performance/load-times.md) |
 
 ## R12. Synthesis: from research to mods
 
