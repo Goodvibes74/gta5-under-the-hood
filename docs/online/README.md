@@ -1,6 +1,6 @@
 # GTA Online
 
-How GTA Online is built on top of the same engine: sessions, the main script, stats and tunables, jobs, properties, businesses, heists. Start with [how Online works](01-how-online-works.md), the [script catalog](02-script-catalog.md), the [data files on disk](03-online-data-files.md) and [inside freemode](07-freemode.md). (This folder is an addition to the base layout: Online is half the game's scripts.)
+How GTA Online is built on top of the same engine: sessions, the main script, stats and tunables, jobs, properties, businesses, heists. Start with [how Online works](01-how-online-works.md), the [script catalog](02-script-catalog.md), the [data files on disk](03-online-data-files.md) and [inside freemode](07-freemode.md), and [story systems in an Online mode](story-systems-in-online-mode.md). (This folder is an addition to the base layout: Online is half the game's scripts.)
 
 ## Topics for this folder
 
@@ -16,7 +16,7 @@ How GTA Online is built on top of the same engine: sessions, the main script, st
 | R7.8 | **Heists** | Open |
 | R7.9 | **DLC storylines** | Open |
 | R7.10 | **Interaction menu, phone and apps** | Open |
-| R5.7 | **Systems that clash with Online mode** | Open |
+| R5.7 | **Systems that clash with Online mode** | **Done** (first pass): [guide](/docs/online/story-systems-in-online-mode.md) |
 | R15.1 | **Sessions and sync** | Open |
 | R15.2 | **Rockstar services** | Open |
 
