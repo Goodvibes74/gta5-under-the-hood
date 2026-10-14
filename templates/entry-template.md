@@ -2,7 +2,7 @@
 
 <One or two sentences: what system this covers and why a modder cares.> Roadmap topic **R<ID>** in the [roadmap](/ROADMAP.md). <Links to the guides this builds on.>
 
-**How it was made.** <Your sources: which decompiled scripts (and which build), which data files (archive and path), which natives, which in-game tests. Say which numbers were counted and how.> Values and counts are **Verified**; what the engine does with a field is **Known** unless stated. <Build: 1.0.3725.0 Legacy, or the one you used.>
+**How it was made.** <Your sources: which decompiled scripts (and which build), which data files (archive and path), which natives, which in-game tests. Say which numbers were counted and how. Name the tools you used; any that aren't on the [tools and resources](/docs/00-getting-started/toolbox.md) page yet, add there too.> Values and counts are **Verified**; what the engine does with a field is **Known** unless stated. <Build: 1.0.3725.0 Legacy, or the one you used.>
 
 ## Short version
 

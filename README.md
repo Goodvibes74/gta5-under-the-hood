@@ -24,13 +24,14 @@ A suggested path: change a value in a data file → write a 30-line C# mod → a
 | If you want to... | Read |
 | --- | --- |
 | Learn a programming language by modding | [Learn to code by modding](#learn-to-code-by-modding-gta-v), [languages](scripting/languages.md) |
-| Get set up (game version, tools, dependencies) | [Setup](docs/00-getting-started/setup.md), [system requirements](docs/00-getting-started/system-requirements.md), [Linux](docs/00-getting-started/linux.md), [toolbox](docs/00-getting-started/toolbox.md), [glossary](docs/00-getting-started/glossary.md) |
+| Get set up (game version, tools, dependencies) | [Setup](docs/00-getting-started/setup.md), [system requirements](docs/00-getting-started/system-requirements.md), [Linux](docs/00-getting-started/linux.md), [tools and resources](docs/00-getting-started/toolbox.md), [glossary](docs/00-getting-started/glossary.md) |
 | Know which languages to learn | [Languages for modding](scripting/languages.md) |
 | See how the game starts and runs its scripts | [Boot](docs/00-getting-started/boot.md), [runtime scripts](docs/core/runtime-scripts.md), [script VM](scripting/script-vm.md) |
 | Understand a system | The folders below; every folder README lists its topics |
 | Write a mod | [Scripting](scripting/README.md) and [examples](examples/README.md) |
 | Look up a file format | [File formats](file-formats/README.md) |
 | Help | [Roadmap](ROADMAP.md) (pick an open topic), [CONTRIBUTING.md](CONTRIBUTING.md) |
+| Share a tool, site or trick that sped up your work | Add it to [tools and resources](docs/00-getting-started/toolbox.md#contributed-tools-and-resources) |
 
 ## What's inside
 

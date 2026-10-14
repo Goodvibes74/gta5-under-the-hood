@@ -15,3 +15,4 @@
 - [ ] No personal paths, emails or save data
 - [ ] Links work (repo-root links like `/docs/core/runtime-scripts.md`)
 - [ ] Roadmap row and folder README updated
+- [ ] New tools or resources I used are listed in [tools and resources](/docs/00-getting-started/toolbox.md#contributed-tools-and-resources) (official links only)

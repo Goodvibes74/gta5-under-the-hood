@@ -1,6 +1,6 @@
 # Getting started
 
-How the game boots, the tools you need, where the game's own scripts can be read, and the words used everywhere else. Read these first: [setup](setup.md), [system requirements](system-requirements.md), [Linux](linux.md), [toolbox](toolbox.md), [glossary](glossary.md), [boot](boot.md), [research tools](research-tools.md), [decompiled scripts](decompiled-scripts.md).
+How the game boots, the tools you need, where the game's own scripts can be read, and the words used everywhere else. Read these first: [setup](setup.md), [system requirements](system-requirements.md), [Linux](linux.md), [tools and resources](toolbox.md), [glossary](glossary.md), [boot](boot.md), [research tools](research-tools.md), [decompiled scripts](decompiled-scripts.md).
 
 ## Topics for this folder
 

@@ -24,7 +24,7 @@ A public reference on how **Grand Theft Auto V (PC, Legacy edition, build 1.0.37
    - **In-game tests** for behaviour: write a test card the contributor can run (what to do, what they should see).
 3. Count things. "Used 1,543 times in 210 scripts" beats "used a lot". Say how you counted.
 4. Write the page from [`templates/entry-template.md`](/templates/entry-template.md) into the folder the roadmap row belongs to (each folder README lists its topic IDs).
-5. Update the roadmap row (status and link) and the folder README table.
+5. Update the roadmap row (status and link) and the folder README table. If the work used a tool, website or technique that isn't on [tools and resources](/docs/00-getting-started/toolbox.md), add a row to its "Contributed tools and resources" table (official link only, never the tool itself).
 6. Before finishing, scan the diff for decompiled code blocks, extracted file contents, personal paths and mod binaries.
 
 ## Useful facts
