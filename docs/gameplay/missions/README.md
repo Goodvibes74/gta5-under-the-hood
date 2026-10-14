@@ -1,6 +1,6 @@
 # Missions
 
-How story missions unlock, how a mission script is built, side content, activities, cutscenes. Start with [story flow](story-flow.md), [mission anatomy](mission-anatomy.md) and the [story script catalog](story-script-catalog.md).
+How story missions unlock, how a mission script is built, side content, activities, cutscenes. Start with [story flow](story-flow.md), [mission anatomy](mission-anatomy.md), [cutscenes and dialogue](cutscenes-and-dialogue.md) and the [story script catalog](story-script-catalog.md).
 
 ## Topics for this folder
 
@@ -11,7 +11,7 @@ How story missions unlock, how a mission script is built, side content, activiti
 | R5.2 | **Anatomy of a story mission** | **Done** (first pass): [guide](/docs/gameplay/missions/mission-anatomy.md) |
 | R5.4 | **Strangers, freaks and side content** | Open |
 | R5.5 | **Minigames and activities** | Open |
-| R5.6 | **Cutscenes and dialogue** | Open |
+| R5.6 | **Cutscenes and dialogue** | **Done** (first pass): [guide](/docs/gameplay/missions/cutscenes-and-dialogue.md) |
 | R5.8 | **Replay, director mode and the Rockstar Editor** | Open |
 
 Pick an open topic, claim it and send a pull request: see [CONTRIBUTING.md](/CONTRIBUTING.md). Write new pages with the [entry template](/templates/entry-template.md).
