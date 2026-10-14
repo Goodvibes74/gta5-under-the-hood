@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **25 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **26 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -39,6 +39,7 @@ Every research topic, its status, and what is left to find out. **25 of 106 topi
 | R12.4 | [Languages for modding](/scripting/languages.md): what to learn for which kind of mod, and in what order |
 | R12.6 | [Modding path](/modding/README.md): from nothing to a first data edit and a first C#, Lua and C++ mod, debugging, and releasing a mod safely |
 | R18.1 | [Measuring performance](/docs/performance/measuring.md): frame time and hitches, the game's 5-scene benchmark script, frame timing from a script, reading a session, Windows tools |
+| R18.2 | [Graphics settings](/docs/performance/graphics-settings.md) (first pass): every `settings.xml` key with its range, cost and values for weak, mid and strong PCs; hidden keys; `commandline.txt` |
 
 Also written before the topic list existed: [how Online works](/docs/online/01-how-online-works.md), the [Online script catalog](/docs/online/02-script-catalog.md) (all 1,143 scripts), [Online data files on disk](/docs/online/03-online-data-files.md), [DLC packs and their vehicles](/docs/entities/vehicles/dlc-packs.md), and the [scripting guides](/scripting/README.md).
 
@@ -216,7 +217,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | ID | Topic | What to find out | Size | Status |
 | --- | --- | --- | --- | --- |
 | R18.1 | **Measuring performance** | How to measure before changing anything: frame rate and frame time, CPU vs GPU bound, the game's own benchmark (`benchmark` script), Windows tools (Task Manager, PresentMon, Event Viewer for hangs), and reading mod logss for stalls. | S | **Done** (first pass): [guide](/docs/performance/measuring.md) |
-| R18.2 | **Graphics settings, one by one** | Every option in `settings.xml` and the in-game menu: what it changes, its CPU, GPU and VRAM cost, and the best value for weak, mid and strong PCs; the settings not shown in the menu; `commandline.txt` switches. | M | Open |
+| R18.2 | **Graphics settings, one by one** | Every option in `settings.xml` and the in-game menu: what it changes, its CPU, GPU and VRAM cost, and the best value for weak, mid and strong PCs; the settings not shown in the menu; `commandline.txt` switches. | M | **Done** (first pass): [guide](/docs/performance/graphics-settings.md) |
 | R18.3 | **Streaming, memory and VRAM** | How the game budgets memory and video memory, why textures stream in late, what the heap and pool adjusters really fix, when more mods means freezes. Builds on R1.4 and R1.5. | M | Open |
 | R18.4 | **CPU: population, AI, physics and scripts** | What loads the CPU: ped and traffic density, AI (R17.9), physics (R2.7), script mods; how density settings and spawn caps help. | M | Open |
 | R18.5 | **Mod overhead** | What each kind of mod costs (ASI plugins, SHVDN scripts, Lua, add-on packs, map mods, graphics mods), how to find the heavy one, and how to write mods that cost nothing when idle (the script-brain pattern from core guide 1). | M | Open |
