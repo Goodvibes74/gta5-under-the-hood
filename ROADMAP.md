@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **14 of 105 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **15 of 105 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -17,6 +17,7 @@ Every research topic, its status, and what is left to find out. **14 of 105 topi
 | --- | --- |
 | R0.1 | [Story and shared script catalog](/docs/gameplay/missions/story-script-catalog.md): the 584 non-Online scripts in 12 groups |
 | R0.2 | [Runtime scripts](/docs/core/runtime-scripts.md): boot order, the always-running scripts, stack pools, global blocks |
+| R0.4 | [Global variable map](/docs/core/global-map.md): the 21 global blocks, the busiest globals and their roles, story mode's traced globals |
 | R0.5 (started) | [Script launch graph](/scripting/script-launch-graph.md): 679 "who starts whom" edges |
 | R1.1 | [The script VM](/scripting/script-vm.md): script format, threads, waits, events, force cleanup |
 | R1.2 | [Boot](/docs/00-getting-started/boot.md): launch to control, new vs loaded game, story to Online and back |
@@ -40,7 +41,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R0.1 | **Script catalog, story and shared scripts** | Break the 584 scripts outside the Online groups into groups (story missions by strand, strangers and freaks, random events, minigames, activities, launchers, controllers and systems, world objects, arcade games, debug and test), with one line per script on what it does. Extends guide 2. | M | **Done** (first pass): [guide](/docs/gameplay/missions/story-script-catalog.md) |
 | R0.2 | **Script cards for the runtime scripts** | A short card for each script that runs always or controls others (`startup`, `main`, `main_persistent`, `standard_global_init`, `flow_controller`, `respawn_controller`, `cellphone_controller`, `shop_controller`, `selector`, `maintransition`, `freemode`, `ingamehud` ...): when it starts, what starts it, what it starts, globals it owns, its main loop. | M | **Done** (first pass): [guide](/docs/core/runtime-scripts.md) |
 | R0.3 | **Native names for the native tables** | Turn each script's native table (hashes for this build) into names with a crossmap, so we can list every script that uses a native family (`NET_GAMESERVER_*`, `STAT_*`, `TASK_*`, `CUTSCENE_*`). Output: a per-script native list and a per-native script list. | M | Open |
-| R0.4 | **Global variable map** | Which global blocks exist, which script registers each (`standard_global_init`, `globals_fmmc_struct_registration`, `tunables_registration`), and what the big blocks hold (player data, tunables, flow flags). Read only. | L | Started: [block table](/docs/core/runtime-scripts.md) |
+| R0.4 | **Global variable map** | Which global blocks exist, which script registers each (`standard_global_init`, `globals_fmmc_struct_registration`, `tunables_registration`), and what the big blocks hold (player data, tunables, flow flags). Read only. | L | **Done** (first pass): [guide](/docs/core/global-map.md) |
 | R0.5 | **Script launch graph** | Who starts whom (`REQUEST_SCRIPT` and `START_NEW_SCRIPT` with stack sizes), and the script brains placed in the world (`ambient*.ipl`, `scriptbrains` data), drawn as one graph for story and one for Online. | M | Started: [launch graph](/scripting/script-launch-graph.md) |
 | R0.6 | **Research toolkit guide** | Update guide 5 with the new tools and a "how to research a new topic in an hour" checklist. | S | Open |
 | R0.7 | **Archive and data file atlas** | List every archive (root, `update/`, all 89 DLC packs) and every file type inside them with counts (`.meta`, `.ymt`, `.ytyp`, `.ymap`, `.ydr`, `.yft`, `.ytd`, `.ycd`, `.ynv`, `.awc`, `.gfx`, `.gxt2`, `.cut`, `.rel`, ...), what each type is, which engine system reads it, and which topic covers it. The data-side twin of the script catalog. | L | Open |
