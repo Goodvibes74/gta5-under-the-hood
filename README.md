@@ -17,18 +17,19 @@ This repo is also a **study tool**. Modding a game you already enjoy is one of t
 | **PowerShell and bash** | Automation, searching huge codebases, parsing files | [Tools](tools/README.md), [decompiled scripts](docs/00-getting-started/decompiled-scripts.md) |
 | **Reading other people's code** | Finding your way around 1,143 scripts, one of them 1.47 million lines long | [Mission anatomy](docs/gameplay/missions/mission-anatomy.md), [inside freemode](docs/online/07-freemode.md) |
 
-A suggested path: change a value in a data file → write a 30-line C# mod → add a menu → read how the game itself does the same thing → contribute what you learned to the [roadmap](ROADMAP.md). Writing up a research topic is good practice too: it teaches you to read code you didn't write and to explain it clearly.
+The [modding path](modding/README.md) walks you through it step by step, from installing ScriptHookV to sharing your first mod. In short: change a value in a data file → write a 30-line C# mod → add a menu → read how the game itself does the same thing → contribute what you learned to the [roadmap](ROADMAP.md). Writing up a research topic is good practice too: it teaches you to read code you didn't write and to explain it clearly.
 
 ## Start here
 
 | If you want to... | Read |
 | --- | --- |
+| Make your first mod, step by step | [Modding: start here](modding/README.md) |
 | Learn a programming language by modding | [Learn to code by modding](#learn-to-code-by-modding-gta-v), [languages](scripting/languages.md) |
 | Get set up (game version, tools, dependencies) | [Setup](docs/00-getting-started/setup.md), [system requirements](docs/00-getting-started/system-requirements.md), [Linux](docs/00-getting-started/linux.md), [tools and resources](docs/00-getting-started/toolbox.md), [glossary](docs/00-getting-started/glossary.md) |
 | Know which languages to learn | [Languages for modding](scripting/languages.md) |
 | See how the game starts and runs its scripts | [Boot](docs/00-getting-started/boot.md), [runtime scripts](docs/core/runtime-scripts.md), [script VM](scripting/script-vm.md) |
 | Understand a system | The folders below; every folder README lists its topics |
-| Write a mod | [Scripting](scripting/README.md) and [examples](examples/README.md) |
+| Write a mod | [Modding path](modding/README.md), [scripting](scripting/README.md) and [examples](examples/README.md) |
 | Look up a file format | [File formats](file-formats/README.md) |
 | Help | [Roadmap](ROADMAP.md) (pick an open topic), [CONTRIBUTING.md](CONTRIBUTING.md) |
 | Share a tool, site or trick that sped up your work | Add it to [tools and resources](docs/00-getting-started/toolbox.md#contributed-tools-and-resources) |
@@ -52,6 +53,7 @@ gta5-under-the-hood/
 │   ├── ui/                      HUD, menus, radar and map
 │   ├── performance/             limits, pool sizes, freezes and crashes
 │   └── online/                  how GTA Online is built: sessions, freemode, stats, jobs
+├── modding/                     start here to make mods: how mods load, tools, first data edit, first C#, Lua and C++ mod, debugging, sharing
 ├── file-formats/                one page per format (RPF, YSC, handling.meta, weapons.meta, materials.dat ...)
 ├── scripting/                   the script VM, natives, C# (SHVDN), Lua, menus, the script launch graph
 ├── examples/                    small worked C# mods
@@ -60,7 +62,7 @@ gta5-under-the-hood/
 
 ## Status
 
-15 of 105 research topics have a first-pass guide, plus the Online guides, the DLC inventory and the scripting guides. The [roadmap](ROADMAP.md) lists every topic, what's done, and where to begin. Highlights so far:
+21 of 106 research topics have a first-pass guide, plus a [step-by-step modding path](modding/README.md) for beginners, the Online guides, the DLC inventory and the scripting guides. The [roadmap](ROADMAP.md) lists every topic, what's done, and where to begin. Highlights so far:
 
 - [Inside freemode](docs/online/07-freemode.md): GTA Online's 1.47-million-line main script, its state machines and ~180 systems.
 - [Story flow](docs/gameplay/missions/story-flow.md) and [mission anatomy](docs/gameplay/missions/mission-anatomy.md): how story missions unlock and how every mission script is built.
