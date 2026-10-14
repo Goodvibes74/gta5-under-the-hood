@@ -26,6 +26,7 @@ Every research topic, its status, and what is left to find out. **11 of 105 topi
 | R3.2 | [Combat and perception](/docs/ai/combat-and-perception.md): relationships, events, combat profiles, accuracy, melee |
 | R5.1 | [Story flow](/docs/gameplay/missions/story-flow.md): the 94-mission table and the flow program |
 | R5.2 | [Mission anatomy](/docs/gameplay/missions/mission-anatomy.md): stages, checkpoints, retry, fail, pass, cleanup |
+| R5.6 | [Cutscenes and dialogue](/docs/gameplay/missions/cutscenes-and-dialogue.md): the cutscene sequence, dressing actors, exit states, Online `MP_1` handles, how every conversation is built |
 | R7.1 | [Inside freemode](/docs/online/07-freemode.md): GTA Online's main script |
 | R12.4 | [Languages for modding](/scripting/languages.md): what to learn for which kind of mod, and in what order |
 
@@ -102,7 +103,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R5.3 | **Saves, completion and autosave** | `autosave_controller`, `savegame_bed`, `save_anywhere`, `completionpercentage_controller`, `achievement_controller`. | M | Open |
 | R5.4 | **Strangers, freaks and side content** | Launchers (`launcher_*`), random characters (`randomchar_controller`), side strands (Epsilon, Paparazzo, Nigel, Tonya, Barry ...), how they appear and unlock. | M | Open |
 | R5.5 | **Minigames and activities** | Golf, tennis, darts, yoga, triathlon, races, flight school, shooting range, strip club, taxi, towing, trafficking, hunting, rampages, arcade machines; how each is launched, scored and rewarded. | L | Open |
-| R5.6 | **Cutscenes and dialogue** | How cutscenes are loaded, staged (entities, crew, vehicles), skipped and cleaned up; the dialogue system (`CREATE_CONVERSATION`, subtitle and speech files); `cutscene_test` and debug scripts as documentation. | M | Open |
+| R5.6 | **Cutscenes and dialogue** | How cutscenes are loaded, staged (entities, crew, vehicles), skipped and cleaned up; the dialogue system (`CREATE_CONVERSATION`, subtitle and speech files); `cutscene_test` and debug scripts as documentation. | M | **Done** (first pass): [guide](/docs/gameplay/missions/cutscenes-and-dialogue.md) |
 | R5.7 | **Systems that clash with Online mode** | Phone (`cellphone_controller`), shops (`shop_controller`, clothes, barber, tattoo, guns), friends and family scenes, emails and texts, ATMs, restricted areas: which ones must be stopped or replaced in our Online mode. | M | Open |
 | R5.8 | **Replay, director mode and the Rockstar Editor** | `replay_controller`, `director_mode`, what NoEditorRestrictions changes. | S | Open |
 
