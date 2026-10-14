@@ -7,7 +7,7 @@ How GTA Online is built on top of the same engine: sessions, the main script, st
 | ID | Topic | Status |
 | --- | --- | --- |
 | R7.1 | **`freemode` inside** | **Done** (first pass): [guide](/docs/online/07-freemode.md) |
-| R7.2 | **Transitions and sessions** | Open |
+| R7.2 | **Transitions and sessions** | **Done** (first pass): [guide](/docs/online/transitions-and-sessions.md) |
 | R7.3 | **Stats, tunables and the server's role** | Open |
 | R7.4 | **The UGC mission format and controllers** | Open |
 | R7.5 | **The job lobby (`fmmc_launcher`)** | Open |
