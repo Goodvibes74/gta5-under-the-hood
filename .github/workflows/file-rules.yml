@@ -1,0 +1,76 @@
+name: file-rules
+
+# Keeps the repo Markdown-only: no executables, binaries, archives or game files.
+# Rules: CONTRIBUTING.md, section "File rules".
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  file-rules:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check changed files
+        env:
+          BASE_PR: ${{ github.event.pull_request.base.sha }}
+          BASE_PUSH: ${{ github.event.before }}
+        run: |
+          set -u
+          BASE="${BASE_PR:-$BASE_PUSH}"
+          if [ -z "$BASE" ] || [ "$BASE" = "0000000000000000000000000000000000000000" ] || ! git cat-file -e "$BASE" 2>/dev/null; then
+            FILES=$(git ls-files)
+          else
+            FILES=$(git diff --name-only --diff-filter=ACMRT "$BASE" HEAD)
+          fi
+
+          MAX_BYTES=512000
+          BLOCKED='exe|dll|asi|sys|msi|msix|bat|cmd|com|scr|vbs|vbe|js|jse|wsf|hta|lnk|jar|apk|zip|7z|rar|tar|gz|tgz|bz2|xz|cab|iso|img|rpf|ysc|ugc|ytd|ydr|yft|ydd|ybn|ymt|ymap|ytyp|awc|pdb|so|dylib|bin'
+          RISKY='Invoke-WebRequest|Invoke-RestMethod|DownloadFile|DownloadString|Net\.WebClient|Invoke-Expression|\biex\b|FromBase64String|Start-Process|curl |wget |bitsadmin|certutil'
+          fail=0
+
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            [ -e "$f" ] || continue
+            lower=$(printf '%s' "$f" | tr '[:upper:]' '[:lower:]')
+            ext="${lower##*.}"
+            [ "$ext" = "$lower" ] && ext=""
+
+            if [ -f "$f" ] && [ "$(wc -c < "$f")" -gt "$MAX_BYTES" ]; then
+              echo "::error file=$f::File is larger than 500 KB."; fail=1; continue
+            fi
+            if [ -n "$ext" ] && printf '%s' "$ext" | grep -Eqx "$BLOCKED"; then
+              echo "::error file=$f::.$ext files are not allowed. Link to the tool's official page instead of uploading it."; fail=1; continue
+            fi
+            if [ -s "$f" ] && ! grep -Iq . "$f"; then
+              echo "::error file=$f::Binary files are not allowed."; fail=1; continue
+            fi
+
+            case "$lower" in
+              .github/*) ;;                                   # maintainer-owned (CODEOWNERS)
+              *.md) ;;
+              license|.gitignore|.gitattributes) ;;
+              tools/*.ps1|examples/*.cs)
+                if grep -EnHi "$RISKY" "$f"; then
+                  echo "::error file=$f::Download-and-run or encoded code is not allowed in tools or examples."; fail=1
+                fi ;;
+              *)
+                echo "::error file=$f::Only Markdown (.md) is allowed here. Tools go in tools/ (.ps1), examples in examples/ (.cs), both with maintainer review."; fail=1 ;;
+            esac
+          done <<EOF
+          $FILES
+          EOF
+
+          if [ "$fail" -ne 0 ]; then
+            echo "File rules failed. See CONTRIBUTING.md, section 'File rules'."
+            exit 1
+          fi
+          echo "All changed files follow the file rules."

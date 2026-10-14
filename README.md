@@ -4,10 +4,26 @@ An open, growing reference on how **GTA V (PC, Legacy edition, build 1.0.3725.0)
 
 Every page says where its facts come from and marks each claim **Verified** (read in the game files or a decompile of this build) or **Known** (community knowledge, not checked). Nothing here is Rockstar's code or data, and nothing here is a mod.
 
+## Learn to code by modding GTA V
+
+This repo is also a **study tool**. Modding a game you already enjoy is one of the most motivating ways to learn a programming language: every exercise ends with something you can see and play. You'll practise real languages on a real, large program:
+
+| Language | What you practise | Start with |
+| --- | --- | --- |
+| **C#** | Classes, events, lists, async-style per-frame code, using a library API | [Languages](scripting/languages.md), then the [examples](examples/README.md) (a first mod in about 30 lines) |
+| **Lua** | Scripting basics, tables, functions, quick edit-and-reload experiments | [Lua](scripting/lua.md) |
+| **C++** | Pointers, memory, DLLs, performance | [Languages](scripting/languages.md#which-language-for-which-job) |
+| **XML and data files** | Structured data, reading a schema, changing values safely | [Vehicle handling](docs/physics/vehicle-handling.md), [weapons](docs/gameplay/weapons/weapons.md) |
+| **PowerShell and bash** | Automation, searching huge codebases, parsing files | [Tools](tools/README.md), [decompiled scripts](docs/00-getting-started/decompiled-scripts.md) |
+| **Reading other people's code** | Finding your way around 1,143 scripts, one of them 1.47 million lines long | [Mission anatomy](docs/gameplay/missions/mission-anatomy.md), [inside freemode](docs/online/07-freemode.md) |
+
+A suggested path: change a value in a data file → write a 30-line C# mod → add a menu → read how the game itself does the same thing → contribute what you learned to the [roadmap](ROADMAP.md). Writing up a research topic is good practice too: it teaches you to read code you didn't write and to explain it clearly.
+
 ## Start here
 
 | If you want to... | Read |
 | --- | --- |
+| Learn a programming language by modding | [Learn to code by modding](#learn-to-code-by-modding-gta-v), [languages](scripting/languages.md) |
 | Get set up (game version, tools, dependencies) | [Setup](docs/00-getting-started/setup.md), [system requirements](docs/00-getting-started/system-requirements.md), [Linux](docs/00-getting-started/linux.md), [toolbox](docs/00-getting-started/toolbox.md), [glossary](docs/00-getting-started/glossary.md) |
 | Know which languages to learn | [Languages for modding](scripting/languages.md) |
 | See how the game starts and runs its scripts | [Boot](docs/00-getting-started/boot.md), [runtime scripts](docs/core/runtime-scripts.md), [script VM](scripting/script-vm.md) |
@@ -54,6 +70,7 @@ gta5-under-the-hood/
 
 - A legitimately purchased copy of GTA V is needed for any of this.
 - Single player only. Never use mods in GTA Online: accounts get banned.
+- Markdown only: no executables, binaries or archives, ever. Tools are linked to their official pages, never uploaded (this keeps malware out). An automatic check enforces it. Found something suspicious? See [SECURITY.md](SECURITY.md).
 - No game code, no game files, no other people's mods in this repo. Details in [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Credits and licence

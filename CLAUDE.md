@@ -6,8 +6,7 @@ Instructions for Claude Code (or any AI assistant) working in this repo. Human c
 
 A public reference on how **Grand Theft Auto V (PC, Legacy edition, build 1.0.3725.0)** works underneath: the engine, physics, AI, the world, story mode, GTA Online, the UI and audio, so people can mod it. It contains only contributors' own writing and their own small tools. No mods, no game files, no game code.
 
-## Hard rules
-
+. **Markdown only, no executables.** Add or change only `.md` files. Never add binaries, executables, scripts outside `tools/`, archives or downloaded files; if a tool was used, link to its official release page instead. Changes to `tools/`, `examples/` and `.github/` need the maintainer and must stay plain readable source with no download-and-run code. The `file-rules` check rejects anything else.
 1. **Never copy Rockstar code or data into the repo.** Decompiled scripts, extracted archive files and dumps stay outside it (a temp or scratch folder). Quote names, numbers, field names, coordinates and short labels; describe logic in your own words.
 2. **Never include other people's mods** (binaries or source, decompiled or not). Link to the author's page.
 3. **Mark every claim Verified or Known.** Verified = read in the game files or a decompile of the stated build. Known = community knowledge not checked.

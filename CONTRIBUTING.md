@@ -2,11 +2,12 @@
 
 Thanks for helping map how GTA V works. Everything here is written by contributors in their own words; the game's code and data never go into this repo.
 
-## The three rules that never bend
+## The four rules that never bend
 
-1. **No Rockstar code or files.** Never paste decompiled script code, extracted game files (`.ysc`, `.ugc`, `.meta` copies, `mpstatssetup.xml` ...), or anything from the archives. Quote names, numbers, coordinates, field names and short labels, and describe logic in your own words.
-2. **No other people's mods.** No mod binaries or their source, decompiled or not. Link to the author's page instead.
-3. **Mark every claim.** **Verified** means you read it in the game files or a decompile of the stated build. **Known** means community knowledge you haven't checked yourself. A guide that mixes the two without saying which can't be trusted.
+1. **Markdown only. No executables, ever.** Contributions are Markdown documents (`.md`) about the game. Never add programs, libraries, installers, archives or binaries: no `.exe`, `.dll`, `.asi`, `.msi`, `.bat`, `.cmd`, `.vbs`, `.jar`, `.zip`, `.7z`, `.rar`, `.rpf` or anything like them, not even inside a folder or under another name. If you used a tool, **link to its official page or release page** and say which version; never upload a copy. This keeps the repo free of malware and of other people's files. The only non-Markdown files are the plain-text research tools in `tools/` and the C# examples in `examples/`: changes to those (and to `.github/`) need the maintainer's review, and must stay readable source (no encoded or obfuscated code, nothing that downloads and runs other programs). An automatic check enforces this on every pull request; see [File rules](#file-rules).
+2. **No Rockstar code or files.** Never paste decompiled script code, extracted game files (`.ysc`, `.ugc`, `.meta` copies, `mpstatssetup.xml` ...), or anything from the archives. Quote names, numbers, coordinates, field names and short labels, and describe logic in your own words.
+3. **No other people's mods.** No mod binaries or their source, decompiled or not. Link to the author's page instead.
+4. **Mark every claim.** **Verified** means you read it in the game files or a decompile of the stated build. **Known** means community knowledge you haven't checked yourself. A guide that mixes the two without saying which can't be trusted.
 
 Also leave out personal details: your paths (`C:\Users\...`), your hardware unless it's a clearly marked test note, your saves and logs.
 
@@ -44,6 +45,7 @@ Always branch from the latest `main`. Keep a branch to one topic; if you find so
 - Commit messages start with the ID when there is one: `R1.4: add pool table from gameconfig.xml`.
 - PR title: `R1.4: Memory, pools and limits (first pass)`.
 - PR description checklist:
+  - [ ] Only Markdown (or a reviewed change to `tools/` or `examples/`); no executables, binaries or archives; tools are linked, not uploaded
   - [ ] Follows the entry template; every claim marked **Verified** or **Known**
   - [ ] Names the game build the facts are from (default: 1.0.3725.0 Legacy)
   - [ ] No game code, extracted files, mod binaries or decompiled mod code
@@ -57,6 +59,22 @@ Always branch from the latest `main`. Keep a branch to one topic; if you find so
 - A maintainer (or a contributor who has had three PRs merged) reviews for the three rules first, then for clarity.
 - Disagreements about a fact are settled with a source: a quote of names or numbers from the decompile, a data file field, or an in-game test anyone can repeat. Write the test in the guide.
 - PRs are squash-merged into `main`; `main` is always readable.
+
+## File rules
+
+Enforced by the `file-rules` check (`.github/workflows/file-rules.yml`) on every pull request, and by the rules on `main` (no direct pushes; every change goes through a pull request that passes the check and is approved by the maintainer).
+
+| Where | Allowed | Notes |
+| --- | --- | --- |
+| Anywhere | `.md` | Documentation. Images: link to them, don't commit them, unless a maintainer agrees (then `.png` or `.jpg` under `docs/`, small) |
+| `tools/` | `.ps1`, `.md` | Plain-text, read-only research tools; maintainer review required |
+| `examples/` | `.cs`, `.md` | Small source examples; maintainer review required |
+| `.github/` | workflow and template files | Maintainer only |
+| Repo root | `.md`, `LICENSE`, `.gitignore`, `.gitattributes` | |
+
+Always rejected: any binary file, any file over 500 KB, and these extensions anywhere: `.exe .dll .asi .sys .msi .msix .bat .cmd .com .scr .vbs .vbe .js .jse .wsf .hta .lnk .jar .apk .ps1` (outside `tools/`), `.zip .7z .rar .tar .gz .cab .iso .rpf .ysc .ugc .ytd .ydr .yft .ymt .ymap .ytyp .awc`.
+
+**Tools and downloads:** write the tool's name, version and official link (GitHub releases, the author's site). Never link to re-uploads, mirrors, cracked builds or files shared in chats.
 
 ## Writing style
 

@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Contributing rules
+    url: https://github.com/Goodvibes74/gta5-under-the-hood/blob/main/CONTRIBUTING.md
+    about: How to claim a topic, branch names, file rules and the review process.

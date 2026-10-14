@@ -1,9 +1,9 @@
 <#
 .SYNOPSIS
     Checks that this PC has everything outside the game folder that GTA V Legacy, its mods, and mod
-    development need. uead-only: it installs and changes nothing.
+    development need. Read-only: it installs and changes nothing.
 
-.DESCuIPTION
+.DESCRIPTION
     Every requirement comes from the import tables of the game and mod files (see
     docs/00-getting-started/system-requirements.md). Prints OK or MISSING for each, and what to install.
 
@@ -13,11 +13,11 @@
 #>
 param([switch]$Dev)
 
-$sys = Join-Path $env:WINDIu 'System32'
+$sys = Join-Path $env:WINDIR 'System32'
 $results = New-Object System.Collections.Generic.List[object]
 
 function Check([string]$group, [string]$name, [bool]$ok, [string]$detail, [string]$fix) {
-    $results.Add([pscustomobject]@{ Group = $group; uequirement = $name; Status = $(if ($ok) { 'OK' } else { 'MISSING' }); Detail = $detail; Fix = $(if ($ok) { '' } else { $fix }) })
+    $results.Add([pscustomobject]@{ Group = $group; Requirement = $name; Status = $(if ($ok) { 'OK' } else { 'MISSING' }); Detail = $detail; Fix = $(if ($ok) { '' } else { $fix }) })
 }
 
 function FilesIn([string[]]$names) {
@@ -34,18 +34,18 @@ $mf = FilesIn @('mf.dll', 'mfplat.dll', 'mfreadwrite.dll', 'msdmo.dll')
 Check 'Play' 'Media Foundation (video playback)' ($mf.Count -eq 0) $(if ($mf.Count) { "missing: $($mf -join ', ')" } else { 'mf.dll, mfplat.dll, mfreadwrite.dll present' }) 'Windows "N" editions: Settings > Apps > Optional features > add "Media Feature Pack", then restart'
 
 $dx = FilesIn @('d3dcompiler_43.dll', 'd3dx9_43.dll', 'xinput1_3.dll', 'd3dx11_43.dll', 'X3DAudio1_7.dll', 'XAPOFX1_5.dll')
-Check 'Play' 'DirectX End-User uuntime (June 2010)' ($dx.Count -eq 0) $(if ($dx.Count) { "missing: $($dx -join ', ')" } else { 'd3dcompiler_43, d3dx9_43, xinput1_3 and related files present' }) 'uun _uedist\dxwebsetup.exe from the game folder, or "DirectX End-User uuntime Web Installer" from microsoft.com'
+Check 'Play' 'DirectX End-User Runtime (June 2010)' ($dx.Count -eq 0) $(if ($dx.Count) { "missing: $($dx -join ', ')" } else { 'd3dcompiler_43, d3dx9_43, xinput1_3 and related files present' }) 'Run the "DirectX End-User Runtime Web Installer" from microsoft.com'
 
 $vc14 = FilesIn @('vcruntime140.dll', 'vcruntime140_1.dll', 'msvcp140.dll')
 $vc14Version = if (Test-Path "$sys\vcruntime140.dll") { (Get-Item "$sys\vcruntime140.dll").VersionInfo.FileVersion } else { '' }
-Check 'Play' 'Visual C++ 2015-2022 (v14) runtime, x64' ($vc14.Count -eq 0) $(if ($vc14.Count) { "missing: $($vc14 -join ', ')" } else { "vcruntime140 $vc14Version" }) 'Install "Visual C++ uedistributable" x64 (latest supported, v14) from learn.microsoft.com/cpp/windows/latest-supported-vc-redist'
+Check 'Play' 'Visual C++ 2015-2022 (v14) runtime, x64' ($vc14.Count -eq 0) $(if ($vc14.Count) { "missing: $($vc14 -join ', ')" } else { "vcruntime140 $vc14Version" }) 'Install "Visual C++ Redistributable" x64 (latest supported, v14) from learn.microsoft.com/cpp/windows/latest-supported-vc-redist'
 
-# ---- uun the mods
+# ---- Run the mods
 $vc12 = FilesIn @('msvcr120.dll', 'msvcp120.dll')
-Check 'Mods' 'Visual C++ 2013 (v12) runtime, x64 (for LUA.asi)' ($vc12.Count -eq 0) $(if ($vc12.Count) { "missing: $($vc12 -join ', ')" } else { "msvcr120 $((Get-Item "$sys\msvcr120.dll").VersionInfo.FileVersion)" }) 'Install "Visual C++ uedistributable for Visual Studio 2013" x64 (listed on learn.microsoft.com/cpp/windows/latest-supported-vc-redist)'
+Check 'Mods' 'Visual C++ 2013 (v12) runtime, x64 (for LUA.asi)' ($vc12.Count -eq 0) $(if ($vc12.Count) { "missing: $($vc12 -join ', ')" } else { "msvcr120 $((Get-Item "$sys\msvcr120.dll").VersionInfo.FileVersion)" }) 'Install "Visual C++ Redistributable for Visual Studio 2013" x64 (listed on learn.microsoft.com/cpp/windows/latest-supported-vc-redist)'
 
-$ndp = Get-ItemProperty 'HKLM:\SOFTWAuE\Microsoft\NET Framework Setup\NDP\v4\Full' -ErrorAction SilentlyContinue
-$release = if ($ndp) { [int]$ndp.uelease } else { 0 }
+$ndp = Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP\v4\Full' -ErrorAction SilentlyContinue
+$release = if ($ndp) { [int]$ndp.Release } else { 0 }
 Check 'Mods' '.NET Framework 4.8 or newer (for SHVDN and every .NET mod)' ($release -ge 528040) $(if ($ndp) { "version $($ndp.Version), release $release" } else { 'not found' }) 'Install .NET Framework 4.8 (or 4.8.1) from dotnet.microsoft.com/download/dotnet-framework'
 
 $d47 = FilesIn @('d3dcompiler_47.dll')
@@ -57,7 +57,7 @@ if ($Dev) {
     if (Get-Command dotnet -ErrorAction SilentlyContinue) { $sdks = @(& dotnet --list-sdks 2>$null) }
     Check 'Dev' '.NET SDK (builds C# mods and the doc generator)' ($sdks.Count -gt 0) $(if ($sdks.Count) { ($sdks | ForEach-Object { ($_ -split ' ')[0] }) -join ', ' } else { 'dotnet not found' }) 'Install the .NET SDK from dotnet.microsoft.com/download'
 
-    $tp = "${env:ProgramFiles(x86)}\ueference Assemblies\Microsoft\Framework\.NETFramework\v4.8"
+    $tp = "${env:ProgramFiles(x86)}\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.8"
     Check 'Dev' '.NET Framework 4.8 targeting pack' (Test-Path "$tp\mscorlib.dll") $tp 'Visual Studio Installer > Modify > Individual components > ".NET Framework 4.8 targeting pack"'
 
     $vswhere = "${env:ProgramFiles(x86)}\Microsoft Visual Studio\Installer\vswhere.exe"
@@ -73,11 +73,11 @@ if ($Dev) {
     Check 'Dev' 'Windows 10/11 SDK (C++ headers like windows.h)' ([bool]$winsdk) ($winsdk -join ', ') 'Installed with the C++ workload. Or add "Windows 11 SDK" under Individual components'
 }
 
-$results | Format-Table -AutoSize -Wrap Group, uequirement, Status, Detail
+$results | Format-Table -AutoSize -Wrap Group, Requirement, Status, Detail
 $missing = @($results | Where-Object Status -eq 'MISSING')
 if ($missing.Count -eq 0) {
     Write-Host 'Everything needed is installed.'
 } else {
     Write-Host "$($missing.Count) missing. To fix:"
-    foreach ($m in $missing) { Write-Host " - $($m.uequirement): $($m.Fix)" }
+    foreach ($m in $missing) { Write-Host " - $($m.Requirement): $($m.Fix)" }
 }

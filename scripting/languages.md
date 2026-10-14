@@ -1,6 +1,6 @@
 # Languages for modding GTA V
 
-Which languages and formats you need to mod GTA V, what each one is for, and an order to learn them in. Roadmap topic **R12.4** in the [roadmap](/ROADMAP.md) (first version; additions welcome).
+Which languages and formats you need to mod GTA V, what each one is for, and an order to learn them in. It works the other way round too: **if you want to learn C#, Lua, C++ or scripting, modding GTA V is a fun way to do it**, because every exercise ends in something you can see in the game. The learning path below doubles as a programming course. Roadmap topic **R12.4** in the [roadmap](/ROADMAP.md) (first version; additions welcome).
 
 ## Short version
 
