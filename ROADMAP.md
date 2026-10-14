@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **37 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **38 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -18,6 +18,7 @@ Every research topic, its status, and what is left to find out. **37 of 106 topi
 | R0.1 | [Story and shared script catalog](/docs/gameplay/missions/story-script-catalog.md): the 584 non-Online scripts in 12 groups |
 | R0.2 | [Runtime scripts](/docs/core/runtime-scripts.md): boot order, the always-running scripts, stack pools, global blocks |
 | R0.4 | [Global variable map](/docs/core/global-map.md): the 21 global blocks, the busiest globals and their roles, story mode's traced globals |
+| R0.8 | [Native namespace map](/scripting/native-namespace-map.md): all 45 namespaces with size, scripts, calls, what each covers and which topic owns it |
 | R1.4 | [Memory, pools and limits](/docs/core/memory-and-pools.md): the pools in `gameconfig.xml`, the 256-ped and 300-vehicle limits, what limit adjusters change, how scripts stay under the limits |
 | R1.5 | [Streaming](/docs/core/streaming.md): request, check, release for every asset type; Rockstar polls instead of blocking; load scenes, focus, streaming volumes, SRLs, IPLs, interiors, LOD and population budgets |
 | R1.6 | [Archives and the content system](/docs/core/archives-and-content.md): RPFs, `dlclist.xml`, `setup2.xml` orders, `content.xml` file types, the mods folder, add-on vs replacement |
@@ -65,7 +66,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R0.5 | **Script launch graph** | Who starts whom (`REQUEST_SCRIPT` and `START_NEW_SCRIPT` with stack sizes), and the script brains placed in the world (`ambient*.ipl`, `scriptbrains` data), drawn as one graph for story and one for Online. | M | Started: [launch graph](/scripting/script-launch-graph.md) |
 | R0.6 | **Research toolkit guide** | Update guide 5 with the new tools and a "how to research a new topic in an hour" checklist. | S | Open |
 | R0.7 | **Archive and data file atlas** | List every archive (root, `update/`, all 89 DLC packs) and every file type inside them with counts (`.meta`, `.ymt`, `.ytyp`, `.ymap`, `.ydr`, `.yft`, `.ytd`, `.ycd`, `.ynv`, `.awc`, `.gfx`, `.gxt2`, `.cut`, `.rel`, ...), what each type is, which engine system reads it, and which topic covers it. The data-side twin of the script catalog. | L | Open |
-| R0.8 | **Native namespace coverage map** | Every native namespace (about 40) with its size, how many scripts use it, and which topic explains it, so no engine API family is left unread. | S | Open |
+| R0.8 | **Native namespace coverage map** | Every native namespace (about 40) with its size, how many scripts use it, and which topic explains it, so no engine API family is left unread. | S | **Done** (first pass): [guide](/scripting/native-namespace-map.md) |
 
 ## R1. Engine runtime: how the game runs scripts and data
 
