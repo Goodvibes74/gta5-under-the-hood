@@ -213,7 +213,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 
 | ID | Topic | What to find out | Size | Status |
 | --- | --- | --- | --- | --- |
-| R18.1 | **Measuring performance** | How to measure before changing anything: frame rate and frame time, CPU vs GPU bound, the game's own benchmark (`benchmark` script), Windows tools (Task Manager, PresentMon, Event Viewer for hangs), and reading mod logss for stalls. | S | Open |
+| R18.1 | **Measuring performance** | How to measure before changing anything: frame rate and frame time, CPU vs GPU bound, the game's own benchmark (`benchmark` script), Windows tools (Task Manager, PresentMon, Event Viewer for hangs), and reading mod logss for stalls. | S | **Done** (first pass): [guide](/docs/performance/measuring.md) |
 | R18.2 | **Graphics settings, one by one** | Every option in `settings.xml` and the in-game menu: what it changes, its CPU, GPU and VRAM cost, and the best value for weak, mid and strong PCs; the settings not shown in the menu; `commandline.txt` switches. | M | Open |
 | R18.3 | **Streaming, memory and VRAM** | How the game budgets memory and video memory, why textures stream in late, what the heap and pool adjusters really fix, when more mods means freezes. Builds on R1.4 and R1.5. | M | Open |
 | R18.4 | **CPU: population, AI, physics and scripts** | What loads the CPU: ped and traffic density, AI (R17.9), physics (R2.7), script mods; how density settings and spawn caps help. | M | Open |
