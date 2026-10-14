@@ -1,0 +1,62 @@
+# Tools
+
+Small, read-only PowerShell tools used to research the game. None of them writes to a game archive, and none ships any game data: you run them on your own copy of the game, and their output (Rockstar's data) stays in a scratch folder outside this repo.
+
+## Before you start
+
+- **CodeWalker** (https://github.com/dexyfex/CodeWalker/releases): `rpf-cw.ps1`, `ysc-dump.ps1` and `dlc-scan.ps1` load its `CodeWalker.Core.dll`. Pass `-CodeWalker <folder>` or set the `CODEWALKER_DIR` environment variable to the folder that holds the DLL.
+- Run from your **game folder** (the tools default `-Game` to the current folder), or pass `-Game <folder>`.
+- **Windows PowerShell 5.1** works; so does PowerShell 7. If scripts are blocked, use `powershell -ExecutionPolicy Bypass -File ...`.
+
+## The tools and how they were made
+
+### `rpf-cw.ps1`: list and extract any archive
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\rpf-cw.ps1 -Archive update\update.rpf -Pattern "common\data\handling.meta" -ExtractTo "$env:TEMP\gta"
+```
+
+**How it works.** Loads `CodeWalker.Core.dll` with .NET reflection, loads the game's decryption keys from the game folder the same way CodeWalker does (`GTA5Keys.LoadFromPath`), opens the archive as an `RpfFile`, walks every entry including nested archives, and prints the size and path of each entry whose inner path matches `-Pattern` (wildcards). With `-ExtractTo` it writes matching plain files (XML, meta, text, `.ugc`) there; compiled resources (`.ydr`, `.ytd` ...) are listed but not extracted. Nothing is ever written back. Note: sizes shown are the stored (compressed) sizes.
+
+### `ysc-dump.ps1`: script headers and strings
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\ysc-dump.ps1 -Out "$env:TEMP\ysc" [-Only "freemode"]
+```
+
+**How it works.** Opens `update\update2.rpf` with CodeWalker, decrypts each compiled script (`.ysc`) in memory, and reads its header by fixed offsets (code size, statics, globals count and global block, natives count, name, string pages; the table is in [research tools](/docs/00-getting-started/research-tools.md)). Strings are stored in `0x4000`-byte pages as null-terminated text; all of them are written out, one text file per script, plus `_summary.tsv` with the header numbers for every script. Used for the script catalogs, the global block map and spotting what an update changed. About 10 minutes for all 1,143 scripts.
+
+### `dlc-scan.ps1`: inventory of the DLC packs
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\dlc-scan.ps1 -Out "$env:TEMP\dlcscan" [-Only "mpheist*"]
+```
+
+**How it works.** Walks `update\x64\dlcpacks\*\dlc.rpf` with CodeWalker, reads each pack's `setup2.xml` (internal name and order), `content.xml` (what it adds) and `vehicles.meta` (vehicle models), and writes them plus a `dlcscan.json` summary. The [DLC packs page](/docs/entities/vehicles/dlc-packs.md) was written from its output. About 5 minutes.
+
+### `rpf.ps1`: dependency-free viewer for open archives
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\rpf.ps1 list update\update.rpf "*dlclist*"
+```
+
+**How it works.** A plain PowerShell reader for the RPF7 format: reads the header and the entry table, follows nested archives, and lists or extracts entries. Works only where the entry table is not encrypted (archives edited with OpenIV, add-on packs); for Rockstar's encrypted archives use `rpf-cw.ps1`. Needs nothing installed.
+
+### `script-launch-graph.ps1`: who starts whom
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\script-launch-graph.ps1 -Repo ..\GTA-V-Decompiled-Scripts -Commit <build commit> -Out "$env:TEMP\graph"
+```
+
+**How it works.** Runs `git grep` over a decompile clone at the given commit (no checkout needed) for every `START_NEW_SCRIPT*` call and every wrapper call that passes a script name or its hash with a stack size. Hashes are turned back into names with the game's `joaat` hash (implemented inline). Each launch becomes an edge `caller → callee (stack)`; the stack size is named from the pools in `gameconfig.xml`. Launches whose name comes from a variable or table are not resolved. Output: `launches.tsv` and `launch-graph.md`, which became the [script launch graph](/scripting/script-launch-graph.md). Under a minute.
+
+## Ideas for new tools (good contributions)
+
+| Tool | What it would do | Roadmap |
+| --- | --- | --- |
+| Native crossmap | Turn the hashed native tables of compiled scripts into names for a given build | R0.3 |
+| Global map | List which script registers each global block and what fields the big blocks hold | R0.4 |
+| Update check | Compare a new build with the last one: version, DLC packs, script sizes, data files | R11.2 |
+| Data-file differ | Compare two copies of a `.meta` file entry by entry (by name), the way the vehicle and weapon guides compared modded files | R0.7 |
+
+Add a tool on a `tool/<name>` branch (see [CONTRIBUTING.md](/CONTRIBUTING.md)), keep it read-only, and document it here the same way.

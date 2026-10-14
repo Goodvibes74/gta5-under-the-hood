@@ -1,0 +1,34 @@
+# Never commit game files, extracted data or dumps
+*.rpf
+*.ysc
+*.ysc.full
+*.ugc
+*.ytd
+*.ydr
+*.yft
+*.ydd
+*.ybn
+*.ymap
+*.ytyp
+*.ymt
+*.awc
+*.gfx
+*.exe
+*.dll
+*.asi
+*.pdb
+# Tool output and scratch folders
+out/
+scratch/
+dump/
+_summary.tsv
+launches.tsv
+dlcscan.json
+# Build output of the examples
+examples/bin/
+examples/obj/
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vs/
+.vscode/
