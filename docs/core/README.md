@@ -12,7 +12,7 @@ The game loop and the scripts that keep it running, memory pools and limits, str
 | R1.4 | **Memory, pools and limits** | **Done** (first pass): [guide](/docs/core/memory-and-pools.md) |
 | R1.5 | **Streaming** | **Done** (first pass): [guide](/docs/core/streaming.md) |
 | R1.6 | **Archives and the content system** | **Done** (first pass): [guide](/docs/core/archives-and-content.md) |
-| R1.7 | **Saves** | Open |
+| R1.7 | **Saves** | **Done** (first pass): [guide](/docs/core/saves.md) |
 | R5.3 | **Saves, completion and autosave** | Open |
 | R11.1 | **What an update breaks** | **Done** (first pass): [guide](/docs/core/surviving-updates.md) |
 | R11.2 | **An update-check tool** | **Started**: [guide](/docs/core/surviving-updates.md) |
