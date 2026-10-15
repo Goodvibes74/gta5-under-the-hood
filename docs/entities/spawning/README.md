@@ -6,7 +6,7 @@ Population, traffic density, scenarios and the rules for what spawns where.
 
 | ID | Topic | Status |
 | --- | --- | --- |
-| R4.1 | **Population** | Open |
+| R4.1 | **Population** | **Done** (first pass): [guide](/docs/entities/spawning/population.md) |
 | R4.2 | **Scenarios and ambient life** | Open |
 | R4.3 | **Vehicle generators and traffic** | **Done** (first pass): [guide](/docs/entities/spawning/vehicle-generators-and-traffic.md) |
 

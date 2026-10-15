@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **53 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **54 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -36,6 +36,7 @@ Every research topic, its status, and what is left to find out. **53 of 106 topi
 | R3.2 | [Combat and perception](/docs/ai/combat-and-perception.md): relationships, events, combat profiles, accuracy, melee |
 | R3.5 | [Swimming and diving](/docs/gameplay/player/swimming-and-diving.md) (first pass): breath 10 to 40 s and stamina 10 to 90 s, drowning, scuba gear and its 5 models, dive heights, the 60-second sea edge, how missions remove the breath limit, boat and sub hooks |
 | R3.8 | [Health, armour, death and arrest](/docs/gameplay/player/health-armour-death.md) (first pass): the 10 health configs and their thresholds (the 100 floor), which peds use which, armour and Ammu-Nation, regeneration, the death and arrest checks, how scripts change health |
+| R4.1 | [Population](/docs/entities/spawning/population.md) (first pass): 1,321 zone boxes, 1,310 zones with their schedules and attributes, the 116 population schedules (12 slots, weekday only), ped and vehicle groups, and the natives that thin, empty or reshape the crowd |
 | R4.3 | [Vehicle generators and traffic](/docs/entities/spawning/vehicle-generators-and-traffic.md) (first pass): 22,506 car generators in the map files, the 116 population schedules and 55 vehicle groups, trains (2 of 12 tracks run), the 14 dispatch services, how scripts thin and block traffic |
 | R5.1 | [Story flow](/docs/gameplay/missions/story-flow.md): the 94-mission table and the flow program |
 | R5.2 | [Mission anatomy](/docs/gameplay/missions/mission-anatomy.md): stages, checkpoints, retry, fail, pass, cleanup |
@@ -125,7 +126,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 
 | ID | Topic | What to find out | Size | Status |
 | --- | --- | --- | --- | --- |
-| R4.1 | **Population** | Population zones and groups (`popzone`, `popgroups.ymt`, `popcycle`), ped and vehicle density, how density changes by time and area, what AI mods change. | M | Open |
+| R4.1 | **Population** | Population zones and groups (`popzone`, `popgroups.ymt`, `popcycle`), ped and vehicle density, how density changes by time and area, what AI mods change. | M | **Done** (first pass): [guide](/docs/entities/spawning/population.md) |
 | R4.2 | **Scenarios and ambient life** | Scenario points and types (sitting, smoking, guards), ambient animations, ambient speech. | M | Open |
 | R4.3 | **Vehicle generators and traffic** | Parked car generators, traffic spawning, emergency vehicles, trains, boats and planes on routes. | S | **Done** (first pass): [guide](/docs/entities/spawning/vehicle-generators-and-traffic.md) |
 | R4.4 | **Random events** (`re_*`, 41 scripts) | How random events are picked and launched, their conditions and cooldowns, what each one does. | M | Open |
