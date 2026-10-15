@@ -74,6 +74,7 @@ Every research topic, its status, and what is left to find out. **80 of 107 topi
 | R8.4 | [HUD, colours and blips](/docs/ui/hud-colours-blips.md) (first pass): the 54 HUD components and which ones scripts hide most, the 235-colour table (HD and CRT), the blip natives and the 191 sprites scripts set, the radar and interior maps |
 | R8.5 | [Server-backed Online screens](/docs/ui/server-backed-screens.md) (first pass): the seven server services behind the Online UI, server calls per screen for 16 scripts, how screens wait (spinners, warnings, guards), and what a local stand-in would need |
 | R8.6 | [Story-mode UI](/docs/ui/story-mode-ui.md) (first pass): the character wheel's movies and methods, the mission-passed screen (mission_stat_watcher, 210 stat labels), the 206-stat Stats page in 8 categories and its display types, the 100% checklist, links to the story pause pages and phone |
+| R9.1 | [How audio is organised](/docs/audio/how-audio-is-organised.md) (first pass): the 54 sound archives (about 17 GB) and what each holds, the .dat*.rel config files, sounds and sound sets (1,069 pairs from 334 sets), 1,136 audio scenes, 443 script banks, and the audio natives with counts |
 | R9.3 | [Music and radio](/docs/audio/music-and-radio.md) (first pass): the radio stations in the audio game data and their names, hidden interior stations, 1,547 mission music events, how scripts tune, lock and duck the radio, and how music is added or replaced |
 | R11 | [Surviving game updates](/docs/core/surviving-updates.md): what an update breaks, the update-day checklist, rules for update-proof code, how to find risky code in a mod |
 | R12.4 | [Languages for modding](/scripting/languages.md): what to learn for which kind of mod, and in what order |
@@ -212,7 +213,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 
 | ID | Topic | What to find out | Size | Status |
 | --- | --- | --- | --- | --- |
-| R9.1 | **How audio is organised** | Sound banks, `.dat` audio config files, sound sets and names used by scripts (`PLAY_SOUND_FRONTEND`), audio scenes. | M | Open |
+| R9.1 | **How audio is organised** | Sound banks, `.dat` audio config files, sound sets and names used by scripts (`PLAY_SOUND_FRONTEND`), audio scenes. | M | **Done** (first pass): [guide](/docs/audio/how-audio-is-organised.md) |
 | R9.2 | **Speech and dialogue** | Speech files, conversation roots, ambient speech, which voices exist per character. | M | Open |
 | R9.3 | **Music and radio** | Music events and mission scores, radio stations and how to add or replace them. | S | **Done** (first pass): [guide](/docs/audio/music-and-radio.md) |
 
