@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **82 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **83 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -80,6 +80,7 @@ Every research topic, its status, and what is left to find out. **82 of 107 topi
 | R11 | [Surviving game updates](/docs/core/surviving-updates.md): what an update breaks, the update-day checklist, rules for update-proof code, how to find risky code in a mod |
 | R12.4 | [Languages for modding](/scripting/languages.md): what to learn for which kind of mod, and in what order |
 | R12.6 | [Modding path](/modding/README.md): from nothing to a first data edit and a first C#, Lua and C++ mod, debugging, and releasing a mod safely |
+| R13.1 | [Rendering, visual settings and LOD](/docs/rendering/rendering-and-visual-settings.md) (first pass): the deferred pipeline at a high level, visualsettings.dat's 1,144 values by group, LOD lights (250, 750, 2,500 m; 200 ymaps), distant lights, LOD distances and scale, and the rendering natives scripts use |
 | R13.2 | [Timecycle and post effects](/docs/rendering/timecycle-and-post-effects.md) (first pass): weather timecycles, the 1,072 timecycle modifiers and what they change, the 252 animated post effects as stacks of modifiers, how scripts set and clear them |
 | R13.3 | [Particles and decals](/docs/rendering/particles-and-decals.md) (first pass): the 364 particle dictionaries and their quality copies, the effect data files, the 259 decal definitions, the pool and per-script limits, how scripts load, start and clean up effects and decals |
 | R13.5 | [Cameras](/docs/rendering/cameras.md) (first pass): the 1,545 camera settings in `cameras.ymt` and the 10 directors, the 4 script camera kinds and how missions use them, the gameplay camera, hints, view modes, shakes and fades |
@@ -232,7 +233,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 
 | ID | Topic | What to find out | Size | Status |
 | --- | --- | --- | --- | --- |
-| R13.1 | **Rendering and graphics settings** | The render pipeline at a high level, what each graphics setting costs on the UHD 620, LOD and draw distance, `visualsettings.dat`, what vremastered changes. | M | Open |
+| R13.1 | **Rendering and graphics settings** | The render pipeline at a high level, what each graphics setting costs on the UHD 620, LOD and draw distance, `visualsettings.dat`, what vremastered changes. | M | **Done** (first pass): [guide](/docs/rendering/rendering-and-visual-settings.md) |
 | R13.2 | **Timecycle and post effects** | Timecycle files and modifiers, screen effects (`ANIMPOSTFX_*`), how scripts change the look of a scene. | S | **Done** (first pass): [guide](/docs/rendering/timecycle-and-post-effects.md) |
 | R13.3 | **Particles and decals** | Particle assets (`ptfx`), how scripts start effects, decals and their limits (what the DecalsLimit patch changes). | S | **Done** (first pass): [guide](/docs/rendering/particles-and-decals.md) |
 | R13.4 | **Animation** | Clip dictionaries (`.ycd`), how tasks play animations, synchronized scenes, move networks, facial animation, scenario animations. | L | Open |
