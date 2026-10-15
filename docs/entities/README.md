@@ -12,6 +12,6 @@ Peds, vehicles and objects: how a model becomes something in the game, and the r
 | R14.4 | **Text and names in content** | Open |
 | R4.1 | **Population** | Open |
 | R4.2 | **Scenarios and ambient life** | Open |
-| R4.3 | **Vehicle generators and traffic** | Open |
+| R4.3 | **Vehicle generators and traffic** | **Done** (first pass): [guide](/docs/entities/spawning/vehicle-generators-and-traffic.md) |
 
 Pick an open topic, claim it and send a pull request: see [CONTRIBUTING.md](/CONTRIBUTING.md). Write new pages with the [entry template](/templates/entry-template.md).
