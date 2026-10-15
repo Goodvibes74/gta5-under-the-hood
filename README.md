@@ -83,7 +83,7 @@ The topics still open are all large (a week or more each). They are listed easie
 
 | # | Job | Why it's at this place |
 | ---: | --- | --- |
-| 1 | **R3.7 Wanted level and police** (priority) | Dispatch and searching are already done ([police and services](docs/ai/police-and-services.md)); what's left is how crimes are detected and reported, from data files that are easy to extract |
+| 1 | **R3.7 Wanted level and police** (priority, **done**: [guide](docs/ai/wanted-level-and-police.md)) | Dispatch and searching are already done ([police and services](docs/ai/police-and-services.md)); what's left is how crimes are detected and reported, from data files that are easy to extract |
 | 2 | **R17.6 Driving AI** (priority) | [Driving](docs/ai/driving.md) and [navigation](docs/ai/navigation.md) cover cars and roads; what's left is helicopter, plane and boat AI, chases and escorts |
 | 3 | **R17.1 The AI architecture** (priority) | Mostly ties the finished AI guides together, plus counts on the task system |
 | 4 | **R0.7 Archive and data file atlas** (priority) | Mechanical: list every archive with [`rpf-cw.ps1`](tools/README.md) and count the file types; long but little guesswork |
