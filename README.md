@@ -62,7 +62,7 @@ gta5-under-the-hood/
 
 ## Status
 
-93 of 107 research topics have a first-pass guide, plus a [step-by-step modding path](modding/README.md) for beginners, the Online guides, the DLC inventory and the scripting guides. The [roadmap](ROADMAP.md) lists every topic, what's done, and where to begin. Highlights so far:
+94 of 107 research topics have a first-pass guide, plus a [step-by-step modding path](modding/README.md) for beginners, the Online guides, the DLC inventory and the scripting guides. The [roadmap](ROADMAP.md) lists every topic, what's done, and where to begin. Highlights so far:
 
 - [Inside freemode](docs/online/07-freemode.md): GTA Online's 1.47-million-line main script, its state machines and ~180 systems.
 - [Story flow](docs/gameplay/missions/story-flow.md) and [mission anatomy](docs/gameplay/missions/mission-anatomy.md): how story missions unlock and how every mission script is built.
@@ -75,6 +75,7 @@ gta5-under-the-hood/
 - Audio: [how audio is organised](docs/audio/how-audio-is-organised.md) and [speech and dialogue](docs/audio/speech-and-dialogue.md).
 - AI: [perception and events](docs/ai/perception-and-events.md), [navigation](docs/ai/navigation.md), [driving](docs/ai/driving.md), [police and services](docs/ai/police-and-services.md), [ambient life](docs/ai/ambient-life.md), [AI cost](docs/ai/ai-cost-and-lod.md).
 - Tools: the read-only [research tools](tools/README.md), including the update-check tool that shows what a game update changed and which of a mod's assets it removed.
+- Ideas: an [ideas list](modding/ideas.md) of 22 story-mode mods the research shows are possible, each linked to its guide.
 
 ## Ground rules
 

@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **93 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **94 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -79,6 +79,7 @@ Every research topic, its status, and what is left to find out. **93 of 107 topi
 | R9.3 | [Music and radio](/docs/audio/music-and-radio.md) (first pass): the radio stations in the audio game data and their names, hidden interior stations, 1,547 mission music events, how scripts tune, lock and duck the radio, and how music is added or replaced |
 | R11 | [Surviving game updates](/docs/core/surviving-updates.md): what an update breaks, the update-day checklist, rules for update-proof code, how to find risky code in a mod |
 | R11.2 | [Update-check tool](/tools/README.md) (first pass): `tools/update-check.ps1` snapshots the game version, archives and DLC packs, diffs against an older snapshot, and checks a mod's asset names against 485,852 archive file names |
+| R12.3 | [Ideas list](/modding/ideas.md) (first pass): 22 story-mode mod ideas from the finished guides, each with what it touches, its guide and a size (proposals awaiting the maintainer's review before any becomes a roadmap topic) |
 | R12.4 | [Languages for modding](/scripting/languages.md): what to learn for which kind of mod, and in what order |
 | R12.6 | [Modding path](/modding/README.md): from nothing to a first data edit and a first C#, Lua and C++ mod, debugging, and releasing a mod safely |
 | R13.1 | [Rendering, visual settings and LOD](/docs/rendering/rendering-and-visual-settings.md) (first pass): the deferred pipeline at a high level, visualsettings.dat's 1,144 values by group, LOD lights (250, 750, 2,500 m; 200 ymaps), distant lights, LOD distances and scale, and the rendering natives scripts use |
@@ -297,7 +298,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | ID | Topic | What to find out | Size | Status |
 | --- | --- | --- | --- | --- |
 | R12.1 | **Mod-builder's cookbook** | One page per kind of mod (spawning and AI, missions, menus, shops, vehicles and handling, weapons, world and map, UI and HUD, audio): which systems it touches, the natives and data files to use, the traps, a minimal working pattern. | L | Open |
-| R12.3 | **Ideas list** | Mods that the research shows are possible and worth building, each with a size estimate, added to the roadmaps after review with the user. | M | Open |
+| R12.3 | **Ideas list** | Mods that the research shows are possible and worth building, each with a size estimate, added to the roadmaps after review with the user. | M | **Done** (first pass): [guide](/modding/ideas.md) |
 | R12.4 | **Languages for modding GTA V** | Which language does what (C# with ScriptHookVDotNet, C++ with ScriptHookV, Lua, the XML and meta data formats, ini files, and the rarer ones: JavaScript, ActionScript for scaleform, PowerShell and bash for tooling), with a learning path for beginners. Written for the public research repo (`docs/PORTABILITY_PLAN.md`). | M | **Done** (first pass): [guide](/scripting/languages.md) |
 | R12.6 | **Modding path for beginners** | A guided path from nothing to a first working mod: how mods load, the tools needed (linked, never uploaded), installing and checking ScriptHookV and SHVDN, a first data edit, a first C#, Lua and C++ mod, debugging, and how to release a mod safely. | M | **Done** (first pass): [modding path](/modding/README.md) |
 
