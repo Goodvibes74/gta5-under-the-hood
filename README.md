@@ -79,15 +79,15 @@ gta5-under-the-hood/
 
 ## Large jobs: pick one
 
-The topics still open are all large (a week or more each). They are listed easiest first, by how much of the groundwork the finished guides already cover. Pick one, claim it as [CONTRIBUTING.md](CONTRIBUTING.md) explains (an issue titled with its ID), and work on it in its own branch. Details for each are in the [roadmap](ROADMAP.md).
+The topics still open are all large (a week or more each). They are listed easiest first, by how much of the groundwork the finished guides already cover. **Jobs 1 to 5 are the priority jobs**: start with these. Pick one, claim it as [CONTRIBUTING.md](CONTRIBUTING.md) explains (an issue titled with its ID), and work on it in its own branch. Details for each are in the [roadmap](ROADMAP.md).
 
 | # | Job | Why it's at this place |
 | ---: | --- | --- |
-| 1 | **R3.7 Wanted level and police** | Dispatch and searching are already done ([police and services](docs/ai/police-and-services.md)); what's left is how crimes are detected and reported, from data files that are easy to extract |
-| 2 | **R17.6 Driving AI** | [Driving](docs/ai/driving.md) and [navigation](docs/ai/navigation.md) cover cars and roads; what's left is helicopter, plane and boat AI, chases and escorts |
-| 3 | **R17.1 The AI architecture** | Mostly ties the finished AI guides together, plus counts on the task system |
-| 4 | **R0.7 Archive and data file atlas** | Mechanical: list every archive with [`rpf-cw.ps1`](tools/README.md) and count the file types; long but little guesswork |
-| 5 | **R12.1 Mod-builder's cookbook** | No new research: one page per kind of mod, written from the existing guides |
+| 1 | **R3.7 Wanted level and police** (priority) | Dispatch and searching are already done ([police and services](docs/ai/police-and-services.md)); what's left is how crimes are detected and reported, from data files that are easy to extract |
+| 2 | **R17.6 Driving AI** (priority) | [Driving](docs/ai/driving.md) and [navigation](docs/ai/navigation.md) cover cars and roads; what's left is helicopter, plane and boat AI, chases and escorts |
+| 3 | **R17.1 The AI architecture** (priority) | Mostly ties the finished AI guides together, plus counts on the task system |
+| 4 | **R0.7 Archive and data file atlas** (priority) | Mechanical: list every archive with [`rpf-cw.ps1`](tools/README.md) and count the file types; long but little guesswork |
+| 5 | **R12.1 Mod-builder's cookbook** (priority) | No new research: one page per kind of mod, written from the existing guides |
 | 6 | **R5.5 Minigames and activities** | About 15 separate scripts to read; launchers and completion are already mapped |
 | 7 | **R13.4 Animation** | Animation natives are easy to count; clip and move-network files are binary with little tooling |
 | 8 | **R17.10 How Rockstar's scripts drive AI** | Pattern hunting inside the largest mission and heist scripts |

@@ -8,6 +8,7 @@ Every research topic, its status, and what is left to find out. **95 of 107 topi
 
 - **New to this?** Want to make a mod first? Follow the [modding path](/modding/README.md). Want to research? Read [getting started](/docs/00-getting-started/README.md), then one finished guide in an area you like (for example [mission anatomy](/docs/gameplay/missions/mission-anatomy.md) or [vehicle handling](/docs/physics/vehicle-handling.md)) to see how a topic is written up.
 - **Good first topics** (S or M, mostly data files, no deep script reading): R2.6 time and weather, R3.8 health and arrest, R9.3 music and radio, R13.2 timecycles, R14.4 text and names, R8.3 text labels, R18.6 Windows and drivers.
+- **Priority jobs** (large, easiest first): R3.7 wanted level and police, R17.6 driving AI, R17.1 the AI architecture, R0.7 the archive and data file atlas, R12.1 the mod-builder's cookbook. The full list of large jobs is in the [README](/README.md#large-jobs-pick-one).
 - **Topics that unblock others:** R0.8 the native namespace map, R0.7 the data file atlas, R17.1 the AI architecture.
 - **Second passes:** every finished guide ends with an "Open questions" table. Each row is a ready-made small task.
 
@@ -121,7 +122,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R0.4 | **Global variable map** | Which global blocks exist, which script registers each (`standard_global_init`, `globals_fmmc_struct_registration`, `tunables_registration`), and what the big blocks hold (player data, tunables, flow flags). Read only. | L | **Done** (first pass): [guide](/docs/core/global-map.md) |
 | R0.5 | **Script launch graph** | Who starts whom (`REQUEST_SCRIPT` and `START_NEW_SCRIPT` with stack sizes), and the script brains placed in the world (`ambient*.ipl`, `scriptbrains` data), drawn as one graph for story and one for Online. | M | **Done** (first pass): [guide](/scripting/script-launch-graph.md) |
 | R0.6 | **Research toolkit guide** | Update guide 5 with the new tools and a "how to research a new topic in an hour" checklist. | S | **Done** (first pass): [guide](/docs/00-getting-started/research-tools.md) |
-| R0.7 | **Archive and data file atlas** | List every archive (root, `update/`, all 89 DLC packs) and every file type inside them with counts (`.meta`, `.ymt`, `.ytyp`, `.ymap`, `.ydr`, `.yft`, `.ytd`, `.ycd`, `.ynv`, `.awc`, `.gfx`, `.gxt2`, `.cut`, `.rel`, ...), what each type is, which engine system reads it, and which topic covers it. The data-side twin of the script catalog. | L | Open |
+| R0.7 | **Archive and data file atlas** | List every archive (root, `update/`, all 89 DLC packs) and every file type inside them with counts (`.meta`, `.ymt`, `.ytyp`, `.ymap`, `.ydr`, `.yft`, `.ytd`, `.ycd`, `.ynv`, `.awc`, `.gfx`, `.gxt2`, `.cut`, `.rel`, ...), what each type is, which engine system reads it, and which topic covers it. The data-side twin of the script catalog. | L | Open (**priority**) |
 | R0.8 | **Native namespace coverage map** | Every native namespace (about 40) with its size, how many scripts use it, and which topic explains it, so no engine API family is left unread. | S | **Done** (first pass): [guide](/scripting/native-namespace-map.md) |
 
 ## R1. Engine runtime: how the game runs scripts and data
@@ -158,7 +159,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R3.4 | **Flying** | Aircraft and helicopter flight model, landing gear, countermeasures, parachuting and skydiving, the flight-school skill. | M | **Done** (first pass): [guide](/docs/gameplay/player/flying.md) |
 | R3.5 | **Swimming and diving** | Stamina and breath, underwater rules, scuba gear, boats and submarines. | S | **Done** (first pass): [guide](/docs/gameplay/player/swimming-and-diving.md) |
 | R3.6 | **Player skills and abilities** | Stamina, shooting, strength, stealth, flying, driving, lung capacity (story stats vs Online stats), special abilities, and how stats change the mechanics above. | M | **Done** (first pass): [guide](/docs/gameplay/player/skills-and-abilities.md) |
-| R3.7 | **Wanted level and police** | How crimes are detected and reported, wanted level rules, dispatch (`dispatch.meta`, service types), police tactics, how police overhaul mods replace each piece. | L | Open |
+| R3.7 | **Wanted level and police** | How crimes are detected and reported, wanted level rules, dispatch (`dispatch.meta`, service types), police tactics, how police overhaul mods replace each piece. | L | Open (**priority**) |
 | R3.8 | **Health, armour, death and arrest** | Health and armour values, regeneration, injury, how death and arrest are handled (respawn controller, hospitals, police stations). | S | **Done** (first pass): [guide](/docs/gameplay/player/health-armour-death.md) |
 | R3.9 | **Economy and pickups** | Money, prices, ATMs, robberies, pickups and collectables, story-mode stock market (`stock_controller`). | M | **Done** (first pass): [guide](/docs/gameplay/economy/economy-and-pickups.md) |
 
@@ -270,12 +271,12 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 
 | ID | Topic | What to find out | Size | Status |
 | --- | --- | --- | --- | --- |
-| R17.1 | **The AI architecture** | How a ped's behaviour is put together: the task system (task tree, primary and secondary tasks, priorities), how scripts give tasks (`TASK_*`, sequences, `SET_BLOCKING_OF_NON_TEMPORARY_EVENTS`), what runs when no script is in charge. | L | Open |
+| R17.1 | **The AI architecture** | How a ped's behaviour is put together: the task system (task tree, primary and secondary tasks, priorities), how scripts give tasks (`TASK_*`, sequences, `SET_BLOCKING_OF_NON_TEMPORARY_EVENTS`), what runs when no script is in charge. | L | Open (**priority**) |
 | R17.2 | **Perception and events** | How peds see and hear (ranges, cones, `SET_PED_SEEING_RANGE`, hearing), the event system (gunshots, explosions, "shocking events", dead bodies), how events turn into reactions, how scripts block or add events. | M | **Done** (first pass): [guide](/docs/ai/perception-and-events.md) |
 | R17.3 | **Decisions and personalities** | Ped personalities and decision makers in the data files, combat behaviour (`combatbehaviour.meta`), combat attributes and ranges, flee and cower rules, bravery, what AI mods change. | M | **Done** (first pass): [guide](/docs/ai/decisions-and-personalities.md) |
 | R17.4 | **Relationships and groups** | Relationship groups (`relationships.dat`, `ADD_RELATIONSHIP_GROUP`), how gangs, cops and civilians treat each other and the player, player groups, followers and formations, bodyguards. | M | **Done** (first pass): [guide](/docs/ai/relationships-and-groups.md) |
 | R17.5 | **Navigation and pathfinding** | Navmeshes (`.ynv`), how peds plan routes on foot, climbing, cover points, doors, interiors; why peds get stuck; navmesh streaming around the player. | M | **Done** (first pass): [guide](/docs/ai/navigation.md) |
-| R17.6 | **Driving AI** | Vehicle path nodes, driving tasks and styles (flags), traffic behaviour, chases and escorts, races, flying AI (helicopters, planes), boat AI. Extends R3.3. | L | Open |
+| R17.6 | **Driving AI** | Vehicle path nodes, driving tasks and styles (flags), traffic behaviour, chases and escorts, races, flying AI (helicopters, planes), boat AI. Extends R3.3. | L | Open (**priority**) |
 | R17.7 | **Police and service AI** | Dispatch, cop search and chase behaviour, roadblocks, ambulances and fire trucks, and how police mods replace each part. Extends R3.7. | M | **Done** (first pass): [guide](/docs/ai/police-and-services.md) |
 | R17.8 | **Ambient life** | Wandering, scenarios, ambient speech and reactions, ped conversations, animals, how the population AI is thinned out with distance. Extends R4.2. | M | **Done** (first pass): [guide](/docs/ai/ambient-life.md) |
 | R17.9 | **AI cost and level of detail** | How many peds can run full AI, low-detail peds and "dummy" vehicles far from the player, what AI costs per frame on a low-end PC, safe limits for spawning mods. | M | **Done** (first pass): [guide](/docs/ai/ai-cost-and-lod.md) |
@@ -298,7 +299,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 
 | ID | Topic | What to find out | Size | Status |
 | --- | --- | --- | --- | --- |
-| R12.1 | **Mod-builder's cookbook** | One page per kind of mod (spawning and AI, missions, menus, shops, vehicles and handling, weapons, world and map, UI and HUD, audio): which systems it touches, the natives and data files to use, the traps, a minimal working pattern. | L | Open |
+| R12.1 | **Mod-builder's cookbook** | One page per kind of mod (spawning and AI, missions, menus, shops, vehicles and handling, weapons, world and map, UI and HUD, audio): which systems it touches, the natives and data files to use, the traps, a minimal working pattern. | L | Open (**priority**) |
 | R12.3 | **Ideas list** | Mods that the research shows are possible and worth building, each with a size estimate, added to the roadmaps after review with the user. | M | **Done** (first pass): [guide](/modding/ideas.md) |
 | R12.4 | **Languages for modding GTA V** | Which language does what (C# with ScriptHookVDotNet, C++ with ScriptHookV, Lua, the XML and meta data formats, ini files, and the rarer ones: JavaScript, ActionScript for scaleform, PowerShell and bash for tooling), with a learning path for beginners. Written for the public research repo (`docs/PORTABILITY_PLAN.md`). | M | **Done** (first pass): [guide](/scripting/languages.md) |
 | R12.6 | **Modding path for beginners** | A guided path from nothing to a first working mod: how mods load, the tools needed (linked, never uploaded), installing and checking ScriptHookV and SHVDN, a first data edit, a first C#, Lua and C++ mod, debugging, and how to release a mod safely. | M | **Done** (first pass): [modding path](/modding/README.md) |
