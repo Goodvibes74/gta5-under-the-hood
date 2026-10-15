@@ -10,7 +10,7 @@ How story missions unlock, how a mission script is built, side content, activiti
 | R5.1 | **The mission flow** | **Done** (first pass): [guide](/docs/gameplay/missions/story-flow.md) |
 | R5.2 | **Anatomy of a story mission** | **Done** (first pass): [guide](/docs/gameplay/missions/mission-anatomy.md) |
 | R5.4 | **Strangers, freaks and side content** | **Done** (first pass): [guide](/docs/gameplay/missions/strangers-and-freaks.md) |
-| R5.5 | **Minigames and activities** | Open (**priority**) |
+| R5.5 | **Minigames and activities** | **Done** (first pass): [guide](/docs/gameplay/missions/minigames-and-activities.md) |
 | R5.6 | **Cutscenes and dialogue** | **Done** (first pass): [guide](/docs/gameplay/missions/cutscenes-and-dialogue.md) |
 | R5.8 | **Replay, director mode and the Rockstar Editor** | **Done** (first pass): [guide](/docs/gameplay/missions/replay-director-and-editor.md) |
 

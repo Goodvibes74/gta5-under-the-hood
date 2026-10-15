@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **100 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **101 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -8,7 +8,7 @@ Every research topic, its status, and what is left to find out. **100 of 107 top
 
 - **New to this?** Want to make a mod first? Follow the [modding path](/modding/README.md). Want to research? Read [getting started](/docs/00-getting-started/README.md), then one finished guide in an area you like (for example [mission anatomy](/docs/gameplay/missions/mission-anatomy.md) or [vehicle handling](/docs/physics/vehicle-handling.md)) to see how a topic is written up.
 - **Good first topics** (S or M, mostly data files, no deep script reading): R2.6 time and weather, R3.8 health and arrest, R9.3 music and radio, R13.2 timecycles, R14.4 text and names, R8.3 text labels, R18.6 Windows and drivers.
-- **Priority jobs:** every open large topic, easiest first: R5.5, R13.4, R17.10, R7.6, R7.7, R7.8, R7.9. Why each is placed where it is: [README](/README.md#large-jobs-priority-pick-one).
+- **Priority jobs:** every open large topic, easiest first: R13.4, R17.10, R7.6, R7.7, R7.8, R7.9. Why each is placed where it is: [README](/README.md#large-jobs-priority-pick-one).
 - **Topics that unblock others:** R0.8 the native namespace map, R0.7 the data file atlas, R17.1 the AI architecture.
 - **Second passes:** every finished guide ends with an "Open questions" table. Each row is a ready-made small task.
 
@@ -57,6 +57,7 @@ Every research topic, its status, and what is left to find out. **100 of 107 top
 | R5.2 | [Mission anatomy](/docs/gameplay/missions/mission-anatomy.md): stages, checkpoints, retry, fail, pass, cleanup |
 | R5.3 | [Completion, autosave and achievements](/docs/core/completion-and-autosave.md) (first pass): the 320 completion entries and the weights that make 100% (missions 55%, minigames 10%, strangers 10%, random events 5% with 14 needed, misc 15% and 5%), the controller and its stats and summary, the autosave controller and 269 scripts that request saves, the save menu, achievements |
 | R5.4 | [Strangers, freaks and side content](/docs/gameplay/missions/strangers-and-freaks.md) (first pass): the 99 world-point and 47 object script brains and what they start, the 32 launchers, the 63-entry strangers-and-freaks table in 18 strands (positions, blips, hour windows, follow-up scripts), and randomchar_controller |
+| R5.5 | [Minigames and activities](/docs/gameplay/missions/minigames-and-activities.md) (first pass): the shared activity launcher and the candidate slot, the game's 19 activity ids, the 42 minigame completion entries, every fee and payout found (golf, range, races, tennis, darts, taxi, towing, trafficking, hunting score table), odd-job pay as property income, and the five rampages |
 | R5.6 | [Cutscenes and dialogue](/docs/gameplay/missions/cutscenes-and-dialogue.md): the cutscene sequence, dressing actors, exit states, Online `MP_1` handles, how every conversation is built |
 | R5.7 | [Story systems in an Online mode](/docs/online/story-systems-in-online-mode.md): what keeps running, force cleanup and brain sets, `shop_controller` and its shops |
 | R5.8 | [Replay, director mode and the Rockstar Editor](/docs/gameplay/missions/replay-director-and-editor.md) (first pass): the mission replay vs the clip recorder vs director mode, how missions mark and block recording, director mode menus, 27 travel locations and rules, the editor patch |
@@ -187,7 +188,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R5.2 | **Anatomy of a story mission** | Take three missions of different kinds (`armenian1`, a heist such as `jewelry_heist`, `trevor1`) and document the stages, checkpoints, fail conditions, cutscenes, dialogue and cleanup: the template every mission follows. | L | **Done** (first pass): [guide](/docs/gameplay/missions/mission-anatomy.md) |
 | R5.3 | **Saves, completion and autosave** | `autosave_controller`, `savegame_bed`, `save_anywhere`, `completionpercentage_controller`, `achievement_controller`. | M | **Done** (first pass): [guide](/docs/core/completion-and-autosave.md) |
 | R5.4 | **Strangers, freaks and side content** | Launchers (`launcher_*`), random characters (`randomchar_controller`), side strands (Epsilon, Paparazzo, Nigel, Tonya, Barry ...), how they appear and unlock. | M | **Done** (first pass): [guide](/docs/gameplay/missions/strangers-and-freaks.md) |
-| R5.5 | **Minigames and activities** | Golf, tennis, darts, yoga, triathlon, races, flight school, shooting range, strip club, taxi, towing, trafficking, hunting, rampages, arcade machines; how each is launched, scored and rewarded. | L | Open (**priority**) |
+| R5.5 | **Minigames and activities** | Golf, tennis, darts, yoga, triathlon, races, flight school, shooting range, strip club, taxi, towing, trafficking, hunting, rampages, arcade machines; how each is launched, scored and rewarded. | L | **Done** (first pass): [guide](/docs/gameplay/missions/minigames-and-activities.md) |
 | R5.6 | **Cutscenes and dialogue** | How cutscenes are loaded, staged (entities, crew, vehicles), skipped and cleaned up; the dialogue system (`CREATE_CONVERSATION`, subtitle and speech files); `cutscene_test` and debug scripts as documentation. | M | **Done** (first pass): [guide](/docs/gameplay/missions/cutscenes-and-dialogue.md) |
 | R5.7 | **Systems that clash with Online mode** | Phone (`cellphone_controller`), shops (`shop_controller`, clothes, barber, tattoo, guns), friends and family scenes, emails and texts, ATMs, restricted areas: which ones must be stopped or replaced in our Online mode. | M | **Done** (first pass): [guide](/docs/online/story-systems-in-online-mode.md) |
 | R5.8 | **Replay, director mode and the Rockstar Editor** | `replay_controller`, `director_mode`, what NoEditorRestrictions changes. | S | **Done** (first pass): [guide](/docs/gameplay/missions/replay-director-and-editor.md) |
