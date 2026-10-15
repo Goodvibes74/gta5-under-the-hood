@@ -68,6 +68,7 @@ Every research topic, its status, and what is left to find out. **75 of 107 topi
 | R7.5 | [The job lobby](/docs/online/job-lobby.md) (first pass): `fmmc_launcher`'s 11 per-player states, the 270-entry activity table (in 266 scripts), job type to controller (89,500 stack, 21 start values), the corona screens, the helper scripts |
 | R7.10 | [Interaction menu, phone and apps](/docs/online/interaction-menu-phone-apps.md) (first pass): the two phone scripts and the app table, the 38 app scripts, the interaction menu's areas, the contact services, the 23 websites in one scaleform movie |
 | R7.11 | [Rockstar Creator internals](/docs/online/creator-internals.md) (first pass): the hub and the 8 creator scripts (4 empty on PC), the fly camera and 2,400 m placement ray, the 1,883-entry prop catalogue in 59 libraries, 106 placement checks and the limits (200 props, 20 dynamic, about 100 checkpoints, 40 removed map objects), bone-based track snapping, the column JSON and its upload, how a race rebuilds the props |
+| R8.2 | [Scaleform movies](/docs/ui/scaleform.md) (first pass): 1,080 .gfx files (788 names) in seven archives and what each group draws, the 121 movies scripts load and the busiest ones, the load-call-draw-release pattern with counts, the 690 method names |
 | R8.3 | [Text labels](/docs/ui/text-labels.md) (first pass): the `.gxt2` format, 610 text blocks and 278,749 labels (plus 186,875 from DLC), 13 languages, mission text slots, the text commands scripts use, and how a mod shows or adds text |
 | R9.3 | [Music and radio](/docs/audio/music-and-radio.md) (first pass): the radio stations in the audio game data and their names, hidden interior stations, 1,547 mission music events, how scripts tune, lock and duck the radio, and how music is added or replaced |
 | R11 | [Surviving game updates](/docs/core/surviving-updates.md): what an update breaks, the update-day checklist, rules for update-proof code, how to find risky code in a mod |
@@ -197,7 +198,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | ID | Topic | What to find out | Size | Status |
 | --- | --- | --- | --- | --- |
 | R8.1 | **Pause and Online menus** | How the frontend menus are built and filled by scripts (`pausemenu`, `pausemenu_multiplayer`), layout data. | M | Open |
-| R8.2 | **Scaleform movies** | The `.gfx` movies, how scripts call them (`BEGIN_SCALEFORM_MOVIE_METHOD`), which movie draws what. | M | Open |
+| R8.2 | **Scaleform movies** | The `.gfx` movies, how scripts call them (`BEGIN_SCALEFORM_MOVIE_METHOD`), which movie draws what. | M | **Done** (first pass): [guide](/docs/ui/scaleform.md) |
 | R8.3 | **Text labels** | GXT2 text files, label naming, how to add your own text. | S | **Done** (first pass): [guide](/docs/ui/text-labels.md) |
 | R8.4 | **HUD, colours and blips** | HUD components, the colour table, blip sprites and how the radar and map draw them. | M | Open |
 | R8.5 | **Server-backed Online screens** | Which Online screens wait for the server, and what they need to run locally. | M | Open |

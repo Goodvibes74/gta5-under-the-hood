@@ -12,7 +12,7 @@ How the phone and the Online interaction menu are built: the two phone scripts a
 - **Three phone skins** are scaleform movies: `cellphone_ifruit`, `cellphone_badger` and `cellphone_prologue` (plus the Facade phone, **Known**); the phone itself is placed with `SET_MOBILE_PHONE_POSITION` (697 scripts) and calls checked with `IS_MOBILE_PHONE_CALL_ONGOING` (821).
 - **The interaction menu (`am_pi_menu`, 13.1 MB) is started by `freemode`** (stack 9,800). Its top items include Quick GPS, Health and Ammo, Appearance, Walk Style, Vehicle Access, Request Personal Vehicle, Snacks, Impromptu Race and the organisation and club menus (Start an Organization, SecuroServ CEO, Start a Motorcycle Club, Ghost Organization, Retire).
 - **Contact services (`am_contact_requests`)** are the phone's Online requests: vehicle delivery, transport, backup helicopter, boat pick-up, bounties (Lester), business and property shortcuts. It checks money first (`NETWORK_CAN_SPEND_MONEY`, 81 calls) and uses the on-screen keyboard for names (`DISPLAY_ONSCREEN_KEYBOARD`, 40).
-- **The internet** is one scaleform movie (`web_browser`) driven by `appinternet`; its `WWW_` labels name 23 sites (Maze Bank, Warstock, the Diamond Casino, Eyefind, Arena War, Dynasty 8, Docktease, BAWSAQ, Legendary Motorsport, Southern San Andreas Super Autos, Lifeinvader, Epsilon Program ...).
+- **The internet** is the `web_browser` movie, driven by `appinternet`, which loads one movie per website (86 `www_*.gfx` files, [Scaleform movies](/docs/ui/scaleform.md)); the script's own `WWW_` labels name 23 sites (Maze Bank, Warstock, the Diamond Casino, Eyefind, Arena War, Dynasty 8, Docktease, BAWSAQ, Legendary Motorsport, Southern San Andreas Super Autos, Lifeinvader, Epsilon Program ...).
 
 ## 21.2 The phone
 
@@ -59,13 +59,13 @@ Activities chosen here are started through the same activity table as the job lo
 
 ## 21.5 The internet
 
-`appinternet` draws every site in one scaleform movie, `web_browser` (with `font_lib_web`). The `WWW_` labels in the script name 23 sites (**Verified**, counted by prefix): Maze Bank (23 labels), Warstock (12), The Diamond Casino & Resort (8), Eyefind (8), Arena War (5), The Children of the Mountain, Prix Luxury Real Estate, Epsilon Program, Dynasty 8 Real Estate, Dynasty 8 Executive Realty, Docktease, BAWSAQ (4 each), The Reality Mill, LCN (3 each), Southern San Andreas Super Autos, P and M Cycles, Lifeinvader, Legendary Motorsport, I Will Survive It All, Elitas Travel, Benny's Original Motorworks (2 each), My Divine Within and the bank (1 each). Buying through a site in Online goes through the server's transactions ([stats and tunables](/docs/online/stats-and-tunables.md)).
+`appinternet` runs the `web_browser` movie (with `font_lib_web`), and each site is its own movie in `scaleform_web.rpf` (86 `www_*.gfx` files, [Scaleform movies](/docs/ui/scaleform.md)). The `WWW_` labels in the script name 23 sites (**Verified**, counted by prefix): Maze Bank (23 labels), Warstock (12), The Diamond Casino & Resort (8), Eyefind (8), Arena War (5), The Children of the Mountain, Prix Luxury Real Estate, Epsilon Program, Dynasty 8 Real Estate, Dynasty 8 Executive Realty, Docktease, BAWSAQ (4 each), The Reality Mill, LCN (3 each), Southern San Andreas Super Autos, P and M Cycles, Lifeinvader, Legendary Motorsport, I Will Survive It All, Elitas Travel, Benny's Original Motorworks (2 each), My Divine Within and the bank (1 each). Buying through a site in Online goes through the server's transactions ([stats and tunables](/docs/online/stats-and-tunables.md)).
 
 ## 21.6 What this means for modders
 
 - **Story-mode phone apps can be replaced by script:** the phone starts whatever script name is in a slot. A mod that writes its own script name into a spare slot's entry would start its own app, but the table's address changes every build; most phone mods instead draw their own menu when the phone is out.
 - **Use the menu frameworks for mod menus** ([menus and UI](/scripting/menus-and-ui.md)) rather than `am_pi_menu`, which depends on Online.
-- **The websites are one scaleform movie,** so new pages need a modified `web_browser` movie (R8.2).
+- **Each website is its own `.gfx` movie,** so a new or changed page means a new or edited `www_*.gfx` ([Scaleform movies](/docs/ui/scaleform.md)).
 - **Online requests spend server money.** Don't call `am_contact_requests` paths or the money natives; Online only.
 
 ## 21.7 Open questions
