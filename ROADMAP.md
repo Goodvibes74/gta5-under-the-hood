@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **62 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **63 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -38,6 +38,7 @@ Every research topic, its status, and what is left to find out. **62 of 106 topi
 | R3.6 | [Player skills and abilities](/docs/gameplay/player/skills-and-abilities.md) (first pass): the seven 0-100 skill stats per character, the ranges the engine maps them to, the 17 special ability entries with their numbers, and how missions control the abilities |
 | R3.8 | [Health, armour, death and arrest](/docs/gameplay/player/health-armour-death.md) (first pass): the 10 health configs and their thresholds (the 100 floor), which peds use which, armour and Ammu-Nation, regeneration, the death and arrest checks, how scripts change health |
 | R4.1 | [Population](/docs/entities/spawning/population.md) (first pass): 1,321 zone boxes, 1,310 zones with their schedules and attributes, the 116 population schedules (12 slots, weekday only), ped and vehicle groups, and the natives that thin, empty or reshape the crowd |
+| R4.2 | [Scenarios and ambient life](/docs/entities/spawning/scenarios.md) (first pass): 111,898 scenario points in 145 regions by type, the scenario definitions, groups and blocking areas, and how scripts start scenarios and ambient speech |
 | R4.3 | [Vehicle generators and traffic](/docs/entities/spawning/vehicle-generators-and-traffic.md) (first pass): 22,506 car generators in the map files, the 116 population schedules and 55 vehicle groups, trains (2 of 12 tracks run), the 14 dispatch services, how scripts thin and block traffic |
 | R4.4 | [Random events](/docs/world/random-events.md) (first pass): the 38 `re_*` scripts, the 105 world brain points in `ambient.ipl` (12 without a script), the shared launch check (speed, height, 150-second gap, unlocks, cooldowns, character), and how to block or add events |
 | R4.5 | [Interiors and IPLs](/docs/world/interiors-and-ipls.md) (first pass): 386 interiors with rooms, portals and 2,150 entity sets, 353 IPL names scripts request, how interiors are pinned, versioned and culled, and how Online interiors open offline |
@@ -135,7 +136,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | ID | Topic | What to find out | Size | Status |
 | --- | --- | --- | --- | --- |
 | R4.1 | **Population** | Population zones and groups (`popzone`, `popgroups.ymt`, `popcycle`), ped and vehicle density, how density changes by time and area, what AI mods change. | M | **Done** (first pass): [guide](/docs/entities/spawning/population.md) |
-| R4.2 | **Scenarios and ambient life** | Scenario points and types (sitting, smoking, guards), ambient animations, ambient speech. | M | Open |
+| R4.2 | **Scenarios and ambient life** | Scenario points and types (sitting, smoking, guards), ambient animations, ambient speech. | M | **Done** (first pass): [guide](/docs/entities/spawning/scenarios.md) |
 | R4.3 | **Vehicle generators and traffic** | Parked car generators, traffic spawning, emergency vehicles, trains, boats and planes on routes. | S | **Done** (first pass): [guide](/docs/entities/spawning/vehicle-generators-and-traffic.md) |
 | R4.4 | **Random events** (`re_*`, 41 scripts) | How random events are picked and launched, their conditions and cooldowns, what each one does. | M | **Done** (first pass): [guide](/docs/world/random-events.md) |
 | R4.5 | **Interiors and IPLs** | Which interiors exist, how they load (IPLs, entity sets, `interiorproxies`), the Online interiors and how to open them offline. | M | **Done** (first pass): [guide](/docs/world/interiors-and-ipls.md) |
