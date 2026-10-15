@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **48 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **49 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -54,6 +54,7 @@ Every research topic, its status, and what is left to find out. **48 of 106 topi
 | R12.4 | [Languages for modding](/scripting/languages.md): what to learn for which kind of mod, and in what order |
 | R12.6 | [Modding path](/modding/README.md): from nothing to a first data edit and a first C#, Lua and C++ mod, debugging, and releasing a mod safely |
 | R13.2 | [Timecycle and post effects](/docs/rendering/timecycle-and-post-effects.md) (first pass): weather timecycles, the 1,072 timecycle modifiers and what they change, the 252 animated post effects as stacks of modifiers, how scripts set and clear them |
+| R13.3 | [Particles and decals](/docs/rendering/particles-and-decals.md) (first pass): the 364 particle dictionaries and their quality copies, the effect data files, the 259 decal definitions, the pool and per-script limits, how scripts load, start and clean up effects and decals |
 | R18.1 | [Measuring performance](/docs/performance/measuring.md): frame time and hitches, the game's 5-scene benchmark script, frame timing from a script, reading a session, Windows tools |
 | R18.2 | [Graphics settings](/docs/performance/graphics-settings.md) (first pass): every `settings.xml` key with its range, cost and values for weak, mid and strong PCs; hidden keys; `commandline.txt` |
 | R18.3 | [Streaming, memory and video memory](/docs/performance/memory-and-vram.md) (first pass): heap, pools, streaming buffers, shared video memory and Windows commit; why more mods means paging freezes on a shared-memory laptop |
@@ -199,7 +200,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | --- | --- | --- | --- | --- |
 | R13.1 | **Rendering and graphics settings** | The render pipeline at a high level, what each graphics setting costs on the UHD 620, LOD and draw distance, `visualsettings.dat`, what vremastered changes. | M | Open |
 | R13.2 | **Timecycle and post effects** | Timecycle files and modifiers, screen effects (`ANIMPOSTFX_*`), how scripts change the look of a scene. | S | **Done** (first pass): [guide](/docs/rendering/timecycle-and-post-effects.md) |
-| R13.3 | **Particles and decals** | Particle assets (`ptfx`), how scripts start effects, decals and their limits (what the DecalsLimit patch changes). | S | Open |
+| R13.3 | **Particles and decals** | Particle assets (`ptfx`), how scripts start effects, decals and their limits (what the DecalsLimit patch changes). | S | **Done** (first pass): [guide](/docs/rendering/particles-and-decals.md) |
 | R13.4 | **Animation** | Clip dictionaries (`.ycd`), how tasks play animations, synchronized scenes, move networks, facial animation, scenario animations. | L | Open |
 | R13.5 | **Cameras** | Script cameras, the gameplay camera, cinematic cameras, camera shakes, how cutscenes and the phone camera use them. | S | Open |
 
