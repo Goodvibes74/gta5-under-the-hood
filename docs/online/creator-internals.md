@@ -41,16 +41,30 @@ The hub is entered through the transition states 32 to 38 (`START_CREATOR_PRE_LA
 
 | Job type (`Global_4718592`) | Subtype (`.f_2`) | Script started |
 | --- | --- | --- |
-| 2 or 8 (races) | any | `FM_Race_Creator` |
+| 2 or 8 (races, parachuting) | any | `FM_Race_Creator` |
 | 1 (deathmatch) | any | `FM_Deathmatch_Creator` |
 | 3 (survival) | any | `FM_Survival_Creator` |
-| 0, 4, 6 or 31 (mission family) | 5 | `FM_LTS_Creator` |
+| 0, 4, 6 or 31 (missions, gang attacks and two unnamed types) | 5 | `FM_LTS_Creator` |
 | same | 11 | `Basic_Creator` (empty) |
 | same | 12 | `Freemode_Creator` (empty) |
 | same | 14 | `Public_Mission_Creator` |
 | same | anything else | `FM_Capture_Creator` |
 
-Each script is requested, started with 64,500 words of stack and marked no longer needed; `FM_Main_Menu` then waits until the creator thread is gone and shows the menu again. Which job a number means beyond the script it starts (for example what type 8 is) is **Known** at best and left open (12.12).
+Each script is requested, started with 64,500 words of stack and marked no longer needed; `FM_Main_Menu` then waits until the creator thread is gone and shows the menu again.
+
+**What the numbers mean** (**Verified**, the job-name function `func_874` in `creator`, labels resolved to American text):
+
+| Type | Name | Subtypes |
+| ---: | --- | --- |
+| 0 (and 9) | Mission | 1 Heist (finale), 4 Versus Mission or Adversary Mode, 5 Last Team Standing, 6 Capture (Contend, GTA, Hold or Raid, chosen by option bits 20 to 23), 7 Heist setup, 14 Mission Creator Content, otherwise Mission |
+| 1 | Deathmatch | 0 Deathmatch, 1 Team Deathmatch, 2 Vehicle Deathmatch, 3 King of the Hill, 4 Team King of the Hill |
+| 2 | Race | 0/1 Land, 2/3 Sea, 4/5 Air, 6/7 Stunt, 10/11 On Foot, 12/13 Bike, 18/19 Target Assault, 24/25 Open Wheel, 26 Pursuit, 27 Street, 30/31 Drift, 32 Drag |
+| 3 | Survival | |
+| 6 | Gang Attack | |
+| 7 | Last Team Standing | |
+| 8 | Parachuting | |
+
+Race subtypes come in pairs; what separates the even and odd number of a pair is not settled (12.13). Any job can also be named "Arena War" when its Arena check passes. Types 4 and 31, which `FM_Main_Menu` also sends to the mission creators, have no name in this function.
 
 The hub's own menu text (**Verified**, labels): "Create a custom Land, Sea or Air Race", "Create a custom GTA Deathmatch", "Create a Capture", "Create a Last Team Standing", "Create a custom Survival mode", "Create a custom King of the Hill mode", "Create a Mission", "Create a Race in the Arena", "Create a Deathmatch in the Arena" and "Load Creation". Four tutorials are tracked by the stats `mpply_done_race_creator_tut`, `_dm_`, `_surv_` and `_koth_creator_tut`.
 
@@ -195,12 +209,18 @@ The creator also loads map variants to build in: 47 `REQUEST_IPL` calls in the r
 
 When a race starts, `fm_race_controler` loops over the prop list in the globals (**Verified**, `func_12540` and `func_12541`). For each prop:
 
-1. `CREATE_OBJECT(model, position, isNetwork = false, ...)`: **static props are local objects**, created separately on every player's machine, not synced over the network. Dynamic props are *probably* created elsewhere as networked objects (12.13).
+1. `CREATE_OBJECT(model, position, isNetwork = false, ...)`: **static props are local objects**, created separately on every player's machine, not synced over the network. Dynamic props are different (below).
 2. `SET_ENTITY_COORDS`, then `SET_ENTITY_ROTATION` (order 2) or `SET_ENTITY_HEADING`.
 3. Unless the prop is meant to be shot: `SET_OBJECT_TARGETTABLE(false)`, `SET_ENTITY_INVINCIBLE`, `SET_ENTITY_PROOFS` (all), `FREEZE_ENTITY_POSITION`, `SET_OBJECT_ALLOW_LOW_LOD_BUOYANCY`.
 4. Draw distance at least 150 m (`SET_ENTITY_LOD_DIST`), then the prop's own `pLODDist` if set; `SET_WAIT_FOR_COLLISIONS_BEFORE_PROBE`.
 5. In some race types the prop is moved out of interior rooms (`CLEAR_ROOM_FOR_ENTITY`, `SET_IS_EXTERIOR_ONLY`).
 6. Colour, speed and slow pads, sounds as in 12.8. Flares, one firework model and one bush have their collision turned off.
+
+**Dynamic props** (the `dprop` section, which has the same `loc`, `vRot`, `head` and `model` columns plus `obref`) are shared by everyone (**Verified**, `func_12303` and `func_886`):
+
+- Only the **script host** creates them (`NETWORK_IS_HOST_OF_THIS_SCRIPT`), and only while `CAN_REGISTER_MISSION_OBJECTS(1)` allows one more mission object.
+- Each is created with networking on and converted to a network ID (`OBJ_TO_NET`), so every player sees the same object move, break or explode. A player changes one only when they have control of it (`NETWORK_HAS_CONTROL_OF_NETWORK_ID`).
+- Seven breakable models from the Specialist races (`sr_prop_sr_boxpile_01` to `_03`, `sr_prop_sr_track_wall`, `sr_prop_sr_tube_wall`, `sr_mp_spec_races_ammu_sign`, `ar_prop_ar_ammu_sign`) are rebuilt: when one has been broken and the host is within 200 m, the host deletes it, clears 10 m around it and creates it again.
 
 Checkpoints are drawn with `CREATE_CHECKPOINT` (14 calls in the controller) from the `chl`/`chh` arrays.
 
@@ -216,13 +236,13 @@ Checkpoints are drawn with `CREATE_CHECKPOINT` (14 calls in the controller) from
 
 | Question | Where it goes |
 | --- | --- |
-| What job types 4, 6, 8 and 31 are, and the full subtype list | Second pass, with `creator` and the [job lobby](/ROADMAP.md) (R7.5) |
+| What job types 4 and 31 are, and what the even and odd race subtypes of a pair mean | Next pass, with the [job lobby](/ROADMAP.md) (R7.5) |
 | The prop limit in `public_mission_creator`, which uses its own messages (`PMCE_F_P`, `PMCE_F_D`) | Second pass |
 | The second dynamic list (library 15), library 39 and the other libraries with no text: hidden, Rockstar-only, or text in a pack not read | Second pass, with every DLC text block |
 | What `GET_USED_CREATOR_BUDGET` measures inside the engine | Reverse engineering, R1.5 (streaming) |
 | Which jobs are saved by the full prop writer and which by the sparse one (`func_189`) | Second pass, compare with the 16 local classic missions ([R7.4](/file-formats/ugc-json.md)) |
 | Meaning of `chs`, `chs2`, `chpp` and the `cpbs1` to `cpbs3` bits | Second pass, read the race controller's checkpoint code |
-| How dynamic props (`dprop`) are created and synced in the race | Second pass, `fm_race_controler` |
+| How the deathmatch and mission controllers create dynamic props (the race is in 12.11) | Next pass |
 | The other creators' own placement (spawn points, enemy waves, capture objects) | Second pass per creator |
 
 ## 12.14 Test cards (story mode, a script mod)
