@@ -7,7 +7,7 @@ The pause and Online menus, scaleform movies, text labels, the HUD, blips and th
 | ID | Topic | Status |
 | --- | --- | --- |
 | R8.1 | **Pause and Online menus** | Open |
-| R8.2 | **Scaleform movies** | Open |
+| R8.2 | **Scaleform movies** | **Done** (first pass): [guide](/docs/ui/scaleform.md) |
 | R8.3 | **Text labels** | **Done** (first pass): [guide](/docs/ui/text-labels.md) |
 | R8.4 | **HUD, colours and blips** | Open |
 | R8.5 | **Server-backed Online screens** | Open |
