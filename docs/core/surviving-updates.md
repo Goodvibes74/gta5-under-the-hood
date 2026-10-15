@@ -12,6 +12,7 @@ What a Rockstar update to GTA V breaks in a modded install, how to see it the sa
 - **Names usually survive:** natives (by hash), script names, data file fields, model and animation names, text labels, IPL names. Mods built on names and natives rarely need more than a rebuild.
 - **New content arrives as new DLC packs** that must be listed in `dlclist.xml`. If the mods folder has its own old `update.rpf`, its old `dlclist.xml` hides the new packs.
 - **Rules that survive updates:** natives over memory, names over numbers, data in add-on packs instead of edited base archives, timeouts and logging whenever an asset is missing, and a written list of every game asset a mod depends on.
+- **A working install is cheap to protect:** an update replaces mainly `GTA5.exe`, `update.rpf` and `update2.rpf` (about 2.5 GB together) and adds DLC packs. Back those up per build, delay updates in the launcher, and play story mode offline; rolling back is copying them back (8.3a).
 
 ## 8.2 What breaks, and how you notice
 
@@ -37,6 +38,42 @@ What a Rockstar update to GTA V breaks in a modded install, how to see it the sa
 5. **Check every mod's assumptions.** Memory offsets and patterns first, then globals, then asset names (8.5 shows what to look for). Update the decompile to the new build's commit before trusting any number from it.
 6. **Start the game with logging on** and read every mod's log for timeouts and missing assets.
 7. **Re-test every mod in game** (a written checklist helps) before calling the install fixed.
+
+## 8.3a Protecting a working install (R11.3)
+
+How to keep a working modded install from being changed under you, and how to go back if it is. Sizes are from a build 1.0.3725.0 Legacy install (**Verified**); what the launchers do is **Known** (their settings pages), and so is which files an update replaces.
+
+**What an update touches** (**Known**, and checkable with [`update-check.ps1`](/tools/README.md) before and after):
+
+| File or folder | Size on build 3725 | Changed by updates |
+| --- | ---: | --- |
+| `GTA5.exe` | 47 MB | Every update |
+| `update\update.rpf` | 1.9 GB | Almost every update |
+| `update\update2.rpf` | 0.5 GB | Most updates (scripts and text) |
+| `update\x64\dlcpacks\` | about 64 GB in 89 packs | New packs added; old ones occasionally patched |
+| Root `x64a.rpf` to `x64w.rpf`, `common.rpf` | about 37 GB | Rarely |
+| `x64\audio\` | about 17 GB | Rarely |
+
+**A last-known-good backup** therefore needs only about 2.5 GB: `GTA5.exe`, `update\update.rpf`, `update\update2.rpf`, plus a list of the DLC pack folders (the update-check snapshot records it), plus your `mods` folder and script mods (`scripts\`, `.asi` files, their `.ini` files). Copy them to a folder named after the build, and take an update-check snapshot at the same time.
+
+**Delaying an update** (**Known**; menu names may differ by launcher version):
+
+| Launcher | Setting |
+| --- | --- |
+| Steam | Game Properties → Updates → "Only update this game when I launch it"; start Steam in offline mode to play without the check |
+| Epic Games | Library → the game → Manage → turn off Auto-update |
+| Rockstar Games Launcher | No per-game switch for automatic updates; start it in offline mode (available after one online sign-in) to skip the check |
+
+Story mode runs on an older build in offline mode; GTA Online always needs the current build, which is one more reason never to take a modded install online.
+
+**Rolling back** (**Known**):
+
+1. Close the game and the launcher.
+2. Copy the backed-up `GTA5.exe`, `update.rpf` and `update2.rpf` over the new ones.
+3. Remove DLC pack folders that weren't in the backup's snapshot (or leave them; an older `dlclist.xml` in the restored `update.rpf` simply doesn't load them).
+4. Start in offline mode so the launcher doesn't download the update again, and check `ScriptHookV.log` reports the old build.
+
+**Keep the vanilla copies too.** If you edit `update.rpf` through the mods folder ([archives and content](/docs/core/archives-and-content.md)), back up the vanilla archive of each build separately, so a future rebuild (8.3, step 3) starts from Rockstar's file, not from an edited one.
 
 ## 8.4 Rules for code that survives updates
 
@@ -77,12 +114,10 @@ It doesn't check text labels, natives or coordinates (they aren't files); for na
 - **Keep a last-known-good backup** of `GTA5.exe`, `update\` and the mods folder (R11.3), so an unwanted update can be rolled back.
 - **Rebuild a stale `update.rpf` before the next update forces it:** start from the current vanilla archive and re-apply only the deliberate edits, so the old data files it carries are gone.
 - **Replace memory writes with natives** while the mod still works; it is much harder after an update has broken it.
-- **Build the update-check tool** (R11.2): compare `GTA5.exe`'s version with the last known one, re-run the DLC scan and script dump, diff against the saved baseline, and check the asset dependency list.
+- **Run the update-check tool** ([`update-check.ps1`](/tools/README.md), 8.5a) before and after every update, and keep a backup per build (8.3a).
 
 ## 8.7 Open questions
 
 | Question | Where it goes |
 | --- | --- |
-| The asset dependency list for mods (every name they use) | R11.2, as a data file plus the update-check tool |
-| How to stop Steam or the Rockstar launcher from updating, and roll back | R11.3 |
 | Which natives changed between 3725 and 3889 | R11.1 second pass, with the native crossmap (R0.3) |

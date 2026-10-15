@@ -16,7 +16,7 @@ The game loop and the scripts that keep it running, memory pools and limits, str
 | R5.3 | **Saves, completion and autosave** | **Done** (first pass): [guide](/docs/core/completion-and-autosave.md) |
 | R11.1 | **What an update breaks** | **Done** (first pass): [guide](/docs/core/surviving-updates.md) |
 | R11.2 | **An update-check tool** | **Done** (first pass): [tool](/tools/README.md), [guide](/docs/core/surviving-updates.md) |
-| R11.3 | **Protecting a working install** | **Started**: [guide](/docs/core/surviving-updates.md) |
+| R11.3 | **Protecting a working install** | **Done** (first pass): [guide](/docs/core/surviving-updates.md#83a-protecting-a-working-install-r113) |
 | R11.4 | **Update-day checklist** | **Done** (first pass): [guide](/docs/core/surviving-updates.md) |
 | R11.5 | **Rules for update-proof code** | **Done** (first pass): [guide](/docs/core/surviving-updates.md) |
 
