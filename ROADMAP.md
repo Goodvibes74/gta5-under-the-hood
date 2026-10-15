@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **68 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **69 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -23,6 +23,7 @@ Every research topic, its status, and what is left to find out. **68 of 107 topi
 | R1.4 | [Memory, pools and limits](/docs/core/memory-and-pools.md): the pools in `gameconfig.xml`, the 256-ped and 300-vehicle limits, what limit adjusters change, how scripts stay under the limits |
 | R1.5 | [Streaming](/docs/core/streaming.md): request, check, release for every asset type; Rockstar polls instead of blocking; load scenes, focus, streaming volumes, SRLs, IPLs, interiors, LOD and population budgets |
 | R1.6 | [Archives and the content system](/docs/core/archives-and-content.md): RPFs, `dlclist.xml`, `setup2.xml` orders, `content.xml` file types, the mods folder, add-on vs replacement |
+| R1.7 | [Saves](/docs/core/saves.md) (first pass): the 38,592-value story save registered field by field (1,062 registrations, named sections and sizes), save version 1.7 and size checks, the other save blocks, when saves are written, Online's separate block, where mods keep their data |
 | R0.3 | [Native usage](/scripting/native-usage.md): the native tables hold NativeDB hashes; 1,013 scripts import 6,575 natives and make 12.3 million calls, with a [per-namespace index](/scripting/native-usage-index.md) of who uses what |
 | R1.3 | [Natives as the engine API](/scripting/natives-engine-api.md) (first pass): seven kinds of native and how to call each, the request/release and create/cleanup contracts with counts, guards (1 call in 21 is an existence or death check), slow and risky natives, what each family can't do |
 | R0.5 (started) | [Script launch graph](/scripting/script-launch-graph.md): 679 "who starts whom" edges |
@@ -108,7 +109,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R1.4 | **Memory, pools and limits** | `gameconfig.xml` pool sizes, what HeapAdjuster, PackfileLimitAdjuster, PoolManager and the other adjusters change, how many peds, vehicles, objects and blips the game can hold, and what happens at the limit. | M | **Done** (first pass): [guide](/docs/core/memory-and-pools.md) |
 | R1.5 | **Streaming** | How models, textures, maps (`ymap`, `ytyp`), interiors and IPLs are requested and loaded, LOD distances, `REQUEST_MODEL` timing, load scenes, why pop-in happens and how to preload. | M | **Done** (first pass): [guide](/docs/core/streaming.md) |
 | R1.6 | **Archives and the content system** | How RPFs, `dlclist.xml`, each pack's `content.xml` and `setup2.xml` decide what loads, the order DLC data overrides base data, what OpenIV's `Mods/` folder does, and how add-on vs replacement mods work. | S | **Done** (first pass): [guide](/docs/core/archives-and-content.md) |
-| R1.7 | **Saves** | The story save file (what is in it, how scripts write it, autosave), and how Online stores the same data in stats. Where mods should keep their own saves. | M | Open |
+| R1.7 | **Saves** | The story save file (what is in it, how scripts write it, autosave), and how Online stores the same data in stats. Where mods should keep their own saves. | M | **Done** (first pass): [guide](/docs/core/saves.md) |
 
 ## R2. Physics and simulation
 
