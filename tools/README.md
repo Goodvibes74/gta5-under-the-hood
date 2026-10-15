@@ -15,6 +15,7 @@ Nothing here is bundled: install each dependency from its official page. No tool
 | `script-launch-graph.ps1` | PowerShell; **Git** on the PATH; a **clone of the community decompiled-scripts repository with its history** (pass `-Repo` and the `-Commit` of your build). Inline C# for the `joaat` hash | Git: https://git-scm.com/downloads. Decompile: search GitHub for `GTA-V-Decompiled-Scripts` |
 | `native-usage.ps1` | PowerShell; **Git** on the PATH; the same **decompile clone** as `script-launch-graph.ps1`; NativeDB's **`natives.json`** saved by hand. Inline C# helper (`Add-Type`) | NativeDB data: https://github.com/alloc8or/gta5-nativedb-data |
 | `ugc-keys.ps1` | PowerShell 5.1 (uses .NET's built-in JSON reader); `.ugc` files extracted first with `rpf-cw.ps1` | Nothing to install |
+| `update-check.ps1` | PowerShell only for the snapshot and comparison; **CodeWalker** (as for `rpf-cw.ps1`) only for the `-Deps` name check | Nothing to install for the snapshot; CodeWalker from its release page |
 | `check-system.ps1` | **Windows** only (reads the registry and `System32`); PowerShell 5.1 or 7. `-Dev` also checks for the .NET SDK and Visual Studio | Nothing to install; it tells you what's missing and where to get it ([system requirements](/docs/00-getting-started/system-requirements.md)) |
 
 None of the tools needs administrator rights, an internet connection, or the game running (closed is safest for the archive tools).
@@ -95,12 +96,19 @@ powershell -ExecutionPolicy Bypass -File tools\check-system.ps1 -Dev   # also th
 
 **How it works.** Checks, read-only, for each thing outside the game folder that the game and its mods need: the DirectX June 2010 files in `System32`, the Visual C++ runtimes, .NET Framework 4.8 (from the registry), Media Foundation, and with `-Dev` the .NET SDK and Visual Studio. The list comes from the import tables of the game and mod files ([system requirements](/docs/00-getting-started/system-requirements.md)). Prints OK or MISSING with what to install. Changes nothing.
 
+### `update-check.ps1`: what an update changed and what a mod lost
+
+```powershell
+powershell -ExecutionPolicy Bypass -File tools\update-check.ps1 -Out "$env:TEMP\updcheck" [-Baseline <old snapshot.json>] [-Deps <deps.txt>]
+```
+
+**How it works.** Reads `GTA5.exe`'s file version, the size and date of `common.rpf`, `update.rpf`, `update2.rpf` and every `x64*.rpf`, and the folder names in `update\x64\dlcpacks`, and writes them to `snapshot.json`. With `-Baseline` it compares against an older snapshot and writes `changes.txt` (version, changed or new archives, added or removed packs). With `-Deps` (a text file with one asset name per line: model, animation dictionary, IPL or ymap, scaleform movie, texture dictionary ...) it opens every archive with CodeWalker, collects all file names (with and without extension) and writes `missing.txt` with the names that no longer exist. Read-only; never writes to the game folder. The snapshot takes a second; the name check about 15 seconds for 486,000 file names on build 3725. Text labels, natives and coordinates aren't files, so they aren't checked. **Made by** Claude Code for R11.2; guide: [surviving updates](/docs/core/surviving-updates.md).
+
 ## Ideas for new tools (good contributions)
 
 | Tool | What it would do | Roadmap |
 | --- | --- | --- |
 | Global map | List which script registers each global block and what fields the big blocks hold | R0.4 |
-| Update check | Compare a new build with the last one: version, DLC packs, script sizes, data files | R11.2 |
 | Data-file differ | Compare two copies of a `.meta` file entry by entry (by name), the way the vehicle and weapon guides compared modded files | R0.7 |
 
 ## Adding a tool

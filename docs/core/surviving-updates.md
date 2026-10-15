@@ -62,6 +62,16 @@ What to search a mod's source for, from highest to lowest risk (found by scannin
 
 A quick search for `FindPattern`, `Memory`, `ReadInt`, `WriteInt`, `Marshal`, `IntPtr` and `+ 0x` in a mod's source finds nearly all memory access.
 
+## 8.5a The update-check tool (R11.2)
+
+[`tools/update-check.ps1`](/tools/README.md) automates the first steps of the checklist (**Verified** on build 1.0.3725.0):
+
+1. **Before an update** (or right after installing a working setup), take a snapshot: `update-check.ps1 -Game <game folder> -Out <folder>`. It saves `snapshot.json` with the `GTA5.exe` version, the size and date of the main archives (26 on build 3725) and the DLC pack list (89).
+2. **After an update,** run it again with `-Baseline <old snapshot.json>`. `changes.txt` lists a new version, changed archives and added or removed packs.
+3. **For each mod,** keep its asset dependency list (8.4) as a text file, one name per line (models, animation dictionaries, IPLs and ymaps, scaleform movies, texture dictionaries), and run with `-Deps <file>`. The tool opens every archive with CodeWalker and writes the names that no longer exist to `missing.txt`. On build 3725 it checks against 485,852 archive file names in about 12 seconds.
+
+It doesn't check text labels, natives or coordinates (they aren't files); for natives, compare the mod's list with NativeDB's build numbers, and for scripts re-run the native and launch-graph tools.
+
 ## 8.6 What this means for modders
 
 - **Keep a last-known-good backup** of `GTA5.exe`, `update\` and the mods folder (R11.3), so an unwanted update can be rolled back.
