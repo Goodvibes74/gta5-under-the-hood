@@ -6,7 +6,7 @@ Sound banks, speech and dialogue, music and radio.
 
 | ID | Topic | Status |
 | --- | --- | --- |
-| R9.1 | **How audio is organised** | Open |
+| R9.1 | **How audio is organised** | **Done** (first pass): [guide](/docs/audio/how-audio-is-organised.md) |
 | R9.2 | **Speech and dialogue** | Open |
 | R9.3 | **Music and radio** | **Done** (first pass): [guide](/docs/audio/music-and-radio.md) |
 
