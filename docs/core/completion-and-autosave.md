@@ -22,7 +22,7 @@ How story mode decides when to save and how much of the game you've done: the 32
 | `completionpercentage_controller` | `initial` | Adds up completion, writes the stats, builds the summary |
 | `autosave_controller` | `main`, `director_mode` (1,424) | Performs autosaves |
 | `save_anywhere` | `main` | The save menu |
-| `savegame_bed` | not in the launch graph (*probable*: a world brain on the safehouse beds) | Sleep to save |
+| `savegame_bed` | a world-point brain (40 m), [strangers and freaks](/docs/gameplay/missions/strangers-and-freaks.md) | Sleep to save |
 | `achievement_controller` | `main_persistent` (1,424) | Watches achievement conditions |
 
 ## 16.3 The completion list
