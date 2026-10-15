@@ -66,6 +66,7 @@ Every research topic, its status, and what is left to find out. **74 of 107 topi
 | R7.3 | [Stats, tunables and the server's role](/docs/online/stats-and-tunables.md) (first pass): 17,928 stats by type and family, 28,502 tunables with their defaults in one script, transactions, what an offline mode must replace |
 | R7.4 | [UGC mission files](/file-formats/ugc-json.md) (first pass): 16,500 key paths in the 1,001 local files, content files vs classic creator missions, and which scripts read each |
 | R7.5 | [The job lobby](/docs/online/job-lobby.md) (first pass): `fmmc_launcher`'s 11 per-player states, the 270-entry activity table (in 266 scripts), job type to controller (89,500 stack, 21 start values), the corona screens, the helper scripts |
+| R7.10 | [Interaction menu, phone and apps](/docs/online/interaction-menu-phone-apps.md) (first pass): the two phone scripts and the app table, the 38 app scripts, the interaction menu's areas, the contact services, the 23 websites in one scaleform movie |
 | R7.11 | [Rockstar Creator internals](/docs/online/creator-internals.md) (first pass): the hub and the 8 creator scripts (4 empty on PC), the fly camera and 2,400 m placement ray, the 1,883-entry prop catalogue in 59 libraries, 106 placement checks and the limits (200 props, 20 dynamic, about 100 checkpoints, 40 removed map objects), bone-based track snapping, the column JSON and its upload, how a race rebuilds the props |
 | R8.3 | [Text labels](/docs/ui/text-labels.md) (first pass): the `.gxt2` format, 610 text blocks and 278,749 labels (plus 186,875 from DLC), 13 languages, mission text slots, the text commands scripts use, and how a mod shows or adds text |
 | R9.3 | [Music and radio](/docs/audio/music-and-radio.md) (first pass): the radio stations in the audio game data and their names, hidden interior stations, 1,547 mission music events, how scripts tune, lock and duck the radio, and how music is added or replaced |
@@ -188,7 +189,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R7.7 | **Organisations and businesses** | VIP, CEO and MC work (`gb_*`), the business loop (supplies, stock, sell), the business computers (`app*`). | L | Open |
 | R7.8 | **Heists** | Classic heists, Doomsday, Casino, Cayo Perico: planning boards, preps, finales, crew cuts. | L | Open |
 | R7.9 | **DLC storylines** | Each DLC's story arc, triggers, scripts, local vs cloud missions, cutscenes and contacts, and how to rebuild it here. | L | Open |
-| R7.10 | **Interaction menu, phone and apps** | `am_pi_menu`, the Online phone, contacts and requests (`am_contact_requests`), the internet sites. | M | Open |
+| R7.10 | **Interaction menu, phone and apps** | `am_pi_menu`, the Online phone, contacts and requests (`am_contact_requests`), the internet sites. | M | **Done** (first pass): [guide](/docs/online/interaction-menu-phone-apps.md) |
 | R7.11 | **Rockstar Creator internals** | How the content creator builds tracks and maps: the creator scripts and how they start, the camera and placement, the prop catalogue, placement checks and limits, snapping stunt track pieces, removing map objects, the saved format and upload, how a job rebuilds its props when played. | L | **Done** (first pass): [guide](/docs/online/creator-internals.md) |
 
 ## R8. The game's own UI
