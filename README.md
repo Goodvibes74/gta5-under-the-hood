@@ -62,7 +62,7 @@ gta5-under-the-hood/
 
 ## Status
 
-102 of 107 research topics have a first-pass guide, plus a [step-by-step modding path](modding/README.md) for beginners, the Online guides, the DLC inventory and the scripting guides. The [roadmap](ROADMAP.md) lists every topic, what's done, and where to begin. Highlights so far:
+103 of 107 research topics have a first-pass guide, plus a [step-by-step modding path](modding/README.md) for beginners, the Online guides, the DLC inventory and the scripting guides. The [roadmap](ROADMAP.md) lists every topic, what's done, and where to begin. Highlights so far:
 
 - [Inside freemode](docs/online/07-freemode.md): GTA Online's 1.47-million-line main script, its state machines and ~180 systems.
 - [Story flow](docs/gameplay/missions/story-flow.md) and [mission anatomy](docs/gameplay/missions/mission-anatomy.md): how story missions unlock and how every mission script is built.
@@ -90,7 +90,7 @@ The topics still open are all large (a week or more each). They are listed easie
 | 5 | **R12.1 Mod-builder's cookbook** (priority, **done**: [cookbook](modding/cookbook/README.md)) | No new research: one page per kind of mod, written from the existing guides |
 | 6 | **R5.5 Minigames and activities** (priority, **done**: [guide](docs/gameplay/missions/minigames-and-activities.md)) | About 15 separate scripts to read; launchers and completion are already mapped |
 | 7 | **R13.4 Animation** (priority, **done**: [guide](docs/rendering/animation.md)) | Animation natives are easy to count; clip and move-network files are binary with little tooling |
-| 8 | **R17.10 How Rockstar's scripts drive AI** (priority) | Pattern hunting inside the largest mission and heist scripts |
+| 8 | **R17.10 How Rockstar's scripts drive AI** (priority, **done**: [guide](docs/ai/script-ai-patterns.md)) | Pattern hunting inside the largest mission and heist scripts |
 | 9 | **R7.6 Properties** (priority) | Large Online property scripts and a property table to decode |
 | 10 | **R7.7 Organisations and businesses** (priority) | Many `gb_*` work scripts and the business computer apps |
 | 11 | **R7.8 Heists** (priority) | The heist controllers are among the biggest scripts; every heist differs |

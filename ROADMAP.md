@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **102 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **103 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -8,7 +8,7 @@ Every research topic, its status, and what is left to find out. **102 of 107 top
 
 - **New to this?** Want to make a mod first? Follow the [modding path](/modding/README.md). Want to research? Read [getting started](/docs/00-getting-started/README.md), then one finished guide in an area you like (for example [mission anatomy](/docs/gameplay/missions/mission-anatomy.md) or [vehicle handling](/docs/physics/vehicle-handling.md)) to see how a topic is written up.
 - **Good first topics** (S or M, mostly data files, no deep script reading): R2.6 time and weather, R3.8 health and arrest, R9.3 music and radio, R13.2 timecycles, R14.4 text and names, R8.3 text labels, R18.6 Windows and drivers.
-- **Priority jobs:** every open large topic, easiest first: R17.10, R7.6, R7.7, R7.8, R7.9. Why each is placed where it is: [README](/README.md#large-jobs-priority-pick-one).
+- **Priority jobs:** every open large topic, easiest first: R7.6, R7.7, R7.8, R7.9. Why each is placed where it is: [README](/README.md#large-jobs-priority-pick-one).
 - **Topics that unblock others:** R0.8 the native namespace map, R0.7 the data file atlas, R17.1 the AI architecture.
 - **Second passes:** every finished guide ends with an "Open questions" table. Each row is a ready-made small task.
 
@@ -108,6 +108,7 @@ Every research topic, its status, and what is left to find out. **102 of 107 top
 | R17.7 | [Police and service AI](/docs/ai/police-and-services.md) (first pass): crime-point thresholds, search radii and hiding times per star, units sent per wanted level, spawn delays and placement, the cop search helpers, emergency services, the police natives scripts use, and which pieces police mods replace |
 | R17.8 | [Ambient life](/docs/ai/ambient-life.md) (first pass): the ambient ped loop, the idle, look-at, wander, chat and animal task tunables, and how scripts thin, empty and release the crowd (counts) |
 | R17.9 | [AI cost and level of detail](/docs/ai/ai-cost-and-lod.md) (first pass): the AI pools and caps (MaxTotalPeds 200, 10 vehicle updates per frame), low-detail locomotion and timeslicing, the natives that force or relax updates, and proposed safe limits for spawning mods |
+| R17.10 | [How Rockstar's scripts drive AI](/docs/ai/script-ai-patterns.md) (first pass): a pattern library: the hostile ped recipe with counts, patrol routes (97 scripts, node scenarios and waits), stealth checks, the hostage event step by step, buddies and escorts, the 13-member heist crew table with cuts and stats, Online difficulty and survival wave scaling, and Online venue peds |
 | R18.1 | [Measuring performance](/docs/performance/measuring.md): frame time and hitches, the game's 5-scene benchmark script, frame timing from a script, reading a session, Windows tools |
 | R18.2 | [Graphics settings](/docs/performance/graphics-settings.md) (first pass): every `settings.xml` key with its range, cost and values for weak, mid and strong PCs; hidden keys; `commandline.txt` |
 | R18.3 | [Streaming, memory and video memory](/docs/performance/memory-and-vram.md) (first pass): heap, pools, streaming buffers, shared video memory and Windows commit; why more mods means paging freezes on a shared-memory laptop |
@@ -287,7 +288,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R17.7 | **Police and service AI** | Dispatch, cop search and chase behaviour, roadblocks, ambulances and fire trucks, and how police mods replace each part. Extends R3.7. | M | **Done** (first pass): [guide](/docs/ai/police-and-services.md) |
 | R17.8 | **Ambient life** | Wandering, scenarios, ambient speech and reactions, ped conversations, animals, how the population AI is thinned out with distance. Extends R4.2. | M | **Done** (first pass): [guide](/docs/ai/ambient-life.md) |
 | R17.9 | **AI cost and level of detail** | How many peds can run full AI, low-detail peds and "dummy" vehicles far from the player, what AI costs per frame on a low-end PC, safe limits for spawning mods. | M | **Done** (first pass): [guide](/docs/ai/ai-cost-and-lod.md) |
-| R17.10 | **How Rockstar's scripts drive AI** | Patterns from missions and Online content: enemy waves, guards and patrols, hostage and escort logic, AI in heists, the Online "fake player" peds. A pattern library for mod missions and AI players. | L | Open (**priority**) |
+| R17.10 | **How Rockstar's scripts drive AI** | Patterns from missions and Online content: enemy waves, guards and patrols, hostage and escort logic, AI in heists, the Online "fake player" peds. A pattern library for mod missions and AI players. | L | **Done** (first pass): [guide](/docs/ai/script-ai-patterns.md) |
 
 ## R18. Game optimization
 
