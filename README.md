@@ -32,6 +32,7 @@ The [modding path](modding/README.md) walks you through it step by step, from in
 | Write a mod | [Modding path](modding/README.md), [scripting](scripting/README.md) and [examples](examples/README.md) |
 | Look up a file format | [File formats](file-formats/README.md) |
 | Help | [Roadmap](ROADMAP.md) (pick an open topic), [CONTRIBUTING.md](CONTRIBUTING.md) |
+| Research the next pass | The "Open questions" table at the end of any guide ([why](#status)), then [CONTRIBUTING.md](CONTRIBUTING.md) |
 | Share a tool, site or trick that sped up your work | Add it to [tools and resources](docs/00-getting-started/toolbox.md#contributed-tools-and-resources) |
 
 ## What's inside
@@ -62,7 +63,11 @@ gta5-under-the-hood/
 
 ## Status
 
-All 107 research topics have a first-pass guide, plus a [step-by-step modding path](modding/README.md) for beginners, the Online guides, the DLC inventory and the scripting guides. The [roadmap](ROADMAP.md) lists every topic, what's done, and where to begin. Highlights so far:
+> **This is a first pass.** Every one of the 107 research topics has been worked through once, to map the ground: where each system lives, how it works, what a mod can change, and the numbers behind it. A first pass is not the last word. Some claims are still **Known** rather than **Verified**, some systems were only sampled, and few findings have been checked in game yet.
+>
+> **Nearly every guide ends with an "Open questions" table** (about 95 of them). Each row is a question the first pass found but couldn't settle, with where it should go next: a second pass of the same topic, another topic, or an in-game test. Taken together, those tables are the research agenda for the next passes, and they're the place to start if you want to go deeper into how the game works. Pick a row, claim it as [CONTRIBUTING.md](CONTRIBUTING.md) explains, answer it, and update the guide and its table.
+
+Alongside the 107 first-pass guides there's a [step-by-step modding path](modding/README.md) for beginners, the Online guides, the DLC inventory and the scripting guides. The [roadmap](ROADMAP.md) lists every topic, what's done, and where to begin. Highlights so far:
 
 - [Inside freemode](docs/online/07-freemode.md): GTA Online's 1.47-million-line main script, its state machines and ~180 systems.
 - [Story flow](docs/gameplay/missions/story-flow.md) and [mission anatomy](docs/gameplay/missions/mission-anatomy.md): how story missions unlock and how every mission script is built.
