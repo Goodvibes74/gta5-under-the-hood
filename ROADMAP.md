@@ -72,6 +72,7 @@ Every research topic, its status, and what is left to find out. **78 of 107 topi
 | R8.2 | [Scaleform movies](/docs/ui/scaleform.md) (first pass): 1,080 .gfx files (788 names) in seven archives and what each group draws, the 121 movies scripts load and the busiest ones, the load-call-draw-release pattern with counts, the 690 method names |
 | R8.3 | [Text labels](/docs/ui/text-labels.md) (first pass): the `.gxt2` format, 610 text blocks and 278,749 labels (plus 186,875 from DLC), 13 languages, mission text slots, the text commands scripts use, and how a mod shows or adds text |
 | R8.4 | [HUD, colours and blips](/docs/ui/hud-colours-blips.md) (first pass): the 54 HUD components and which ones scripts hide most, the 235-colour table (HD and CRT), the blip natives and the 191 sprites scripts set, the radar and interior maps |
+| R8.5 | [Server-backed Online screens](/docs/ui/server-backed-screens.md) (first pass): the seven server services behind the Online UI, server calls per screen for 16 scripts, how screens wait (spinners, warnings, guards), and what a local stand-in would need |
 | R9.3 | [Music and radio](/docs/audio/music-and-radio.md) (first pass): the radio stations in the audio game data and their names, hidden interior stations, 1,547 mission music events, how scripts tune, lock and duck the radio, and how music is added or replaced |
 | R11 | [Surviving game updates](/docs/core/surviving-updates.md): what an update breaks, the update-day checklist, rules for update-proof code, how to find risky code in a mod |
 | R12.4 | [Languages for modding](/scripting/languages.md): what to learn for which kind of mod, and in what order |
@@ -203,7 +204,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R8.2 | **Scaleform movies** | The `.gfx` movies, how scripts call them (`BEGIN_SCALEFORM_MOVIE_METHOD`), which movie draws what. | M | **Done** (first pass): [guide](/docs/ui/scaleform.md) |
 | R8.3 | **Text labels** | GXT2 text files, label naming, how to add your own text. | S | **Done** (first pass): [guide](/docs/ui/text-labels.md) |
 | R8.4 | **HUD, colours and blips** | HUD components, the colour table, blip sprites and how the radar and map draw them. | M | **Done** (first pass): [guide](/docs/ui/hud-colours-blips.md) |
-| R8.5 | **Server-backed Online screens** | Which Online screens wait for the server, and what they need to run locally. | M | Open |
+| R8.5 | **Server-backed Online screens** | Which Online screens wait for the server, and what they need to run locally. | M | **Done** (first pass): [guide](/docs/ui/server-backed-screens.md) |
 | R8.6 | **Story-mode UI** | Character wheel, stats and completion screens, phone apps. | M | Open |
 
 ## R9. Audio
