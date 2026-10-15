@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **45 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **46 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -48,6 +48,7 @@ Every research topic, its status, and what is left to find out. **45 of 106 topi
 | R7.2 | [Transitions and sessions](/docs/online/transitions-and-sessions.md) (first pass): `maintransition`'s 70 named states, the paths into freemode, the creator and back, session and server natives, what 382 scripts read |
 | R7.3 | [Stats, tunables and the server's role](/docs/online/stats-and-tunables.md) (first pass): 17,928 stats by type and family, 28,502 tunables with their defaults in one script, transactions, what an offline mode must replace |
 | R7.4 | [UGC mission files](/file-formats/ugc-json.md) (first pass): 16,500 key paths in the 1,001 local files, content files vs classic creator missions, and which scripts read each |
+| R8.3 | [Text labels](/docs/ui/text-labels.md) (first pass): the `.gxt2` format, 610 text blocks and 278,749 labels (plus 186,875 from DLC), 13 languages, mission text slots, the text commands scripts use, and how a mod shows or adds text |
 | R11 | [Surviving game updates](/docs/core/surviving-updates.md): what an update breaks, the update-day checklist, rules for update-proof code, how to find risky code in a mod |
 | R12.4 | [Languages for modding](/scripting/languages.md): what to learn for which kind of mod, and in what order |
 | R12.6 | [Modding path](/modding/README.md): from nothing to a first data edit and a first C#, Lua and C++ mod, debugging, and releasing a mod safely |
@@ -167,7 +168,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | --- | --- | --- | --- | --- |
 | R8.1 | **Pause and Online menus** | How the frontend menus are built and filled by scripts (`pausemenu`, `pausemenu_multiplayer`), layout data. | M | Open |
 | R8.2 | **Scaleform movies** | The `.gfx` movies, how scripts call them (`BEGIN_SCALEFORM_MOVIE_METHOD`), which movie draws what. | M | Open |
-| R8.3 | **Text labels** | GXT2 text files, label naming, how to add your own text. | S | Open |
+| R8.3 | **Text labels** | GXT2 text files, label naming, how to add your own text. | S | **Done** (first pass): [guide](/docs/ui/text-labels.md) |
 | R8.4 | **HUD, colours and blips** | HUD components, the colour table, blip sprites and how the radar and map draw them. | M | Open |
 | R8.5 | **Server-backed Online screens** | Which Online screens wait for the server, and what they need to run locally. | M | Open |
 | R8.6 | **Story-mode UI** | Character wheel, stats and completion screens, phone apps. | M | Open |
