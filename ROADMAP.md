@@ -89,6 +89,7 @@ Every research topic, its status, and what is left to find out. **85 of 107 topi
 | R14.3 | [Props, archetypes and doors](/docs/entities/objects/props-and-doors.md) (first pass): what an archetype holds, static, dynamic and breakable props, the 24 rayfire destruction objects named in scripts, the door system natives and doortuning.meta's 36 tunings and 94 model mappings |
 | R14.4 | [Text and names in content](/docs/entities/objects/text-and-names.md) (first pass): the name labels in `vehicles.meta` and `weapons.meta`, 879 vehicles checked against the text (4 unnamed), makers, weapons, how DLC packs register names, and what an add-on needs |
 | R15.1 | [Sessions and sync](/docs/online/sessions-and-sync.md) (first pass): network scripts and participants, host and player broadcast data with sizes (freemode's 32 × 880 block), networked entities, control and migration, mission entity budgets, script events, session types |
+| R15.2 | [Rockstar services](/docs/online/rockstar-services.md) (first pass): a census of the 12 service families (natives, calls, most widespread native), what each service does, the guards scripts check, and what happens when a service is missing |
 | R17.3 | [Decisions and personalities](/docs/ai/decisions-and-personalities.md) (first pass): the 95 ped personalities, the 18 bravery types and their flags, what makes Michael, Franklin and Trevor different, driving and agitation ranges, and how personality, decision maker, combat info and group fit together |
 | R17.4 | [Relationships and groups](/docs/ai/relationships-and-groups.md) (first pass): the 40 default groups and every rule in `relationships.dat`, model defaults, how missions add groups and set relationships (with the value counts), and player groups and formations |
 | R18.1 | [Measuring performance](/docs/performance/measuring.md): frame time and hitches, the game's 5-scene benchmark script, frame timing from a script, reading a session, Windows tools |
@@ -255,7 +256,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | ID | Topic | What to find out | Size | Status |
 | --- | --- | --- | --- | --- |
 | R15.1 | **Sessions and sync** | Network objects, ownership and migration, broadcast data, events (`NETWORK_*` natives) at the engine level. | M | **Done** (first pass): [guide](/docs/online/sessions-and-sync.md) |
-| R15.2 | **Rockstar services** | Social Club and ROS, cloud files, UGC queries, leaderboards, presence, the store and transactions: which natives talk to them and what fails when they're absent. | M | Open |
+| R15.2 | **Rockstar services** | Social Club and ROS, cloud files, UGC queries, leaderboards, presence, the store and transactions: which natives talk to them and what fails when they're absent. | M | **Done** (first pass): [guide](/docs/online/rockstar-services.md) |
 
 ## R17. NPC AI: how peds and drivers think
 
