@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **64 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **65 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -38,6 +38,7 @@ Every research topic, its status, and what is left to find out. **64 of 106 topi
 | R3.5 | [Swimming and diving](/docs/gameplay/player/swimming-and-diving.md) (first pass): breath 10 to 40 s and stamina 10 to 90 s, drowning, scuba gear and its 5 models, dive heights, the 60-second sea edge, how missions remove the breath limit, boat and sub hooks |
 | R3.6 | [Player skills and abilities](/docs/gameplay/player/skills-and-abilities.md) (first pass): the seven 0-100 skill stats per character, the ranges the engine maps them to, the 17 special ability entries with their numbers, and how missions control the abilities |
 | R3.8 | [Health, armour, death and arrest](/docs/gameplay/player/health-armour-death.md) (first pass): the 10 health configs and their thresholds (the 100 floor), which peds use which, armour and Ammu-Nation, regeneration, the death and arrest checks, how scripts change health |
+| R3.9 | [Economy and pickups](/docs/gameplay/economy/economy-and-pickups.md) (first pass): story cash stats and spending categories, the 92 pickup types and 74 rewards, the pickups story mode places, collectables, robberies, ATMs and the stock market scripts, and the pickup natives |
 | R4.1 | [Population](/docs/entities/spawning/population.md) (first pass): 1,321 zone boxes, 1,310 zones with their schedules and attributes, the 116 population schedules (12 slots, weekday only), ped and vehicle groups, and the natives that thin, empty or reshape the crowd |
 | R4.2 | [Scenarios and ambient life](/docs/entities/spawning/scenarios.md) (first pass): 111,898 scenario points in 145 regions by type, the scenario definitions, groups and blocking areas, and how scripts start scenarios and ambient speech |
 | R4.3 | [Vehicle generators and traffic](/docs/entities/spawning/vehicle-generators-and-traffic.md) (first pass): 22,506 car generators in the map files, the 116 population schedules and 55 vehicle groups, trains (2 of 12 tracks run), the 14 dispatch services, how scripts thin and block traffic |
@@ -130,7 +131,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R3.6 | **Player skills and abilities** | Stamina, shooting, strength, stealth, flying, driving, lung capacity (story stats vs Online stats), special abilities, and how stats change the mechanics above. | M | **Done** (first pass): [guide](/docs/gameplay/player/skills-and-abilities.md) |
 | R3.7 | **Wanted level and police** | How crimes are detected and reported, wanted level rules, dispatch (`dispatch.meta`, service types), police tactics, how police overhaul mods replace each piece. | L | Open |
 | R3.8 | **Health, armour, death and arrest** | Health and armour values, regeneration, injury, how death and arrest are handled (respawn controller, hospitals, police stations). | S | **Done** (first pass): [guide](/docs/gameplay/player/health-armour-death.md) |
-| R3.9 | **Economy and pickups** | Money, prices, ATMs, robberies, pickups and collectables, story-mode stock market (`stock_controller`). | M | Open |
+| R3.9 | **Economy and pickups** | Money, prices, ATMs, robberies, pickups and collectables, story-mode stock market (`stock_controller`). | M | **Done** (first pass): [guide](/docs/gameplay/economy/economy-and-pickups.md) |
 
 ## R4. The world
 

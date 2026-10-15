@@ -32,7 +32,6 @@ Where GTA V's water is (the ocean, lakes, rivers and pools as rectangles in `wat
 | 30.0 m | 77 | The Alamo Sea and other low inland water |
 | 196.4 m | 17 | The Land Act reservoir (above the Vinewood Hills) |
 | 160.3 m | 8 | The Vinewood reservoir |
-| Others | 0 | Pools, rivers and ponds use other heights |
 
 Pools in back gardens are mostly not in `water.xml`; they are drawn and simulated as part of their buildings (**Known**).
 
