@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **69 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **70 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -49,6 +49,7 @@ Every research topic, its status, and what is left to find out. **69 of 107 topi
 | R4.6 | [Map data](/docs/world/map-data.md) (first pass): 19,362 ymaps and 1.69 million entity placements by source, the other map file types, LOD naming, how packs and patches add or replace map parts, IPLs, and the restricted-area scripts |
 | R5.1 | [Story flow](/docs/gameplay/missions/story-flow.md): the 94-mission table and the flow program |
 | R5.2 | [Mission anatomy](/docs/gameplay/missions/mission-anatomy.md): stages, checkpoints, retry, fail, pass, cleanup |
+| R5.3 | [Completion, autosave and achievements](/docs/core/completion-and-autosave.md) (first pass): the 320 completion entries and the weights that make 100% (missions 55%, minigames 10%, strangers 10%, random events 5% with 14 needed, misc 15% and 5%), the controller and its stats and summary, the autosave controller and 269 scripts that request saves, the save menu, achievements |
 | R5.6 | [Cutscenes and dialogue](/docs/gameplay/missions/cutscenes-and-dialogue.md): the cutscene sequence, dressing actors, exit states, Online `MP_1` handles, how every conversation is built |
 | R5.7 | [Story systems in an Online mode](/docs/online/story-systems-in-online-mode.md): what keeps running, force cleanup and brain sets, `shop_controller` and its shops |
 | R5.8 | [Replay, director mode and the Rockstar Editor](/docs/gameplay/missions/replay-director-and-editor.md) (first pass): the mission replay vs the clip recorder vs director mode, how missions mark and block recording, director mode menus, 27 travel locations and rules, the editor patch |
@@ -154,7 +155,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | --- | --- | --- | --- | --- |
 | R5.1 | **The mission flow** | `flow_controller`, mission triggers (`mission_triggerer_a` to `d`), flow flags, how missions unlock, strands (Michael, Franklin, Trevor, heists), `mission_repeat_controller`. | L | **Done** (first pass): [guide](/docs/gameplay/missions/story-flow.md) |
 | R5.2 | **Anatomy of a story mission** | Take three missions of different kinds (`armenian1`, a heist such as `jewelry_heist`, `trevor1`) and document the stages, checkpoints, fail conditions, cutscenes, dialogue and cleanup: the template every mission follows. | L | **Done** (first pass): [guide](/docs/gameplay/missions/mission-anatomy.md) |
-| R5.3 | **Saves, completion and autosave** | `autosave_controller`, `savegame_bed`, `save_anywhere`, `completionpercentage_controller`, `achievement_controller`. | M | Open |
+| R5.3 | **Saves, completion and autosave** | `autosave_controller`, `savegame_bed`, `save_anywhere`, `completionpercentage_controller`, `achievement_controller`. | M | **Done** (first pass): [guide](/docs/core/completion-and-autosave.md) |
 | R5.4 | **Strangers, freaks and side content** | Launchers (`launcher_*`), random characters (`randomchar_controller`), side strands (Epsilon, Paparazzo, Nigel, Tonya, Barry ...), how they appear and unlock. | M | Open |
 | R5.5 | **Minigames and activities** | Golf, tennis, darts, yoga, triathlon, races, flight school, shooting range, strip club, taxi, towing, trafficking, hunting, rampages, arcade machines; how each is launched, scored and rewarded. | L | Open |
 | R5.6 | **Cutscenes and dialogue** | How cutscenes are loaded, staged (entities, crew, vehicles), skipped and cleaned up; the dialogue system (`CREATE_CONVERSATION`, subtitle and speech files); `cutscene_test` and debug scripts as documentation. | M | **Done** (first pass): [guide](/docs/gameplay/missions/cutscenes-and-dialogue.md) |
