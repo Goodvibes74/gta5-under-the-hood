@@ -75,6 +75,7 @@ gta5-under-the-hood/
 - Audio: [how audio is organised](docs/audio/how-audio-is-organised.md) and [speech and dialogue](docs/audio/speech-and-dialogue.md).
 - AI: [perception and events](docs/ai/perception-and-events.md), [navigation](docs/ai/navigation.md), [driving](docs/ai/driving.md), [police and services](docs/ai/police-and-services.md), [ambient life](docs/ai/ambient-life.md), [AI cost](docs/ai/ai-cost-and-lod.md).
 - Tools: the read-only [research tools](tools/README.md), including the update-check tool that shows what a game update changed and which of a mod's assets it removed.
+- Ideas: an [ideas list](modding/ideas.md) of 22 story-mode mods the research shows are possible, each linked to its guide.
 
 ## Ground rules
 

@@ -20,6 +20,8 @@ You need a legitimately purchased copy of GTA V for PC. Everything else on this 
 | 8 | [Debugging: when nothing happens](08-debugging.md) | A habit of reading the right log first, and a table of the usual causes | 20 min |
 | 9 | [Next steps and sharing your mod](09-next-steps-and-sharing.md) | Where to go deeper, and how to release a mod safely | 20 min |
 
+
+**Looking for a project after the path?** The [ideas list](ideas.md) has 22 story-mode mods the research shows are possible, each with its guide and a size.
 Steps 5, 6 and 7 are alternatives. Most people do 5 and stop there for a while; 6 is a quick detour; 7 is for when you need speed or low-level access. Step 4 needs no programming and is a good first win.
 
 ## Which step for which idea
