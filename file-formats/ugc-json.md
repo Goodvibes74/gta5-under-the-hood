@@ -35,6 +35,8 @@ The JSON format of GTA Online's jobs and content: the 1,001 local `.ugc` files, 
 | `ddblip`, `ddtrig`, `fsp`, `interactables`, `vhrls`, `usj`, `tmD`, `dtmp*`, `ptemp` | 1 to 21 each | Smaller systems (blips, triggers, unique stunt jumps `usj` ...) |
 | `meta` (top level) | 11 | Locations, vehicle hashes, weapons used (a summary for the job list) |
 
+How the creators write these sections (the `prop`, `race` and `dhprop` columns, sparse arrays, the upload) is in [Rockstar Creator internals](/docs/online/creator-internals.md) (R7.11).
+
 ## 11.3 Content files
 
 | Section | Files | Key paths | Shape (keys under it) |
