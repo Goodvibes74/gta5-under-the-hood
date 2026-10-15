@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **86 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **87 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -90,6 +90,7 @@ Every research topic, its status, and what is left to find out. **86 of 107 topi
 | R14.4 | [Text and names in content](/docs/entities/objects/text-and-names.md) (first pass): the name labels in `vehicles.meta` and `weapons.meta`, 879 vehicles checked against the text (4 unnamed), makers, weapons, how DLC packs register names, and what an add-on needs |
 | R15.1 | [Sessions and sync](/docs/online/sessions-and-sync.md) (first pass): network scripts and participants, host and player broadcast data with sizes (freemode's 32 × 880 block), networked entities, control and migration, mission entity budgets, script events, session types |
 | R15.2 | [Rockstar services](/docs/online/rockstar-services.md) (first pass): a census of the 12 service families (natives, calls, most widespread native), what each service does, the guards scripts check, and what happens when a service is missing |
+| R17.2 | [Perception and events](/docs/ai/perception-and-events.md) (first pass): the 48 shocking events with sight and hearing ranges, lifetimes, reactions and police calls (44 named from hashes), the general and weapon event delays, and how scripts block, add and suppress events |
 | R17.3 | [Decisions and personalities](/docs/ai/decisions-and-personalities.md) (first pass): the 95 ped personalities, the 18 bravery types and their flags, what makes Michael, Franklin and Trevor different, driving and agitation ranges, and how personality, decision maker, combat info and group fit together |
 | R17.4 | [Relationships and groups](/docs/ai/relationships-and-groups.md) (first pass): the 40 default groups and every rule in `relationships.dat`, model defaults, how missions add groups and set relationships (with the value counts), and player groups and formations |
 | R18.1 | [Measuring performance](/docs/performance/measuring.md): frame time and hitches, the game's 5-scene benchmark script, frame timing from a script, reading a session, Windows tools |
@@ -263,7 +264,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | ID | Topic | What to find out | Size | Status |
 | --- | --- | --- | --- | --- |
 | R17.1 | **The AI architecture** | How a ped's behaviour is put together: the task system (task tree, primary and secondary tasks, priorities), how scripts give tasks (`TASK_*`, sequences, `SET_BLOCKING_OF_NON_TEMPORARY_EVENTS`), what runs when no script is in charge. | L | Open |
-| R17.2 | **Perception and events** | How peds see and hear (ranges, cones, `SET_PED_SEEING_RANGE`, hearing), the event system (gunshots, explosions, "shocking events", dead bodies), how events turn into reactions, how scripts block or add events. | M | Open |
+| R17.2 | **Perception and events** | How peds see and hear (ranges, cones, `SET_PED_SEEING_RANGE`, hearing), the event system (gunshots, explosions, "shocking events", dead bodies), how events turn into reactions, how scripts block or add events. | M | **Done** (first pass): [guide](/docs/ai/perception-and-events.md) |
 | R17.3 | **Decisions and personalities** | Ped personalities and decision makers in the data files, combat behaviour (`combatbehaviour.meta`), combat attributes and ranges, flee and cower rules, bravery, what AI mods change. | M | **Done** (first pass): [guide](/docs/ai/decisions-and-personalities.md) |
 | R17.4 | **Relationships and groups** | Relationship groups (`relationships.dat`, `ADD_RELATIONSHIP_GROUP`), how gangs, cops and civilians treat each other and the player, player groups, followers and formations, bodyguards. | M | **Done** (first pass): [guide](/docs/ai/relationships-and-groups.md) |
 | R17.5 | **Navigation and pathfinding** | Navmeshes (`.ynv`), how peds plan routes on foot, climbing, cover points, doors, interiors; why peds get stuck; navmesh streaming around the player. | M | Open |
