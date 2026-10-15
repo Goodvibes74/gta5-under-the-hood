@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **65 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **66 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -58,6 +58,7 @@ Every research topic, its status, and what is left to find out. **65 of 106 topi
 | R7.2 | [Transitions and sessions](/docs/online/transitions-and-sessions.md) (first pass): `maintransition`'s 70 named states, the paths into freemode, the creator and back, session and server natives, what 382 scripts read |
 | R7.3 | [Stats, tunables and the server's role](/docs/online/stats-and-tunables.md) (first pass): 17,928 stats by type and family, 28,502 tunables with their defaults in one script, transactions, what an offline mode must replace |
 | R7.4 | [UGC mission files](/file-formats/ugc-json.md) (first pass): 16,500 key paths in the 1,001 local files, content files vs classic creator missions, and which scripts read each |
+| R7.11 | [Rockstar Creator internals](/docs/online/creator-internals.md) (first pass): the hub and the 8 creator scripts (4 empty on PC), the fly camera and 2,400 m placement ray, the 1,883-entry prop catalogue in 59 libraries, 106 placement checks and the limits (200 props, 20 dynamic, about 100 checkpoints, 40 removed map objects), bone-based track snapping, the column JSON and its upload, how a race rebuilds the props |
 | R8.3 | [Text labels](/docs/ui/text-labels.md) (first pass): the `.gxt2` format, 610 text blocks and 278,749 labels (plus 186,875 from DLC), 13 languages, mission text slots, the text commands scripts use, and how a mod shows or adds text |
 | R9.3 | [Music and radio](/docs/audio/music-and-radio.md) (first pass): the radio stations in the audio game data and their names, hidden interior stations, 1,547 mission music events, how scripts tune, lock and duck the radio, and how music is added or replaced |
 | R11 | [Surviving game updates](/docs/core/surviving-updates.md): what an update breaks, the update-day checklist, rules for update-proof code, how to find risky code in a mod |
@@ -180,6 +181,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R7.8 | **Heists** | Classic heists, Doomsday, Casino, Cayo Perico: planning boards, preps, finales, crew cuts. | L | Open |
 | R7.9 | **DLC storylines** | Each DLC's story arc, triggers, scripts, local vs cloud missions, cutscenes and contacts, and how to rebuild it here. | L | Open |
 | R7.10 | **Interaction menu, phone and apps** | `am_pi_menu`, the Online phone, contacts and requests (`am_contact_requests`), the internet sites. | M | Open |
+| R7.11 | **Rockstar Creator internals** | How the content creator builds tracks and maps: the creator scripts and how they start, the camera and placement, the prop catalogue, placement checks and limits, snapping stunt track pieces, removing map objects, the saved format and upload, how a job rebuilds its props when played. | L | **Done** (first pass): [guide](/docs/online/creator-internals.md) |
 
 ## R8. The game's own UI
 
