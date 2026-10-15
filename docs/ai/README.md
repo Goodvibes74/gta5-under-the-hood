@@ -15,7 +15,7 @@ How peds and drivers think: tasks, perception, decisions, relationships, navigat
 | R17.4 | **Relationships and groups** | **Done** (first pass): [guide](/docs/ai/relationships-and-groups.md) |
 | R17.5 | **Navigation and pathfinding** | **Done** (first pass): [guide](/docs/ai/navigation.md) |
 | R17.6 | **Driving AI** | Open |
-| R17.7 | **Police and service AI** | Open |
+| R17.7 | **Police and service AI** | **Done** (first pass): [guide](/docs/ai/police-and-services.md) |
 | R17.8 | **Ambient life** | Open |
 | R17.9 | **AI cost and level of detail** | Open |
 | R17.10 | **How Rockstar's scripts drive AI** | Open |
