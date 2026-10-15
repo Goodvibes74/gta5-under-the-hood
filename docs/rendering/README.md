@@ -8,7 +8,7 @@ Graphics settings, timecycles and post effects, particles and decals, animation,
 | --- | --- | --- |
 | R13.1 | **Rendering and graphics settings** | Open |
 | R13.2 | **Timecycle and post effects** | **Done** (first pass): [guide](/docs/rendering/timecycle-and-post-effects.md) |
-| R13.3 | **Particles and decals** | Open |
+| R13.3 | **Particles and decals** | **Done** (first pass): [guide](/docs/rendering/particles-and-decals.md) |
 | R13.4 | **Animation** | Open |
 | R13.5 | **Cameras** | Open |
 
