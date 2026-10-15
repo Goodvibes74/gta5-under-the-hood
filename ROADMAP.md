@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **91 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **92 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -26,7 +26,7 @@ Every research topic, its status, and what is left to find out. **91 of 107 topi
 | R1.7 | [Saves](/docs/core/saves.md) (first pass): the 38,592-value story save registered field by field (1,062 registrations, named sections and sizes), save version 1.7 and size checks, the other save blocks, when saves are written, Online's separate block, where mods keep their data |
 | R0.3 | [Native usage](/scripting/native-usage.md): the native tables hold NativeDB hashes; 1,013 scripts import 6,575 natives and make 12.3 million calls, with a [per-namespace index](/scripting/native-usage-index.md) of who uses what |
 | R1.3 | [Natives as the engine API](/scripting/natives-engine-api.md) (first pass): seven kinds of native and how to call each, the request/release and create/cleanup contracts with counts, guards (1 call in 21 is an existence or death check), slow and risky natives, what each family can't do |
-| R0.5 (started) | [Script launch graph](/scripting/script-launch-graph.md): 679 "who starts whom" edges |
+| R0.5 | [Script launch graph](/scripting/script-launch-graph.md) (first pass): 679 "who starts whom" edges, the three other ways scripts start (engine roots, 146 script brains, names from tables), and story and Online backbone diagrams |
 | R1.1 | [The script VM](/scripting/script-vm.md): script format, threads, waits, events, force cleanup |
 | R1.2 | [Boot](/docs/00-getting-started/boot.md): launch to control, new vs loaded game, story to Online and back |
 | R2.1 | [Collision and materials](/docs/physics/collision-and-materials.md): 213 materials, shape tests, collision streaming |
@@ -116,7 +116,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R0.2 | **Script cards for the runtime scripts** | A short card for each script that runs always or controls others (`startup`, `main`, `main_persistent`, `standard_global_init`, `flow_controller`, `respawn_controller`, `cellphone_controller`, `shop_controller`, `selector`, `maintransition`, `freemode`, `ingamehud` ...): when it starts, what starts it, what it starts, globals it owns, its main loop. | M | **Done** (first pass): [guide](/docs/core/runtime-scripts.md) |
 | R0.3 | **Native names for the native tables** | Turn each script's native table (hashes for this build) into names with a crossmap, so we can list every script that uses a native family (`NET_GAMESERVER_*`, `STAT_*`, `TASK_*`, `CUTSCENE_*`). Output: a per-script native list and a per-native script list. | M | **Done** (first pass): [guide](/scripting/native-usage.md) |
 | R0.4 | **Global variable map** | Which global blocks exist, which script registers each (`standard_global_init`, `globals_fmmc_struct_registration`, `tunables_registration`), and what the big blocks hold (player data, tunables, flow flags). Read only. | L | **Done** (first pass): [guide](/docs/core/global-map.md) |
-| R0.5 | **Script launch graph** | Who starts whom (`REQUEST_SCRIPT` and `START_NEW_SCRIPT` with stack sizes), and the script brains placed in the world (`ambient*.ipl`, `scriptbrains` data), drawn as one graph for story and one for Online. | M | Started: [launch graph](/scripting/script-launch-graph.md) |
+| R0.5 | **Script launch graph** | Who starts whom (`REQUEST_SCRIPT` and `START_NEW_SCRIPT` with stack sizes), and the script brains placed in the world (`ambient*.ipl`, `scriptbrains` data), drawn as one graph for story and one for Online. | M | **Done** (first pass): [guide](/scripting/script-launch-graph.md) |
 | R0.6 | **Research toolkit guide** | Update guide 5 with the new tools and a "how to research a new topic in an hour" checklist. | S | **Done** (first pass): [guide](/docs/00-getting-started/research-tools.md) |
 | R0.7 | **Archive and data file atlas** | List every archive (root, `update/`, all 89 DLC packs) and every file type inside them with counts (`.meta`, `.ymt`, `.ytyp`, `.ymap`, `.ydr`, `.yft`, `.ytd`, `.ycd`, `.ynv`, `.awc`, `.gfx`, `.gxt2`, `.cut`, `.rel`, ...), what each type is, which engine system reads it, and which topic covers it. The data-side twin of the script catalog. | L | Open |
 | R0.8 | **Native namespace coverage map** | Every native namespace (about 40) with its size, how many scripts use it, and which topic explains it, so no engine API family is left unread. | S | **Done** (first pass): [guide](/scripting/native-namespace-map.md) |
