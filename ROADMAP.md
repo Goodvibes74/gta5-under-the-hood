@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **104 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **105 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -8,7 +8,7 @@ Every research topic, its status, and what is left to find out. **104 of 107 top
 
 - **New to this?** Want to make a mod first? Follow the [modding path](/modding/README.md). Want to research? Read [getting started](/docs/00-getting-started/README.md), then one finished guide in an area you like (for example [mission anatomy](/docs/gameplay/missions/mission-anatomy.md) or [vehicle handling](/docs/physics/vehicle-handling.md)) to see how a topic is written up.
 - **Good first topics** (S or M, mostly data files, no deep script reading): R2.6 time and weather, R3.8 health and arrest, R9.3 music and radio, R13.2 timecycles, R14.4 text and names, R8.3 text labels, R18.6 Windows and drivers.
-- **Priority jobs:** every open large topic, easiest first: R7.7, R7.8, R7.9. Why each is placed where it is: [README](/README.md#large-jobs-priority-pick-one).
+- **Priority jobs:** every open large topic, easiest first: R7.8, R7.9. Why each is placed where it is: [README](/README.md#large-jobs-priority-pick-one).
 - **Topics that unblock others:** R0.8 the native namespace map, R0.7 the data file atlas, R17.1 the AI architecture.
 - **Second passes:** every finished guide ends with an "Open questions" table. Each row is a ready-made small task.
 
@@ -71,6 +71,7 @@ Every research topic, its status, and what is left to find out. **104 of 107 top
 | R7.4 | [UGC mission files](/file-formats/ugc-json.md) (first pass): 16,500 key paths in the 1,001 local files, content files vs classic creator missions, and which scripts read each |
 | R7.5 | [The job lobby](/docs/online/job-lobby.md) (first pass): `fmmc_launcher`'s 11 per-player states, the 270-entry activity table (in 266 scripts), job type to controller (89,500 stack, 21 start values), the corona screens, the helper scripts |
 | R7.6 | [Properties](/docs/online/properties.md) (first pass): the 115-entry property table with names, classes and default prices, the ownership slots and their stats, layered prices and the 50% trade-in, entrance checks, instanced interiors and what they start, and the 181-entry simple-interior list behind the business properties |
+| R7.7 | [Organisations and businesses](/docs/online/organisations-and-businesses.md) (first pass): the am_launcher event-type table that starts all free-roam work, organisation rules from tunable defaults (wages, cooldowns, boss bonuses, fees), the business loop with capacity, production time and unit value for the biker businesses, bunker and acid lab, special cargo rules, and the 13 business computer apps |
 | R7.10 | [Interaction menu, phone and apps](/docs/online/interaction-menu-phone-apps.md) (first pass): the two phone scripts and the app table, the 38 app scripts, the interaction menu's areas, the contact services, the 23 websites in one scaleform movie |
 | R7.11 | [Rockstar Creator internals](/docs/online/creator-internals.md) (first pass): the hub and the 8 creator scripts (4 empty on PC), the fly camera and 2,400 m placement ray, the 1,883-entry prop catalogue in 59 libraries, 106 placement checks and the limits (200 props, 20 dynamic, about 100 checkpoints, 40 removed map objects), bone-based track snapping, the column JSON and its upload, how a race rebuilds the props |
 | R8.1 | [Pause and Online menus](/docs/ui/pause-menu.md) (first pass): pausemenu.xml's 154 screens, 408 buttons and 162 settings, the nine option actions, the 24 runtime types and which screens scripts fill, the page scripts, the frontend natives and what scripts mostly do (keep the menu away) |
@@ -215,7 +216,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R7.4 | **The UGC mission format and controllers** | Map every key in the local `.ugc` files, how `fm_mission_controller` and `_2020` read rules, objectives, teams and spawns. | L | **Done** (first pass): [guide](/file-formats/ugc-json.md) |
 | R7.5 | **The job lobby (`fmmc_launcher`)** | How a job is chosen, set up, launched and ended, and how the lobby screens are filled. | M | **Done** (first pass): [guide](/docs/online/job-lobby.md) |
 | R7.6 | **Properties** | `am_mp_property_ext/int`, the property table, entering, buying, garages, the business properties. | L | **Done** (first pass): [guide](/docs/online/properties.md) |
-| R7.7 | **Organisations and businesses** | VIP, CEO and MC work (`gb_*`), the business loop (supplies, stock, sell), the business computers (`app*`). | L | Open (**priority**) |
+| R7.7 | **Organisations and businesses** | VIP, CEO and MC work (`gb_*`), the business loop (supplies, stock, sell), the business computers (`app*`). | L | **Done** (first pass): [guide](/docs/online/organisations-and-businesses.md) |
 | R7.8 | **Heists** | Classic heists, Doomsday, Casino, Cayo Perico: planning boards, preps, finales, crew cuts. | L | Open (**priority**) |
 | R7.9 | **DLC storylines** | Each DLC's story arc, triggers, scripts, local vs cloud missions, cutscenes and contacts, and how to rebuild it here. | L | Open (**priority**) |
 | R7.10 | **Interaction menu, phone and apps** | `am_pi_menu`, the Online phone, contacts and requests (`am_contact_requests`), the internet sites. | M | **Done** (first pass): [guide](/docs/online/interaction-menu-phone-apps.md) |
