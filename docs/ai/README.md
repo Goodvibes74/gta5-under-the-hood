@@ -7,7 +7,7 @@ How peds and drivers think: tasks, perception, decisions, relationships, navigat
 | ID | Topic | Status |
 | --- | --- | --- |
 | R3.2 | **Combat and AI** | **Done** (first pass): [guide](/docs/ai/combat-and-perception.md) |
-| R3.3 | **Driving and AI driving** | Open |
+| R3.3 | **Driving and AI driving** | **Done** (first pass): [guide](/docs/ai/driving.md) |
 | R3.7 | **Wanted level and police** | Open |
 | R17.1 | **The AI architecture** | Open |
 | R17.2 | **Perception and events** | Open |
