@@ -6,7 +6,7 @@ Ped models and their metadata, appearance and clothing, ped physics.
 
 | ID | Topic | Status |
 | --- | --- | --- |
-| R14.2 | **Peds** | Open |
+| R14.2 | **Peds** | **Done** (first pass): [guide](/docs/entities/peds/peds.md) |
 | R6.3 | **Appearance and clothing** | **Done** (first pass): [guide](/docs/entities/peds/appearance-and-clothing.md) |
 | R2.3 | **Ped physics and ragdoll** | Open |
 
