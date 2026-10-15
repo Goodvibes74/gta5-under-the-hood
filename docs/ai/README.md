@@ -18,6 +18,6 @@ How peds and drivers think: tasks, perception, decisions, relationships, navigat
 | R17.7 | **Police and service AI** | **Done** (first pass): [guide](/docs/ai/police-and-services.md) |
 | R17.8 | **Ambient life** | **Done** (first pass): [guide](/docs/ai/ambient-life.md) |
 | R17.9 | **AI cost and level of detail** | **Done** (first pass): [guide](/docs/ai/ai-cost-and-lod.md) |
-| R17.10 | **How Rockstar's scripts drive AI** | Open |
+| R17.10 | **How Rockstar's scripts drive AI** | Open (**priority**) |
 
 Pick an open topic, claim it and send a pull request: see [CONTRIBUTING.md](/CONTRIBUTING.md). Write new pages with the [entry template](/templates/entry-template.md).

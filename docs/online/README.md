@@ -11,10 +11,10 @@ How GTA Online is built on top of the same engine: sessions, the main script, st
 | R7.3 | **Stats, tunables and the server's role** | **Done** (first pass): [guide](/docs/online/stats-and-tunables.md) |
 | R7.4 | **The UGC mission format and controllers** | **Done** (first pass): [guide](/file-formats/ugc-json.md) |
 | R7.5 | **The job lobby (`fmmc_launcher`)** | **Done** (first pass): [guide](/docs/online/job-lobby.md) |
-| R7.6 | **Properties** | Open |
-| R7.7 | **Organisations and businesses** | Open |
-| R7.8 | **Heists** | Open |
-| R7.9 | **DLC storylines** | Open |
+| R7.6 | **Properties** | Open (**priority**) |
+| R7.7 | **Organisations and businesses** | Open (**priority**) |
+| R7.8 | **Heists** | Open (**priority**) |
+| R7.9 | **DLC storylines** | Open (**priority**) |
 | R7.10 | **Interaction menu, phone and apps** | **Done** (first pass): [guide](/docs/online/interaction-menu-phone-apps.md) |
 | R7.11 | **Rockstar Creator internals** | **Done** (first pass): [guide](/docs/online/creator-internals.md) |
 | R5.7 | **Systems that clash with Online mode** | **Done** (first pass): [guide](/docs/online/story-systems-in-online-mode.md) |
