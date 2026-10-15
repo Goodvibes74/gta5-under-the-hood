@@ -6,6 +6,6 @@ Vehicle definitions and the DLC vehicle inventory. Start with [DLC packs](dlc-pa
 
 | ID | Topic | Status |
 | --- | --- | --- |
-| R14.1 | **Vehicles** | Open |
+| R14.1 | **Vehicles** | **Done** (first pass): [guide](/docs/entities/vehicles/vehicles.md) |
 
 Pick an open topic, claim it and send a pull request: see [CONTRIBUTING.md](/CONTRIBUTING.md). Write new pages with the [entry template](/templates/entry-template.md).
