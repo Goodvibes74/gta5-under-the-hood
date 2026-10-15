@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **63 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **64 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -29,6 +29,7 @@ Every research topic, its status, and what is left to find out. **63 of 106 topi
 | R1.2 | [Boot](/docs/00-getting-started/boot.md): launch to control, new vs loaded game, story to Online and back |
 | R2.1 | [Collision and materials](/docs/physics/collision-and-materials.md): 213 materials, shape tests, collision streaming |
 | R2.2 | [Vehicle handling](/docs/physics/vehicle-handling.md): handling.meta, flags, damage, upgrades, DLC handling |
+| R2.4 | [Water and buoyancy](/docs/physics/water-and-buoyancy.md) (first pass): 504 water quads by height, calming and wave quads, how weather shapes waves, `fPercentSubmerged` and the boat, submarine and seaplane handling sections, and the natives that probe and calm water |
 | R2.5 | [Fire, explosions and projectiles](/docs/physics/fire-explosions-projectiles.md) (first pass): the 85 explosion types (36 base, 49 DLC) with damage, radius and push, the 22 flammable materials, the 80 projectile ammo types, how scripts start and detect fire and explosions |
 | R2.6 | [Time, weather and wind](/docs/world/time-and-weather.md) (first pass): the 17 weather types, the 173-entry weather cycle and its odds, how scripts lock and release weather, the death reroll, the clock and Online's clock override, wind |
 | R2.7 | [Physics cost](/docs/performance/physics-cost.md) (first pass): physics pools vanilla vs modded, what each simulation costs, how Rockstar keeps physics cheap, proposed budgets and tests |
@@ -112,7 +113,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R2.1 | **Collision and materials** | Bounds and collision types, `materials.dat` (friction, elasticity, per-material effects), how probes and raycasts work (`SHAPETEST_*`), collision loading around the player. | M | **Done** (first pass): [guide](/docs/physics/collision-and-materials.md) |
 | R2.2 | **Vehicle physics** | `handling.meta` and its sub-handling blocks (bikes, boats, aircraft, special flags), mass, centre of mass, traction curves, gears, suspension, drift; damage and deformation; what mod-shop upgrades change. | L | **Done** (first pass): [guide](/docs/physics/vehicle-handling.md) |
 | R2.3 | **Ped physics and ragdoll** | Euphoria behaviours, when peds ragdoll, ragdoll natives, falling and impact damage, `pedhealth.meta`, the limits on ragdolling peds at once. | M | Open |
-| R2.4 | **Water, buoyancy and swimming** | Water data (`water.xml`), waves, boats and submarine buoyancy, how swimming and diving work underneath. | M | Open |
+| R2.4 | **Water, buoyancy and swimming** | Water data (`water.xml`), waves, boats and submarine buoyancy, how swimming and diving work underneath. | M | **Done** (first pass): [guide](/docs/physics/water-and-buoyancy.md) |
 | R2.5 | **Fire, explosions and projectiles** | `explosion.meta`, fire spread, projectiles and thrown weapons, damage falloff. | S | **Done** (first pass): [guide](/docs/physics/fire-explosions-projectiles.md) |
 | R2.6 | **Time, weather and wind** | The clock, `weather.xml`, timecycle modifiers, wind and how it affects physics, how scripts lock weather and time. | S | **Done** (first pass): [guide](/docs/world/time-and-weather.md) |
 | R2.7 | **Physics cost on a low-end PC** | Which simulations cost the most (ragdolls, debris, vehicle crashes, fire), measured through tests, written as spawn and effect budgets for mods. | M | **Done** (first pass): [guide](/docs/performance/physics-cost.md) |
