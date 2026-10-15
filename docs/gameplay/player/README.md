@@ -6,7 +6,7 @@ Stats and skills, flying and swimming, health and death, character switching, co
 
 | ID | Topic | Status |
 | --- | --- | --- |
-| R3.4 | **Flying** | Open |
+| R3.4 | **Flying** | **Done** (first pass): [guide](/docs/gameplay/player/flying.md) |
 | R3.5 | **Swimming and diving** | **Done** (first pass): [guide](/docs/gameplay/player/swimming-and-diving.md) |
 | R3.6 | **Player skills and abilities** | **Done** (first pass): [guide](/docs/gameplay/player/skills-and-abilities.md) |
 | R3.8 | **Health, armour, death and arrest** | **Done** (first pass): [guide](/docs/gameplay/player/health-armour-death.md) |
