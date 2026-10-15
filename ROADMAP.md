@@ -96,6 +96,7 @@ Every research topic, its status, and what is left to find out. **90 of 107 topi
 | R17.5 | [Navigation and pathfinding](/docs/ai/navigation.md) (first pass): 4,404 navmesh tiles (and 37 vehicle meshes) and the grid, 259/274 road node files, streaming them around the player, the movement, blocking, cover and patrol natives with counts, and why peds get stuck |
 | R17.7 | [Police and service AI](/docs/ai/police-and-services.md) (first pass): crime-point thresholds, search radii and hiding times per star, units sent per wanted level, spawn delays and placement, the cop search helpers, emergency services, the police natives scripts use, and which pieces police mods replace |
 | R17.8 | [Ambient life](/docs/ai/ambient-life.md) (first pass): the ambient ped loop, the idle, look-at, wander, chat and animal task tunables, and how scripts thin, empty and release the crowd (counts) |
+| R17.9 | [AI cost and level of detail](/docs/ai/ai-cost-and-lod.md) (first pass): the AI pools and caps (MaxTotalPeds 200, 10 vehicle updates per frame), low-detail locomotion and timeslicing, the natives that force or relax updates, and proposed safe limits for spawning mods |
 | R18.1 | [Measuring performance](/docs/performance/measuring.md): frame time and hitches, the game's 5-scene benchmark script, frame timing from a script, reading a session, Windows tools |
 | R18.2 | [Graphics settings](/docs/performance/graphics-settings.md) (first pass): every `settings.xml` key with its range, cost and values for weak, mid and strong PCs; hidden keys; `commandline.txt` |
 | R18.3 | [Streaming, memory and video memory](/docs/performance/memory-and-vram.md) (first pass): heap, pools, streaming buffers, shared video memory and Windows commit; why more mods means paging freezes on a shared-memory laptop |
@@ -274,7 +275,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R17.6 | **Driving AI** | Vehicle path nodes, driving tasks and styles (flags), traffic behaviour, chases and escorts, races, flying AI (helicopters, planes), boat AI. Extends R3.3. | L | Open |
 | R17.7 | **Police and service AI** | Dispatch, cop search and chase behaviour, roadblocks, ambulances and fire trucks, and how police mods replace each part. Extends R3.7. | M | **Done** (first pass): [guide](/docs/ai/police-and-services.md) |
 | R17.8 | **Ambient life** | Wandering, scenarios, ambient speech and reactions, ped conversations, animals, how the population AI is thinned out with distance. Extends R4.2. | M | **Done** (first pass): [guide](/docs/ai/ambient-life.md) |
-| R17.9 | **AI cost and level of detail** | How many peds can run full AI, low-detail peds and "dummy" vehicles far from the player, what AI costs per frame on a low-end PC, safe limits for spawning mods. | M | Open |
+| R17.9 | **AI cost and level of detail** | How many peds can run full AI, low-detail peds and "dummy" vehicles far from the player, what AI costs per frame on a low-end PC, safe limits for spawning mods. | M | **Done** (first pass): [guide](/docs/ai/ai-cost-and-lod.md) |
 | R17.10 | **How Rockstar's scripts drive AI** | Patterns from missions and Online content: enemy waves, guards and patrols, hostage and escort logic, AI in heists, the Online "fake player" peds. A pattern library for mod missions and AI players. | L | Open |
 
 ## R18. Game optimization
