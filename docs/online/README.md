@@ -19,6 +19,6 @@ How GTA Online is built on top of the same engine: sessions, the main script, st
 | R7.11 | **Rockstar Creator internals** | **Done** (first pass): [guide](/docs/online/creator-internals.md) |
 | R5.7 | **Systems that clash with Online mode** | **Done** (first pass): [guide](/docs/online/story-systems-in-online-mode.md) |
 | R15.1 | **Sessions and sync** | **Done** (first pass): [guide](/docs/online/sessions-and-sync.md) |
-| R15.2 | **Rockstar services** | Open |
+| R15.2 | **Rockstar services** | **Done** (first pass): [guide](/docs/online/rockstar-services.md) |
 
 Pick an open topic, claim it and send a pull request: see [CONTRIBUTING.md](/CONTRIBUTING.md). Write new pages with the [entry template](/templates/entry-template.md).
