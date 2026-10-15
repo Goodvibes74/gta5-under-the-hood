@@ -6,7 +6,7 @@ Small worked mods that show a guide in practice. Each example is also a small pr
 
 | ID | Topic | Status |
 | --- | --- | --- |
-| R12.1 | **Mod-builder's cookbook** | Open (**priority**) |
+| R12.1 | **Mod-builder's cookbook** | **Done** (first pass): [guide](/modding/cookbook/README.md) |
 | R12.3 | **Ideas list** | **Done** (first pass): [guide](/modding/ideas.md) |
 
 Pick an open topic, claim it and send a pull request: see [CONTRIBUTING.md](/CONTRIBUTING.md). Write new pages with the [entry template](/templates/entry-template.md).
