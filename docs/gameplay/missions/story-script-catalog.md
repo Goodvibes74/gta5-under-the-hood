@@ -62,7 +62,7 @@ Sorted by size, largest first.
 | `mission_triggerer_a` | 2.2 MB | Mission triggers, group A |
 | `family_scene_t0` | 2.2 MB | Trevor's home scene 0 |
 | `family_scene_t1` | 2.2 MB | Trevor's home scene 1 |
-| `replay_controller` | 2.2 MB | Rockstar Editor recording |
+| `replay_controller` | 2.2 MB | Mission replay: the fail screen, retry, restart and skip ([R5.8](/docs/gameplay/missions/replay-director-and-editor.md)) |
 | `family_scene_f0` | 2.2 MB | Franklin's home scene 0 |
 | `selector` | 2.1 MB | The character wheel and switching |
 | `benchmark` | 2.0 MB | The built-in benchmark run (graphics settings menu) |
