@@ -7,7 +7,7 @@ The map, zones, interiors and IPLs, map data files, time and weather, random eve
 | ID | Topic | Status |
 | --- | --- | --- |
 | R2.6 | **Time, weather and wind** | **Done** (first pass): [guide](/docs/world/time-and-weather.md) |
-| R4.4 | **Random events** (`re_*`, 41 scripts) | Open |
+| R4.4 | **Random events** (`re_*`, 41 scripts) | **Done** (first pass): [guide](/docs/world/random-events.md) |
 | R4.5 | **Interiors and IPLs** | Open |
 | R4.6 | **Map data** | Open |
 
