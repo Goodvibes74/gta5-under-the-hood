@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **66 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **67 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -58,6 +58,7 @@ Every research topic, its status, and what is left to find out. **66 of 107 topi
 | R7.2 | [Transitions and sessions](/docs/online/transitions-and-sessions.md) (first pass): `maintransition`'s 70 named states, the paths into freemode, the creator and back, session and server natives, what 382 scripts read |
 | R7.3 | [Stats, tunables and the server's role](/docs/online/stats-and-tunables.md) (first pass): 17,928 stats by type and family, 28,502 tunables with their defaults in one script, transactions, what an offline mode must replace |
 | R7.4 | [UGC mission files](/file-formats/ugc-json.md) (first pass): 16,500 key paths in the 1,001 local files, content files vs classic creator missions, and which scripts read each |
+| R7.5 | [The job lobby](/docs/online/job-lobby.md) (first pass): `fmmc_launcher`'s 11 per-player states, the 270-entry activity table (in 266 scripts), job type to controller (89,500 stack, 21 start values), the corona screens, the helper scripts |
 | R7.11 | [Rockstar Creator internals](/docs/online/creator-internals.md) (first pass): the hub and the 8 creator scripts (4 empty on PC), the fly camera and 2,400 m placement ray, the 1,883-entry prop catalogue in 59 libraries, 106 placement checks and the limits (200 props, 20 dynamic, about 100 checkpoints, 40 removed map objects), bone-based track snapping, the column JSON and its upload, how a race rebuilds the props |
 | R8.3 | [Text labels](/docs/ui/text-labels.md) (first pass): the `.gxt2` format, 610 text blocks and 278,749 labels (plus 186,875 from DLC), 13 languages, mission text slots, the text commands scripts use, and how a mod shows or adds text |
 | R9.3 | [Music and radio](/docs/audio/music-and-radio.md) (first pass): the radio stations in the audio game data and their names, hidden interior stations, 1,547 mission music events, how scripts tune, lock and duck the radio, and how music is added or replaced |
@@ -175,7 +176,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R7.2 | **Transitions and sessions** | `maintransition`, joining and leaving, the character select, what "network game in progress" switches on, what fails without a session. | M | **Done** (first pass): [guide](/docs/online/transitions-and-sessions.md) |
 | R7.3 | **Stats, tunables and the server's role** | `mpstatssetup.xml` stat families, what is server-authoritative, tunables and their defaults, the transaction (basket) flow, what we must replace locally. | M | **Done** (first pass): [guide](/docs/online/stats-and-tunables.md) |
 | R7.4 | **The UGC mission format and controllers** | Map every key in the local `.ugc` files, how `fm_mission_controller` and `_2020` read rules, objectives, teams and spawns. | L | **Done** (first pass): [guide](/file-formats/ugc-json.md) |
-| R7.5 | **The job lobby (`fmmc_launcher`)** | How a job is chosen, set up, launched and ended, and how the lobby screens are filled. | M | Open |
+| R7.5 | **The job lobby (`fmmc_launcher`)** | How a job is chosen, set up, launched and ended, and how the lobby screens are filled. | M | **Done** (first pass): [guide](/docs/online/job-lobby.md) |
 | R7.6 | **Properties** | `am_mp_property_ext/int`, the property table, entering, buying, garages, the business properties. | L | Open |
 | R7.7 | **Organisations and businesses** | VIP, CEO and MC work (`gb_*`), the business loop (supplies, stock, sell), the business computers (`app*`). | L | Open |
 | R7.8 | **Heists** | Classic heists, Doomsday, Casino, Cayo Perico: planning boards, preps, finales, crew cuts. | L | Open |

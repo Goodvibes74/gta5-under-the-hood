@@ -10,7 +10,7 @@ How GTA Online is built on top of the same engine: sessions, the main script, st
 | R7.2 | **Transitions and sessions** | **Done** (first pass): [guide](/docs/online/transitions-and-sessions.md) |
 | R7.3 | **Stats, tunables and the server's role** | **Done** (first pass): [guide](/docs/online/stats-and-tunables.md) |
 | R7.4 | **The UGC mission format and controllers** | **Done** (first pass): [guide](/file-formats/ugc-json.md) |
-| R7.5 | **The job lobby (`fmmc_launcher`)** | Open |
+| R7.5 | **The job lobby (`fmmc_launcher`)** | **Done** (first pass): [guide](/docs/online/job-lobby.md) |
 | R7.6 | **Properties** | Open |
 | R7.7 | **Organisations and businesses** | Open |
 | R7.8 | **Heists** | Open |
