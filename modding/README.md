@@ -23,6 +23,8 @@ You need a legitimately purchased copy of GTA V for PC. Everything else on this 
 
 **Looking for a project after the path?** The [ideas list](ideas.md) has 22 story-mode mods the research shows are possible, each with its guide and a size.
 
+**Building a particular kind of mod?** The [cookbook](cookbook/README.md) has one page per kind (spawning and AI, missions, menus, shops, vehicles, weapons, world, UI, audio) with the natives, files, traps and a minimal pattern.
+
 Steps 5, 6 and 7 are alternatives. Most people do 5 and stop there for a while; 6 is a quick detour; 7 is for when you need speed or low-level access. Step 4 needs no programming and is a good first win.
 
 ## Which step for which idea

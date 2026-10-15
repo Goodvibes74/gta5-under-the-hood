@@ -53,7 +53,7 @@ gta5-under-the-hood/
 │   ├── ui/                      HUD, menus, radar and map
 │   ├── performance/             limits, pool sizes, freezes and crashes
 │   └── online/                  how GTA Online is built: sessions, freemode, stats, jobs
-├── modding/                     start here to make mods: how mods load, tools, first data edit, first C#, Lua and C++ mod, debugging, sharing
+├── modding/                     start here to make mods: how mods load, tools, first data edit, first C#, Lua and C++ mod, debugging, sharing, the cookbook, the ideas list
 ├── file-formats/                one page per format (RPF, YSC, handling.meta, weapons.meta, materials.dat ...)
 ├── scripting/                   the script VM, natives, C# (SHVDN), Lua, menus, the script launch graph
 ├── examples/                    small worked C# mods
@@ -62,7 +62,7 @@ gta5-under-the-hood/
 
 ## Status
 
-99 of 107 research topics have a first-pass guide, plus a [step-by-step modding path](modding/README.md) for beginners, the Online guides, the DLC inventory and the scripting guides. The [roadmap](ROADMAP.md) lists every topic, what's done, and where to begin. Highlights so far:
+100 of 107 research topics have a first-pass guide, plus a [step-by-step modding path](modding/README.md) for beginners, the Online guides, the DLC inventory and the scripting guides. The [roadmap](ROADMAP.md) lists every topic, what's done, and where to begin. Highlights so far:
 
 - [Inside freemode](docs/online/07-freemode.md): GTA Online's 1.47-million-line main script, its state machines and ~180 systems.
 - [Story flow](docs/gameplay/missions/story-flow.md) and [mission anatomy](docs/gameplay/missions/mission-anatomy.md): how story missions unlock and how every mission script is built.
@@ -87,7 +87,7 @@ The topics still open are all large (a week or more each). They are listed easie
 | 2 | **R17.6 Driving AI** (priority, **done**: [guide](docs/ai/driving-ai.md)) | [Driving](docs/ai/driving.md) and [navigation](docs/ai/navigation.md) cover cars and roads; what's left is helicopter, plane and boat AI, chases and escorts |
 | 3 | **R17.1 The AI architecture** (priority, **done**: [guide](docs/ai/ai-architecture.md)) | Mostly ties the finished AI guides together, plus counts on the task system |
 | 4 | **R0.7 Archive and data file atlas** (priority, **done**: [guide](file-formats/data-file-atlas.md)) | Mechanical: list every archive with [`rpf-cw.ps1`](tools/README.md) and count the file types; long but little guesswork |
-| 5 | **R12.1 Mod-builder's cookbook** (priority) | No new research: one page per kind of mod, written from the existing guides |
+| 5 | **R12.1 Mod-builder's cookbook** (priority, **done**: [cookbook](modding/cookbook/README.md)) | No new research: one page per kind of mod, written from the existing guides |
 | 6 | **R5.5 Minigames and activities** (priority) | About 15 separate scripts to read; launchers and completion are already mapped |
 | 7 | **R13.4 Animation** (priority) | Animation natives are easy to count; clip and move-network files are binary with little tooling |
 | 8 | **R17.10 How Rockstar's scripts drive AI** (priority) | Pattern hunting inside the largest mission and heist scripts |
