@@ -77,9 +77,9 @@ gta5-under-the-hood/
 - Tools: the read-only [research tools](tools/README.md), including the update-check tool that shows what a game update changed and which of a mod's assets it removed, and [how to protect a working install](docs/core/surviving-updates.md#83a-protecting-a-working-install-r113) (backup, delaying updates, rollback).
 - Ideas: an [ideas list](modding/ideas.md) of 22 story-mode mods the research shows are possible, each linked to its guide.
 
-## Large jobs: pick one
+## Large jobs (priority): pick one
 
-The topics still open are all large (a week or more each). They are listed easiest first, by how much of the groundwork the finished guides already cover. **Jobs 1 to 5 are the priority jobs**: start with these. Pick one, claim it as [CONTRIBUTING.md](CONTRIBUTING.md) explains (an issue titled with its ID), and work on it in its own branch. Details for each are in the [roadmap](ROADMAP.md).
+The topics still open are all large (a week or more each). They are listed easiest first, by how much of the groundwork the finished guides already cover. **All of them are priority jobs**: take them in this order, starting with 1 to 5. Pick one, claim it as [CONTRIBUTING.md](CONTRIBUTING.md) explains (an issue titled with its ID), and work on it in its own branch. Details for each are in the [roadmap](ROADMAP.md).
 
 | # | Job | Why it's at this place |
 | ---: | --- | --- |
@@ -88,13 +88,13 @@ The topics still open are all large (a week or more each). They are listed easie
 | 3 | **R17.1 The AI architecture** (priority) | Mostly ties the finished AI guides together, plus counts on the task system |
 | 4 | **R0.7 Archive and data file atlas** (priority) | Mechanical: list every archive with [`rpf-cw.ps1`](tools/README.md) and count the file types; long but little guesswork |
 | 5 | **R12.1 Mod-builder's cookbook** (priority) | No new research: one page per kind of mod, written from the existing guides |
-| 6 | **R5.5 Minigames and activities** | About 15 separate scripts to read; launchers and completion are already mapped |
-| 7 | **R13.4 Animation** | Animation natives are easy to count; clip and move-network files are binary with little tooling |
-| 8 | **R17.10 How Rockstar's scripts drive AI** | Pattern hunting inside the largest mission and heist scripts |
-| 9 | **R7.6 Properties** | Large Online property scripts and a property table to decode |
-| 10 | **R7.7 Organisations and businesses** | Many `gb_*` work scripts and the business computer apps |
-| 11 | **R7.8 Heists** | The heist controllers are among the biggest scripts; every heist differs |
-| 12 | **R7.9 DLC storylines** | The broadest job: every DLC's story, much of it cloud content not in the local files |
+| 6 | **R5.5 Minigames and activities** (priority) | About 15 separate scripts to read; launchers and completion are already mapped |
+| 7 | **R13.4 Animation** (priority) | Animation natives are easy to count; clip and move-network files are binary with little tooling |
+| 8 | **R17.10 How Rockstar's scripts drive AI** (priority) | Pattern hunting inside the largest mission and heist scripts |
+| 9 | **R7.6 Properties** (priority) | Large Online property scripts and a property table to decode |
+| 10 | **R7.7 Organisations and businesses** (priority) | Many `gb_*` work scripts and the business computer apps |
+| 11 | **R7.8 Heists** (priority) | The heist controllers are among the biggest scripts; every heist differs |
+| 12 | **R7.9 DLC storylines** (priority) | The broadest job: every DLC's story, much of it cloud content not in the local files |
 
 Online jobs (9 to 12) are research only: read the scripts and files, never run mods in GTA Online.
 

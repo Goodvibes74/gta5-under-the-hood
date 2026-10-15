@@ -8,7 +8,7 @@ Every research topic, its status, and what is left to find out. **95 of 107 topi
 
 - **New to this?** Want to make a mod first? Follow the [modding path](/modding/README.md). Want to research? Read [getting started](/docs/00-getting-started/README.md), then one finished guide in an area you like (for example [mission anatomy](/docs/gameplay/missions/mission-anatomy.md) or [vehicle handling](/docs/physics/vehicle-handling.md)) to see how a topic is written up.
 - **Good first topics** (S or M, mostly data files, no deep script reading): R2.6 time and weather, R3.8 health and arrest, R9.3 music and radio, R13.2 timecycles, R14.4 text and names, R8.3 text labels, R18.6 Windows and drivers.
-- **Priority jobs** (large, easiest first): R3.7 wanted level and police, R17.6 driving AI, R17.1 the AI architecture, R0.7 the archive and data file atlas, R12.1 the mod-builder's cookbook. The full list of large jobs is in the [README](/README.md#large-jobs-pick-one).
+- **Priority jobs:** every open large topic, easiest first: R3.7, R17.6, R17.1, R0.7, R12.1, R5.5, R13.4, R17.10, R7.6, R7.7, R7.8, R7.9. Why each is placed where it is: [README](/README.md#large-jobs-priority-pick-one).
 - **Topics that unblock others:** R0.8 the native namespace map, R0.7 the data file atlas, R17.1 the AI architecture.
 - **Second passes:** every finished guide ends with an "Open questions" table. Each row is a ready-made small task.
 
@@ -182,7 +182,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R5.2 | **Anatomy of a story mission** | Take three missions of different kinds (`armenian1`, a heist such as `jewelry_heist`, `trevor1`) and document the stages, checkpoints, fail conditions, cutscenes, dialogue and cleanup: the template every mission follows. | L | **Done** (first pass): [guide](/docs/gameplay/missions/mission-anatomy.md) |
 | R5.3 | **Saves, completion and autosave** | `autosave_controller`, `savegame_bed`, `save_anywhere`, `completionpercentage_controller`, `achievement_controller`. | M | **Done** (first pass): [guide](/docs/core/completion-and-autosave.md) |
 | R5.4 | **Strangers, freaks and side content** | Launchers (`launcher_*`), random characters (`randomchar_controller`), side strands (Epsilon, Paparazzo, Nigel, Tonya, Barry ...), how they appear and unlock. | M | **Done** (first pass): [guide](/docs/gameplay/missions/strangers-and-freaks.md) |
-| R5.5 | **Minigames and activities** | Golf, tennis, darts, yoga, triathlon, races, flight school, shooting range, strip club, taxi, towing, trafficking, hunting, rampages, arcade machines; how each is launched, scored and rewarded. | L | Open |
+| R5.5 | **Minigames and activities** | Golf, tennis, darts, yoga, triathlon, races, flight school, shooting range, strip club, taxi, towing, trafficking, hunting, rampages, arcade machines; how each is launched, scored and rewarded. | L | Open (**priority**) |
 | R5.6 | **Cutscenes and dialogue** | How cutscenes are loaded, staged (entities, crew, vehicles), skipped and cleaned up; the dialogue system (`CREATE_CONVERSATION`, subtitle and speech files); `cutscene_test` and debug scripts as documentation. | M | **Done** (first pass): [guide](/docs/gameplay/missions/cutscenes-and-dialogue.md) |
 | R5.7 | **Systems that clash with Online mode** | Phone (`cellphone_controller`), shops (`shop_controller`, clothes, barber, tattoo, guns), friends and family scenes, emails and texts, ATMs, restricted areas: which ones must be stopped or replaced in our Online mode. | M | **Done** (first pass): [guide](/docs/online/story-systems-in-online-mode.md) |
 | R5.8 | **Replay, director mode and the Rockstar Editor** | `replay_controller`, `director_mode`, what NoEditorRestrictions changes. | S | **Done** (first pass): [guide](/docs/gameplay/missions/replay-director-and-editor.md) |
@@ -205,10 +205,10 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R7.3 | **Stats, tunables and the server's role** | `mpstatssetup.xml` stat families, what is server-authoritative, tunables and their defaults, the transaction (basket) flow, what we must replace locally. | M | **Done** (first pass): [guide](/docs/online/stats-and-tunables.md) |
 | R7.4 | **The UGC mission format and controllers** | Map every key in the local `.ugc` files, how `fm_mission_controller` and `_2020` read rules, objectives, teams and spawns. | L | **Done** (first pass): [guide](/file-formats/ugc-json.md) |
 | R7.5 | **The job lobby (`fmmc_launcher`)** | How a job is chosen, set up, launched and ended, and how the lobby screens are filled. | M | **Done** (first pass): [guide](/docs/online/job-lobby.md) |
-| R7.6 | **Properties** | `am_mp_property_ext/int`, the property table, entering, buying, garages, the business properties. | L | Open |
-| R7.7 | **Organisations and businesses** | VIP, CEO and MC work (`gb_*`), the business loop (supplies, stock, sell), the business computers (`app*`). | L | Open |
-| R7.8 | **Heists** | Classic heists, Doomsday, Casino, Cayo Perico: planning boards, preps, finales, crew cuts. | L | Open |
-| R7.9 | **DLC storylines** | Each DLC's story arc, triggers, scripts, local vs cloud missions, cutscenes and contacts, and how to rebuild it here. | L | Open |
+| R7.6 | **Properties** | `am_mp_property_ext/int`, the property table, entering, buying, garages, the business properties. | L | Open (**priority**) |
+| R7.7 | **Organisations and businesses** | VIP, CEO and MC work (`gb_*`), the business loop (supplies, stock, sell), the business computers (`app*`). | L | Open (**priority**) |
+| R7.8 | **Heists** | Classic heists, Doomsday, Casino, Cayo Perico: planning boards, preps, finales, crew cuts. | L | Open (**priority**) |
+| R7.9 | **DLC storylines** | Each DLC's story arc, triggers, scripts, local vs cloud missions, cutscenes and contacts, and how to rebuild it here. | L | Open (**priority**) |
 | R7.10 | **Interaction menu, phone and apps** | `am_pi_menu`, the Online phone, contacts and requests (`am_contact_requests`), the internet sites. | M | **Done** (first pass): [guide](/docs/online/interaction-menu-phone-apps.md) |
 | R7.11 | **Rockstar Creator internals** | How the content creator builds tracks and maps: the creator scripts and how they start, the camera and placement, the prop catalogue, placement checks and limits, snapping stunt track pieces, removing map objects, the saved format and upload, how a job rebuilds its props when played. | L | **Done** (first pass): [guide](/docs/online/creator-internals.md) |
 
@@ -248,7 +248,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R13.1 | **Rendering and graphics settings** | The render pipeline at a high level, what each graphics setting costs on the UHD 620, LOD and draw distance, `visualsettings.dat`, what vremastered changes. | M | **Done** (first pass): [guide](/docs/rendering/rendering-and-visual-settings.md) |
 | R13.2 | **Timecycle and post effects** | Timecycle files and modifiers, screen effects (`ANIMPOSTFX_*`), how scripts change the look of a scene. | S | **Done** (first pass): [guide](/docs/rendering/timecycle-and-post-effects.md) |
 | R13.3 | **Particles and decals** | Particle assets (`ptfx`), how scripts start effects, decals and their limits (what the DecalsLimit patch changes). | S | **Done** (first pass): [guide](/docs/rendering/particles-and-decals.md) |
-| R13.4 | **Animation** | Clip dictionaries (`.ycd`), how tasks play animations, synchronized scenes, move networks, facial animation, scenario animations. | L | Open |
+| R13.4 | **Animation** | Clip dictionaries (`.ycd`), how tasks play animations, synchronized scenes, move networks, facial animation, scenario animations. | L | Open (**priority**) |
 | R13.5 | **Cameras** | Script cameras, the gameplay camera, cinematic cameras, camera shakes, how cutscenes and the phone camera use them. | S | **Done** (first pass): [guide](/docs/rendering/cameras.md) |
 
 ## R14. Content definitions: vehicles, peds, weapons and props
@@ -280,7 +280,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R17.7 | **Police and service AI** | Dispatch, cop search and chase behaviour, roadblocks, ambulances and fire trucks, and how police mods replace each part. Extends R3.7. | M | **Done** (first pass): [guide](/docs/ai/police-and-services.md) |
 | R17.8 | **Ambient life** | Wandering, scenarios, ambient speech and reactions, ped conversations, animals, how the population AI is thinned out with distance. Extends R4.2. | M | **Done** (first pass): [guide](/docs/ai/ambient-life.md) |
 | R17.9 | **AI cost and level of detail** | How many peds can run full AI, low-detail peds and "dummy" vehicles far from the player, what AI costs per frame on a low-end PC, safe limits for spawning mods. | M | **Done** (first pass): [guide](/docs/ai/ai-cost-and-lod.md) |
-| R17.10 | **How Rockstar's scripts drive AI** | Patterns from missions and Online content: enemy waves, guards and patrols, hostage and escort logic, AI in heists, the Online "fake player" peds. A pattern library for mod missions and AI players. | L | Open |
+| R17.10 | **How Rockstar's scripts drive AI** | Patterns from missions and Online content: enemy waves, guards and patrols, hostage and escort logic, AI in heists, the Online "fake player" peds. A pattern library for mod missions and AI players. | L | Open (**priority**) |
 
 ## R18. Game optimization
 
