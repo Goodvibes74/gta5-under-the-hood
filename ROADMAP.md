@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **83 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **84 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -86,6 +86,7 @@ Every research topic, its status, and what is left to find out. **83 of 107 topi
 | R13.5 | [Cameras](/docs/rendering/cameras.md) (first pass): the 1,545 camera settings in `cameras.ymt` and the 10 directors, the 4 script camera kinds and how missions use them, the gameplay camera, hints, view modes, shakes and fades |
 | R14.1 | [Vehicles](/docs/entities/vehicles/vehicles.md) (first pass): 901 vehicle models by type and class, the 190 flags, layouts, 602 mod kits, carvariations, what an add-on car needs, and how scripts spawn and customise vehicles |
 | R14.2 | [Peds](/docs/entities/peds/peds.md) (first pass): 1,109 ped models and their name prefixes, what one `peds.ymt` entry links to (type, relationship group, personality, combat, abilities), component data, and how scripts create, dress and set up peds |
+| R14.3 | [Props, archetypes and doors](/docs/entities/objects/props-and-doors.md) (first pass): what an archetype holds, static, dynamic and breakable props, the 24 rayfire destruction objects named in scripts, the door system natives and doortuning.meta's 36 tunings and 94 model mappings |
 | R14.4 | [Text and names in content](/docs/entities/objects/text-and-names.md) (first pass): the name labels in `vehicles.meta` and `weapons.meta`, 879 vehicles checked against the text (4 unnamed), makers, weapons, how DLC packs register names, and what an add-on needs |
 | R17.3 | [Decisions and personalities](/docs/ai/decisions-and-personalities.md) (first pass): the 95 ped personalities, the 18 bravery types and their flags, what makes Michael, Franklin and Trevor different, driving and agitation ranges, and how personality, decision maker, combat info and group fit together |
 | R17.4 | [Relationships and groups](/docs/ai/relationships-and-groups.md) (first pass): the 40 default groups and every rule in `relationships.dat`, model defaults, how missions add groups and set relationships (with the value counts), and player groups and formations |
@@ -245,7 +246,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | --- | --- | --- | --- | --- |
 | R14.1 | **Vehicles** | `vehicles.meta`, `carcols.meta` (mod kits, colours, lights, sirens), `carvariations.meta`, `vehiclelayouts.meta`, how an add-on car is defined. | M | **Done** (first pass): [guide](/docs/entities/vehicles/vehicles.md) |
 | R14.2 | **Peds** | `peds.meta`, ped personalities, ped component and prop data (`.ymt`), ped types and relationship defaults. | M | **Done** (first pass): [guide](/docs/entities/peds/peds.md) |
-| R14.3 | **Props and archetypes** | `.ytyp` archetypes, prop flags, dynamic and breakable props, doors and the door system. | M | Open |
+| R14.3 | **Props and archetypes** | `.ytyp` archetypes, prop flags, dynamic and breakable props, doors and the door system. | M | **Done** (first pass): [guide](/docs/entities/objects/props-and-doors.md) |
 | R14.4 | **Text and names in content** | How models get their display names (labels) and how add-on content registers them. | S | **Done** (first pass): [guide](/docs/entities/objects/text-and-names.md) |
 
 ## R15. The network layer and Rockstar's services

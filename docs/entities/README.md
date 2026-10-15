@@ -8,7 +8,7 @@ Peds, vehicles and objects: how a model becomes something in the game, and the r
 | --- | --- | --- |
 | R14.1 | **Vehicles** | **Done** (first pass): [guide](/docs/entities/vehicles/vehicles.md) |
 | R14.2 | **Peds** | **Done** (first pass): [guide](/docs/entities/peds/peds.md) |
-| R14.3 | **Props and archetypes** | Open |
+| R14.3 | **Props and archetypes** | **Done** (first pass): [guide](/docs/entities/objects/props-and-doors.md) |
 | R14.4 | **Text and names in content** | **Done** (first pass): [guide](/docs/entities/objects/text-and-names.md) |
 | R4.1 | **Population** | **Done** (first pass): [guide](/docs/entities/spawning/population.md) |
 | R4.2 | **Scenarios and ambient life** | **Done** (first pass): [guide](/docs/entities/spawning/scenarios.md) |
