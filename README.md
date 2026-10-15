@@ -68,7 +68,13 @@ gta5-under-the-hood/
 - [Story flow](docs/gameplay/missions/story-flow.md) and [mission anatomy](docs/gameplay/missions/mission-anatomy.md): how story missions unlock and how every mission script is built.
 - [Vehicle handling](docs/physics/vehicle-handling.md), [collision and materials](docs/physics/collision-and-materials.md), [weapons](docs/gameplay/weapons/weapons.md), [combat and perception](docs/ai/combat-and-perception.md).
 - [Runtime scripts](docs/core/runtime-scripts.md) and the [script launch graph](scripting/script-launch-graph.md): which scripts always run and who starts whom.
-- [Native usage](scripting/native-usage.md): which of the 1,013 scripts call each of 6,575 natives, 12.3 million calls, with a [per-namespace index](scripting/native-usage-index.md).
+- [Native usage](scripting/native-usage.md): which of the 1,013 scripts call each of 6,575 natives, 12.3 million calls, with a [per-namespace index](scripting/native-usage-index.md); and [natives as the engine API](scripting/natives-engine-api.md): the kinds of native and the contracts Rockstar keeps.
+- [Rockstar Creator internals](docs/online/creator-internals.md): how the content creator builds tracks and maps from props (placement ray, 1,883-prop catalogue, limits, bone snapping, the saved format), with the [job lobby](docs/online/job-lobby.md) that launches jobs.
+- [Saves](docs/core/saves.md) and [completion, autosave and achievements](docs/core/completion-and-autosave.md): the 38,592-value story save and the weights that make 100%.
+- UI: [pause menu](docs/ui/pause-menu.md), [Scaleform movies](docs/ui/scaleform.md), [HUD, colours and blips](docs/ui/hud-colours-blips.md), [story-mode UI](docs/ui/story-mode-ui.md).
+- Audio: [how audio is organised](docs/audio/how-audio-is-organised.md) and [speech and dialogue](docs/audio/speech-and-dialogue.md).
+- AI: [perception and events](docs/ai/perception-and-events.md), [navigation](docs/ai/navigation.md), [driving](docs/ai/driving.md), [police and services](docs/ai/police-and-services.md), [ambient life](docs/ai/ambient-life.md), [AI cost](docs/ai/ai-cost-and-lod.md).
+- Tools: the read-only [research tools](tools/README.md), including the update-check tool that shows what a game update changed and which of a mod's assets it removed.
 
 ## Ground rules
 
