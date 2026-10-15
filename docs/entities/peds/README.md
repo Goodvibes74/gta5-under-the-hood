@@ -8,6 +8,6 @@ Ped models and their metadata, appearance and clothing, ped physics.
 | --- | --- | --- |
 | R14.2 | **Peds** | **Done** (first pass): [guide](/docs/entities/peds/peds.md) |
 | R6.3 | **Appearance and clothing** | **Done** (first pass): [guide](/docs/entities/peds/appearance-and-clothing.md) |
-| R2.3 | **Ped physics and ragdoll** | Open |
+| R2.3 | **Ped physics and ragdoll** | **Done** (first pass): [guide](/docs/entities/peds/ragdoll.md) |
 
 Pick an open topic, claim it and send a pull request: see [CONTRIBUTING.md](/CONTRIBUTING.md). Write new pages with the [entry template](/templates/entry-template.md).
