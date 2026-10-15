@@ -18,6 +18,6 @@ Missing and wanted: `vehicles.meta`, `carcols.meta`, `carvariations.meta`, `peds
 
 | ID | Topic | Status |
 | --- | --- | --- |
-| R0.7 | **Archive and data file atlas** | Open (**priority**) |
+| R0.7 | **Archive and data file atlas** | **Done** (first pass): [guide](/file-formats/data-file-atlas.md) |
 
 Pick an open topic, claim it and send a pull request: see [CONTRIBUTING.md](/CONTRIBUTING.md). Write new pages with the [entry template](/templates/entry-template.md).

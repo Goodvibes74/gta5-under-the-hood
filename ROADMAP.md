@@ -8,7 +8,7 @@ Every research topic, its status, and what is left to find out. **98 of 107 topi
 
 - **New to this?** Want to make a mod first? Follow the [modding path](/modding/README.md). Want to research? Read [getting started](/docs/00-getting-started/README.md), then one finished guide in an area you like (for example [mission anatomy](/docs/gameplay/missions/mission-anatomy.md) or [vehicle handling](/docs/physics/vehicle-handling.md)) to see how a topic is written up.
 - **Good first topics** (S or M, mostly data files, no deep script reading): R2.6 time and weather, R3.8 health and arrest, R9.3 music and radio, R13.2 timecycles, R14.4 text and names, R8.3 text labels, R18.6 Windows and drivers.
-- **Priority jobs:** every open large topic, easiest first: R0.7, R12.1, R5.5, R13.4, R17.10, R7.6, R7.7, R7.8, R7.9. Why each is placed where it is: [README](/README.md#large-jobs-priority-pick-one).
+- **Priority jobs:** every open large topic, easiest first: R12.1, R5.5, R13.4, R17.10, R7.6, R7.7, R7.8, R7.9. Why each is placed where it is: [README](/README.md#large-jobs-priority-pick-one).
 - **Topics that unblock others:** R0.8 the native namespace map, R0.7 the data file atlas, R17.1 the AI architecture.
 - **Second passes:** every finished guide ends with an "Open questions" table. Each row is a ready-made small task.
 
@@ -20,6 +20,7 @@ Every research topic, its status, and what is left to find out. **98 of 107 topi
 | R0.2 | [Runtime scripts](/docs/core/runtime-scripts.md): boot order, the always-running scripts, stack pools, global blocks |
 | R0.4 | [Global variable map](/docs/core/global-map.md): the 21 global blocks, the busiest globals and their roles, story mode's traced globals |
 | R0.6 | [Research toolkit](/docs/00-getting-started/research-tools.md) (first pass): all eight tools, techniques for binary metadata, hash names, archive-wide counts, map files, text and literal arguments, and a "research a topic in an hour" checklist |
+| R0.7 | [Archive and data file atlas](/file-formats/data-file-atlas.md) (first pass): 5,290 archives and 389,555 files of 57 kinds, counted by base, update, DLC and audio, with what each type is, what reads it and its guide |
 | R0.8 | [Native namespace map](/scripting/native-namespace-map.md): all 45 namespaces with size, scripts, calls, what each covers and which topic owns it |
 | R1.4 | [Memory, pools and limits](/docs/core/memory-and-pools.md): the pools in `gameconfig.xml`, the 256-ped and 300-vehicle limits, what limit adjusters change, how scripts stay under the limits |
 | R1.5 | [Streaming](/docs/core/streaming.md): request, check, release for every asset type; Rockstar polls instead of blocking; load scenes, focus, streaming volumes, SRLs, IPLs, interiors, LOD and population budgets |
@@ -125,7 +126,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R0.4 | **Global variable map** | Which global blocks exist, which script registers each (`standard_global_init`, `globals_fmmc_struct_registration`, `tunables_registration`), and what the big blocks hold (player data, tunables, flow flags). Read only. | L | **Done** (first pass): [guide](/docs/core/global-map.md) |
 | R0.5 | **Script launch graph** | Who starts whom (`REQUEST_SCRIPT` and `START_NEW_SCRIPT` with stack sizes), and the script brains placed in the world (`ambient*.ipl`, `scriptbrains` data), drawn as one graph for story and one for Online. | M | **Done** (first pass): [guide](/scripting/script-launch-graph.md) |
 | R0.6 | **Research toolkit guide** | Update guide 5 with the new tools and a "how to research a new topic in an hour" checklist. | S | **Done** (first pass): [guide](/docs/00-getting-started/research-tools.md) |
-| R0.7 | **Archive and data file atlas** | List every archive (root, `update/`, all 89 DLC packs) and every file type inside them with counts (`.meta`, `.ymt`, `.ytyp`, `.ymap`, `.ydr`, `.yft`, `.ytd`, `.ycd`, `.ynv`, `.awc`, `.gfx`, `.gxt2`, `.cut`, `.rel`, ...), what each type is, which engine system reads it, and which topic covers it. The data-side twin of the script catalog. | L | Open (**priority**) |
+| R0.7 | **Archive and data file atlas** | List every archive (root, `update/`, all 89 DLC packs) and every file type inside them with counts (`.meta`, `.ymt`, `.ytyp`, `.ymap`, `.ydr`, `.yft`, `.ytd`, `.ycd`, `.ynv`, `.awc`, `.gfx`, `.gxt2`, `.cut`, `.rel`, ...), what each type is, which engine system reads it, and which topic covers it. The data-side twin of the script catalog. | L | **Done** (first pass): [guide](/file-formats/data-file-atlas.md) |
 | R0.8 | **Native namespace coverage map** | Every native namespace (about 40) with its size, how many scripts use it, and which topic explains it, so no engine API family is left unread. | S | **Done** (first pass): [guide](/scripting/native-namespace-map.md) |
 
 ## R1. Engine runtime: how the game runs scripts and data
