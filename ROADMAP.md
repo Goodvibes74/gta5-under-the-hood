@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **101 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **102 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -8,7 +8,7 @@ Every research topic, its status, and what is left to find out. **101 of 107 top
 
 - **New to this?** Want to make a mod first? Follow the [modding path](/modding/README.md). Want to research? Read [getting started](/docs/00-getting-started/README.md), then one finished guide in an area you like (for example [mission anatomy](/docs/gameplay/missions/mission-anatomy.md) or [vehicle handling](/docs/physics/vehicle-handling.md)) to see how a topic is written up.
 - **Good first topics** (S or M, mostly data files, no deep script reading): R2.6 time and weather, R3.8 health and arrest, R9.3 music and radio, R13.2 timecycles, R14.4 text and names, R8.3 text labels, R18.6 Windows and drivers.
-- **Priority jobs:** every open large topic, easiest first: R13.4, R17.10, R7.6, R7.7, R7.8, R7.9. Why each is placed where it is: [README](/README.md#large-jobs-priority-pick-one).
+- **Priority jobs:** every open large topic, easiest first: R17.10, R7.6, R7.7, R7.8, R7.9. Why each is placed where it is: [README](/README.md#large-jobs-priority-pick-one).
 - **Topics that unblock others:** R0.8 the native namespace map, R0.7 the data file atlas, R17.1 the AI architecture.
 - **Second passes:** every finished guide ends with an "Open questions" table. Each row is a ready-made small task.
 
@@ -91,6 +91,7 @@ Every research topic, its status, and what is left to find out. **101 of 107 top
 | R13.1 | [Rendering, visual settings and LOD](/docs/rendering/rendering-and-visual-settings.md) (first pass): the deferred pipeline at a high level, visualsettings.dat's 1,144 values by group, LOD lights (250, 750, 2,500 m; 200 ymaps), distant lights, LOD distances and scale, and the rendering natives scripts use |
 | R13.2 | [Timecycle and post effects](/docs/rendering/timecycle-and-post-effects.md) (first pass): weather timecycles, the 1,072 timecycle modifiers and what they change, the 252 animated post effects as stacks of modifiers, how scripts set and clear them |
 | R13.3 | [Particles and decals](/docs/rendering/particles-and-decals.md) (first pass): the 364 particle dictionaries and their quality copies, the effect data files, the 259 decal definitions, the pool and per-script limits, how scripts load, start and clean up effects and decals |
+| R13.4 | [Animation](/docs/rendering/animation.md) (first pass): the 24,692 clip dictionaries and the 51 base clip archives by prefix, the 4,526 clip sets with their streaming rules and memory groups, move networks (93 base, 31 patched) and the 32 scripts that drive one, facial moods and expressions, get-up sets, ambient conditional animations, and how Rockstar calls TASK_PLAY_ANIM (blend, duration and flag bits over 7,340 calls) and synchronized scenes |
 | R13.5 | [Cameras](/docs/rendering/cameras.md) (first pass): the 1,545 camera settings in `cameras.ymt` and the 10 directors, the 4 script camera kinds and how missions use them, the gameplay camera, hints, view modes, shakes and fades |
 | R14.1 | [Vehicles](/docs/entities/vehicles/vehicles.md) (first pass): 901 vehicle models by type and class, the 190 flags, layouts, 602 mod kits, carvariations, what an add-on car needs, and how scripts spawn and customise vehicles |
 | R14.2 | [Peds](/docs/entities/peds/peds.md) (first pass): 1,109 ped models and their name prefixes, what one `peds.ymt` entry links to (type, relationship group, personality, combat, abilities), component data, and how scripts create, dress and set up peds |
@@ -254,7 +255,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R13.1 | **Rendering and graphics settings** | The render pipeline at a high level, what each graphics setting costs on the UHD 620, LOD and draw distance, `visualsettings.dat`, what vremastered changes. | M | **Done** (first pass): [guide](/docs/rendering/rendering-and-visual-settings.md) |
 | R13.2 | **Timecycle and post effects** | Timecycle files and modifiers, screen effects (`ANIMPOSTFX_*`), how scripts change the look of a scene. | S | **Done** (first pass): [guide](/docs/rendering/timecycle-and-post-effects.md) |
 | R13.3 | **Particles and decals** | Particle assets (`ptfx`), how scripts start effects, decals and their limits (what the DecalsLimit patch changes). | S | **Done** (first pass): [guide](/docs/rendering/particles-and-decals.md) |
-| R13.4 | **Animation** | Clip dictionaries (`.ycd`), how tasks play animations, synchronized scenes, move networks, facial animation, scenario animations. | L | Open (**priority**) |
+| R13.4 | **Animation** | Clip dictionaries (`.ycd`), how tasks play animations, synchronized scenes, move networks, facial animation, scenario animations. | L | **Done** (first pass): [guide](/docs/rendering/animation.md) |
 | R13.5 | **Cameras** | Script cameras, the gameplay camera, cinematic cameras, camera shakes, how cutscenes and the phone camera use them. | S | **Done** (first pass): [guide](/docs/rendering/cameras.md) |
 
 ## R14. Content definitions: vehicles, peds, weapons and props
