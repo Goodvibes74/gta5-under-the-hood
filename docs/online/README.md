@@ -14,7 +14,7 @@ How GTA Online is built on top of the same engine: sessions, the main script, st
 | R7.6 | **Properties** | **Done** (first pass): [guide](/docs/online/properties.md) |
 | R7.7 | **Organisations and businesses** | **Done** (first pass): [guide](/docs/online/organisations-and-businesses.md) |
 | R7.8 | **Heists** | **Done** (first pass): [guide](/docs/online/heists.md) |
-| R7.9 | **DLC storylines** | Open (**priority**) |
+| R7.9 | **DLC storylines** | **Done** (first pass): [guide](/docs/online/dlc-storylines.md) |
 | R7.10 | **Interaction menu, phone and apps** | **Done** (first pass): [guide](/docs/online/interaction-menu-phone-apps.md) |
 | R7.11 | **Rockstar Creator internals** | **Done** (first pass): [guide](/docs/online/creator-internals.md) |
 | R5.7 | **Systems that clash with Online mode** | **Done** (first pass): [guide](/docs/online/story-systems-in-online-mode.md) |

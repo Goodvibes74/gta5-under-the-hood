@@ -62,7 +62,7 @@ gta5-under-the-hood/
 
 ## Status
 
-106 of 107 research topics have a first-pass guide, plus a [step-by-step modding path](modding/README.md) for beginners, the Online guides, the DLC inventory and the scripting guides. The [roadmap](ROADMAP.md) lists every topic, what's done, and where to begin. Highlights so far:
+All 107 research topics have a first-pass guide, plus a [step-by-step modding path](modding/README.md) for beginners, the Online guides, the DLC inventory and the scripting guides. The [roadmap](ROADMAP.md) lists every topic, what's done, and where to begin. Highlights so far:
 
 - [Inside freemode](docs/online/07-freemode.md): GTA Online's 1.47-million-line main script, its state machines and ~180 systems.
 - [Story flow](docs/gameplay/missions/story-flow.md) and [mission anatomy](docs/gameplay/missions/mission-anatomy.md): how story missions unlock and how every mission script is built.
@@ -79,7 +79,7 @@ gta5-under-the-hood/
 
 ## Large jobs (priority): pick one
 
-The topics still open are all large (a week or more each). They are listed easiest first, by how much of the groundwork the finished guides already cover. **All of them are priority jobs**: take them in this order, starting with 1 to 5. Pick one, claim it as [CONTRIBUTING.md](CONTRIBUTING.md) explains (an issue titled with its ID), and work on it in its own branch. Details for each are in the [roadmap](ROADMAP.md).
+Every large topic now has a first pass (each took a week or more). They are listed in the order they were taken, easiest first, by how much of the groundwork the earlier guides covered. Second passes are welcome: each guide ends with an "Open questions" table; claim one as [CONTRIBUTING.md](CONTRIBUTING.md) explains and work on it in its own branch.
 
 | # | Job | Why it's at this place |
 | ---: | --- | --- |
@@ -94,7 +94,7 @@ The topics still open are all large (a week or more each). They are listed easie
 | 9 | **R7.6 Properties** (priority, **done**: [guide](docs/online/properties.md)) | Large Online property scripts and a property table to decode |
 | 10 | **R7.7 Organisations and businesses** (priority, **done**: [guide](docs/online/organisations-and-businesses.md)) | Many `gb_*` work scripts and the business computer apps |
 | 11 | **R7.8 Heists** (priority, **done**: [guide](docs/online/heists.md)) | The heist controllers are among the biggest scripts; every heist differs |
-| 12 | **R7.9 DLC storylines** (priority) | The broadest job: every DLC's story, much of it cloud content not in the local files |
+| 12 | **R7.9 DLC storylines** (priority, **done**: [guide](docs/online/dlc-storylines.md)) | The broadest job: every DLC's story, much of it cloud content not in the local files |
 
 Online jobs (9 to 12) are research only: read the scripts and files, never run mods in GTA Online.
 
