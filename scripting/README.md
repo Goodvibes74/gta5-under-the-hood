@@ -10,6 +10,7 @@ The script language the game is written in, the natives, and the ways mods run c
 | R0.3 | **Native names for the native tables** | **Done** (first pass): [guide](/scripting/native-usage.md), [index](/scripting/native-usage-index.md) |
 | R0.5 | **Script launch graph** | Started: [launch graph](/scripting/script-launch-graph.md) |
 | R0.8 | **Native namespace coverage map** | **Done** (first pass): [guide](/scripting/native-namespace-map.md) |
+| R1.3 | **Natives as the engine API** | **Done** (first pass): [guide](/scripting/natives-engine-api.md) |
 | R12.4 | **Languages for modding GTA V** | **Done** (first pass): [guide](/scripting/languages.md) |
 
 Pick an open topic, claim it and send a pull request: see [CONTRIBUTING.md](/CONTRIBUTING.md). Write new pages with the [entry template](/templates/entry-template.md).

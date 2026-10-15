@@ -8,7 +8,7 @@ The game loop and the scripts that keep it running, memory pools and limits, str
 | --- | --- | --- |
 | R0.2 | **Script cards for the runtime scripts** | **Done** (first pass): [guide](/docs/core/runtime-scripts.md) |
 | R0.4 | **Global variable map** | **Done** (first pass): [guide](/docs/core/global-map.md) |
-| R1.3 | **Natives as the engine API** | Open |
+| R1.3 | **Natives as the engine API** | **Done** (first pass): [guide](/scripting/natives-engine-api.md) |
 | R1.4 | **Memory, pools and limits** | **Done** (first pass): [guide](/docs/core/memory-and-pools.md) |
 | R1.5 | **Streaming** | **Done** (first pass): [guide](/docs/core/streaming.md) |
 | R1.6 | **Archives and the content system** | **Done** (first pass): [guide](/docs/core/archives-and-content.md) |
