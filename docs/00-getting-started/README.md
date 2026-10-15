@@ -6,7 +6,7 @@ How the game boots, the tools you need, where the game's own scripts can be read
 
 | ID | Topic | Status |
 | --- | --- | --- |
-| R0.6 | **Research toolkit guide** | Open |
+| R0.6 | **Research toolkit guide** | **Done** (first pass): [guide](/docs/00-getting-started/research-tools.md) |
 | R1.2 | **Boot and script control** | **Done** (first pass): [guide](/docs/00-getting-started/boot.md) |
 
 Pick an open topic, claim it and send a pull request: see [CONTRIBUTING.md](/CONTRIBUTING.md). Write new pages with the [entry template](/templates/entry-template.md).

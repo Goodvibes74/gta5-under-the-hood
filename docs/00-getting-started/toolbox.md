@@ -71,6 +71,8 @@ Add one row per tool or resource, newest at the bottom. Keep it to things you ac
 | Tool or resource | Version | Link (official page only) | What it helped with | Used for topic | Added by |
 | --- | --- | --- | --- | --- | --- |
 | *Example:* CodeWalker | 30 dev46 | https://github.com/dexyfex/CodeWalker/releases | Extracting `handling.meta` and `materials.dat` from the encrypted archives | R2.1, R2.2 | @Goodvibes74 |
+| CodeWalker.Core `MetaXml`, `YmapFile` and `RpfFile` from PowerShell | 30 dev46 | https://github.com/dexyfex/CodeWalker/releases | Converting binary `.ymt` and `.rel` files to XML, counting car generators in every `.ymap`, listing every archive ([research tools](/docs/00-getting-started/research-tools.md)) | R2.5, R4.3, R9.3, R13.2, R13.3, R13.5 | @Goodvibes74 |
+| ScriptHookVDotNet's `GTA.Control` enum (read from metadata) | 3.x | https://github.com/scripthookvdotnet/scripthookvdotnet | Names for control IDs 0 to 364 | R6.4 | @Goodvibes74 |
 
 **Rules for this table**
 
