@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **94 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **95 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -79,6 +79,7 @@ Every research topic, its status, and what is left to find out. **94 of 107 topi
 | R9.3 | [Music and radio](/docs/audio/music-and-radio.md) (first pass): the radio stations in the audio game data and their names, hidden interior stations, 1,547 mission music events, how scripts tune, lock and duck the radio, and how music is added or replaced |
 | R11 | [Surviving game updates](/docs/core/surviving-updates.md): what an update breaks, the update-day checklist, rules for update-proof code, how to find risky code in a mod |
 | R11.2 | [Update-check tool](/tools/README.md) (first pass): `tools/update-check.ps1` snapshots the game version, archives and DLC packs, diffs against an older snapshot, and checks a mod's asset names against 485,852 archive file names |
+| R11.3 | [Protecting a working install](/docs/core/surviving-updates.md#83a-protecting-a-working-install-r113) (first pass): what an update replaces (with sizes), a 2.5 GB last-known-good backup, delaying updates in Steam, Epic and the Rockstar launcher, and rolling back |
 | R12.3 | [Ideas list](/modding/ideas.md) (first pass): 22 story-mode mod ideas from the finished guides, each with what it touches, its guide and a size (proposals awaiting the maintainer's review before any becomes a roadmap topic) |
 | R12.4 | [Languages for modding](/scripting/languages.md): what to learn for which kind of mod, and in what order |
 | R12.6 | [Modding path](/modding/README.md): from nothing to a first data edit and a first C#, Lua and C++ mod, debugging, and releasing a mod safely |
@@ -235,7 +236,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | --- | --- | --- | --- | --- |
 | R11.1 | **What an update breaks** | ScriptHookV's version gate, native tables, memory offsets, global indices, stale modified archives, missing DLC entries, renamed assets. | M | **Done** (first pass): [guide](/docs/core/surviving-updates.md) |
 | R11.2 | **An update-check tool** | Compare the game version, re-scan DLC packs and scripts, and check every asset name a mod uses against the new build. | M | **Done** (first pass): [tool](/tools/README.md), [guide](/docs/core/surviving-updates.md) |
-| R11.3 | **Protecting a working install** | Delaying updates, backing up the exe and `update/`, rolling back. | S | **Started**: [guide](/docs/core/surviving-updates.md) |
+| R11.3 | **Protecting a working install** | Delaying updates, backing up the exe and `update/`, rolling back. | S | **Done** (first pass): [guide](/docs/core/surviving-updates.md#83a-protecting-a-working-install-r113) |
 | R11.4 | **Update-day checklist** | The order of steps after an update. | S | **Done** (first pass): [guide](/docs/core/surviving-updates.md) |
 | R11.5 | **Rules for update-proof code** | Natives over memory, data files over hard-coded names, timeouts and logging when an asset is missing. | S | **Done** (first pass): [guide](/docs/core/surviving-updates.md) |
 
