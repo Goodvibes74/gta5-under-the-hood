@@ -21,6 +21,8 @@ You need a legitimately purchased copy of GTA V for PC. Everything else on this 
 | 9 | [Next steps and sharing your mod](09-next-steps-and-sharing.md) | Where to go deeper, and how to release a mod safely | 20 min |
 
 
+**Know what you want to make but not what to read?** The [mod map](mod-map.md) matches 13 kinds of mod (graphics, vehicles, liveries, police, skins, weapons, audio, missions, heists, saves and more) to the guides, files and natives for each, and lists what this repo doesn't cover yet.
+
 **Looking for a project after the path?** The [ideas list](ideas.md) has 22 story-mode mods the research shows are possible, each with its guide and a size.
 
 **Building a particular kind of mod?** The [cookbook](cookbook/README.md) has one page per kind (spawning and AI, missions, menus, shops, vehicles, weapons, world, UI, audio) with the natives, files, traps and a minimal pattern.
