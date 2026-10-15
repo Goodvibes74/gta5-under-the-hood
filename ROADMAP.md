@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **59 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **60 of 106 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -40,6 +40,7 @@ Every research topic, its status, and what is left to find out. **59 of 106 topi
 | R4.1 | [Population](/docs/entities/spawning/population.md) (first pass): 1,321 zone boxes, 1,310 zones with their schedules and attributes, the 116 population schedules (12 slots, weekday only), ped and vehicle groups, and the natives that thin, empty or reshape the crowd |
 | R4.3 | [Vehicle generators and traffic](/docs/entities/spawning/vehicle-generators-and-traffic.md) (first pass): 22,506 car generators in the map files, the 116 population schedules and 55 vehicle groups, trains (2 of 12 tracks run), the 14 dispatch services, how scripts thin and block traffic |
 | R4.4 | [Random events](/docs/world/random-events.md) (first pass): the 38 `re_*` scripts, the 105 world brain points in `ambient.ipl` (12 without a script), the shared launch check (speed, height, 150-second gap, unlocks, cooldowns, character), and how to block or add events |
+| R4.5 | [Interiors and IPLs](/docs/world/interiors-and-ipls.md) (first pass): 386 interiors with rooms, portals and 2,150 entity sets, 353 IPL names scripts request, how interiors are pinned, versioned and culled, and how Online interiors open offline |
 | R4.6 | [Map data](/docs/world/map-data.md) (first pass): 19,362 ymaps and 1.69 million entity placements by source, the other map file types, LOD naming, how packs and patches add or replace map parts, IPLs, and the restricted-area scripts |
 | R5.1 | [Story flow](/docs/gameplay/missions/story-flow.md): the 94-mission table and the flow program |
 | R5.2 | [Mission anatomy](/docs/gameplay/missions/mission-anatomy.md): stages, checkpoints, retry, fail, pass, cleanup |
@@ -135,7 +136,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R4.2 | **Scenarios and ambient life** | Scenario points and types (sitting, smoking, guards), ambient animations, ambient speech. | M | Open |
 | R4.3 | **Vehicle generators and traffic** | Parked car generators, traffic spawning, emergency vehicles, trains, boats and planes on routes. | S | **Done** (first pass): [guide](/docs/entities/spawning/vehicle-generators-and-traffic.md) |
 | R4.4 | **Random events** (`re_*`, 41 scripts) | How random events are picked and launched, their conditions and cooldowns, what each one does. | M | **Done** (first pass): [guide](/docs/world/random-events.md) |
-| R4.5 | **Interiors and IPLs** | Which interiors exist, how they load (IPLs, entity sets, `interiorproxies`), the Online interiors and how to open them offline. | M | Open |
+| R4.5 | **Interiors and IPLs** | Which interiors exist, how they load (IPLs, entity sets, `interiorproxies`), the Online interiors and how to open them offline. | M | **Done** (first pass): [guide](/docs/world/interiors-and-ipls.md) |
 | R4.6 | **Map data** | `ymap` and `ytyp` structure, LOD, how map mods (forest packs, vremastered) add or replace parts of the map, restricted areas. | M | **Done** (first pass): [guide](/docs/world/map-data.md) |
 
 ## R5. Story mode
