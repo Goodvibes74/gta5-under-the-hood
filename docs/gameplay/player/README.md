@@ -12,6 +12,6 @@ Stats and skills, flying and swimming, health and death, character switching, co
 | R3.8 | **Health, armour, death and arrest** | **Done** (first pass): [guide](/docs/gameplay/player/health-armour-death.md) |
 | R6.1 | **Character switching** | **Done** (first pass): [guide](/docs/gameplay/player/character-switching.md) |
 | R6.2 | **Respawn, death and arrest** | **Done** (first pass): [guide](/docs/gameplay/player/respawn-death-and-arrest.md) |
-| R6.4 | **Controls and camera** | Open |
+| R6.4 | **Controls and camera** | **Done** (first pass): [guide](/docs/gameplay/player/controls-and-camera.md) |
 
 Pick an open topic, claim it and send a pull request: see [CONTRIBUTING.md](/CONTRIBUTING.md). Write new pages with the [entry template](/templates/entry-template.md).
