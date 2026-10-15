@@ -22,6 +22,7 @@ You need a legitimately purchased copy of GTA V for PC. Everything else on this 
 
 
 **Looking for a project after the path?** The [ideas list](ideas.md) has 22 story-mode mods the research shows are possible, each with its guide and a size.
+
 Steps 5, 6 and 7 are alternatives. Most people do 5 and stop there for a while; 6 is a quick detour; 7 is for when you need speed or low-level access. Step 4 needs no programming and is a good first win.
 
 ## Which step for which idea
