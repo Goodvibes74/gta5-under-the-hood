@@ -7,7 +7,7 @@ Graphics settings, timecycles and post effects, particles and decals, animation,
 | ID | Topic | Status |
 | --- | --- | --- |
 | R13.1 | **Rendering and graphics settings** | Open |
-| R13.2 | **Timecycle and post effects** | Open |
+| R13.2 | **Timecycle and post effects** | **Done** (first pass): [guide](/docs/rendering/timecycle-and-post-effects.md) |
 | R13.3 | **Particles and decals** | Open |
 | R13.4 | **Animation** | Open |
 | R13.5 | **Cameras** | Open |
