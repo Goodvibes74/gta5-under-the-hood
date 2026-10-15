@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **95 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **96 of 107 topics** have a first-pass guide. Pick any **Open** topic, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -8,7 +8,7 @@ Every research topic, its status, and what is left to find out. **95 of 107 topi
 
 - **New to this?** Want to make a mod first? Follow the [modding path](/modding/README.md). Want to research? Read [getting started](/docs/00-getting-started/README.md), then one finished guide in an area you like (for example [mission anatomy](/docs/gameplay/missions/mission-anatomy.md) or [vehicle handling](/docs/physics/vehicle-handling.md)) to see how a topic is written up.
 - **Good first topics** (S or M, mostly data files, no deep script reading): R2.6 time and weather, R3.8 health and arrest, R9.3 music and radio, R13.2 timecycles, R14.4 text and names, R8.3 text labels, R18.6 Windows and drivers.
-- **Priority jobs:** every open large topic, easiest first: R3.7, R17.6, R17.1, R0.7, R12.1, R5.5, R13.4, R17.10, R7.6, R7.7, R7.8, R7.9. Why each is placed where it is: [README](/README.md#large-jobs-priority-pick-one).
+- **Priority jobs:** every open large topic, easiest first: R17.6, R17.1, R0.7, R12.1, R5.5, R13.4, R17.10, R7.6, R7.7, R7.8, R7.9. Why each is placed where it is: [README](/README.md#large-jobs-priority-pick-one).
 - **Topics that unblock others:** R0.8 the native namespace map, R0.7 the data file atlas, R17.1 the AI architecture.
 - **Second passes:** every finished guide ends with an "Open questions" table. Each row is a ready-made small task.
 
@@ -43,6 +43,7 @@ Every research topic, its status, and what is left to find out. **95 of 107 topi
 | R3.4 | [Flying](/docs/gameplay/player/flying.md) (first pass): the 30-field flying handling block and its values for the 22 base aircraft, landing gear, VTOL, countermeasures and turbulence natives, AI flight tasks, parachuting, the 12-lesson flight school |
 | R3.5 | [Swimming and diving](/docs/gameplay/player/swimming-and-diving.md) (first pass): breath 10 to 40 s and stamina 10 to 90 s, drowning, scuba gear and its 5 models, dive heights, the 60-second sea edge, how missions remove the breath limit, boat and sub hooks |
 | R3.6 | [Player skills and abilities](/docs/gameplay/player/skills-and-abilities.md) (first pass): the seven 0-100 skill stats per character, the ranges the engine maps them to, the 17 special ability entries with their numbers, and how missions control the abilities |
+| R3.7 | [Wanted level and police](/docs/ai/wanted-level-and-police.md) (first pass): the 42 crimes and which must be witnessed, heard or phoned in, the witness personalities, crime points per star, wanted difficulty and decay per star, and the wanted natives scripts use |
 | R3.8 | [Health, armour, death and arrest](/docs/gameplay/player/health-armour-death.md) (first pass): the 10 health configs and their thresholds (the 100 floor), which peds use which, armour and Ammu-Nation, regeneration, the death and arrest checks, how scripts change health |
 | R3.9 | [Economy and pickups](/docs/gameplay/economy/economy-and-pickups.md) (first pass): story cash stats and spending categories, the 92 pickup types and 74 rewards, the pickups story mode places, collectables, robberies, ATMs and the stock market scripts, and the pickup natives |
 | R4.1 | [Population](/docs/entities/spawning/population.md) (first pass): 1,321 zone boxes, 1,310 zones with their schedules and attributes, the 116 population schedules (12 slots, weekday only), ped and vehicle groups, and the natives that thin, empty or reshape the crowd |
@@ -159,7 +160,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R3.4 | **Flying** | Aircraft and helicopter flight model, landing gear, countermeasures, parachuting and skydiving, the flight-school skill. | M | **Done** (first pass): [guide](/docs/gameplay/player/flying.md) |
 | R3.5 | **Swimming and diving** | Stamina and breath, underwater rules, scuba gear, boats and submarines. | S | **Done** (first pass): [guide](/docs/gameplay/player/swimming-and-diving.md) |
 | R3.6 | **Player skills and abilities** | Stamina, shooting, strength, stealth, flying, driving, lung capacity (story stats vs Online stats), special abilities, and how stats change the mechanics above. | M | **Done** (first pass): [guide](/docs/gameplay/player/skills-and-abilities.md) |
-| R3.7 | **Wanted level and police** | How crimes are detected and reported, wanted level rules, dispatch (`dispatch.meta`, service types), police tactics, how police overhaul mods replace each piece. | L | Open (**priority**) |
+| R3.7 | **Wanted level and police** | How crimes are detected and reported, wanted level rules, dispatch (`dispatch.meta`, service types), police tactics, how police overhaul mods replace each piece. | L | **Done** (first pass): [guide](/docs/ai/wanted-level-and-police.md) |
 | R3.8 | **Health, armour, death and arrest** | Health and armour values, regeneration, injury, how death and arrest are handled (respawn controller, hospitals, police stations). | S | **Done** (first pass): [guide](/docs/gameplay/player/health-armour-death.md) |
 | R3.9 | **Economy and pickups** | Money, prices, ATMs, robberies, pickups and collectables, story-mode stock market (`stock_controller`). | M | **Done** (first pass): [guide](/docs/gameplay/economy/economy-and-pickups.md) |
 
