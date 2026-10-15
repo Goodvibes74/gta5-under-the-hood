@@ -164,5 +164,5 @@ The engine has a fixed pool for weapon definitions and components. Community plu
 | Which mod installed the weapon overhaul (and the other 93 replaced files) | Ask the user; R10.1 |
 | The hatchet's extra condition, and whether the Gusenberg really waits for `finale_credits` | R3.1 second pass |
 | How story stats and Online rank change `AmmoMax` | R3.6 |
-| Explosion damage and radius per explosive (`explosion.meta`) | R2.5 |
+| Explosion damage and radius per explosive (`explosion.meta`) | R2.5: [fire, explosions and projectiles](/docs/physics/fire-explosions-projectiles.md) |
 | How aim assist and lock-on work for the player versus AI | R3.2 |
