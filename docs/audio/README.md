@@ -7,7 +7,7 @@ Sound banks, speech and dialogue, music and radio.
 | ID | Topic | Status |
 | --- | --- | --- |
 | R9.1 | **How audio is organised** | **Done** (first pass): [guide](/docs/audio/how-audio-is-organised.md) |
-| R9.2 | **Speech and dialogue** | Open |
+| R9.2 | **Speech and dialogue** | **Done** (first pass): [guide](/docs/audio/speech-and-dialogue.md) |
 | R9.3 | **Music and radio** | **Done** (first pass): [guide](/docs/audio/music-and-radio.md) |
 
 Pick an open topic, claim it and send a pull request: see [CONTRIBUTING.md](/CONTRIBUTING.md). Write new pages with the [entry template](/templates/entry-template.md).
