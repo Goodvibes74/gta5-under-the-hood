@@ -260,6 +260,7 @@ Downloadable saves with full completion, money or a set progression point. This 
 | [Surviving updates](/docs/core/surviving-updates.md) | Use names, not numbers, so the mod outlasts patches |
 | [Next steps and sharing](09-next-steps-and-sharing.md) | How to release a mod safely: your own work only, no Rockstar files |
 | [Glossary](/docs/00-getting-started/glossary.md) | Handle, hash, native, pack |
+| [NativeDB](https://nativedb.dotindustries.dev/gta5/natives) | Look up any native's name, parameters and community notes; the natives named in every section above are searchable here |
 | [Tools and resources](/docs/00-getting-started/toolbox.md) | Every tool, with its official link |
 
 ## Gaps in this repo (what the map cannot point to yet)
