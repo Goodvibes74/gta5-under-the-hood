@@ -32,3 +32,5 @@ examples/obj/
 Thumbs.db
 .vs/
 .vscode/
+# Knowledge-graph tool output (graphify) and its cache
+graphify-out/
