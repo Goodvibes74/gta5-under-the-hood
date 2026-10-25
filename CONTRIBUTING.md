@@ -24,7 +24,7 @@ Every piece of research has an **ID** in the [roadmap](/ROADMAP.md) (`R1.4`, `R1
 | 3. Write | Copy [`templates/entry-template.md`](/templates/entry-template.md) into the right folder, fill every section, mark Verified and Known, end with "What this means for modders" and "Open questions". Add any tool or resource you used that isn't listed yet to [tools and resources](/docs/00-getting-started/toolbox.md#contributed-tools-and-resources) (link only) | The page reads on its own |
 | 4. Pull request | Push the branch and open a PR (template below). Update the roadmap row to **Done (first pass)** with a link, and the folder's README table | Checks pass, review done |
 | 5. Merge | A maintainer squash-merges into `main` | The topic is on `main` |
-| 6. Second pass (optional) | Anyone can pick rows from a guide's "Open questions" table as a new small branch | |
+| 6. Second pass (optional) | Anyone can pick rows from a guide's "Open questions" table as a new small branch. Every row has an ID in [OPEN_QUESTIONS.md](/OPEN_QUESTIONS.md); use it in the issue title and mark the row there when it is answered | The row in OPEN_QUESTIONS.md says Answered |
 
 ### Branch names
 

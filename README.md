@@ -84,7 +84,7 @@ Alongside the 108 first-pass guides there's a [step-by-step modding path](moddin
 
 ## Large jobs (priority): pick one
 
-Every large topic now has a first pass (each took a week or more). They are listed in the order they were taken, easiest first, by how much of the groundwork the earlier guides covered. Second passes are welcome: each guide ends with an "Open questions" table; claim one as [CONTRIBUTING.md](CONTRIBUTING.md) explains and work on it in its own branch.
+Every large topic now has a first pass (each took a week or more). They are listed in the order they were taken, easiest first, by how much of the groundwork the earlier guides covered. Second passes are welcome: each guide ends with an "Open questions" table, and all of them are collected in [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md); claim one as [CONTRIBUTING.md](CONTRIBUTING.md) explains and work on it in its own branch.
 
 | # | Job | Why it's at this place |
 | ---: | --- | --- |

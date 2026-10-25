@@ -45,3 +45,4 @@ A public reference on how **Grand Theft Auto V (PC, Legacy edition, build 1.0.37
 | `tools/` | Read-only research tools (PowerShell), explained in `tools/README.md` |
 | `templates/` | The entry template |
 | `ROADMAP.md` | Every topic and its status |
+| `OPEN_QUESTIONS.md` | Every guide's open questions with IDs, by category: the second-pass tracker. Update it when you answer or add a question |
