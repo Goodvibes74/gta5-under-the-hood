@@ -93,6 +93,6 @@ A full per-pack list of shop files is still to make (10.7).
 | --- | --- |
 | Inside `clothes_shop_mp`: menu structure, how it applies an item, what it saves | Second pass |
 | Inside `hairdo_shop_mp`: which overlays and tints it offers per gender | Second pass |
-| The overlay index list (0 to 12) and micro-morph list (0 to 19), checked against the creator | Second pass |
+| The overlay index list (0 to 12) and micro-morph list (0 to 19), checked against the creator | Answered from the creator's tables in [the Online character creator](/docs/gameplay/player/online-character-creator.md) (R6.5); in-game check still open |
 | The restriction tag names (hashes to names) | Second pass |
 | How many packs carry shop files, and how many items in all (a one-process scan of all 89 packs; one CodeWalker start per pack is too slow) | Second pass, extend [`tools/dlc-scan.ps1`](/tools/README.md) |

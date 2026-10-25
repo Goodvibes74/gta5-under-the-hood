@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **All 107 topics** have a first-pass guide. Pick any topic for a second pass, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **All 108 topics** have a first-pass guide. Pick any topic for a second pass, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -65,6 +65,7 @@ Every research topic, its status, and what is left to find out. **All 107 topics
 | R6.2 | [Respawn, death and arrest](/docs/gameplay/player/respawn-death-and-arrest.md) (first pass): the 5 hospitals and 7 police stations, the death charge (5%, max $5,000) and the arrest charge and weapon loss, what a respawn resets, how missions hold the restart, Online respawn |
 | R6.3 | [Appearance and clothing](/docs/entities/peds/appearance-and-clothing.md) (first pass): component slots and prop anchors, freemode faces, tattoos and shirt prints, the shop catalogue files and the natives that read them, the shop scripts |
 | R6.4 | [Controls and camera](/docs/gameplay/player/controls-and-camera.md) (first pass): control actions and IDs (to 401), the binding files, the three control groups, which controls Rockstar's scripts disable and check most, claiming input, and first and third person view modes |
+| R6.5 | [The Online character creator](/docs/gameplay/player/online-character-creator.md) (first pass): the creator inside `maintransition`, its seven menus, the micro-morph map for the 11 feature items, the overlay map for the appearance items, 32 eye colours, the 100-point stat pool with each skill's floor and cap, the line-up room, and the 63 stats that keep the face |
 | R7.1 | [Inside freemode](/docs/online/07-freemode.md): GTA Online's main script |
 | R7.2 | [Transitions and sessions](/docs/online/transitions-and-sessions.md) (first pass): `maintransition`'s 70 named states, the paths into freemode, the creator and back, session and server natives, what 382 scripts read |
 | R7.3 | [Stats, tunables and the server's role](/docs/online/stats-and-tunables.md) (first pass): 17,928 stats by type and family, 28,502 tunables with their defaults in one script, transactions, what an offline mode must replace |
@@ -207,6 +208,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R6.2 | **Respawn, death and arrest** | `respawn_controller`, hospitals and police stations, what is lost, how Online's respawn differs. | S | **Done** (first pass): [guide](/docs/gameplay/player/respawn-death-and-arrest.md) |
 | R6.3 | **Appearance and clothing** | Ped components and props, freemode ped models (`mp_m_freemode_01`), head blend, overlays, tattoos, the shop catalogues (`shop_ped_apparel` and its DLC files), outfits. | L | **Done** (first pass): [guide](/docs/entities/peds/appearance-and-clothing.md) |
 | R6.4 | **Controls and camera** | Control IDs and how scripts disable them, camera modes, first person, the phone and menus fighting over inputs. | S | **Done** (first pass): [guide](/docs/gameplay/player/controls-and-camera.md) |
+| R6.5 | **The Online character creator** | Where the creator lives, its menus, how heritage, features, appearance and stats map onto natives and indices, the room, what it saves and the rules (stat points, re-edit fee). | M | **Done** (first pass): [guide](/docs/gameplay/player/online-character-creator.md) |
 
 ## R7. GTA Online
 
