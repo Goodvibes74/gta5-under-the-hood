@@ -73,6 +73,18 @@ From `armenian1` and the patterns across all scripts (**Verified**):
 
 **Subtitles** come with the conversation: the line text is the label itself, so a conversation and its subtitles can't drift apart.
 
+### Subtitles and phone calls (second pass)
+
+*Second pass (2026-10-25).* Read in `dialogue_handler` and `armenian1` (commit `6c18d3e8b`; global and function names are build-specific pointers). **Verified** unless marked.
+
+**Two switches decide whether a line is shown.** The player's setting is `PREF_SUBTITLES` ("Subtitles", on the Display page of the settings, [pause menu](/docs/ui/pause-menu.md)); the engine applies it to every conversation (**Known**). Each request also carries its own two flags: show subtitles, and add the lines to the Brief page's dialogue history. Every script that talks has the same small helper (`func_360` in `armenian1`) that writes the request: it copies the mission's speaker list, a fixed number (145), the text block name, the two flags (passed in as "off" switches, so 0 means show and 0 means add to the brief) and one more flag. `dialogue_handler` copies the flags into the conversation it builds and passes them to `START_SCRIPT_CONVERSATION` (show subtitles, add to brief, and two more flags; NativeDB names them clone and interruptible, **Known**). So a mission can play a line with no subtitle at all, whatever the setting.
+
+**Missions read the setting to keep the screen tidy.** `IS_SUBTITLE_PREFERENCE_SWITCHED_ON` is called 381 times in 86 scripts. In `armenian1` it sits in the check that decides whether an objective may be printed now: with subtitles on, the objective waits until no message is on screen and the current conversation has finished, so the two never overlap at the bottom of the screen; with subtitles off it can print over speech.
+
+**Phone calls take the same road with a different start.** A call is built in `dialogue_handler` like any conversation (same request globals, same lines from `<root>_<n>A` labels, same speakers), then preloaded with `PRELOAD_SCRIPT_PHONE_CONVERSATION` and started with `START_SCRIPT_PHONE_CONVERSATION`, which takes only the two flags (show subtitles, add to brief). Face-to-face lines use `PRELOAD_SCRIPT_CONVERSATION` / `START_SCRIPT_CONVERSATION`. That one choice is what makes a call sound like a call (the phone filter and the phone on screen are the engine's side, **Known**). Missions check `IS_MOBILE_PHONE_CALL_ONGOING` (821 scripts, 1,920 calls) before starting anything that would talk over a call.
+
+**The request globals** (question GP-007, the parts read here): the copy of the speaker list, the block name (24 characters), the two display flags with their "off" twins, the extra flag, and the root and a priority (clamped so that 8 to 11 become 7), which the helper hands to the queueing function. `dialogue_handler` keeps the built conversation in one block (`Global_22602` in this build), whose fields 368 to 370 hold the three flags and whose lines and speakers sit in arrays of six values each. Field-by-field naming of the rest is left to the global map (R0.4).
+
 ## 6.6 What this means for modders
 
 - **Copy the sequence, including exit states.** A mod cutscene that fades out, plays and fades in works, but the seamless version is: dress in the asset window, register, start, and use `CAN_SET_EXIT_STATE_FOR_REGISTERED_ENTITY` and `CAN_SET_EXIT_STATE_FOR_CAMERA` to hand each actor and the camera back mid-motion.
@@ -88,5 +100,6 @@ From `armenian1` and the patterns across all scripts (**Verified**):
 | --- | --- |
 | How many cutscene files ship (`.cut` in the `x64` archives and DLC packs) and how they are organised | R0.7 atlas, R13.4 animation |
 | Exact meanings of the `START_CUTSCENE` and `REGISTER_ENTITY_FOR_CUTSCENE` flag bits | Second pass, in-game tests |
-| The layout of `dialogue_handler`'s request globals (speakers, root, block, flags) | R0.4 global map |
-| How subtitles are hidden or shown (frontend setting) and how phone calls differ from face-to-face lines | Second pass |
+| The layout of `dialogue_handler`'s request globals (speakers, root, block, flags) | Partly answered in [6.5](#subtitles-and-phone-calls-second-pass) (the flags, block, root and priority); the rest of the conversation block is R0.4 |
+
+Answered in the second pass: how subtitles are hidden or shown, and how phone calls differ from face-to-face lines ([6.5](#subtitles-and-phone-calls-second-pass)).
