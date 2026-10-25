@@ -69,13 +69,44 @@ The pattern (**Verified** in the scripts above): check the guard, show the spinn
 
 Pages that read only stats (awards, unlocks, weapons) need nothing but stat values.
 
-## 25.5 What this means for modders
+## 25.5 The ONLINE tab, entry by entry
+
+*Second pass (2026-10-25).* The pause menu's ONLINE tab (screen `MENU_UNIQUE_ID_MISSION_CREATOR`, [pause menu 23.5](/docs/ui/pause-menu.md#235-the-full-tree-menu-versions-tabs-and-panes)) is filled by `pausemenu_multiplayer`. Read in the decompile (commit `6c18d3e8b`; function names are build-specific): the script walks 22 entry numbers, asks one function (`func_1780`) whether each is shown, takes its name from another (`func_1886`), and fills the right-hand pane with a title and a description label per entry. **Verified** names (English text from `global.gxt2`) and conditions.
+
+| # | Entry | In Online | In story mode |
+| ---: | --- | --- | --- |
+| 0 | Jobs (`PM_JOBS`) | Yes | No |
+| 1 | Character Transfer (`PM_MIGRATE`) | No | Yes, unless a tunable or a check turns it off |
+| 2 | Join Friends (`PM_FRESES`) | Yes | Yes |
+| 3 | Join Crew Members (`PM_CRESES`) | Yes | Yes |
+| 4 | Playlists (`PM_PLAYLISTS`) | Yes | No |
+| 5 | Players (`PM_PLYRS`) | Yes | No |
+| 6 | Crews (`PM_CREWS`) | Yes | Yes, except in one mode (below) |
+| 7 | Party (`PM_PARTY`) | Only on platforms with parties (Xbox 360 and one other check) | No |
+| 8 | Creator (`PM_MISS_CREATOR`) | Yes | Yes, except in one mode |
+| 9 | Swap Character (`PM_SWAP_CHAR`) | Yes | No |
+| 10 | Character Transfer (second entry) | Unless a tunable turns it off | No |
+| 11 | Purchase Shark Cards (`PM_GOTO_STORE`) | Only when the store is open to the user and not in an activity session | No |
+| 12 | Criminal Enterprise Starter Pack (`PM_CESP`) | Unless a tunable turns it off, and only with the store | No |
+| 13 | Safety and Alerts (`PM_SAFEALERT`) | Unless a tunable turns it off | No |
+| 14 | Options (`PM_MP_OPTIONS`) | Yes | No |
+| 15 | Find New Session (`UI_FLOW_OP_NEWSESH_M`) | Yes | No |
+| 16 | Leave GTA Online (`PM_QUIT_MP`) | Yes | No |
+| 17 | Choose Character (`PM_CHOOSE_CHAR`) | No | Yes |
+| 18 | Play GTA Online (`PM_ENTER_MP`) | No | Yes |
+| 19 | Credits & Legal (`UI_FLOW_OP_CL`, or Credits or Legal alone) | Picked by a tunable (`Global_262145.f_9321`; −1 hides it) | Only in the one mode |
+| 20 | Account Picker (`PM_PANE_PICK`) | Only on the platform that has one | No |
+| 21 | Quit Game (`PM_EXIT_GAME`) | PC only | No |
+
+"In Online" means a network game is running; the "one mode" is a state the script's own check (`func_307`) returns 2 for, which hides most entries in both lists (**Known**, not traced further). **Options** opens the Online settings the script fills itself (labels `PM_SETTING_*`): quickplay actions on foot and in a vehicle, enable or disable Passive Mode, spawn location (with choices such as "Hotel" and "Bunker"), matchmaking, player rank title, betting odds format, kill yourself, player overhead display, allow spectators, joint celebration, remain host after the next-job vote, filter quick-join content, join next mode from the spectator box, player text messages, and the GTA Online version. **Jobs** and **Playlists** open lists of UGC content (Rockstar, Rockstar Verified, My Jobs, Bookmarked, Recently Played) by type (Missions, Races, Stunt Races, Deathmatches, Last Team Standing, Capture, Versus, Survivals, Parachuting, King of the Hill, Arena War ...), each with its own "There are no ... available" message when the server returns nothing; that is where most of the script's 328 UGC calls go.
+
+## 25.6 What this means for modders
 
 - **Single player only.** These screens are Online; don't run mods in GTA Online to explore them, and never call the transaction or UGC natives.
 - **For research,** the table in 25.2 says which scripts to read for each service; the guards in 25.3 are where a screen gives up when the server is missing.
 - **Story-mode mods are mostly unaffected:** the story UI (pause menu, phone, map) works without these services (**Known**); only Social Club features such as Snapmatic uploads need them.
 
-## 25.6 Open questions
+## 25.7 Open questions
 
 | Question | Where it goes |
 | --- | --- |
@@ -83,6 +114,6 @@ Pages that read only stats (awards, unlocks, weapons) need nothing but stat valu
 | The full list of transaction calls per business app | R7.7 |
 | Leaderboard IDs read by each screen | Second pass |
 
-## 25.7 Test cards
+## 25.8 Test cards
 
 None: these screens are Online only.
