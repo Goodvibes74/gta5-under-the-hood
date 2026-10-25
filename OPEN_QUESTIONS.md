@@ -33,6 +33,80 @@ The topics that open questions point to most often are R4.6, R5.1 and R5.2 (6 ea
 - **One guide at a time:** the guides with the most open questions are the Online creator internals (8), time and weather, timecycles and post effects, heists, and respawn, death and arrest (7 each).
 - **The links:** pick a topic from the list above and answer every question that points to it.
 
+## Priority order (set 2026-10-25)
+
+The second pass works through the 196 questions of these four areas (and the test and engine questions with them) in this order: **1. the user interface, 2. the core engine, 3. GTA Online** (the interaction menu, jobs, properties, businesses, heists and everything else a player does there), **4. story mode and offline play** (missions, activities, the player). The other categories (entities, physics, AI, the world, audio, rendering, performance, scripting, file formats) wait until these are done, except where a question below needs one of them.
+
+The questions are grouped into **batches**. A batch is one branch and one pull request: its questions share a guide, a script or a data file, so reading the source once answers most of them. Work the batches top to bottom inside a phase; a batch can start before the one above it is finished.
+
+**Kind** says what the batch needs: *scripts* (the decompile), *data* (extracted game files), *test* (an in-game test card someone has to play), *engine* (reverse engineering the executable). Questions that need only a test or the engine are listed separately at the end of each phase so a script-reading pass doesn't stall on them.
+
+**Batch status:** **Open**, **In progress** (branch named), **Partly done** (pull request linked, with what is left), **Done** (pull request linked). Each question keeps its own status in the tables further down.
+
+### Phase 1: the user interface
+
+| Batch | Topic | Questions | Kind | Status |
+| --- | --- | --- | --- | --- |
+| P1.1 | [Pause and Online menus](/docs/ui/pause-menu.md) (R8.1): the full menu tree and `frontend.xml` | UI-004, UI-006 | data | Done, [#107](https://github.com/Goodvibes74/gta5-under-the-hood/pull/107) |
+| P1.2 | [Text labels](/docs/ui/text-labels.md) (R8.3): text slots, the label-name index, the `update2.rpf` blocks, and the labels other guides couldn't read | UI-016, UI-018, UI-019, CORE-004, CORE-008, GP-013 | scripts, data | Done, [#108](https://github.com/Goodvibes74/gta5-under-the-hood/pull/108) |
+| P1.3 | [HUD, colours and blips](/docs/ui/hud-colours-blips.md) (R8.4): blip sprite names and the `[HD]`/`[CRT]` colours | UI-001, UI-003 | data | Done, [#109](https://github.com/Goodvibes74/gta5-under-the-hood/pull/109) |
+| P1.4 | [Scaleform movies](/docs/ui/scaleform.md) (R8.2): movies loaded through variables, DLC movies, each movie's methods, interior maps | UI-007, UI-008, UI-009 | scripts, data | Done, [#110](https://github.com/Goodvibes74/gta5-under-the-hood/pull/110) (61 interior maps left) |
+| P1.5 | [Story-mode UI](/docs/ui/story-mode-ui.md) (R8.6): the stat list, mission stats and medals, the mission-passed screen | UI-013, UI-014, UI-015, GP-015 | scripts, data | Done, [#111](https://github.com/Goodvibes74/gta5-under-the-hood/pull/111) |
+| P1.6 | [Server-backed Online screens](/docs/ui/server-backed-screens.md) (R8.5): what `pausemenu_multiplayer` fills, the signed-out guards, leaderboard IDs | UI-005, UI-010, UI-012 | scripts | Partly done, [#112](https://github.com/Goodvibes74/gta5-under-the-hood/pull/112) (UI-010 and UI-012 left) |
+| P1.7 | Subtitles and phone-call lines (R5.6 with R8.6) | GP-008 | scripts | Done, [#113](https://github.com/Goodvibes74/gta5-under-the-hood/pull/113) |
+
+Test only: UI-002 (draw lists and depths), UI-017 (which DLC text block wins a clash). UI-011 (transactions per business app) is answered with P3.8.
+
+### Phase 2: the core engine
+
+| Batch | Topic | Questions | Kind | Status |
+| --- | --- | --- | --- | --- |
+| P2.1 | [Boot](/docs/00-getting-started/boot.md) and [runtime scripts](/docs/core/runtime-scripts.md) (R1.2, R0.2): how `main`, `initial` and `startup` start, force-cleanup bits, `profiler_registration`, level index 5, the path to `prologue1` | CORE-017, CORE-018, CORE-019, GS-001, GS-002, ON-060 | scripts | Partly done, [#114](https://github.com/Goodvibes74/gta5-under-the-hood/pull/114) (CORE-018, GS-001, GS-002 left) |
+| P2.2 | [The global map](/docs/core/global-map.md) (R0.4): the player and server broadcast data, blocks 13 and 15, the **Known** rows | CORE-009, CORE-011, CORE-012, ON-003, ON-050 | scripts | Partly done, [#115](https://github.com/Goodvibes74/gta5-under-the-hood/pull/115) (CORE-012, broadcast field roles left) |
+| P2.3 | [Saves](/docs/core/saves.md) (R1.7): the full section tree, the save upgrade, spending categories | CORE-022, CORE-023, GP-004 | scripts | Open |
+| P2.4 | [Completion and autosave](/docs/core/completion-and-autosave.md) (R5.3): autosave triggers, completion flags, the 23 achievements, the retry snapshot, mission replays | CORE-005, CORE-006, CORE-007, CORE-025, GP-018, GP-020, GP-033 | scripts | Open |
+| P2.5 | [Archives and content](/docs/core/archives-and-content.md) (R1.6): load phases per change set, `update2.rpf` and the mods folder copy | CORE-002, CORE-003 | data | Open |
+| P2.6 | [Script launch graph](/scripting/script-launch-graph.md) (R0.5): table-driven launches, and the scripts nobody starts by name | CORE-021, GP-009, GP-040 | scripts | Open |
+| P2.7 | [Streaming](/docs/core/streaming.md) and [memory](/docs/core/memory-and-pools.md) (R1.5, R1.4): the SRLs, pool slot costs, vanilla weapon array sizes | CORE-015, CORE-016, CORE-028 | scripts, engine | Open |
+
+Test only: GS-003 (does the return to story mode restart every script), CORE-001 (overlay or replace between two packs), CORE-013, CORE-014 (pool use in a heavy session), CORE-026, CORE-027, CORE-029 (streaming and memory measurements). Engine only: CORE-024 (the save file format). Later: CORE-030 (natives changed in build 3889, with R11.1).
+
+### Phase 3: GTA Online
+
+| Batch | Topic | Questions | Kind | Status |
+| --- | --- | --- | --- | --- |
+| P3.1 | [Interaction menu, phone and apps](/docs/online/interaction-menu-phone-apps.md) (R7.10): the full interaction-menu tree, story phone slots, website pages, phone models | ON-026, ON-027, ON-028, ON-029 | scripts | Open |
+| P3.2 | [The job lobby](/docs/online/job-lobby.md) (R7.5): launcher states, start arguments, corona settings, playlists, walk-in markers, job types | ON-030, ON-031, ON-032, ON-033, ON-034, ON-006 | scripts | Open |
+| P3.3 | [Inside `freemode`](/docs/online/07-freemode.md) and [sessions](/docs/online/sessions-and-sync.md) (R7.1, R15.1): the event ids, the host's rotation, the running-state functions per system | ON-001, ON-002, ON-005, ON-051 | scripts | Open |
+| P3.4 | [Transitions](/docs/online/transitions-and-sessions.md) (R7.2): the offline branch, character slots, the way back to story mode, the testbed session, what opens the creator | ON-004, ON-061, ON-062, ON-063, ON-064, GP-059 | scripts | Open |
+| P3.5 | [Stats and tunables](/docs/online/stats-and-tunables.md) (R7.3): the tunable index, save categories, the shop basket, unnamed service readers | CORE-010, ON-047, ON-054, ON-055, ON-056, GP-058 | scripts | Open |
+| P3.6 | [The Online character creator](/docs/gameplay/player/online-character-creator.md) (R6.5): unlabelled morphs, slider scaling, outfit groups | GP-055, GP-056, GP-057 | scripts | Open |
+| P3.7 | [Properties](/docs/online/properties.md) (R7.6): yachts and vehicles as properties, garages, entrances, instances, daily fees | ON-041, ON-042, ON-043, ON-044, ON-045, ON-046 | scripts | Open |
+| P3.8 | [Organisations and businesses](/docs/online/organisations-and-businesses.md) (R7.7): production numbers, capacities, offline production, boss costs, challenges, business missions, transactions | ON-035, ON-036, ON-037, ON-038, ON-039, ON-040, ON-049, UI-011 | scripts | Open |
+| P3.9 | [Heists](/docs/online/heists.md) (R7.8): fail bands, casino targets, Cayo loot, the classic planning board, elite rewards, story arcs, crew skill | ON-019, ON-020, ON-021, ON-022, ON-023, ON-024, ON-025, GP-019 | scripts | Open |
+| P3.10 | [DLC storylines](/docs/online/dlc-storylines.md) (R7.9): stats per flow step, voice-only flows, arrival updates, missing flows, mp2025_02 | ON-014, ON-015, ON-016, ON-017, ON-018 | scripts, data | Open |
+| P3.11 | [Creator internals](/docs/online/creator-internals.md) (R7.11): prop limits, hidden libraries, the two prop writers, checkpoint fields, other creators' placement | ON-007, ON-008, ON-010, ON-011, ON-012, ON-013 | scripts | Open |
+| P3.12 | [Story systems in an Online mode](/docs/online/story-systems-in-online-mode.md) (R5.7): the shop table, ped brain sets | ON-057, ON-059 | scripts | Open |
+
+Test only: GP-054 (parent head counts), ON-058 (story clothes shop with a freemode ped; single player only). Engine only: ON-009 (creator budget), ON-052 (migration). Later: ON-048 (service natives in story scripts), ON-053 (a tunables list tool; needs the maintainer, as `tools/` does).
+
+### Phase 4: story mode and offline play
+
+| Batch | Topic | Questions | Kind | Status |
+| --- | --- | --- | --- | --- |
+| P4.1 | [Story flow](/docs/gameplay/missions/story-flow.md) (R5.1): the remaining command types, table fields, hidden missions, fails, the flow integers, the active triggerer | GP-028, GP-029, GP-030, GP-031, GP-032, CORE-020 | scripts | Open |
+| P4.2 | [Mission anatomy](/docs/gameplay/missions/mission-anatomy.md) and [replay](/docs/gameplay/missions/replay-director-and-editor.md) (R5.2, R5.8): skip flags, replay states, lead-ins, replay event types, director mode areas | GP-016, GP-017, GP-021, GP-022, GP-024, GP-025, GP-026 | scripts | Open |
+| P4.3 | [Minigames and activities](/docs/gameplay/missions/minigames-and-activities.md) (R5.5): medal thresholds, golf, activity unlocks, towing bonus | GP-010, GP-011, GP-012, GP-014 | scripts | Open |
+| P4.4 | [Strangers and freaks](/docs/gameplay/missions/strangers-and-freaks.md) (R5.4): unlock conditions, world points, brain flags | GP-034, GP-035, GP-036 | scripts, data | Open |
+| P4.5 | [Cutscenes and dialogue](/docs/gameplay/missions/cutscenes-and-dialogue.md) (R5.6): the cutscene files and `dialogue_handler`'s globals | GP-005, GP-007 | scripts, data | Open |
+| P4.6 | [Character switching](/docs/gameplay/player/character-switching.md) (R6.1): saved character state, the scene table | GP-037, GP-038 | scripts | Open |
+| P4.7 | [Respawn](/docs/gameplay/player/respawn-death-and-arrest.md) and [health](/docs/gameplay/player/health-armour-death.md) (R6.2, R3.8): the building table, free respawns, hospital packs, armour items, DLC health configs | GP-060, GP-061, GP-063, GP-065, GP-066, GP-051, GP-052 | scripts, data | Open |
+| P4.8 | [Economy and pickups](/docs/gameplay/economy/economy-and-pickups.md) (R3.9): stock prices, pickup placement, shop robbery pay | GP-001, GP-002, GP-003 | scripts | Open |
+| P4.9 | [Controls and camera](/docs/gameplay/player/controls-and-camera.md) (R6.4): control names, disable helpers, context numbers | GP-041, GP-042, GP-044 | scripts, data | Open |
+| P4.10 | [Skills](/docs/gameplay/player/skills-and-abilities.md), [flying](/docs/gameplay/player/flying.md) and [weapons](/docs/gameplay/weapons/weapons.md) (R3.6, R3.4, R3.1): skill gains, ability types, starting skills, DLC flying blocks, flight lessons, AI flight missions, weapon unlocks, ammo caps | GP-067, GP-069, GP-070, GP-045, GP-046, GP-047, GP-048, GP-077, GP-078 | scripts, data | Open |
+
+Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), GP-039 (switch flags), GP-043 (two scripts disabling controls), GP-049, GP-050, GP-053 (regeneration, hurt thresholds, armour split), GP-062, GP-064 (arrest weapons, respawn point choice), GP-068 (shooting, strength, stealth), GP-071, GP-072, GP-075 (breath, drowning, swim speed). Engine: GP-023 (what NoEditorRestrictions patches). Elsewhere: GP-027 (R13.2), GP-073 (swimming stat entries), GP-074 (R2.3), GP-076 (a question for the install's owner), GP-079 (R2.5), GP-080 (R3.2).
+
 ## By category
 
 | Category | Guides | Questions |
@@ -77,19 +151,19 @@ The topics that open questions point to most often are R4.6, R5.1 and R5.2 (6 ea
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| CORE-004 | The text of each completion label (block not found) | Second pass, with every text block | Open |
+| CORE-004 | The text of each completion label (block not found) | Second pass, with every text block | Answered: [completion 16.3](/docs/core/completion-and-autosave.md#163-the-completion-list) (199 have text; 121 are internal names with no text) |
 | CORE-005 | What each completion entry's flags and map numbers mean | Second pass, `func_699` | Open |
 | CORE-006 | Every autosave trigger, from the request fields | Second pass, follow `Global_102468` | Open |
 | CORE-007 | Which 23 achievements the controller awards, by name | Second pass, with the achievement list | Open |
-| CORE-008 | `SC_MSC_` labels whose text is in a text block not read in the first pass *(from the guide's text)* | Second pass | Open |
+| CORE-008 | `SC_MSC_` labels whose text is in a text block not read in the first pass *(from the guide's text)* | Second pass | Answered: [completion 16.3](/docs/core/completion-and-autosave.md#163-the-completion-list) |
 
 ### [The global variable map](/docs/core/global-map.md) (R0.4)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| CORE-009 | Field layout of the player broadcast data (`Global_1845250`, `Global_2658291`) | R7.1 second pass | Open |
+| CORE-009 | Field layout of the player broadcast data (`Global_1845250`, `Global_2658291`) | R7.1 second pass | Partly answered: field use counted ([global map 6.3](/docs/core/global-map.md#63-the-most-used-globals)); roles left |
 | CORE-010 | The tunable index list: which `Global_262145.f_<n>` is which tunable | R7.3 | Open |
-| CORE-011 | What the references into blocks 13 and 15 are | Second pass | Open |
+| CORE-011 | What the references into blocks 13 and 15 are | Second pass | Answered: dead code behind two flags no script sets ([global map 6.2](/docs/core/global-map.md#62-the-blocks-with-how-much-they-are-used)) |
 | CORE-012 | Roles of the **Known** rows above, by reading one use each | Second pass | Open |
 
 ### [Memory, pools and limits](/docs/core/memory-and-pools.md) (R1.4)
@@ -105,9 +179,9 @@ The topics that open questions point to most often are R4.6, R5.1 and R5.2 (6 ea
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| CORE-017 | Meaning of force-cleanup bits 8, 16, 32, 64 and 128 | R1.1 | Open |
+| CORE-017 | Meaning of force-cleanup bits 8, 16, 32, 64 and 128 | R1.1 | Answered (16 and 32 are raised by the engine, cause open): [runtime scripts 1.3](/docs/core/runtime-scripts.md#every-force-cleanup-bit-second-pass) |
 | CORE-018 | What exactly the engine does to start `main`, `initial` and `startup`, and in which order | R1.2 | Open |
-| CORE-019 | What `profiler_registration` (global block 2) is and whether anything starts it | R0.4 | Open |
+| CORE-019 | What `profiler_registration` (global block 2) is and whether anything starts it | R0.4 | Answered: empty script, block 2 never used ([runtime scripts 1.5](/docs/core/runtime-scripts.md#15-global-blocks)) |
 | CORE-020 | The story flags that pick the active mission triggerer | R5.1 | Open |
 | CORE-021 | Resolve table-driven launches (second pass of the graph) | R0.5 | Open |
 
@@ -436,20 +510,20 @@ The topics that open questions point to most often are R4.6, R5.1 and R5.2 (6 ea
 | --- | --- | --- | --- |
 | GP-005 | How many cutscene files ship (`.cut` in the `x64` archives and DLC packs) and how they are organised | R0.7 atlas, R13.4 animation | Open |
 | GP-006 | Exact meanings of the `START_CUTSCENE` and `REGISTER_ENTITY_FOR_CUTSCENE` flag bits | Second pass, in-game tests | Open |
-| GP-007 | The layout of `dialogue_handler`'s request globals (speakers, root, block, flags) | R0.4 global map | Open |
-| GP-008 | How subtitles are hidden or shown (frontend setting) and how phone calls differ from face-to-face lines | Second pass | Open |
+| GP-007 | The layout of `dialogue_handler`'s request globals (speakers, root, block, flags) | R0.4 global map | Partly answered: flags, block, root and priority ([cutscenes and dialogue 6.5](/docs/gameplay/missions/cutscenes-and-dialogue.md#subtitles-and-phone-calls-second-pass)); the rest of the conversation block is R0.4 |
+| GP-008 | How subtitles are hidden or shown (frontend setting) and how phone calls differ from face-to-face lines | Second pass | Answered: [cutscenes and dialogue 6.5](/docs/gameplay/missions/cutscenes-and-dialogue.md#subtitles-and-phone-calls-second-pass) |
 
 ### [Minigames and activities](/docs/gameplay/missions/minigames-and-activities.md) (R5.5)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-009 | Who starts `minigame_stats_tracker` and `minigame_ending_stinger` (not started by name in this build) | Next pass: search by hash | Open |
+| GP-009 | Who starts `minigame_stats_tracker` and `minigame_ending_stinger` (not started by name in this build) | Next pass: search by hash | Answered: neither is named anywhere, by string or hash ([minigames 42.5](/docs/gameplay/missions/minigames-and-activities.md#425-scoring)) |
 | GP-010 | The flight-school, range and triathlon medal thresholds | Next pass: read each script's goal tables | Open |
 | GP-011 | Golf: course data, AI foursome behaviour, how the score is kept | Next pass | Open |
 | GP-012 | How the flow unlocks each activity (blips appear after story missions) | Next pass, with [story flow](/docs/gameplay/missions/story-flow.md) | Open |
-| GP-013 | The sea-race labels (`SNCA`, `SSC`, `SCAA`, `SCAB`) and street-race labels in English | Text files ([R8.3](/ROADMAP.md)) | Open |
+| GP-013 | The sea-race labels (`SNCA`, `SSC`, `SCAA`, `SCAB`) and street-race labels in English | Text files ([R8.3](/ROADMAP.md)) | Answered: [minigames 42.2](/docs/gameplay/missions/minigames-and-activities.md#422-the-activity-list) |
 | GP-014 | The towing quick-bonus check (what the 12 s timer measures) | Next pass | Open |
-| GP-015 | What starts `minigame_stats_tracker`'s medal result screen (`mission_complete` Scaleform, `SET_MEDAL`); no script starts it by name *(from the guide's text)* | Second pass | Open |
+| GP-015 | What starts `minigame_stats_tracker`'s medal result screen (`mission_complete` Scaleform, `SET_MEDAL`); no script starts it by name *(from the guide's text)* | Second pass | Answered: nothing starts it in this build ([minigames 42.5](/docs/gameplay/missions/minigames-and-activities.md#425-scoring)) |
 
 ### [Anatomy of a story mission](/docs/gameplay/missions/mission-anatomy.md) (R5.2)
 
@@ -538,7 +612,7 @@ The topics that open questions point to most often are R4.6, R5.1 and R5.2 (6 ea
 | GP-056 | How the slider values (0 to 100, -1 to 1) are scaled into the saved `FEATURE_n` and `HEADBLEND_*` floats, and which `FEATURE_n` is which morph | Next pass, the save function and the stat enum mapping | Open |
 | GP-057 | The outfit group names (`BEA`, `CAS` ...) and the components of each starter outfit | Next pass, the outfit tables | Open |
 | GP-058 | The appearance fee and cooldown values | R7.3 tunables, `freemode` | Open |
-| GP-059 | Which transition state opens the creator, and what menu `-1392473901` is (used 3 times, probably the character select) | R7.2 second pass | Open |
+| GP-059 | Which transition state opens the creator, and what menu `-1392473901` is (used 3 times, probably the character select) | Partly answered: `-1392473901` is `FE_MENU_VERSION_TEXT_SELECTION`, the "LOBBY LIST" screen ([pause menu 23.5](/docs/ui/pause-menu.md#235-the-full-tree-menu-versions-tabs-and-panes)); the transition state is still R7.2 | Partly answered |
 
 ### [Respawn, death and arrest](/docs/gameplay/player/respawn-death-and-arrest.md) (R6.2)
 
@@ -589,7 +663,7 @@ The topics that open questions point to most often are R4.6, R5.1 and R5.2 (6 ea
 | --- | --- | --- | --- |
 | ON-001 | What each of the 183 running-state functions does in detail (this pass labels them from strings only) | R7.1 second pass, per system | Open |
 | ON-002 | Names of the 60 network event ids and the main script event hashes | R7.2, R15 | Open |
-| ON-003 | The fields of the player and server broadcast data | R0.4 global map | Open |
+| ON-003 | The fields of the player and server broadcast data | R0.4 global map | Partly answered: field use counted ([global map 6.3](/docs/core/global-map.md#63-the-most-used-globals)); roles left |
 | ON-004 | What `freemode_clearGlobals` resets and when | R7.2 | Open |
 | ON-005 | How the host's rotation through participants works | R7.1 second pass | Open |
 
@@ -701,7 +775,7 @@ The topics that open questions point to most often are R4.6, R5.1 and R5.2 (6 ea
 | ON-057 | The full shop table (index, position, type) from `shop_controller` | Second pass; feeds shop mods | Open |
 | ON-058 | What exactly `clothes_shop_sp` does with a freemode ped (refuses, shows story stock, or breaks) | In-game test | Open |
 | ON-059 | What sets 2 and 4 contain (ped brains) | Second pass | Open |
-| ON-060 | How bits 16, 32 and 64 in these masks are raised (they end some systems on other occasions) | R1.2 second pass | Open |
+| ON-060 | How bits 16, 32 and 64 in these masks are raised (they end some systems on other occasions) | R1.2 second pass | Partly answered: 64 with 8 by `main`, `mission_repeat_controller`, `benchmark`; 16 and 32 only by the engine ([runtime scripts 1.3](/docs/core/runtime-scripts.md#every-force-cleanup-bit-second-pass)) |
 
 ### [Transitions and sessions](/docs/online/transitions-and-sessions.md) (R7.2)
 
@@ -718,25 +792,25 @@ The topics that open questions point to most often are R4.6, R5.1 and R5.2 (6 ea
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| UI-001 | A picture or name for each of the 191 sprites used | Second pass with the blip icon list | Open |
-| UI-002 | What the `listId` draw lists and depths do | In-game test | Open |
-| UI-003 | The three colours that differ between `[HD]` and `[CRT]` | Second pass | Open |
+| UI-001 | A picture or name for each of the 191 sprites used | Second pass with the blip icon list | Answered (names; pictures still open): [HUD 24.4](/docs/ui/hud-colours-blips.md#244-blips) |
+| UI-002 | What the `listId` draw lists and depths do | Partly answered: list 1 is the top-right stack ordered by `listPriority`, `depth` is draw order ([pause menu 23.6](/docs/ui/pause-menu.md#236-frontendxml-where-the-hud-and-menus-sit)); confirm the stacking with test card 2 there | Partly answered |
+| UI-003 | The three colours that differ between `[HD]` and `[CRT]` | Second pass | Answered: [HUD 24.3](/docs/ui/hud-colours-blips.md#243-colours) |
 
 ### [Pause and Online menus](/docs/ui/pause-menu.md) (R8.1)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| UI-004 | The full tree: which header holds which tabs in story mode and Online | Second pass, walk `pausemenu.xml` | Open |
-| UI-005 | What `pausemenu_multiplayer` fills on each Online page | R8.5 | Open |
-| UI-006 | What `frontend.xml` sets (sizes and positions of HUD and menus) | R8.4 | Open |
+| UI-004 | The full tree: which header holds which tabs in story mode and Online | Second pass, walk `pausemenu.xml` | Answered: [pause menu 23.5](/docs/ui/pause-menu.md#235-the-full-tree-menu-versions-tabs-and-panes) |
+| UI-005 | What `pausemenu_multiplayer` fills on each Online page | R8.5 | Answered (the ONLINE tab list; each sub-page in detail is left): [server-backed screens 25.5](/docs/ui/server-backed-screens.md#255-the-online-tab-entry-by-entry) |
+| UI-006 | What `frontend.xml` sets (sizes and positions of HUD and menus) | R8.4 | Answered: [pause menu 23.6](/docs/ui/pause-menu.md#236-frontendxml-where-the-hud-and-menus-sit) |
 
 ### [Scaleform movies](/docs/ui/scaleform.md) (R8.2)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| UI-007 | Movies loaded through variables (not counted), and DLC pack movies | Second pass, DLC scan | Open |
-| UI-008 | Each movie's full method list | Second pass, read the `.gfx` action scripts | Open |
-| UI-009 | Which interior map `int<number>` belongs to which interior | Second pass with R4.5 | Open |
+| UI-007 | Movies loaded through variables (not counted), and DLC pack movies | Second pass, DLC scan | Answered: [Scaleform 22.5](/docs/ui/scaleform.md#225-every-movie-its-methods-and-who-names-it) |
+| UI-008 | Each movie's full method list | Second pass, read the `.gfx` action scripts | Answered (rebuilt from the `.gfx` files; summary and examples, not the full list): [Scaleform 22.5](/docs/ui/scaleform.md#225-every-movie-its-methods-and-who-names-it) |
+| UI-009 | Which interior map `int<number>` belongs to which interior | Second pass with R4.5 | Partly answered: 221 of 282 named ([Scaleform 22.5](/docs/ui/scaleform.md#225-every-movie-its-methods-and-who-names-it)); 61 left |
 
 ### [Server-backed Online screens](/docs/ui/server-backed-screens.md) (R8.5)
 
@@ -750,18 +824,18 @@ The topics that open questions point to most often are R4.6, R5.1 and R5.2 (6 ea
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| UI-013 | The full stat list per category, with display types | Second pass, `spstatssetupui.xml` | Open |
-| UI-014 | How a mission chooses its stats and the medal thresholds | Second pass, `mission_stat_watcher` and each mission | Open |
-| UI-015 | The parameters of `SHOW_MISSION_PASSED_MESSAGE` | Second pass | Open |
+| UI-013 | The full stat list per category, with display types | Second pass, `spstatssetupui.xml` | Answered: [story-mode UI, the full stat list](/docs/ui/story-mode-ui.md#the-full-stat-list) |
+| UI-014 | How a mission chooses its stats and the medal thresholds | Second pass, `mission_stat_watcher` and each mission | Answered: [story-mode UI, stats and medal](/docs/ui/story-mode-ui.md#how-a-mission-picks-its-stats-and-its-medal) (which stats each mission lists is left) |
+| UI-015 | The parameters of `SHOW_MISSION_PASSED_MESSAGE` | Second pass | Answered (order and values; what 3, 6 and 7 change on screen is left): [story-mode UI](/docs/ui/story-mode-ui.md#how-a-mission-picks-its-stats-and-its-medal) |
 
 ### [Text labels](/docs/ui/text-labels.md) (R8.3)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| UI-016 | The full slot list and which systems own which slot | Second pass: read the slot constants in `standard_global_init` and the mission scripts | Open |
+| UI-016 | The full slot list and which systems own which slot | Second pass: read the slot constants in `standard_global_init` and the mission scripts | Answered: [text labels, the text slots](/docs/ui/text-labels.md#the-text-slots-and-who-uses-them) |
 | UI-017 | How DLC global blocks are merged and which wins on a clash | In-game test; R1.6 | Open |
-| UI-018 | A label-name index (most names are only known by hash) | Second pass: hash every string literal in the decompile and match | Open |
-| UI-019 | What the 8 blocks `update2.rpf` adds are for | Second pass | Open |
+| UI-018 | A label-name index (most names are only known by hash) | Second pass: hash every string literal in the decompile and match | Partly answered: 29.5% of all labels named, 74% of `global` ([text labels, naming the labels](/docs/ui/text-labels.md#naming-the-labels)); subtitle, credit and track-ID labels left |
+| UI-019 | What the 8 blocks `update2.rpf` adds are for | Second pass | Answered: [text labels, the eight blocks](/docs/ui/text-labels.md#the-eight-blocks-update2rpf-adds) |
 
 ## Audio
 
