@@ -10,7 +10,7 @@ Every research topic, its status, and what is left to find out. **All 108 topics
 - **Good first topics** (S or M, mostly data files, no deep script reading): R2.6 time and weather, R3.8 health and arrest, R9.3 music and radio, R13.2 timecycles, R14.4 text and names, R8.3 text labels, R18.6 Windows and drivers.
 - **Priority jobs:** every large topic now has a first pass; their "Open questions" tables are the next work. The order they were done in: [README](/README.md#large-jobs-priority-pick-one).
 - **Topics that unblock others:** R0.8 the native namespace map, R0.7 the data file atlas, R17.1 the AI architecture.
-- **Second passes:** every finished guide ends with an "Open questions" table. Each row is a ready-made small task. All 408 of them are collected, numbered and grouped by category in [OPEN_QUESTIONS.md](/OPEN_QUESTIONS.md), which is where the second pass is tracked.
+- **Second passes:** every finished guide ends with an "Open questions" table. Each row is a ready-made small task. All 408 of them are collected, numbered and grouped by category in [OPEN_QUESTIONS.md](/OPEN_QUESTIONS.md), which is where the second pass is tracked. The [priority order](/OPEN_QUESTIONS.md#priority-order-set-2026-10-25) puts the user interface first, then the core engine, GTA Online, and story mode, in batches of questions that share a source.
 
 ## What is done (first pass)
 
