@@ -29,10 +29,12 @@ Where the game's scripts keep shared state: the global blocks, which script owns
 | 10 | `title_update_registration` | 1,134 | 1,510,605 | Title-update additions: much of today's Online lives here |
 | 11 | `sp_dlc_registration` | 10 | 31,711 | Story-mode DLC data |
 | 12 | `sp_pilotschool_reg` | 1 | 2 | Pilot School flag |
-| 13, 15 | none | 1, 1 | 23, 19 | No owner in the headers, yet a few references (to check: decompiler artefacts or unused code) |
+| 13, 15 | none | 1, 1 | 23, 19 | Dead code: reached only behind two flags that no script ever sets (second pass, below) |
 | 16 | `mp_prop_special_global_block` | 20 | 28,015 | Special properties |
 | 17 | `title_update_registration_2` | 234 | 128,039 | Later title-update additions |
 | 18, 19, 20 | `globals_fmmc_struct_registration`, `2`, `3` | 1 each | 264,829, 114,619, 11,380 | The mission (FMMC) structures, one huge structure each, used mostly by the creators and mission controllers |
+
+**Blocks 13 and 15** (*second pass, 2026-10-25*, **Verified**). Every reference was listed with `git grep` (commit `6c18d3e8b`). They sit in five scripts: `dialogue_handler`, `emergencycalllauncher`, `main_persistent`, `pausemenu_sp_repeat` and `replay_controller`. They always come in pairs: the same code reads `Global_3407872` (block 13) when one flag is set (`Global_2883694` in this build) and `Global_3932160` (block 15) when another is (`Global_2883693`), and both point at large structures with the same field layout (fields such as `.f_964.f_539.f_4321`, a character model, and `.f_931.f_21`, a count the replay menu checks). No script registers either block, and the only writes to the two flags in the whole decompile set them to 0. So these paths never run in build 3725: they are leftovers of an older save layout that still compile into the scripts. A mod can ignore both blocks.
 
 ## 6.3 The most-used globals
 
@@ -58,6 +60,8 @@ Where the game's scripts keep shared state: the global blocks, which script owns
 | `Global_2685150` | 10 | 33,302 | 618 | `fmmc_launcher`, mission controllers | Job lobby state (**Known**) |
 | `Global_1679103` | 6 | 30,470 | 429 | `timershud`, the mission controllers | Mission HUD timers and counters (**Verified** for the take counter in [core guide 4](/docs/gameplay/weapons/weapons.md)) |
 | `Global_2649159` | 10 | 10,601 | 348 | `freemode` | **Server broadcast data**; value 0 is freemode's host state (**Verified**) |
+
+**Where the player broadcast data is used** (*second pass, 2026-10-25*, **Verified** counts, roles still open). Counting every `Global_2658291[player].f_<n>` and `Global_1845250[player].f_<n>` reference in the decompile shows how lopsided the two blocks are. In `Global_2658291` (468 values per player) scripts use 138 top-level fields, but one sub-structure, `.f_325`, takes 302,151 references, and inside it `.f_325.f_11` alone 101,492; next come `.f_204` (12,445) and `.f_203` (10,113), which scripts test and set bit by bit (`BitTest`, `SET_BIT`: per-player state flags), then `.f_276`, `.f_221`, `.f_76` and `.f_124`. In `Global_1845250` (880 values per player) 75 top-level fields are used; `.f_260` takes 154,902 references (its busiest parts are `.f_260.f_299`, `.f_397`, `.f_311`, `.f_543` and `.f_490`), then the bare entry (10,562), `.f_97` (5,527, a sub-structure with bit fields at `.f_97.f_32`), `.f_36`, `.f_808`, `.f_198` and `.f_879`. Field numbers change with every build; name a field by reading the natives next to its uses, starting with `.f_325.f_11` and `.f_260`.
 
 ## 6.4 Story mode's globals (block 0), traced in earlier guides
 
@@ -91,9 +95,10 @@ Where the game's scripts keep shared state: the global blocks, which script owns
 
 ## 6.7 Open questions
 
+Answered in the second pass: what the references into blocks 13 and 15 are (dead code, [6.2](#62-the-blocks-with-how-much-they-are-used)).
+
 | Question | Where it goes |
 | --- | --- |
-| Field layout of the player broadcast data (`Global_1845250`, `Global_2658291`) | R7.1 second pass |
+| Field layout of the player broadcast data (`Global_1845250`, `Global_2658291`): the busiest fields are counted ([6.3](#63-the-most-used-globals)); their roles are not | R7.1 second pass |
 | The tunable index list: which `Global_262145.f_<n>` is which tunable | R7.3 |
-| What the references into blocks 13 and 15 are | Second pass |
 | Roles of the **Known** rows above, by reading one use each | Second pass |
