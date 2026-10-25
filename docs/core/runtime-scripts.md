@@ -65,7 +65,24 @@ From launch to control, the scripts that end are `startup`, the registration scr
 | `NETWORK_SET_SCRIPT_IS_SAFE_FOR_NETWORK_GAME` | The script keeps running when a network game starts | `startup`, `standard_global_reg`, `main_persistent` and everything it starts, `initial`, `maintransition`, `spawn_activities`, `error_listener` |
 | `HAS_FORCE_CLEANUP_OCCURRED(mask)` with bit 2 | The script cleans up and ends when story mode hands over to Online | `main`, `flow_controller`, `respawn_controller`, `code_controller`, `player_controller`, `comms_controller`, the mission triggerers, `vehicle_gen_controller`, `blip_controller`, `email_controller`, `autosave_controller` ... |
 
-**Verified:** every story-only controller in the cards below tests a mask that includes bit 2, none of the network-safe ones do, and `maintransition` is the script that calls `FORCE_CLEANUP(2)`. Other bits appear too: bit 8 is raised by `main`, `mission_repeat_controller`, the mission triggerers and `vehicle_gen_controller` (**Verified**), and the community names it the replay or "repeat play" cleanup (**Known**). The meaning of bits 16, 32, 64 and 128 is a topic for R1.1.
+**Verified:** every story-only controller in the cards below tests a mask that includes bit 2, none of the network-safe ones do, and `maintransition` is the script that calls `FORCE_CLEANUP(2)`. Other bits appear too: bit 8 is raised by `main`, `mission_repeat_controller`, the mission triggerers and `vehicle_gen_controller` (**Verified**), and the community names it the replay or "repeat play" cleanup (**Known**). The second pass below lists every bit.
+
+### Every force-cleanup bit (second pass)
+
+*Second pass (2026-10-25).* Every `FORCE_CLEANUP`, `FORCE_CLEANUP_FOR_ALL_THREADS_WITH_THIS_NAME` and `FORCE_CLEANUP_FOR_THREAD_WITH_THIS_ID` call, every `HAS_FORCE_CLEANUP_OCCURRED` mask and every `GET_CAUSE_OF_MOST_RECENT_FORCE_CLEANUP` comparison in the decompile (commit `6c18d3e8b`) was counted with `git grep`. Who raises a bit and when is **Verified**; the name given to each bit is read from those situations.
+
+| Bit | Raised by (scripts) | When | Checked by |
+| ---: | --- | --- | --- |
+| 1 | `main`; also aimed at one script by name (`am_prostitute`, `controller_ambientarea` end `pb_prostitute` and other ambient threads this way) | `main` raises it when the replay system asks scripts to clean up (`REPLAY_SYSTEM_HAS_REQUESTED_A_SCRIPT_CLEANUP`, the Rockstar Editor opening from story mode), after raising 8 and 64, and then reports `SET_SCRIPTS_HAVE_CLEANED_UP_FOR_REPLAY_SYSTEM` | Most story scripts (masks 3, 11, 19, 67, 83 ... all include it) |
+| 2 | `maintransition` (2 calls), `selector`, `main_persistent`; also aimed at named threads | Story mode handing over to Online | Every story-only controller |
+| 4 | No script | | 3 scripts test it alone |
+| 8 | 146 calls of `FORCE_CLEANUP(8)`, almost all inside one shared routine copied into each script | Before a mission replay or a world reset: `mission_repeat_controller` and `benchmark` raise 8 and 64 together, and so does `main` before the editor | Launchers, ambient controllers, shops (masks with 8) |
+| 16 | No script (raised by the engine) | | The object brains (`ob_bong`, `ob_drinking_shots`, `ob_franklin_wine`, `ob_wheatgrass`, `ob_mp_bed_low`, `ob_mp_shower_med`) and `pickupvehicles` |
+| 32 | No script (raised by the engine) | | The always-running story trackers: `achievement_controller`, `stats_controller`, `social_controller`, `drunk_controller`, `ingamehud`, `timershud`, and `flow_controller` (mask 34) |
+| 64 | `main`, `mission_repeat_controller`, `benchmark` | Always together with 8 (mission replay, benchmark, editor) | `shop_controller`, `taxiservice`, `vehicle_gen_controller`, the `family_scene_*` scripts (they keep a prop in hand unless the cause is 64) |
+| 128 | `director_mode` | Entering director mode, once the player is ready | Masks such as 146 and 210 |
+
+Bits 16 and 32 are never raised by a script, so the engine raises them; what for is open (an in-game test can watch `GET_CAUSE_OF_MOST_RECENT_FORCE_CLEANUP` in a small script). Of the 1,000-odd `HAS_FORCE_CLEANUP_OCCURRED` tests, the commonest masks are 3 (bits 1 and 2, 138 tests), 19 (1, 2, 16; 92), 11 (1, 2, 8; 43), 83 (1, 2, 16, 64; 42) and 2 (32). For a mod: test the same mask as the story scripts you live next to; mask 3 ends with them on the way to Online and into the editor.
 
 ### Stacks come from fixed pools
 
@@ -123,7 +140,7 @@ From the script headers (`tools/ysc-dump.ps1`, field `globalblock`). Exactly 18 
 | --- | --- | --- | --- | --- | --- |
 | 0 | `Global_0` | 153,879 | `standard_global_init` | `startup` | Story mode and shared state, including the story save globals (`Global_114904` onward, registered for saving by `standard_global_reg`) |
 | 1 | `Global_262144` | 37,437 | `tunables_registration` | `startup` | Tunables. `Global_262145` is the most-read global in the game: 31,290 reads in `freemode` alone |
-| 2 | `Global_524288` | 27,051 | `profiler_registration` | No script by name | Profiler (debug); to check |
+| 2 | `Global_524288` | 27,051 | `profiler_registration` | No script by name or hash | Unused: the script is empty and no script reads or writes any global in the block (second pass) |
 | 3 | `Global_786432` | 228,707 | `ugc_global_registration` | `main_persistent`, `maintransition`, `ingamehud`, the creators | UGC (user-generated content) data |
 | 4 | `Global_1048576` | 11,047 | `ugc_global_registration_2` | as block 3 | More UGC data |
 | 5 | `Global_1310720` | 261,487 | `mp_prop_global_block` | `startup` | Online properties |
@@ -242,10 +259,11 @@ Each card: what starts it and on which stack, whether it survives into Online, i
 
 ## 1.9 Open questions
 
+Answered in the second pass: the force-cleanup bits ([every force-cleanup bit](#every-force-cleanup-bit-second-pass)) and `profiler_registration` (empty, and global block 2 is never used). Still open: what the engine raises bits 16 and 32 for.
+
 | Question | Where it goes |
 | --- | --- |
-| Meaning of force-cleanup bits 8, 16, 32, 64 and 128 | R1.1 |
 | What exactly the engine does to start `main`, `initial` and `startup`, and in which order | R1.2 |
-| What `profiler_registration` (global block 2) is and whether anything starts it | R0.4 |
 | The story flags that pick the active mission triggerer | R5.1 |
 | Resolve table-driven launches (second pass of the graph) | R0.5 |
+| What the engine raises force-cleanup bits 16 and 32 for (no script raises them) | In-game test: log `GET_CAUSE_OF_MOST_RECENT_FORCE_CLEANUP` |
