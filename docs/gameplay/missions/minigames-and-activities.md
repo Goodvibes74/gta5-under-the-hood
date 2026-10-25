@@ -41,6 +41,8 @@ The ids below are the game's own (they index the completion list, the launchers'
 | 17 | Triathlon | `triathlonsp` | `launcher_Triathlon` (100 m) | `SC_MG_TRI1` to `3` (count) |
 | 18 | Yoga | `yoga` | `launcher_Yoga` (20 m) | `SC_MSC_YOG` (misc, tracked only) |
 
+**The race names** (*second pass, 2026-10-25*, from `global.gxt2`, **Verified**): the four sea races are North Coast (`SNCA`), South Coast (`SSC`), Canyon (`SCAA`) and Los Santos (`SCAB`); the five street races are City Circuit (`SRCC`), Airport (`SRAP`), Freeway (`SRFW`), Vespucci Canals (`SRVC`) and South Los Santos (`SRLS`). The completion texts read "Sea Race: North Coast", "Street Race: Airport" and so on.
+
 **Not in the list:** the cinema (`act_cinema`, its own world-point brain, `SC_MSC_CIN` counts as misc), the pier rides (`bigwheel`, `rollercoaster`, from `fairgroundHub`), the cable car, the car wash, photography (`photographymonkey`, `photographywildlife`) and friend activities (`friendactivity`: bar, cinema, darts, strip club count as `SC_FR_*` in the 5% friends group; golf and tennis with friends are tracked only).
 
 **Online only** (never started in story mode): `golf_mp`, `tennis_network_mp`, `pilot_school_mp`, `range_modern_mp`, `stripclub_mp`, the casino games (`casinoroulette`, `blackjack`, `three_card_poker`) and the arcade cabinets. The cabinet games are started by Online's `am_mp_arc_cab_manager` and the arcade props scripts, and five of the nine register as network scripts (**Verified**).
@@ -106,7 +108,7 @@ All story money goes through one shared function compiled into each script: it t
 | Races, triathlons, stunts | Position or time, with the race UI from the shared `SP_SPR` text |
 | Golf, tennis | Strokes and points, with the leaderboards read from Rockstar's servers when online (`LEADERBOARDS2_READ_*`) |
 
-The mission-passed style result screen with a medal (`mission_complete` Scaleform, `SET_MEDAL`) is drawn by `minigame_stats_tracker`; no script in this build starts it by name (open question).
+The mission-passed style result screen with a medal (`mission_complete` Scaleform, `SET_MEDAL`) is drawn by `minigame_stats_tracker`; no script in this build starts it by name. *Second pass (2026-10-25):* neither `minigame_stats_tracker` nor `minigame_ending_stinger` is named anywhere in the decompile, as a string or as its `joaat` hash (2,005,372,777 and 128,858,001), so nothing starts them in build 3725 (**Verified** for scripts; an engine start is not ruled out but nothing points to one). The minigames draw their own end screens.
 
 **Text blocks** each activity loads (`REQUEST_ADDITIONAL_TEXT`): `SP_GOLF`, `TENNIS`, `DARTS`, `YOGA`, `SP_SPR` (off-road, stunts, triathlon), `PSCHOOL`, `S_RANGE`, `BJUMP`, `AMBHT` (hunting), `TAXI`, `DTRSHRD` plus `DTRFAIR` or `DTRFKGR` (trafficking).
 
@@ -137,11 +139,9 @@ Each also sets its intro and outro animations, enemy vehicles, ambient speech, a
 
 | Question | Where it goes |
 | --- | --- |
-| Who starts `minigame_stats_tracker` and `minigame_ending_stinger` (not started by name in this build) | Next pass: search by hash |
 | The flight-school, range and triathlon medal thresholds | Next pass: read each script's goal tables |
 | Golf: course data, AI foursome behaviour, how the score is kept | Next pass |
 | How the flow unlocks each activity (blips appear after story missions) | Next pass, with [story flow](/docs/gameplay/missions/story-flow.md) |
-| The sea-race labels (`SNCA`, `SSC`, `SCAA`, `SCAB`) and street-race labels in English | Text files ([R8.3](/ROADMAP.md)) |
 | The towing quick-bonus check (what the 12 s timer measures) | Next pass |
 
 ## 42.9 Test cards

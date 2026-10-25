@@ -2,7 +2,7 @@
 
 How story mode decides when to save and how much of the game you've done: the 320 completion entries and the weights that make 100%, the controller that adds them up and reports them, the autosave controller and how scripts ask it to save, the save bed and save-anywhere scripts, and the achievement controller. Roadmap topic **R5.3** in the [roadmap](/ROADMAP.md). Builds on saves (R1.7) and [story flow](/docs/gameplay/missions/story-flow.md) (R5.1).
 
-**How it was made.** Read in the build 1.0.3725.0 decompile (commit `6c18d3e8b`): `standard_global_reg` (the completion entries and weights), `completionpercentage_controller` (31,293 lines), `autosave_controller` (93,637), `save_anywhere`, `savegame_bed`, `achievement_controller` (17,700). Launchers from the [script launch graph](/scripting/script-launch-graph.md); script counts with `git grep`; native counts from [native usage](/scripting/native-usage.md). Numbers and names are **Verified**. The text behind the completion labels (`M_ARM1`, `SC_MG_GOLF` ...) wasn't found in the text files read, so what each label names is inferred from its prefix (*probable*).
+**How it was made.** Read in the build 1.0.3725.0 decompile (commit `6c18d3e8b`): `standard_global_reg` (the completion entries and weights), `completionpercentage_controller` (31,293 lines), `autosave_controller` (93,637), `save_anywhere`, `savegame_bed`, `achievement_controller` (17,700). Launchers from the [script launch graph](/scripting/script-launch-graph.md); script counts with `git grep`; native counts from [native usage](/scripting/native-usage.md). Numbers and names are **Verified**. The text behind the completion labels (`M_ARM1`, `SC_MG_GOLF` ...) wasn't found in the text files read, so what each label names is inferred from its prefix (*probable*). *Second pass (2026-10-25):* the labels were looked up in every American text block of the base game and the DLC packs ([text labels](/docs/ui/text-labels.md#naming-the-labels)); 199 of the 320 have text, all in `global.gxt2`, and the 121 others have none anywhere ([16.3](#163-the-completion-list)).
 
 ## 16.1 Short version
 
@@ -42,7 +42,16 @@ Each entry is registered by one call (`func_699` in this build) with: entry numb
 
 **The sum** (`func_153` in the controller, **Verified**): for each counted group it adds the weights of completed entries; if every entry of the group is done it sets the group to its full share instead (55, 10, 0, 10, 5, 15, 5). Random events add four times their weight and are set to the full 5% once 14 are done (the needed count, `14`, is set next to the list). The seven group totals are added into the save's total.
 
-**What `SC_MSC_` likely covers** (*probable* from the labels): stunt jumps (`STJ`), under-the-bridge flights (`BRG`), knife flights (`KFT`), the cinema (`CIN`) and other one-off collections. Labels whose text is in a block not read here are an open question.
+**The text of the labels** (*second pass*, **Verified**). 199 of the 320 labels have English text in `global.gxt2`: every story mission (`M_ARM1` "Franklin and Lamar", `M_FAM1` "Father/Son", `M_MIC4` "Meltdown"), every counted stranger and freak (`SC_RC_EPS3` "Assuming The Truth"), every minigame (`SC_MG_TRI1` "Triathlon 1: Trailer Park", `SC_MGPS11` "Flight School - Skydiving") and every misc entry. The 121 without text exist in no American text file, base or DLC, so they are internal names the game never shows as text: all 60 random events (`RE*`), the 42 tracked-only entries of group 0 (taxi `OJTX*` and trafficking `OJDG*` odd jobs, extra random-event variants, `SC_FR_ARRACT`), 11 in group 6 (air and ground trafficking `OJDA*`, `OJDG1` to `5`, hunting `OJHU`), 7 in group 1 (the five assassinations `ASS1` to `5`, `FHPB`, `DHP1`) and 1 in group 4 (`MGSP`).
+
+**The misc and friend groups** name these activities (the `SC_MSC_` prefix shortened to its last part):
+
+| Group | Counts toward 100% | Labels and their text |
+| ---: | --- | --- |
+| 11 | Yes, 15% | `SC_CO_UFOP1` Collect Omega Spaceship Parts, `SC_CO_DLS1` Collect Dreyfuss Letter Scraps, `STJ` Stunt Jumps, `BRG` Under The Bridge, `KFT` Knife Flights, `CIN` Cinema Visit, `PPY` Property Purchase, `VEH` Online Vehicle Purchase, `CHP` Walk and Play with Chop, `BOO` Booty Call, `HKR` Hooker Hire, `HLD` Shop Hold Up |
+| 12 | No (tracked only) | `DIV` Diving Pickups, `SON` Sonar Collections, `YOG` Yoga, `CAB` Cable Car Ride, `WSH` Car Wash, `FRG` Fairground Visit, `CLT` Clothes Purchase, `MOD` Car Mod Purchase, `BRB` Get a Haircut, `TAT` Get a Tattoo, `GUN` Weapon Purchase, `WTV` Watch TV, `STK` Deal in Stocks |
+| 13 | Yes, 5% | `SC_FR_BAR` Friends: Bar Visit, `SC_FR_CIN` Cinema Visit, `SC_FR_DAR` Play Darts, `SC_FR_STR` Strip Club Visit |
+| 14 | No | `SC_FR_GOL` Friends: Play Golf, `SC_FR_TEN` Play Tennis |
 
 ## 16.4 Reporting it
 
@@ -74,7 +83,6 @@ When asked (`Global_114638` in this build), the controller (**Verified**):
 
 | Question | Where it goes |
 | --- | --- |
-| The text of each completion label (block not found) | Second pass, with every text block |
 | What each completion entry's flags and map numbers mean | Second pass, `func_699` |
 | Every autosave trigger, from the request fields | Second pass, follow `Global_102468` |
 | Which 23 achievements the controller awards, by name | Second pass, with the achievement list |
