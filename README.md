@@ -63,11 +63,11 @@ gta5-under-the-hood/
 
 ## Status
 
-> **This is a first pass.** Every one of the 108 original research topics has been worked through once (one topic added since, R6.7 Online cosmetics, is still open), to map the ground: where each system lives, how it works, what a mod can change, and the numbers behind it. A first pass is not the last word. Some claims are still **Known** rather than **Verified**, some systems were only sampled, and few findings have been checked in game yet.
+> **This is a first pass.** Every one of the 109 research topics has been worked through once, to map the ground: where each system lives, how it works, what a mod can change, and the numbers behind it. A first pass is not the last word. Some claims are still **Known** rather than **Verified**, some systems were only sampled, and few findings have been checked in game yet.
 >
 > **Nearly every guide ends with an "Open questions" table** (about 95 of them). Each row is a question the first pass found but couldn't settle, with where it should go next: a second pass of the same topic, another topic, or an in-game test. Taken together, those tables are the research agenda for the next passes, and they're the place to start if you want to go deeper into how the game works. Pick a row, claim it as [CONTRIBUTING.md](CONTRIBUTING.md) explains, answer it, and update the guide and its table.
 
-Alongside the 108 first-pass guides there's a [step-by-step modding path](modding/README.md) for beginners, the Online guides, the DLC inventory and the scripting guides. The [roadmap](ROADMAP.md) lists every topic, what's done, and where to begin. Highlights so far:
+Alongside the 109 first-pass guides there's a [step-by-step modding path](modding/README.md) for beginners, the Online guides, the DLC inventory and the scripting guides. The [roadmap](ROADMAP.md) lists every topic, what's done, and where to begin. Highlights so far:
 
 - [Inside freemode](docs/online/07-freemode.md): GTA Online's 1.47-million-line main script, its state machines and ~180 systems.
 - [Story flow](docs/gameplay/missions/story-flow.md) and [mission anatomy](docs/gameplay/missions/mission-anatomy.md): how story missions unlock and how every mission script is built.
@@ -84,7 +84,7 @@ Alongside the 108 first-pass guides there's a [step-by-step modding path](moddin
 
 ## Large jobs (priority): pick one
 
-Every large topic has a first pass (each took a week or more) except R6.7, added on 2026-10-26 and still open. They are listed in the order they were taken, easiest first, by how much of the groundwork the earlier guides covered. Second passes are welcome: each guide ends with an "Open questions" table, and all of them are collected in [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md); claim one as [CONTRIBUTING.md](CONTRIBUTING.md) explains and work on it in its own branch.
+Every large topic now has a first pass (each took a week or more; R6.7 was added and written on 2026-10-26). They are listed in the order they were taken, easiest first, by how much of the groundwork the earlier guides covered. Second passes are welcome: each guide ends with an "Open questions" table, and all of them are collected in [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md); claim one as [CONTRIBUTING.md](CONTRIBUTING.md) explains and work on it in its own branch.
 
 | # | Job | Why it's at this place |
 | ---: | --- | --- |
@@ -100,7 +100,7 @@ Every large topic has a first pass (each took a week or more) except R6.7, added
 | 10 | **R7.7 Organisations and businesses** (priority, **done**: [guide](docs/online/organisations-and-businesses.md)) | Many `gb_*` work scripts and the business computer apps |
 | 11 | **R7.8 Heists** (priority, **done**: [guide](docs/online/heists.md)) | The heist controllers are among the biggest scripts; every heist differs |
 | 12 | **R7.9 DLC storylines** (priority, **done**: [guide](docs/online/dlc-storylines.md)) | The broadest job: every DLC's story, much of it cloud content not in the local files |
-| 13 | **R6.7 Online cosmetics** (open) | Barber, clothes and tattoo shop scripts plus the apparel catalogue; [appearance and clothing](docs/entities/peds/appearance-and-clothing.md) and the [character creator](docs/gameplay/player/online-character-creator.md) already cover the natives and the face |
+| 13 | **R6.7 Online cosmetics** (priority, **done**: [guide](docs/gameplay/player/online-cosmetic-shops.md)) | Barber, clothes and tattoo shop scripts plus the apparel catalogue; [appearance and clothing](docs/entities/peds/appearance-and-clothing.md) and the [character creator](docs/gameplay/player/online-character-creator.md) already cover the natives and the face |
 
 Online jobs (9 to 13) are research only: read the scripts and files, never run mods in GTA Online.
 
