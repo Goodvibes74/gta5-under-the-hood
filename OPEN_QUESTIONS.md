@@ -2,7 +2,7 @@
 
 Every open question from every first-pass guide, in one place. All 108 roadmap topics have a first-pass guide, and each guide ends with an "Open questions" table. This file collects those tables, plus the questions that were only written into a guide's text, so the **second pass** of the research can be planned and tracked from one list.
 
-**How it was made.** Collected on 2026-10-25 from the `main` branch: every `.md` file under `docs/`, `scripting/`, `file-formats/` and `modding/` was scanned for headings that contain "Open questions", and every row of the table under each one was taken, 396 rows from 97 guides. The guides' text was also searched for "open question", "not decoded" and similar phrases outside those tables, which added 13 questions (marked *from the guide's text*). One row was already answered elsewhere and is listed at the end instead. Guides written later add their questions with the next free ID in their category (R6.7, 2026-10-26: GP-081 to GP-086). The roadmap ID after each guide comes from [ROADMAP.md](/ROADMAP.md). The questions are copied as the guides word them; the guide stays the place where the answer goes.
+**How it was made.** Collected on 2026-10-25 from the `main` branch: every `.md` file under `docs/`, `scripting/`, `file-formats/` and `modding/` was scanned for headings that contain "Open questions", and every row of the table under each one was taken, 396 rows from 97 guides. The guides' text was also searched for "open question", "not decoded" and similar phrases outside those tables, which added 13 questions (marked *from the guide's text*). One row was already answered elsewhere and is listed at the end instead. Guides written later add their questions with the next free ID in their category (R6.7, 2026-10-26: GP-081 to GP-086; the R7.6 second pass: ON-065, ON-066). The roadmap ID after each guide comes from [ROADMAP.md](/ROADMAP.md). The questions are copied as the guides word them; the guide stays the place where the answer goes.
 
 ## How the second pass works
 
@@ -75,13 +75,13 @@ Test only: GS-003 (does the return to story mode restart every script), CORE-001
 
 | Batch | Topic | Questions | Kind | Status |
 | --- | --- | --- | --- | --- |
-| P3.1 | [Interaction menu, phone and apps](/docs/online/interaction-menu-phone-apps.md) (R7.10): the full interaction-menu tree, story phone slots, website pages, phone models | ON-026, ON-027, ON-028, ON-029 | scripts | Open |
+| P3.1 | [Interaction menu, phone and apps](/docs/online/interaction-menu-phone-apps.md) (R7.10): the full interaction-menu tree, story phone slots, website pages, phone models | ON-026, ON-027, ON-028, ON-029 | scripts | Open (ON-028 partly answered with P3.7) |
 | P3.2 | [The job lobby](/docs/online/job-lobby.md) (R7.5): launcher states, start arguments, corona settings, playlists, walk-in markers, job types | ON-030, ON-031, ON-032, ON-033, ON-034, ON-006 | scripts | Open |
 | P3.3 | [Inside `freemode`](/docs/online/07-freemode.md) and [sessions](/docs/online/sessions-and-sync.md) (R7.1, R15.1): the event ids, the host's rotation, the running-state functions per system | ON-001, ON-002, ON-005, ON-051 | scripts | Open |
 | P3.4 | [Transitions](/docs/online/transitions-and-sessions.md) (R7.2): the offline branch, character slots, the way back to story mode, the testbed session, what opens the creator | ON-004, ON-061, ON-062, ON-063, ON-064, GP-059 | scripts | Open |
 | P3.5 | [Stats and tunables](/docs/online/stats-and-tunables.md) (R7.3): the tunable index, save categories, the shop basket, unnamed service readers | CORE-010, ON-047, ON-054, ON-055, ON-056, GP-058 | scripts | Open |
 | P3.6 | [The Online character creator](/docs/gameplay/player/online-character-creator.md) (R6.5): unlabelled morphs, slider scaling, outfit groups | GP-055, GP-056, GP-057 | scripts | Open |
-| P3.7 | [Properties](/docs/online/properties.md) (R7.6): yachts and vehicles as properties, garages, entrances, instances, daily fees | ON-041, ON-042, ON-043, ON-044, ON-045, ON-046 | scripts | Open |
+| P3.7 | [Properties](/docs/online/properties.md) (R7.6): yachts and vehicles as properties, garages, entrances, instances, daily fees | ON-041, ON-042, ON-043, ON-044, ON-045, ON-046 | scripts | Partly done, with ON-028 (ON-042 and ON-043 partly left; new ON-065, ON-066) |
 | P3.8 | [Organisations and businesses](/docs/online/organisations-and-businesses.md) (R7.7): production numbers, capacities, offline production, boss costs, challenges, business missions, transactions | ON-035, ON-036, ON-037, ON-038, ON-039, ON-040, ON-049, UI-011 | scripts | Open |
 | P3.9 | [Heists](/docs/online/heists.md) (R7.8): fail bands, casino targets, Cayo loot, the classic planning board, elite rewards, story arcs, crew skill | ON-019, ON-020, ON-021, ON-022, ON-023, ON-024, ON-025, GP-019 | scripts | Open |
 | P3.10 | [DLC storylines](/docs/online/dlc-storylines.md) (R7.9): stats per flow step, voice-only flows, arrival updates, missing flows, mp2025_02 | ON-014, ON-015, ON-016, ON-017, ON-018 | scripts, data | Open |
@@ -118,14 +118,14 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [AI](#ai) (`AI-`) | 13 | 50 |
 | [The world](#the-world) (`WLD-`) | 4 | 19 |
 | [Gameplay](#gameplay) (`GP-`) | 17 | 86 |
-| [GTA Online](#gta-online) (`ON-`) | 13 | 64 |
+| [GTA Online](#gta-online) (`ON-`) | 13 | 66 |
 | [User interface](#user-interface) (`UI-`) | 6 | 19 |
 | [Audio](#audio) (`AUD-`) | 3 | 11 |
 | [Rendering](#rendering) (`REN-`) | 5 | 27 |
 | [Performance](#performance) (`PERF-`) | 9 | 28 |
 | [Scripting](#scripting) (`SCR-`) | 4 | 14 |
 | [File formats](#file-formats) (`FF-`) | 2 | 6 |
-| **Total** | | **414** |
+| **Total** | | **416** |
 
 ## Getting started
 
@@ -719,7 +719,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | --- | --- | --- | --- |
 | ON-026 | The story-mode slot list (which apps each character has) | Second pass, `cellphone_controller` by character | Open |
 | ON-027 | The full interaction-menu tree and its conditions | Second pass, `am_pi_menu` | Open |
-| ON-028 | Every website page and what each sells | Second pass, `appinternet` | Open |
+| ON-028 | Every website page and what each sells | Second pass, `appinternet` | Partly answered: the eight selling sites with their numbers and stock counts ([R7.10 21.5](/docs/online/interaction-menu-phone-apps.md#215-the-internet)); the item-to-model list is left |
 | ON-029 | The Facade phone's movie and the character-to-phone mapping | Second pass | Open |
 
 ### [The job lobby (`fmmc_launcher`)](/docs/online/job-lobby.md) (R7.5)
@@ -747,12 +747,14 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-041 | How the yacht, Kosatka and other vehicles-as-properties are bought and placed | Next pass, `freemode` yacht code | Open |
-| ON-042 | Where garage capacities and vehicle slots are stored, and how a personal vehicle is saved per slot | Next pass, with the vehicle stats | Open |
-| ON-043 | The simple-interior entrance positions and which script places the doors | Next pass, `am_mp_smpl_interior_ext` tables | Open |
-| ON-044 | Instance numbering of `am_mp_property_int` (owner id, building, or both) | Next pass | Open |
-| ON-045 | Daily property fees (utility bills) and how they are charged | Next pass, `freemode` | Open |
-| ON-046 | The business side of each simple interior | [R7.7](/ROADMAP.md) | Open |
+| ON-041 | How the yacht, Kosatka and other vehicles-as-properties are bought and placed | Next pass, `freemode` yacht code | Answered: websites, stats, the 36 yacht spots ([45.6a](/docs/online/properties.md#yachts-and-other-vehicles-as-properties)) |
+| ON-042 | Where garage capacities and vehicle slots are stored, and how a personal vehicle is saved per slot | Next pass, with the vehicle stats | Partly answered: spaces per slot and the 607 `MPSV_*` records ([45.6a](/docs/online/properties.md#garage-sizes-and-personal-vehicle-records)); where colours and mods are kept is ON-066 |
+| ON-043 | The simple-interior entrance positions and which script places the doors | Next pass, `am_mp_smpl_interior_ext` tables | Partly answered: the per-type function table and the mansions ([45.6a](/docs/online/properties.md#simple-interior-entrances)); the other positions are left |
+| ON-044 | Instance numbering of `am_mp_property_int` (owner id, building, or both) | Next pass | Answered: per owner, rows 0 to 31, 32 without an owner ([45.6a](/docs/online/properties.md#interior-instances)) |
+| ON-045 | Daily property fees (utility bills) and how they are charged | Next pass, `freemode` | Answered: every 48 minutes, fees per property ([45.6a](/docs/online/properties.md#daily-property-fees-utility-bills)) |
+| ON-046 | The business side of each simple interior | [R7.7](/ROADMAP.md) | Answered in [organisations and businesses](/docs/online/organisations-and-businesses.md#464-the-business-loop) |
+| ON-065 | Which business or vehicle the garage indices 116 to 137 and ownership slots 12 to 35 are | Next pass, the slot-to-stat functions in `freemode` | Open |
+| ON-066 | Where a personal vehicle's colours, wheels and mods are saved | Next pass, the vehicle save code in `freemode` and `carmod_shop` | Open |
 
 ### [Rockstar services](/docs/online/rockstar-services.md) (R15.2)
 
