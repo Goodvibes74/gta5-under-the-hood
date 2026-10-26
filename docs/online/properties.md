@@ -232,6 +232,71 @@ The business properties use a shared "simple interior" system instead of the apa
 
 The "restricted interiors" are the reason missions can send players into the banks, the FIB building or the carrier: they are entered through the same system as a business, but only while a mission allows it (*probable*, from the names and the shared code).
 
+## 45.6a Garages, bills, yachts and instances (second pass)
+
+*Second pass, 2026-10-26.* Read in the same decompile: `freemode` (the garage-size and utility-bill functions), `am_mp_property_int` (the instance), `am_mp_yacht` (the yacht spots), `am_mp_smpl_interior_ext` (entrances), `appinternet` (purchase pages), and `common\data\mpstatssetup.xml` from `update\update.rpf`. Tunable names and defaults come from `tuneables_processing`. Counts and values are **Verified** unless marked.
+
+### Garage sizes and personal-vehicle records
+
+One function in `freemode` gives the number of vehicle spaces, either for a property index or for one of the 36 ownership slots (**Verified**):
+
+| Ownership slot | Owned through | Spaces |
+| --- | --- | ---: |
+| 0 to 4, 7, 23, 24, 27, 28 | the ten homes (`PROPERTY_HOUSE`, `MULTI_PROPERTY_1` to `9`) | 13 reserved; the home's class decides how many are used: 2, 6 or 10 (3, 8 or 13 when the function's third argument is set) |
+| 5 | office (`PROP_OFFICE`) | 0 |
+| 6 | clubhouse (`PROP_CLUBHOUSE`) | 10 |
+| 8, 9, 10 | office garages (`PROP_OFFICE_GAR1` to `3`) | 20 each |
+| 11 | vehicle warehouse (`PROP_IE_WAREHOUSE`) | 8 (*probable*: the eight special vehicles, matching an eight-entry list in `appinternet`: `ruiner2`, `blazer5`, `phantom2`, `voltic2`, `dune4`/`dune5`, `wastelander`, `boxville5`, `technical2`) |
+| 12 | | 35 |
+| 13 | | 7 |
+| 14 | | 1 |
+| 15 to 22, 25, 32 | | 10 each |
+| 26 | | 20 |
+| 29 | | 50 (probably the Eclipse Blvd garage: five floors, the stats have five `MSTOREY_FLOOR` tooltips) |
+| 31 | | 2 |
+| 33, 34, 35 | | 20 each |
+
+Property indices past 115 (not in the table of 45.2) get sizes by index: 116 = 35, 117 = 7, 118 = 1, 119 to 127 = 10 (122 = 9), 128 = 20, 129 = 50, 132 = 2, 133 = 10, 135 to 137 = 20. Which business or vehicle each of these is, is still open (45.8).
+
+Every personal vehicle is one **record** in a per-character array of **607**, kept in stats flagged `IsVehicle` (4,412 of them): `MPSV_MODEL_n`, `MPSV_FLAGS_n` (mod flags), `MPSV_VEHICLE_BS_n` (control flags), `MPSV_LP0_n` (the plate, a 64-bit stat), `MPSV_PRICE_PAID_n`, `MPSV_PREMIUM_PAID_n` (insurance paid by whoever destroyed it), `MPSV_IMPOUND_TIME_n`, and for 133 of them `MPSV_OBTAINED_TIME_n`, plus `MPSV_VEHICLE_TIMESTAMP` and named one-offs (`MPSV_MODEL_BIKER_CLT`, `_TUNER_VEH`, `_SALVAGE_VEH`). A `freemode` function maps record numbers to stat numbers in blocks (records 0 to 9, 13 to 22, 26 to 35 ... with three unused numbers after each block of ten up to record 362, then straight runs), so a home's 13 reserved records hold up to 10 real cars. Colours, wheels and mods aren't among these stat names; where the full vehicle setup is kept is an open question.
+
+### Daily property fees (utility bills)
+
+`freemode` charges everything at once, every **2,880,000 ms (48 real minutes, one in-game day)**, when no job or other block is active (**Verified**). It adds up (tunable names and defaults):
+
+| What | Fee per day |
+| --- | ---: |
+| Each owned low-end home (class 4) | $25 (`low_aprt_util`) |
+| Each owned medium home (class 5) | $50 (`mid_aprt_util`) |
+| Each owned high-end home (class 6) | $75 (`high_aprt_util`) |
+| Garages | none |
+| Yacht | $500 (`yacht_utilities_cost`; off with `yacht_disable_utilities`) |
+| Hangar | $250 utility + $0 staff (`smug_hangar_utility_fees`, `smug_hangar_staff_fees`) |
+| Casino penthouse | $300 plus $25 per owned upgrade, up to eight (`vc_penthouse_utility_base`, `_expansion`) |
+| A property flagged in the player's broadcast data (unnamed tunables) | $100 + $100, plus $100 more for each of three upgrades |
+| Another flagged property | $150 |
+| Each of three properties tracked in one bit field (probably the three mansions) | $600 base, +$10, +$10, +$500 and +$25 for each of four upgrades |
+
+The total is shown with `MP_PROP_UTIL` ("You paid your combined Property charges totaling $~1~ for the day.") and paid through the transaction service (`service_spend_utility_bills`) or `NETWORK_SPEND_APARTMENT_UTILITIES`. If the player can't pay, a flag is set and the bill is tried again at the next session start (**Verified**). The Kosatka has its own fee service (`service_spend_submarine_utility_fee`).
+
+### Yachts and other vehicles as properties
+
+- **Bought on websites:** the yacht on Docktease (`WWW_DOCKTEASE_COM_S_YACHT_D_PURCHASE_SUCCESS`), the Mobile Operations Center, Avenger, Terrorbyte and Kosatka on Warstock Cache & Carry (`..._TRUCK_D_PURCHASE_OK`, `_AVENGER_D_BUY_D_OK`, `_HACKERTRUCK_D_SOLD`, `_SUB_D_PURCHASE_OK`). The model choice is a stat per vehicle (`INV_YACHT_MODEL_0`, `INV_TRUCK_MODEL_0`, `INV_HACKERTRUCK_MODEL_0`, `IH_SUB_OWNED`), the options are packed stats (`PACKED_MP_INT_KOSATKA_COLOUR`, `_FLAG`, `_SONAR`, `_GUIDED_MISSILES`, `_SEASPARROW2`, `_AVISA`, `_WEAPON_WORKSHOP`; `PACKED_MP_INT_HACKERTRUCK_INTERIOR_TINT`, `_DRONE_STATION` ...). Kosatka default price $2,200,000 (`ih_sub_base_kosatka`).
+- **The yacht is placed at one of 36 fixed spots** around the coast, all at sea level (z 9.70): a table of 42 positions and headings in `am_mp_yacht`, where entries 0 to 35 are the player spots and 36 to 41 (z 9.71) are extra ones added later (*probable*: mission and event yachts). The yacht is built from props at that spot (`apa_mp_apa_yacht`, three hull options with rail and colour variants, `apa_mp_apa_yacht_option1` to `3`), not loaded as an IPL. Its property index is 86, and its interior uses instance slot 36 (below).
+- The MOC, Avenger and Terrorbyte are stored in the bunker, facility (or hangar) and nightclub and called from the interaction menu (`PIM_HRTV1` "Your Mobile Operations Center is already stored in your Bunker", `PIM_AVEN1`); their interiors are simple interiors (45.6).
+
+### Interior instances
+
+`am_mp_property_int` registers as a 32-player network script with an **instance number from a 32-entry table** of active properties kept by the session: it looks for the row whose owner gamer handle and property match the one being entered (property 86, the yacht, is matched as 36), and uses that row number, 0 to 31. A player entering without an owner to match gets instance 32. So the instance is **per owner** (one per player's property in the session), not per building: two owners in the same Eclipse Towers building are in different instances (**Verified**).
+
+### Simple-interior entrances
+
+`am_mp_smpl_interior_ext` doesn't hold one coordinate list. Each interior type registers a table of about 40 functions; one of them returns the entrance data for an interior and entrance number (position, size, heading), which the script uses to draw the entry marker (`DRAW_MARKER` type 1, 0.75 m, in the interior's HUD colour) and the blip (`ADD_BLIP_FOR_COORD`). The three mansions' entrances are in the shared code: -2563.4, 1915.8, 167.8 · -1689.3, 481.8, 128.8 · 533.5, 770.8, 201.9 (interiors 177 to 179). The other types' lists sit behind those function pointers (open question).
+
+### The business side
+
+What each business interior produces, sells and costs is in [organisations and businesses](/docs/online/organisations-and-businesses.md#464-the-business-loop) (R7.7).
+
 ## 45.7 What this means for modders
 
 These are Online systems: read them, never mod them in Online. For a story-mode or offline project:
@@ -245,9 +310,11 @@ These are Online systems: read them, never mod them in Online. For a story-mode 
 
 | Question | Where it goes |
 | --- | --- |
-| How the yacht, Kosatka and other vehicles-as-properties are bought and placed | Next pass, `freemode` yacht code |
-| Where garage capacities and vehicle slots are stored, and how a personal vehicle is saved per slot | Next pass, with the vehicle stats |
-| The simple-interior entrance positions and which script places the doors | Next pass, `am_mp_smpl_interior_ext` tables |
-| Instance numbering of `am_mp_property_int` (owner id, building, or both) | Next pass |
-| Daily property fees (utility bills) and how they are charged | Next pass, `freemode` |
-| The business side of each simple interior | [R7.7](/ROADMAP.md) |
+| How the yacht, Kosatka and other vehicles-as-properties are bought and placed | Answered in [45.6a](#yachts-and-other-vehicles-as-properties) (second pass) |
+| Where garage capacities and vehicle slots are stored, and how a personal vehicle is saved per slot | Partly answered in [45.6a](#garage-sizes-and-personal-vehicle-records): sizes per slot and the 607 `MPSV_*` records; where colours and mods are kept is still open |
+| The simple-interior entrance positions and which script places the doors | Partly answered in [45.6a](#simple-interior-entrances): the mechanism and the mansions; the other types' positions sit behind per-type function pointers |
+| Instance numbering of `am_mp_property_int` (owner id, building, or both) | Answered in [45.6a](#interior-instances): per owner, rows 0 to 31, 32 without an owner |
+| Daily property fees (utility bills) and how they are charged | Answered in [45.6a](#daily-property-fees-utility-bills) |
+| The business side of each simple interior | Answered in [organisations and businesses](/docs/online/organisations-and-businesses.md#464-the-business-loop) (R7.7) |
+| Which business or vehicle the garage indices 116 to 137 and ownership slots 12 to 35 are | Next pass, the slot-to-stat functions in `freemode` |
+| Where a personal vehicle's colours, wheels and mods are saved | Next pass, the vehicle save code in `freemode` and `carmod_shop` |

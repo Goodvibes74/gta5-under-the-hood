@@ -61,6 +61,21 @@ Activities chosen here are started through the same activity table as the job lo
 
 `appinternet` runs the `web_browser` movie (with `font_lib_web`), and each site is its own movie in `scaleform_web.rpf` (86 `www_*.gfx` files, [Scaleform movies](/docs/ui/scaleform.md)). The `WWW_` labels in the script name 23 sites (**Verified**, counted by prefix): Maze Bank (23 labels), Warstock (12), The Diamond Casino & Resort (8), Eyefind (8), Arena War (5), The Children of the Mountain, Prix Luxury Real Estate, Epsilon Program, Dynasty 8 Real Estate, Dynasty 8 Executive Realty, Docktease, BAWSAQ (4 each), The Reality Mill, LCN (3 each), Southern San Andreas Super Autos, P and M Cycles, Lifeinvader, Legendary Motorsport, I Will Survive It All, Elitas Travel, Benny's Original Motorworks (2 each), My Divine Within and the bank (1 each). Buying through a site in Online goes through the server's transactions ([stats and tunables](/docs/online/stats-and-tunables.md)).
 
+*Second pass, 2026-10-26.* Eight sites sell vehicles, and the script numbers them (**Verified**, from the purchase-message table and the per-site stock table in `appinternet`):
+
+| Site number | Site | Stock slots | Notes |
+| ---: | --- | ---: | --- |
+| 10 | Legendary Motorsport | 209 | |
+| 11 | Elitas Travel | 33 | aircraft |
+| 12 | Warstock Cache & Carry | 161 | separate purchase messages for the Mobile Operations Center (item 323), Avenger (357), Terrorbyte (402) and Kosatka (518) |
+| 13 | Docktease | 23 | boats; the yacht (item 245) has its own message |
+| 15 | P and M Cycles | 9 | bicycles |
+| 16 | Southern San Andreas Super Autos | 269 | |
+| 26 | Benny's Original Motorworks | 32 | |
+| 29 | Arena War | 23 | |
+
+Each slot holds an item number from one shared vehicle item list; which model each item is was not mapped in this pass. What the notes column says each site sells is **Known**. The real-estate sites sell properties: Dynasty 8 Real Estate the 85 homes and garages, Dynasty 8 Executive Realty offices, warehouses and the other executive properties ([properties](/docs/online/properties.md)); The Diamond Casino & Resort sells membership, the penthouse suites and renovations. Maze Bank, BAWSAQ and LCN are the bank and the two stock markets; Lifeinvader, Eyefind and the cult sites only show pages.
+
 ## 21.6 What this means for modders
 
 - **Story-mode phone apps can be replaced by script:** the phone starts whatever script name is in a slot. A mod that writes its own script name into a spare slot's entry would start its own app, but the table's address changes every build; most phone mods instead draw their own menu when the phone is out.
@@ -74,7 +89,7 @@ Activities chosen here are started through the same activity table as the job lo
 | --- | --- |
 | The story-mode slot list (which apps each character has) | Second pass, `cellphone_controller` by character |
 | The full interaction-menu tree and its conditions | Second pass, `am_pi_menu` |
-| Every website page and what each sells | Second pass, `appinternet` |
+| Every website page and what each sells | Partly answered in [21.5](#215-the-internet) (second pass): the eight selling sites and their stock counts; the item-to-model list is still open |
 | The Facade phone's movie and the character-to-phone mapping | Second pass |
 
 ## 21.8 Test cards
