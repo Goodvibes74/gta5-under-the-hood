@@ -72,6 +72,7 @@ Enforced by the `file-rules` check (`.github/workflows/file-rules.yml`) on every
 | `examples/` | `.cs`, `.md` | Small source examples; maintainer review required |
 | `.github/` | workflow and template files | Maintainer only |
 | Repo root | `.md`, `LICENSE`, `.gitignore`, `.gitattributes` | |
+| `graphify-out/` | generated knowledge graph (`graph.json`, `graph.html`, `GRAPH_REPORT.md`, `manifest.json`, `cache/`) | Only those exact files, exempt from the size and extension limits; regenerate with `/graphify . --update`, never edit by hand |
 
 Always rejected: any binary file, any file over 500 KB, and these extensions anywhere: `.exe .dll .asi .sys .msi .msix .bat .cmd .com .scr .vbs .vbe .js .jse .wsf .hta .lnk .jar .apk .ps1` (outside `tools/`), `.zip .7z .rar .tar .gz .cab .iso .rpf .ysc .ugc .ytd .ydr .yft .ymt .ymap .ytyp .awc`.
 
