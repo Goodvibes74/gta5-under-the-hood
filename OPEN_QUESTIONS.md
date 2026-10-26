@@ -2,7 +2,7 @@
 
 Every open question from every first-pass guide, in one place. All 108 roadmap topics have a first-pass guide, and each guide ends with an "Open questions" table. This file collects those tables, plus the questions that were only written into a guide's text, so the **second pass** of the research can be planned and tracked from one list.
 
-**How it was made.** Collected on 2026-10-25 from the `main` branch: every `.md` file under `docs/`, `scripting/`, `file-formats/` and `modding/` was scanned for headings that contain "Open questions", and every row of the table under each one was taken, 396 rows from 97 guides. The guides' text was also searched for "open question", "not decoded" and similar phrases outside those tables, which added 13 questions (marked *from the guide's text*). One row was already answered elsewhere and is listed at the end instead. The roadmap ID after each guide comes from [ROADMAP.md](/ROADMAP.md). The questions are copied as the guides word them; the guide stays the place where the answer goes.
+**How it was made.** Collected on 2026-10-25 from the `main` branch: every `.md` file under `docs/`, `scripting/`, `file-formats/` and `modding/` was scanned for headings that contain "Open questions", and every row of the table under each one was taken, 396 rows from 97 guides. The guides' text was also searched for "open question", "not decoded" and similar phrases outside those tables, which added 13 questions (marked *from the guide's text*). One row was already answered elsewhere and is listed at the end instead. Guides written later add their questions with the next free ID in their category (R6.7, 2026-10-26: GP-081 to GP-086). The roadmap ID after each guide comes from [ROADMAP.md](/ROADMAP.md). The questions are copied as the guides word them; the guide stays the place where the answer goes.
 
 ## How the second pass works
 
@@ -86,7 +86,7 @@ Test only: GS-003 (does the return to story mode restart every script), CORE-001
 | P3.9 | [Heists](/docs/online/heists.md) (R7.8): fail bands, casino targets, Cayo loot, the classic planning board, elite rewards, story arcs, crew skill | ON-019, ON-020, ON-021, ON-022, ON-023, ON-024, ON-025, GP-019 | scripts | Open |
 | P3.10 | [DLC storylines](/docs/online/dlc-storylines.md) (R7.9): stats per flow step, voice-only flows, arrival updates, missing flows, mp2025_02 | ON-014, ON-015, ON-016, ON-017, ON-018 | scripts, data | Open |
 | P3.11 | [Creator internals](/docs/online/creator-internals.md) (R7.11): prop limits, hidden libraries, the two prop writers, checkpoint fields, other creators' placement | ON-007, ON-008, ON-010, ON-011, ON-012, ON-013 | scripts | Open |
-| P3.12 | [Story systems in an Online mode](/docs/online/story-systems-in-online-mode.md) (R5.7): the shop table, ped brain sets | ON-057, ON-059 | scripts | Open |
+| P3.12 | [Story systems in an Online mode](/docs/online/story-systems-in-online-mode.md) (R5.7): the shop table, ped brain sets | ON-057, ON-059 | scripts | Partly done, with R6.7 (ON-059 left) |
 
 Test only: GP-054 (parent head counts), ON-058 (story clothes shop with a freemode ped; single player only). Engine only: ON-009 (creator budget), ON-052 (migration). Later: ON-048 (service natives in story scripts), ON-053 (a tunables list tool; needs the maintainer, as `tools/` does).
 
@@ -117,7 +117,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [Physics](#physics) (`PHY-`) | 4 | 18 |
 | [AI](#ai) (`AI-`) | 13 | 50 |
 | [The world](#the-world) (`WLD-`) | 4 | 19 |
-| [Gameplay](#gameplay) (`GP-`) | 16 | 80 |
+| [Gameplay](#gameplay) (`GP-`) | 17 | 86 |
 | [GTA Online](#gta-online) (`ON-`) | 13 | 64 |
 | [User interface](#user-interface) (`UI-`) | 6 | 19 |
 | [Audio](#audio) (`AUD-`) | 3 | 11 |
@@ -125,7 +125,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [Performance](#performance) (`PERF-`) | 9 | 28 |
 | [Scripting](#scripting) (`SCR-`) | 4 | 14 |
 | [File formats](#file-formats) (`FF-`) | 2 | 6 |
-| **Total** | | **408** |
+| **Total** | | **414** |
 
 ## Getting started
 
@@ -232,11 +232,11 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ENT-008 | Inside `clothes_shop_mp`: menu structure, how it applies an item, what it saves | Second pass | Open |
-| ENT-009 | Inside `hairdo_shop_mp`: which overlays and tints it offers per gender | Second pass | Open |
+| ENT-008 | Inside `clothes_shop_mp`: menu structure, how it applies an item, what it saves | Second pass | Answered: browse spots, catalogue queries, label-keyed prices, 20 outfit slots and the stats ([R6.7](/docs/gameplay/player/online-cosmetic-shops.md#clothes-stores-and-the-mask-shop-clothes_shop_mp)) |
+| ENT-009 | Inside `hairdo_shop_mp`: which overlays and tints it offers per gender | Second pass | Answered: pages per gender, overlay index and item count per page, prices ([R6.7](/docs/gameplay/player/online-cosmetic-shops.md#barber-shops-hairdo_shop_mp)) |
 | ENT-010 | The overlay index list (0 to 12) and micro-morph list (0 to 19), checked against the creator | Answered from the creator's tables in [the Online character creator](/docs/gameplay/player/online-character-creator.md) (R6.5); in-game check still open | Partly answered |
-| ENT-011 | The restriction tag names (hashes to names) | Second pass | Open |
-| ENT-012 | How many packs carry shop files, and how many items in all (a one-process scan of all 89 packs; one CodeWalker start per pack is too slow) | Second pass, extend [`tools/dlc-scan.ps1`](/tools/README.md) | Open |
+| ENT-011 | The restriction tag names (hashes to names) | Second pass | Answered: the catalogue stores them as text, 510 names with counts ([R6.7](/docs/gameplay/player/online-cosmetic-shops.md#wearing-rules-restriction-tags)) |
+| ENT-012 | How many packs carry shop files, and how many items in all (a one-process scan of all 89 packs; one CodeWalker start per pack is too slow) | Second pass, extend [`tools/dlc-scan.ps1`](/tools/README.md) | Answered: 86 files from 43 packs, 36,232 items; 31 tattoo files, 2,702 rows ([R6.7](/docs/gameplay/player/online-cosmetic-shops.md#the-catalogue-in-numbers)) |
 
 ### [Peds](/docs/entities/peds/peds.md) (R14.2)
 
@@ -614,6 +614,17 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | GP-058 | The appearance fee and cooldown values | R7.3 tunables, `freemode` | Open |
 | GP-059 | Which transition state opens the creator, and what menu `-1392473901` is (used 3 times, probably the character select) | Partly answered: `-1392473901` is `FE_MENU_VERSION_TEXT_SELECTION`, the "LOBBY LIST" screen ([pause menu 23.5](/docs/ui/pause-menu.md#235-the-full-tree-menu-versions-tabs-and-panes)); the transition state is still R7.2 | Partly answered |
 
+### [Online cosmetics and the shops that sell them](/docs/gameplay/player/online-cosmetic-shops.md) (R6.7)
+
+| ID | Question | Where it goes | Status |
+| --- | --- | --- | --- |
+| GP-081 | What each restriction tag blocks or forces, as a table (hat with hood, glasses with masks ...) | Next pass, the tag checks in `shop_controller` | Open |
+| GP-082 | The full `locate` number to menu title map, and why a few menus appear only in some store layouts | Next pass, `clothes_shop_mp` menu builder | Open |
+| GP-083 | The base-wardrobe tables (labels and prices of the non-DLC clothes) | Next pass | Open |
+| GP-084 | Which barber items need a rank, and the ranks | Next pass, the unlock checks behind `HAIR_UNLOCK` | Open |
+| GP-085 | The hair and make-up colour counts on this build | In-game test, `GET_NUM_PED_HAIR_TINTS` / `GET_NUM_PED_MAKEUP_TINTS` | Open |
+| GP-086 | Which hair fade goes with which hairstyle (the barber adds one when a style is bought) | Next pass, the hairstyle-to-list-slot mapping in `hairdo_shop_mp` | Open |
+
 ### [Respawn, death and arrest](/docs/gameplay/player/respawn-death-and-arrest.md) (R6.2)
 
 | ID | Question | Where it goes | Status |
@@ -772,7 +783,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-057 | The full shop table (index, position, type) from `shop_controller` | Second pass; feeds shop mods | Open |
+| ON-057 | The full shop table (index, position, type) from `shop_controller` | Second pass; feeds shop mods | Answered: all 65 entries by script, the cosmetic shops with name, position and interior ([R6.7](/docs/gameplay/player/online-cosmetic-shops.md#the-shop-table)) |
 | ON-058 | What exactly `clothes_shop_sp` does with a freemode ped (refuses, shows story stock, or breaks) | In-game test | Open |
 | ON-059 | What sets 2 and 4 contain (ped brains) | Second pass | Open |
 | ON-060 | How bits 16, 32 and 64 in these masks are raised (they end some systems on other occasions) | R1.2 second pass | Partly answered: 64 with 8 by `main`, `mission_repeat_controller`, `benchmark`; 16 and 32 only by the engine ([runtime scripts 1.3](/docs/core/runtime-scripts.md#every-force-cleanup-bit-second-pass)) |

@@ -1,6 +1,6 @@
 # Research roadmap
 
-Every research topic, its status, and what is left to find out. **All 108 topics** have a first-pass guide. Pick any topic for a second pass, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
+Every research topic, its status, and what is left to find out. **All 109 topics** have a first-pass guide. Pick any topic for a second pass, claim it as [CONTRIBUTING.md](/CONTRIBUTING.md) explains, and send a pull request.
 
 **Status values:** **Open** (nobody on it), **Claimed** (`@user`, branch name: someone is on it), **Done (first pass)** (a guide exists; second passes, checks and corrections are welcome), **Done** (reviewed and checked in game). Sizes: **S** an evening, **M** a few sessions, **L** a week or more.
 
@@ -8,7 +8,7 @@ Every research topic, its status, and what is left to find out. **All 108 topics
 
 - **New to this?** Want to make a mod first? Follow the [modding path](/modding/README.md). Want to research? Read [getting started](/docs/00-getting-started/README.md), then one finished guide in an area you like (for example [mission anatomy](/docs/gameplay/missions/mission-anatomy.md) or [vehicle handling](/docs/physics/vehicle-handling.md)) to see how a topic is written up.
 - **Good first topics** (S or M, mostly data files, no deep script reading): R2.6 time and weather, R3.8 health and arrest, R9.3 music and radio, R13.2 timecycles, R14.4 text and names, R8.3 text labels, R18.6 Windows and drivers.
-- **Priority jobs:** every large topic now has a first pass; their "Open questions" tables are the next work. The order they were done in: [README](/README.md#large-jobs-priority-pick-one).
+- **Priority jobs:** every large topic has a first pass (R6.7, added on 2026-10-26, was done the same day); their "Open questions" tables are the next work. The order they were done in: [README](/README.md#large-jobs-priority-pick-one).
 - **Topics that unblock others:** R0.8 the native namespace map, R0.7 the data file atlas, R17.1 the AI architecture.
 - **Second passes:** every finished guide ends with an "Open questions" table. Each row is a ready-made small task. All 408 of them are collected, numbered and grouped by category in [OPEN_QUESTIONS.md](/OPEN_QUESTIONS.md), which is where the second pass is tracked. The [priority order](/OPEN_QUESTIONS.md#priority-order-set-2026-10-25) puts the user interface first, then the core engine, GTA Online, and story mode, in batches of questions that share a source.
 
@@ -66,6 +66,7 @@ Every research topic, its status, and what is left to find out. **All 108 topics
 | R6.3 | [Appearance and clothing](/docs/entities/peds/appearance-and-clothing.md) (first pass): component slots and prop anchors, freemode faces, tattoos and shirt prints, the shop catalogue files and the natives that read them, the shop scripts |
 | R6.4 | [Controls and camera](/docs/gameplay/player/controls-and-camera.md) (first pass): control actions and IDs (to 401), the binding files, the three control groups, which controls Rockstar's scripts disable and check most, claiming input, and first and third person view modes |
 | R6.5 | [The Online character creator](/docs/gameplay/player/online-character-creator.md) (first pass): the creator inside `maintransition`, its seven menus, the micro-morph map for the 11 feature items, the overlay map for the appearance items, 32 eye colours, the 100-point stat pool with each skill's floor and cap, the line-up room, and the 63 stats that keep the face |
+| R6.7 | [Online cosmetics and the shops that sell them](/docs/gameplay/player/online-cosmetic-shops.md) (first pass): the 35 barber, clothes and tattoo shops and their places, the barber's nine pages per gender with overlay indices, 512 priced items and hair fades, the 36,232-item clothing catalogue and its label-keyed prices, 510 restriction tags, 20 outfit slots, 1,194 DLC tattoos in six zones, and the stats that save it all |
 | R7.1 | [Inside freemode](/docs/online/07-freemode.md): GTA Online's main script |
 | R7.2 | [Transitions and sessions](/docs/online/transitions-and-sessions.md) (first pass): `maintransition`'s 70 named states, the paths into freemode, the creator and back, session and server natives, what 382 scripts read |
 | R7.3 | [Stats, tunables and the server's role](/docs/online/stats-and-tunables.md) (first pass): 17,928 stats by type and family, 28,502 tunables with their defaults in one script, transactions, what an offline mode must replace |
@@ -209,6 +210,7 @@ Also written before the topic list existed: [how Online works](/docs/online/01-h
 | R6.3 | **Appearance and clothing** | Ped components and props, freemode ped models (`mp_m_freemode_01`), head blend, overlays, tattoos, the shop catalogues (`shop_ped_apparel` and its DLC files), outfits. | L | **Done** (first pass): [guide](/docs/entities/peds/appearance-and-clothing.md) |
 | R6.4 | **Controls and camera** | Control IDs and how scripts disable them, camera modes, first person, the phone and menus fighting over inputs. | S | **Done** (first pass): [guide](/docs/gameplay/player/controls-and-camera.md) |
 | R6.5 | **The Online character creator** | Where the creator lives, its menus, how heritage, features, appearance and stats map onto natives and indices, the room, what it saves and the rules (stat points, re-edit fee). | M | **Done** (first pass): [guide](/docs/gameplay/player/online-character-creator.md) |
+| R6.7 | **Online cosmetics and the shops that sell them** | How GTA Online sells and applies every cosmetic on the freemode character, going deeper than R6.3 and R6.5. Barber shops (`hairdo_shop_mp`): hairstyles per gender and the fade overlay each one adds, hair colour and highlight palettes, beards, eyebrows, chest hair, make-up, lipstick, blush, contact lenses, prices, and the chair, mirror camera and barber scene. Clothes stores (`clothes_shop_mp`): the store tiers and what each stocks, the catalogue filters, saved outfits, rank, event and DLC unlocks, prices, the changing-room camera. Hats, glasses, masks and other props: hat hair, helmets, masks that hide hair and beard, items that can't be worn together. Tattoo parlours (`tattoo_shop`): zones, crew and DLC tattoos, removal. How the choices are saved in the character's stats and put back on spawn, and the interaction menu's accessories and outfit switching. | L | **Done** (first pass, added and written 2026-10-26): [guide](/docs/gameplay/player/online-cosmetic-shops.md) |
 
 ## R7. GTA Online
 

@@ -91,8 +91,8 @@ A full per-pack list of shop files is still to make (10.7).
 
 | Question | Where it goes |
 | --- | --- |
-| Inside `clothes_shop_mp`: menu structure, how it applies an item, what it saves | Second pass |
-| Inside `hairdo_shop_mp`: which overlays and tints it offers per gender | Second pass |
+| Inside `clothes_shop_mp`: menu structure, how it applies an item, what it saves | Answered in [Online cosmetics and the shops that sell them](/docs/gameplay/player/online-cosmetic-shops.md#clothes-stores-and-the-mask-shop-clothes_shop_mp) (R6.7) |
+| Inside `hairdo_shop_mp`: which overlays and tints it offers per gender | Answered in [R6.7](/docs/gameplay/player/online-cosmetic-shops.md#barber-shops-hairdo_shop_mp) |
 | The overlay index list (0 to 12) and micro-morph list (0 to 19), checked against the creator | Answered from the creator's tables in [the Online character creator](/docs/gameplay/player/online-character-creator.md) (R6.5); in-game check still open |
-| The restriction tag names (hashes to names) | Second pass |
-| How many packs carry shop files, and how many items in all (a one-process scan of all 89 packs; one CodeWalker start per pack is too slow) | Second pass, extend [`tools/dlc-scan.ps1`](/tools/README.md) |
+| The restriction tag names (hashes to names) | Answered: the catalogue stores them as text, 510 names ([R6.7](/docs/gameplay/player/online-cosmetic-shops.md#wearing-rules-restriction-tags)) |
+| How many packs carry shop files, and how many items in all (a one-process scan of all 89 packs; one CodeWalker start per pack is too slow) | Answered: 86 files from 43 packs, 36,232 items ([R6.7](/docs/gameplay/player/online-cosmetic-shops.md#the-catalogue-in-numbers)) |
