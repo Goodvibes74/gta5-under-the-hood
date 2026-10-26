@@ -44,6 +44,13 @@ jobs:
             ext="${lower##*.}"
             [ "$ext" = "$lower" ] && ext=""
 
+            # Generated knowledge graph (graphify): plain JSON/HTML/Markdown, committed on purpose.
+            # Size and extension limits do not apply to these exact paths only.
+            case "$lower" in
+              graphify-out/graph.json|graphify-out/graph.html|graphify-out/manifest.json|graphify-out/graph_report.md|graphify-out/.graphify_labels.json|graphify-out/cost.json|graphify-out/cache/*/*.json|graphify-out/cache/*.json)
+                continue ;;
+            esac
+
             if [ -f "$f" ] && [ "$(wc -c < "$f")" -gt "$MAX_BYTES" ]; then
               echo "::error file=$f::File is larger than 500 KB."; fail=1; continue
             fi
