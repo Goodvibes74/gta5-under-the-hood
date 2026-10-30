@@ -52,7 +52,7 @@ The questions are grouped into **batches**. A batch is one branch and one pull r
 | P1.3 | [HUD, colours and blips](/docs/ui/hud-colours-blips.md) (R8.4): blip sprite names and the `[HD]`/`[CRT]` colours | UI-001, UI-003 | data | Done, [#109](https://github.com/Goodvibes74/gta5-under-the-hood/pull/109) |
 | P1.4 | [Scaleform movies](/docs/ui/scaleform.md) (R8.2): movies loaded through variables, DLC movies, each movie's methods, interior maps | UI-007, UI-008, UI-009 | scripts, data | Done, [#110](https://github.com/Goodvibes74/gta5-under-the-hood/pull/110) (61 interior maps left) |
 | P1.5 | [Story-mode UI](/docs/ui/story-mode-ui.md) (R8.6): the stat list, mission stats and medals, the mission-passed screen | UI-013, UI-014, UI-015, GP-015 | scripts, data | Done, [#111](https://github.com/Goodvibes74/gta5-under-the-hood/pull/111) |
-| P1.6 | [Server-backed Online screens](/docs/ui/server-backed-screens.md) (R8.5): what `pausemenu_multiplayer` fills, the signed-out guards, leaderboard IDs | UI-005, UI-010, UI-012 | scripts | Partly done, [#112](https://github.com/Goodvibes74/gta5-under-the-hood/pull/112) (UI-010 and UI-012 left) |
+| P1.6 | [Server-backed Online screens](/docs/ui/server-backed-screens.md) (R8.5): what `pausemenu_multiplayer` fills, the signed-out guards, leaderboard IDs | UI-005, UI-010, UI-012 | scripts | Done, [#112](https://github.com/Goodvibes74/gta5-under-the-hood/pull/112) and branch `research/R8.5-server-screens-second-pass` |
 | P1.7 | Subtitles and phone-call lines (R5.6 with R8.6) | GP-008 | scripts | Done, [#113](https://github.com/Goodvibes74/gta5-under-the-hood/pull/113) |
 
 Test only: UI-002 (draw lists and depths), UI-017 (which DLC text block wins a clash). UI-011 (transactions per business app) is answered with P3.8.
@@ -61,8 +61,8 @@ Test only: UI-002 (draw lists and depths), UI-017 (which DLC text block wins a c
 
 | Batch | Topic | Questions | Kind | Status |
 | --- | --- | --- | --- | --- |
-| P2.1 | [Boot](/docs/00-getting-started/boot.md) and [runtime scripts](/docs/core/runtime-scripts.md) (R1.2, R0.2): how `main`, `initial` and `startup` start, force-cleanup bits, `profiler_registration`, level index 5, the path to `prologue1` | CORE-017, CORE-018, CORE-019, GS-001, GS-002, ON-060 | scripts | Partly done, [#114](https://github.com/Goodvibes74/gta5-under-the-hood/pull/114) (CORE-018, GS-001, GS-002 left) |
-| P2.2 | [The global map](/docs/core/global-map.md) (R0.4): the player and server broadcast data, blocks 13 and 15, the **Known** rows | CORE-009, CORE-011, CORE-012, ON-003, ON-050 | scripts | Partly done, [#115](https://github.com/Goodvibes74/gta5-under-the-hood/pull/115) (CORE-012, broadcast field roles left) |
+| P2.1 | [Boot](/docs/00-getting-started/boot.md) and [runtime scripts](/docs/core/runtime-scripts.md) (R1.2, R0.2): how `main`, `initial` and `startup` start, force-cleanup bits, `profiler_registration`, level index 5, the path to `prologue1` | CORE-017, CORE-018, CORE-019, GS-001, GS-002, ON-060 | scripts | Done for scripts, [#114](https://github.com/Goodvibes74/gta5-under-the-hood/pull/114) and branch `research/R1.2-boot-second-pass` (CORE-018's engine side needs the executable) |
+| P2.2 | [The global map](/docs/core/global-map.md) (R0.4): the player and server broadcast data, blocks 13 and 15, the **Known** rows | CORE-009, CORE-011, CORE-012, ON-003, ON-050 | scripts | Partly done, [#115](https://github.com/Goodvibes74/gta5-under-the-hood/pull/115) and branch `research/R0.4-global-map-second-pass-2` (per-bit and per-stat field names, server broadcast fields left) |
 | P2.3 | [Saves](/docs/core/saves.md) (R1.7): the full section tree, the save upgrade, spending categories | CORE-022, CORE-023, GP-004 | scripts | Open |
 | P2.4 | [Completion and autosave](/docs/core/completion-and-autosave.md) (R5.3): autosave triggers, completion flags, the 23 achievements, the retry snapshot, mission replays | CORE-005, CORE-006, CORE-007, CORE-025, GP-018, GP-020, GP-033 | scripts | Open |
 | P2.5 | [Archives and content](/docs/core/archives-and-content.md) (R1.6): load phases per change set, `update2.rpf` and the mods folder copy | CORE-002, CORE-003 | data | Open |
@@ -133,8 +133,8 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GS-001 | Which level index 5 is | R1.6 or R4.6 | Open |
-| GS-002 | The exact path from a new game to `prologue1` | Partly answered: it is strand 27, switched on at a new game ([core guide 2](/docs/gameplay/missions/story-flow.md#25-the-32-strands)); the switch itself is R5.2 | Partly answered |
+| GS-001 | Which level index 5 is | R1.6 or R4.6 | Answered: the network testbed level; which folder it loads stays **Known** ([boot 3.4.1](/docs/00-getting-started/boot.md#341-the-level-indexes-second-pass)) |
+| GS-002 | The exact path from a new game to `prologue1` | Answered: [boot 3.4.2](/docs/00-getting-started/boot.md#342-from-a-new-game-to-prologue1-second-pass) | Answered |
 | GS-003 | Whether the return to story mode restarts every script (test card 2) | R7.2 | Open |
 
 ## Core engine
@@ -161,10 +161,10 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| CORE-009 | Field layout of the player broadcast data (`Global_1845250`, `Global_2658291`) | R7.1 second pass | Partly answered: field use counted ([global map 6.3](/docs/core/global-map.md#63-the-most-used-globals)); roles left |
+| CORE-009 | Field layout of the player broadcast data (`Global_1845250`, `Global_2658291`) | R7.1 second pass | Partly answered: `.f_325` (interior and owner) named, `.f_204`/`.f_203` bit flags, `.f_260` filled from stats ([global map 6.3](/docs/core/global-map.md#63-the-most-used-globals)); per-bit and per-stat names left (R7.3) |
 | CORE-010 | The tunable index list: which `Global_262145.f_<n>` is which tunable | R7.3 | Open |
 | CORE-011 | What the references into blocks 13 and 15 are | Second pass | Answered: dead code behind two flags no script sets ([global map 6.2](/docs/core/global-map.md#62-the-blocks-with-how-much-they-are-used)) |
-| CORE-012 | Roles of the **Known** rows above, by reading one use each | Second pass | Open |
+| CORE-012 | Roles of the **Known** rows above, by reading one use each | Second pass | Answered: [global map 6.3](/docs/core/global-map.md#63-the-most-used-globals) (three rows **Verified**, `Global_1892653` still unread) |
 
 ### [Memory, pools and limits](/docs/core/memory-and-pools.md) (R1.4)
 
@@ -180,7 +180,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | CORE-017 | Meaning of force-cleanup bits 8, 16, 32, 64 and 128 | R1.1 | Answered (16 and 32 are raised by the engine, cause open): [runtime scripts 1.3](/docs/core/runtime-scripts.md#every-force-cleanup-bit-second-pass) |
-| CORE-018 | What exactly the engine does to start `main`, `initial` and `startup`, and in which order | R1.2 | Open |
+| CORE-018 | What exactly the engine does to start `main`, `initial` and `startup`, and in which order | R1.2 | Partly answered: no script starts them, and the order follows from what each reads and waits for ([boot 3.3](/docs/00-getting-started/boot.md#33-inside-the-boot-scripts)); the engine call needs the executable |
 | CORE-019 | What `profiler_registration` (global block 2) is and whether anything starts it | R0.4 | Answered: empty script, block 2 never used ([runtime scripts 1.5](/docs/core/runtime-scripts.md#15-global-blocks)) |
 | CORE-020 | The story flags that pick the active mission triggerer | R5.1 | Open |
 | CORE-021 | Resolve table-driven launches (second pass of the graph) | R0.5 | Open |
@@ -674,7 +674,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | --- | --- | --- | --- |
 | ON-001 | What each of the 183 running-state functions does in detail (this pass labels them from strings only) | R7.1 second pass, per system | Open |
 | ON-002 | Names of the 60 network event ids and the main script event hashes | R7.2, R15 | Open |
-| ON-003 | The fields of the player and server broadcast data | R0.4 global map | Partly answered: field use counted ([global map 6.3](/docs/core/global-map.md#63-the-most-used-globals)); roles left |
+| ON-003 | The fields of the player and server broadcast data | R0.4 global map | Partly answered: busiest player fields named or typed ([global map 6.3](/docs/core/global-map.md#63-the-most-used-globals)); server broadcast fields left |
 | ON-004 | What `freemode_clearGlobals` resets and when | R7.2 | Open |
 | ON-005 | How the host's rotation through participants works | R7.1 second pass | Open |
 
@@ -829,9 +829,9 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| UI-010 | Which screens still work, partly, when signed out (an offline test is Online-adjacent; read-only analysis only) | Second pass from the guards | Open |
+| UI-010 | Which screens still work, partly, when signed out (an offline test is Online-adjacent; read-only analysis only) | Second pass from the guards | Answered from the guards: [server-backed screens 25.6](/docs/ui/server-backed-screens.md#256-signed-out-what-the-guards-do-second-pass) |
 | UI-011 | The full list of transaction calls per business app | R7.7 | Open |
-| UI-012 | Leaderboard IDs read by each screen | Second pass | Open |
+| UI-012 | Leaderboard IDs read by each screen | Second pass | Answered: 39 board IDs in a library shared by 30 scripts ([server-backed screens 25.7](/docs/ui/server-backed-screens.md#257-leaderboard-ids-per-screen-second-pass)) |
 
 ### [Story-mode UI](/docs/ui/story-mode-ui.md) (R8.6)
 

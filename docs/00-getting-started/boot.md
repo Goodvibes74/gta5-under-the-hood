@@ -34,6 +34,14 @@ On that PC the engine's part (0 to 68 s) is the loading screen; the mods' part (
 
 ## 3.3 Inside the boot scripts
 
+**Who starts the three entry scripts (second pass).** No script starts `startup`, `initial` or `main`: none of the 1,143 build-3725 scripts names them in a request or start call (**Verified** by searching the decompile for each name). The engine starts all three. What the scripts show about the order (**Verified**):
+
+- `startup` runs first. It starts `standard_global_init` and `standard_global_reg`, which set the values the other two read.
+- `initial` never waits for anything. Its first steps read `Global_1` (new or loaded game, set by `standard_global_reg`) and `Global_3` (boot into Online, set by `startup`), so it must start after `startup` has finished its registrations. It ends by itself (`TERMINATE_THIS_THREAD`).
+- `main` waits in a loop until no `initial` thread is running, then starts its own setup. `main_persistent` and `controller_races` wait for `initial` the same way.
+
+How the engine starts them (which call, whether it runs `startup` to its end before starting `initial`, and whether `main` and `initial` start in the same frame) isn't visible in the scripts and needs the executable (engine reverse engineering).
+
 **`startup`** (**Verified**):
 
 1. Marks itself safe for network games; turns off director mode and animal form; removes the prologue's distant-lights IPLs.
@@ -55,8 +63,38 @@ On that PC the engine's part (0 to 68 s) is the loading screen; the mods' part (
 ## 3.4 New game or loaded game
 
 - The story save holds a flag (a bit in the flow flags) that `standard_global_reg` copies into `Global_1`, and sets for the next save. `startup` uses `Global_1` to keep the loaded save's version, and `initial` uses it to run four extra setup steps for a loaded game (**Verified** that the flag comes from the save and gates these steps; "set once a game has been started" is our reading).
-- `initial` skips one setup step when `GET_INDEX_OF_CURRENT_LEVEL` is 5. Level 5 is checked 215 times across the scripts, mostly in Online content (level 1 is checked 6 times, around trains and the main map). Which level 5 is stays open.
-- On a new game the first mission, `prologue1`, comes from the mission table above through `flow_controller`, like every other story mission (**Verified** that `prologue1` is entry 53 and that no script starts it by name; the exact first-start path is R5.1).
+- `initial` skips one setup step when `GET_INDEX_OF_CURRENT_LEVEL` is 5: the step that requests and starts the 19 story controllers (`flow_controller`, `blip_controller`, `player_controller`, `vehicle_gen_controller`, `stock_controller` and the rest). Level 5 is the **network testbed level** (see 3.4.1).
+- On a new game the first mission, `prologue1`, comes from the mission table above through `flow_controller`, like every other story mission. The exact path is in 3.4.2 (**Verified**).
+
+### 3.4.1 The level indexes (second pass)
+
+`GET_INDEX_OF_CURRENT_LEVEL` is compared with only two numbers in the build-3725 scripts (**Verified**, counted with `git grep` over the decompile):
+
+| Level | Checks | Where | What the scripts do on it |
+| --- | --- | --- | --- |
+| 1 | 6 (`==` 4, `!=` 2) | `main_persistent` (3), `shop_controller`, `standard_global_init` | Reset the trains (`DELETE_ALL_TRAINS`, then switch the train configurations on and off), set up shops. This is the normal Los Santos map, `levels/gta5` |
+| 5 | 217 (`==` 215, `!=` 2) in 214 scripts | 212 copies of one shared helper, plus `maintransition` (4), `initial` and `vehicle_gen_controller` | See below |
+
+What level 5 changes (**Verified**):
+
+- **The shared helper.** 212 scripts (`main_persistent`, `maintransition`, the `gb_*` boss work, the car-mod shops and others) carry the same function that returns the current activity type. On level 5 it returns 7 at once and skips every other check (freemode events, missions, the player's state).
+- **`maintransition` goes to the testbed states.** When the transition picks its first state and the level is 5, it jumps to state 40, `TRANSITION_STATE_LOOK_FOR_FRESH_JOIN_TESTBED`, where every other launch goes to state 16, `TRANSITION_STATE_PREJOINING_FM_SESSION_CHECKS` (the state names are the script's own strings). Its three other level-5 checks change transition settings whose meaning wasn't decoded. States 39 to 52 are the testbed states 39 to 52 of the [transitions guide](/docs/online/transitions-and-sessions.md).
+- **`initial` starts no story controllers**, so no flow, no mission triggers, no story blips.
+
+So level 5 is a development level that goes straight into a network "testbed" session with no story mode. Which folder it loads is **Known**, not proven: the game data has only one level folder besides `gta5`, `common:/data/levels/stripped`. Its `stripped.meta` loads `platform:/levels/testbed/script/script.rpf` (a separate set of scripts for the testbed) and a small test map (`levels/tools_test/paths.rpf`, `levels/stripped/stripped.rpf`). Neither `.rpf` ships in the PC install, and the level list itself isn't in a data file (it sits in the executable, where its strings are protected), so the number 5 can't be tied to a folder name from the files alone. A retail game always runs level 1. Mods never need the level-5 branches.
+
+### 3.4.2 From a new game to `prologue1` (second pass)
+
+**Verified** in `startup`, `standard_global_reg`, `initial` and `flow_controller`:
+
+1. `startup` works out whether the game is booting straight into Online (the landing-screen or launcher choice it commits in step 2 of 3.3) and stores the answer in `Global_3`, before it starts `standard_global_reg`.
+2. `standard_global_reg` registers the story save. A new game has no save, so the "game started" flag it copies into `Global_1` is 0. It then sets **flow started** (`f_9092` of the save, [core guide 2](/docs/gameplay/missions/story-flow.md#23-where-the-flow-lives-in-the-save)) and, on a new game, sets bit 1 (**active**) on **strand 27, the Prologue**. If the boot is going to Online (`Global_3` set) it clears that bit instead, so an Online boot never starts the prologue.
+3. `initial` runs a second check when `Global_80281` is set (by `main_persistent`, at the end of a cleanup routine that raises force cleanup 2): if strand 27 isn't active, or mission 53 (`prologue1`) isn't completed, it sets strand 27 active and fades the screen out over 0.8 s. The same block sets a save bit once the prologue is completed and `flowintrotitle` (the opening title) isn't running. `initial` then starts `flow_controller` with the other controllers (on any level except 5) and ends.
+4. `flow_controller` has the same check a third time: every frame, before it runs the strands, it sets strand 27 active, with the same 0.8 s fade-out, if it isn't already.
+5. Strand 27 holds a **mission straight away** command for `prologue1` ([core guide 2, the command types](/docs/gameplay/missions/story-flow.md#24-the-flow-program)): `flow_controller` looks up entry 53 in the mission table and starts the script without a trigger. No script names `prologue1` in a start call.
+6. When `prologue1` passes, strand 27 activates strand 1 (Franklin and Lamar) and ends.
+
+For a mod this means: a "new game" is simply strand 27 active with an empty save. Clearing bit 1 of strand 27 before `flow_controller` starts doesn't stop the prologue, because `flow_controller` sets the bit again. A mod that wants to skip the prologue has to mark mission 53 done and finish the strand the way the flow does, not just switch it off (R5.2).
 
 ## 3.5 Launching into Online
 
@@ -96,7 +134,8 @@ There are two ways in, and both end in the same place (**Verified**):
 
 | Question | Where it goes |
 | --- | --- |
-| Which level index 5 is | R1.6 or R4.6 |
-| The exact path from a new game to `prologue1` | Partly answered: it is strand 27, switched on at a new game ([core guide 2](/docs/gameplay/missions/story-flow.md#25-the-32-strands)); the switch itself is R5.2 |
+| Which level index 5 is | Answered in [3.4.1](#341-the-level-indexes-second-pass): the network testbed level (no story controllers, testbed transition states). Which folder it loads stays **Known** |
+| The exact path from a new game to `prologue1` | Answered in [3.4.2](#342-from-a-new-game-to-prologue1-second-pass) |
+| How exactly the engine starts `startup`, `initial` and `main` | Partly answered in [3.3](#33-inside-the-boot-scripts): no script starts them, and the order is forced by what each one reads and waits for; the engine call itself needs the executable |
 | What the numbers in the story mission table mean | Answered in [core guide 2](/docs/gameplay/missions/story-flow.md#22-the-mission-table) |
 | Whether the return to story mode restarts every script (test card 2) | R7.2 |

@@ -6,10 +6,10 @@
     "semantic_hash": "6e5f8c4d34aafb9ea8cf043f0eafb0b1"
   },
   ".github/workflows/file-rules.yml": {
-    "mtime": 1793040995.614493,
-    "seen": 1793041533.9842627,
-    "ast_hash": "d2c3a0ec0d2451bddccdffaf330e402f",
-    "semantic_hash": "d2c3a0ec0d2451bddccdffaf330e402f"
+    "mtime": 1793340221.9523728,
+    "seen": 1793340578.7283816,
+    "ast_hash": "43f98fba0758d2b9e82e3115dfb82b12",
+    "semantic_hash": "43f98fba0758d2b9e82e3115dfb82b12"
   },
   "examples/01_HelloWorld.cs": {
     "mtime": 1793040995.6465487,
@@ -120,16 +120,16 @@
     "semantic_hash": "c1bad021e7b716137717831f11983d07"
   },
   "CLAUDE.md": {
-    "mtime": 1793040995.614493,
-    "seen": 1793041533.9842925,
-    "ast_hash": "532b129bf9a801162e007978001c5c22",
-    "semantic_hash": "532b129bf9a801162e007978001c5c22"
+    "mtime": 1793340221.95337,
+    "seen": 1793340578.7279959,
+    "ast_hash": "da657f4115cd6de2e5418bddce034908",
+    "semantic_hash": "da657f4115cd6de2e5418bddce034908"
   },
   "CONTRIBUTING.md": {
-    "mtime": 1793040995.614493,
-    "seen": 1793041533.9842942,
-    "ast_hash": "bfd039f8c4949317cf4811fe9ebb826e",
-    "semantic_hash": "bfd039f8c4949317cf4811fe9ebb826e"
+    "mtime": 1793340221.9543655,
+    "seen": 1793340578.7281923,
+    "ast_hash": "7046035eca26d0fe7e81eebdfc5f6d0c",
+    "semantic_hash": "7046035eca26d0fe7e81eebdfc5f6d0c"
   },
   "CREDITS.md": {
     "mtime": 1793040995.614493,
@@ -138,10 +138,10 @@
     "semantic_hash": "e8c326deccd5ad357ff28c29fd8f1323"
   },
   "OPEN_QUESTIONS.md": {
-    "mtime": 1793040995.6147776,
-    "seen": 1793041533.984297,
-    "ast_hash": "d88600a3ec9b4a8cc76020cb3010b808",
-    "semantic_hash": "d88600a3ec9b4a8cc76020cb3010b808"
+    "mtime": 1793340222.2213757,
+    "seen": 1793340578.7277868,
+    "ast_hash": "7cf8bc9d68481554f1d4ff6244653c06",
+    "semantic_hash": "7cf8bc9d68481554f1d4ff6244653c06"
   },
   "README.md": {
     "mtime": 1793040995.6147776,
@@ -168,10 +168,10 @@
     "semantic_hash": "11c55f0461f0c77ca4748b54d60a786f"
   },
   "docs/00-getting-started/boot.md": {
-    "mtime": 1793040995.6200132,
-    "seen": 1793041533.984303,
-    "ast_hash": "83187c74a544699271b6bbf137188bb8",
-    "semantic_hash": "83187c74a544699271b6bbf137188bb8"
+    "mtime": 1793339586.231614,
+    "seen": 1793340578.7285974,
+    "ast_hash": "3e4b2ba79483d3bc9b513fbaf1b9a37a",
+    "semantic_hash": "3e4b2ba79483d3bc9b513fbaf1b9a37a"
   },
   "docs/00-getting-started/decompiled-scripts.md": {
     "mtime": 1793040995.6200132,
@@ -342,10 +342,10 @@
     "semantic_hash": "19e5f796d84588b18c2d84b30a253a51"
   },
   "docs/core/global-map.md": {
-    "mtime": 1793040995.625198,
-    "seen": 1793041533.9843419,
-    "ast_hash": "44a72c9c217cde18462cb1d3297318e6",
-    "semantic_hash": "44a72c9c217cde18462cb1d3297318e6"
+    "mtime": 1793340101.4436796,
+    "seen": 1793340578.72882,
+    "ast_hash": "9edfa114c3436f3206d8d815ac1af956",
+    "semantic_hash": "9edfa114c3436f3206d8d815ac1af956"
   },
   "docs/core/memory-and-pools.md": {
     "mtime": 1793040995.625198,
@@ -864,10 +864,10 @@
     "semantic_hash": "e4eb4399bfb2c5b3cbec9b61d0e80610"
   },
   "docs/ui/server-backed-screens.md": {
-    "mtime": 1793040995.6453865,
-    "seen": 1793041533.9844582,
-    "ast_hash": "e5afd780911e561da8ac10f661391a3a",
-    "semantic_hash": "e5afd780911e561da8ac10f661391a3a"
+    "mtime": 1793339923.4256802,
+    "seen": 1793340578.729036,
+    "ast_hash": "28415d4bc163d0a9af8229efee5c3158",
+    "semantic_hash": "28415d4bc163d0a9af8229efee5c3158"
   },
   "docs/ui/story-mode-ui.md": {
     "mtime": 1793040995.6453865,
