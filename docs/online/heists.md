@@ -39,7 +39,7 @@ Tunable defaults (**Verified**):
 
 **Cut rules:** `heists_leader_default_heist_finale_cut` 55, `leader_default_heist_tutorial_finale_cut` 60, `leader_min_heist_finale_take_percentage` and `member_min_...` 15, `max_heist_cut_amount` 70. Total take is clamped by `earnings_heists_finale_minimum_total_cash_take` 100,000 and `_maximum_` 1,875,000. Dropped cash during the money grab is tied to two thresholds (10,000 and 14,000), and a team can lose at most 45% of the take to damage and drops (`max_heist_cash_loss_percentage`).
 
-**Failure penalties** (**Verified** tables; time bands are the tunable values as stored, units not read):
+**Failure penalties** (**Verified** tables). The "Up to" column is in **minutes**: `fm_mission_controller` multiplies each `heist_fail_cash_time_period_<n>` tunable by 60,000 and compares it with the time the team spent, in milliseconds. That time is the network time since the mission's timer started, plus 10 seconds. When the job continues an earlier part, it also includes the time carried over from that part (*second pass, 2026-10-30*, **Verified**):
 
 | Band | Up to | Finale penalty | Prep penalty |
 | ---: | ---: | ---: | ---: |
@@ -151,7 +151,7 @@ These are Online systems: read them, never mod them in Online. For a story-mode 
 
 | Question | Where it goes |
 | --- | --- |
-| The units of the failure time bands (minutes of play, *probable*) | Next pass, the mission controller |
+| The units of the failure time bands (minutes of play, *probable*) | Answered in [47.3](#473-classic-heists): minutes, compared with the mission's elapsed time plus 10 seconds |
 | The casino target index order (gold or artwork at index 1) | Answered in [47.6.1](#4761-casino-targets-and-elite-challenges-second-pass): 0 cash, 1 gold, 2 artwork, 3 diamonds |
 | Cayo secondary loot values (cash, weed, coke, gold, paintings) and bag capacity | Next pass: hashed tunables near the primary values |
 | How the classic apartment board is drawn and which script owns it | Answered in [47.6.1](#4761-casino-targets-and-elite-challenges-second-pass): `fmmc_launcher`, with `heist_mp`, `heistmap_mp` and `heist_pre` drawn in 3D |

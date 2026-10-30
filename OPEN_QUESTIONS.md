@@ -708,7 +708,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-019 | The units of the failure time bands (minutes of play, *probable*) | Next pass, the mission controller | Open |
+| ON-019 | The units of the failure time bands (minutes of play, *probable*) | Next pass, the mission controller | Answered: minutes; the mission controller compares each band times 60,000 with the mission's elapsed network time plus 10 seconds ([R7.8 47.3](/docs/online/heists.md#473-classic-heists)) |
 | ON-020 | The casino target index order (gold or artwork at index 1) | Next pass: the target name function | Answered: 0 cash, 1 gold, 2 artwork, 3 diamonds ([R7.8 47.6.1](/docs/online/heists.md#4761-casino-targets-and-elite-challenges-second-pass)) |
 | ON-021 | Cayo secondary loot values (cash, weed, coke, gold, paintings) and bag capacity | Next pass: hashed tunables near the primary values | Open |
 | ON-022 | How the classic apartment board is drawn and which script owns it | Next pass, `freemode` | Answered: owned by `fmmc_launcher`, movies `heist_mp`, `heistmap_mp`, `heist_pre` drawn with `DRAW_SCALEFORM_MOVIE_3D_SOLID` ([R7.8 47.6.1](/docs/online/heists.md#4761-casino-targets-and-elite-challenges-second-pass)) |
