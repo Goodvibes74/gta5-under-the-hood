@@ -247,16 +247,21 @@ One function in `freemode` gives the number of vehicle spaces, either for a prop
 | 6 | clubhouse (`PROP_CLUBHOUSE`) | 10 |
 | 8, 9, 10 | office garages (`PROP_OFFICE_GAR1` to `3`) | 20 each |
 | 11 | vehicle warehouse (`PROP_IE_WAREHOUSE`) | 8 (*probable*: the eight special vehicles, matching an eight-entry list in `appinternet`: `ruiner2`, `blazer5`, `phantom2`, `voltic2`, `dune4`/`dune5`, `wastelander`, `boxville5`, `technical2`) |
-| 12 | | 35 |
-| 13 | | 7 |
-| 14 | | 1 |
-| 15 to 22, 25, 32 | | 10 each |
-| 26 | | 20 |
-| 29 | | 50 (probably the Eclipse Blvd garage: five floors, the stats have five `MSTOREY_FLOOR` tooltips) |
-| 31 | | 2 |
-| 33, 34, 35 | | 20 each |
+| 12 | hangar (`PROP_HANGAR`) | 35 |
+| 13 | facility (`PROP_DEFUNCBASE`) | 7 |
+| 14 | nightclub (`PROP_NIGHTCLUB`) | 1 |
+| 15, 16, 17 | nightclub garage floors (`PROP_MEGAWARE_GAR1` to `3`) | 10 each |
+| 18, 19, 20 | Arena workshop garage floors (`PROP_ARENAWARS_GAR1` to `3`) | 10 each |
+| 21 | Diamond Casino penthouse garage (`PROP_CASINO_GAR1`) | 10 |
+| 22 | arcade garage (`PROP_ARCADE_GAR1`) | 10 |
+| 25 | auto shop (`PROP_AUTO_SHOP`) | 10 |
+| 26 | Agency garage (`PROP_SECURITY_OFFICE_GAR`) | 20 |
+| 29 | Eclipse Blvd garage (`MULTSTOREY_GAR_OWNED`) | 50 |
+| 31 | bail office (`PROP_BAIL_OFFICE`) | 2 |
+| 32 | hacker den (`PROP_HACKER_DEN`) | 10 |
+| 30, 33, 34, 35 | not in the slot-to-stat function; 33 to 35 have 20 spaces each | |
 
-Property indices past 115 (not in the table of 45.2) get sizes by index: 116 = 35, 117 = 7, 118 = 1, 119 to 127 = 10 (122 = 9), 128 = 20, 129 = 50, 132 = 2, 133 = 10, 135 to 137 = 20. Which business or vehicle each of these is, is still open (45.8).
+Property indices past 115 (not in the table of 45.2) get sizes by index: 116 = 35, 117 = 7, 118 = 1, 119 to 127 = 10 (122 = 9), 128 = 20, 129 = 50, 132 = 2, 133 = 10, 135 to 137 = 20. *Second pass (2026-10-30, **Verified**):* `freemode`'s slot-to-stat function names ownership slots 12 to 32 (the table above). The property indices 116 to 137 don't follow the slot numbers in a fixed offset, so which index is which property is still open (45.8).
 
 Every personal vehicle is one **record** in a per-character array of **607**, kept in stats flagged `IsVehicle` (4,412 of them): `MPSV_MODEL_n`, `MPSV_FLAGS_n` (mod flags), `MPSV_VEHICLE_BS_n` (control flags), `MPSV_LP0_n` (the plate, a 64-bit stat), `MPSV_PRICE_PAID_n`, `MPSV_PREMIUM_PAID_n` (insurance paid by whoever destroyed it), `MPSV_IMPOUND_TIME_n`, and for 133 of them `MPSV_OBTAINED_TIME_n`, plus `MPSV_VEHICLE_TIMESTAMP` and named one-offs (`MPSV_MODEL_BIKER_CLT`, `_TUNER_VEH`, `_SALVAGE_VEH`). A `freemode` function maps record numbers to stat numbers in blocks (records 0 to 9, 13 to 22, 26 to 35 ... with three unused numbers after each block of ten up to record 362, then straight runs), so a home's 13 reserved records hold up to 10 real cars. Colours, wheels and mods aren't among these stat names; where the full vehicle setup is kept is an open question.
 
@@ -316,5 +321,5 @@ These are Online systems: read them, never mod them in Online. For a story-mode 
 | Instance numbering of `am_mp_property_int` (owner id, building, or both) | Answered in [45.6a](#interior-instances): per owner, rows 0 to 31, 32 without an owner |
 | Daily property fees (utility bills) and how they are charged | Answered in [45.6a](#daily-property-fees-utility-bills) |
 | The business side of each simple interior | Answered in [organisations and businesses](/docs/online/organisations-and-businesses.md#464-the-business-loop) (R7.7) |
-| Which business or vehicle the garage indices 116 to 137 and ownership slots 12 to 35 are | Next pass, the slot-to-stat functions in `freemode` |
+| Which business or vehicle the garage indices 116 to 137 and ownership slots 12 to 35 are | Mostly answered (second pass): slots 12 to 32 named in [the garage table](#garage-sizes-and-personal-vehicle-records); slots 30 and 33 to 35 and the indices 116 to 137 left |
 | Where a personal vehicle's colours, wheels and mods are saved | Next pass, the vehicle save code in `freemode` and `carmod_shop` |
