@@ -40,7 +40,22 @@ Packs in `dlclist.xml` order (**Verified**), the update they belong to (**Known*
 | `mp2025_01` | Money Fronts | `TYFLOW` (5) | Visit Martin Madrazo; buy the Hands On Car Wash to launder money | Martin Madrazo, Raf |
 | `mp2025_02` | (mansions) | `MP252_*` music events | Mansion intro cutscenes `XM25_MANSION_INTA` to `C`; mansions The Tongva Estate, Richman Villa, The Vinewood Residence | |
 
-Flows with text outside the main text files (`XM4V_FLW` 22, `S25R_FLW` 6, `SR2CH_FLW` 6, `X24O_FLW`, `S25M_FLW`, `SR2RN_FLW`) are *probably* phone conversations, whose lines live in the dialogue files ([R9.2](/docs/audio/speech-and-dialogue.md)).
+Flows with text outside the main text files (`XM4V_FLW` 22, `S25R_FLW` 6, `SR2CH_FLW` 6, `X24O_FLW`, `S25M_FLW`, `SR2RN_FLW`) are phone calls, whose subtitles live in each pack's dialogue blocks ([R9.2](/docs/audio/speech-and-dialogue.md); see 48.2.1).
+
+### 48.2.1 The phone-call flows (second pass)
+
+*Second pass, 2026-10-30.* **Verified** by reading `freemode`, which returns each call's conversation root with its dialogue block (for example `XM4VAU`). The subtitles were then matched in the packs' `americandlc.rpf`: each line is the root plus `_<n>`, so `XM4V_FLW_1A_1` is the first line of call `XM4V_FLW_1A`. `freemode` names 40 roots, and every one has lines. In short, in our own words:
+
+| Calls (block, pack) | Caller | What the calls cover |
+| --- | --- | --- |
+| `XM4V_FLW_1A` to `14C`, 22 calls (`XM4VAU`, `mp2023_02` The Chop Shop) | Vincent Effenburger (names himself) | The Cluckin' Bell Farm Raid: the opening offer (four versions, by how the player knows Vincent: not yet, from the Diamond Casino, or from his mall security job at Rockford Plaza), then one call after each setup step (the train, the weapons and gear, the getaway car, the supply-line sabotage, with an "A" or "B" version for a clean or loud result), the go-ahead for the raid, and the pay-out calls after the finale and its replays |
+| `SR2CH_FLW_1A` to `6A`, 6 calls (`SR2CHAU`, `mp2023_01` San Andreas Mercenaries) | Charlie (**Known**; he calls the player "TL") | The Merryweather storyline between Project Overthrow jobs: a cobalt find, Coil weapons tech in stolen crates, a rescue, and the final split between Merryweather and the government |
+| `SR2RN_FLW_1A`, `1B`, 2 calls (`SR2RNAU`, same pack) | Ron | Two versions of Ron's opening call: one about the player going into business with the Fooligans in Sandy Shores, one general pitch (*probable*: which condition picks each isn't traced) |
+| `X24O_FLW_1A`, `2A`, 2 calls (`X24OAU`, `mp2024_02` Agents of Sabotage) | Oscar Guzman (names himself) | The offer of the McKenzie Field hangar, and the follow-up after buying it |
+| `S25M_FLW_1A`, `2A`, 2 calls (`S25MAU`, `mp2025_01` Money Fronts) | Martin Madrazo (names himself) | An invitation to meet someone important at the airport (two versions) |
+| `S25R_FLW_1A` to `7A`, 6 calls (`S25RAU`, same pack) | Raf (*probable*: the speaker's name isn't in the subtitles) | Money Fronts' laundering businesses: the car wash, Higgins Helitours, Smoke on the Water, one call when both are owned, and a warning to slow down when too much money goes through at once |
+
+The call-to-pack mapping follows from which pack's `americandlc.rpf` holds each block (**Verified**). The update names are **Known**.
 
 ## 48.3 How a flow works
 
@@ -109,7 +124,7 @@ A mod rebuilds the flow itself (a small state machine on its own save), reuses t
 | Question | Where it goes |
 | --- | --- |
 | Which stats each flow keys on, step by step | Next pass, per flow function in `freemode` |
-| The text of the voice-only flows (`XM4V_FLW`, `S25R_FLW`, `SR2CH_FLW` ...) | Dialogue files, R9.2 second pass |
+| The text of the voice-only flows (`XM4V_FLW`, `S25R_FLW`, `SR2CH_FLW` ...) | Answered in [48.2.1](#4821-the-phone-call-flows-second-pass): 40 phone calls in six DLC dialogue blocks |
 | Which update each `fm_content_*` script arrived in (compare decompile commits by build) | Answered in [48.6.1](#4861-when-each-fm_content_-script-arrived-second-pass) |
 | The flows for After Hours, Doomsday and the 2015 heists (no flow label family found) | Next pass |
 | The mp2025_02 update's name and story | Next pass, its pack text |
