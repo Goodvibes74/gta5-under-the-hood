@@ -68,7 +68,7 @@ Which of Rockstar's online services the game scripts talk to, through which nati
 
 | Question | Where it goes |
 | --- | --- |
-| The unnamed (`unk_`) tunable readers and which service natives they are | Second pass, NativeDB hashes |
+| The unnamed (`unk_`) tunable readers and which service natives they are | Answered in [R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass): the tunable registration natives for int, float and bool |
 | Which story-mode scripts call any service native, and why | Second pass, per script |
 | The catalogue item keys and categories | R7.7 |
 

@@ -79,7 +79,7 @@ Test only: GS-003 (does the return to story mode restart every script), CORE-001
 | P3.2 | [The job lobby](/docs/online/job-lobby.md) (R7.5): launcher states, start arguments, corona settings, playlists, walk-in markers, job types | ON-030, ON-031, ON-032, ON-033, ON-034, ON-006 | scripts | Mostly done, branch `research/second-pass-phase3` (job types 4 and 31 unnamed) |
 | P3.3 | [Inside `freemode`](/docs/online/07-freemode.md) and [sessions](/docs/online/sessions-and-sync.md) (R7.1, R15.1): the event ids, the host's rotation, the running-state functions per system | ON-001, ON-002, ON-005, ON-051 | scripts | Partly done, branch `research/second-pass-phase3` (ON-051 answered, ON-005 mostly, ON-002 partly; ON-001 left) |
 | P3.4 | [Transitions](/docs/online/transitions-and-sessions.md) (R7.2): the offline branch, character slots, the way back to story mode, the testbed session, what opens the creator | ON-004, ON-061, ON-062, ON-063, ON-064, GP-059 | scripts | Done, branch `research/second-pass-phase3` |
-| P3.5 | [Stats and tunables](/docs/online/stats-and-tunables.md) (R7.3): the tunable index, save categories, the shop basket, unnamed service readers | CORE-010, ON-047, ON-054, ON-055, ON-056, GP-058 | scripts | Open |
+| P3.5 | [Stats and tunables](/docs/online/stats-and-tunables.md) (R7.3): the tunable index, save categories, the shop basket, unnamed service readers | CORE-010, ON-047, ON-054, ON-055, ON-056, GP-058 | scripts | Done, branch `research/second-pass-phase3` |
 | P3.6 | [The Online character creator](/docs/gameplay/player/online-character-creator.md) (R6.5): unlabelled morphs, slider scaling, outfit groups | GP-055, GP-056, GP-057 | scripts | Open |
 | P3.7 | [Properties](/docs/online/properties.md) (R7.6): yachts and vehicles as properties, garages, entrances, instances, daily fees | ON-041, ON-042, ON-043, ON-044, ON-045, ON-046 | scripts | Partly done, with ON-028 (ON-042 and ON-043 partly left; new ON-065, ON-066) |
 | P3.8 | [Organisations and businesses](/docs/online/organisations-and-businesses.md) (R7.7): production numbers, capacities, offline production, boss costs, challenges, business missions, transactions | ON-035, ON-036, ON-037, ON-038, ON-039, ON-040, ON-049, UI-011 | scripts | Open |
@@ -162,7 +162,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | CORE-009 | Field layout of the player broadcast data (`Global_1845250`, `Global_2658291`) | R7.1 second pass | Mostly answered: `.f_325` named, 16 parts of `.f_260` named from `mpstatscharactermappingdata.xml`, every bit of `.f_204`/`.f_203` grouped by who writes it ([global map 6.3](/docs/core/global-map.md#63-the-most-used-globals)); single-bit names left |
-| CORE-010 | The tunable index list: which `Global_262145.f_<n>` is which tunable | R7.3 | Open |
+| CORE-010 | The tunable index list: which `Global_262145.f_<n>` is which tunable | R7.3 | Answered: 34,987 assignments give field, type, name and default; 27,691 named, 7,296 by hash only ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
 | CORE-011 | What the references into blocks 13 and 15 are | Second pass | Answered: dead code behind two flags no script sets ([global map 6.2](/docs/core/global-map.md#62-the-blocks-with-how-much-they-are-used)) |
 | CORE-012 | Roles of the **Known** rows above, by reading one use each | Second pass | Answered: [global map 6.3](/docs/core/global-map.md#63-the-most-used-globals) (four rows **Verified**, including `Global_1892653` = `GPBD_FM_3`) |
 
@@ -611,7 +611,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | GP-055 | The two unlabelled morph-19 entries and the last column of the appearance table (which sex or body type each row is for) | Next pass, the item-table caller | Open |
 | GP-056 | How the slider values (0 to 100, -1 to 1) are scaled into the saved `FEATURE_n` and `HEADBLEND_*` floats, and which `FEATURE_n` is which morph | Next pass, the save function and the stat enum mapping | Open |
 | GP-057 | The outfit group names (`BEA`, `CAS` ...) and the components of each starter outfit | Next pass, the outfit tables | Open |
-| GP-058 | The appearance fee and cooldown values | R7.3 tunables, `freemode` | Open |
+| GP-058 | The appearance fee and cooldown values | R7.3 tunables, `freemode` | Answered: `character_appearance_charge` $100,000, cooldown 48 minutes, cap 30 in 24 hours ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
 | GP-059 | Which transition state opens the creator, and what menu `-1392473901` is (used 3 times, probably the character select) | R7.2 (transitions) | Answered: `-1392473901` is `FE_MENU_VERSION_TEXT_SELECTION`, the "LOBBY LIST" screen ([pause menu 23.5](/docs/ui/pause-menu.md#235-the-full-tree-menu-versions-tabs-and-panes)); the creator opens through state 32 when the transition's destination is 2 ([R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) |
 
 ### [Online cosmetics and the shops that sell them](/docs/gameplay/player/online-cosmetic-shops.md) (R6.7)
@@ -760,7 +760,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-047 | The unnamed (`unk_`) tunable readers and which service natives they are | Second pass, NativeDB hashes | Open |
+| ON-047 | The unnamed (`unk_`) tunable readers and which service natives they are | Second pass, NativeDB hashes | Answered: `_NETWORK_GET_TUNABLES_REGISTRATION_INT`, `_FLOAT` and `_BOOL` ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
 | ON-048 | Which story-mode scripts call any service native, and why | Second pass, per script | Open |
 | ON-049 | The catalogue item keys and categories | R7.7 | Open |
 
@@ -777,9 +777,9 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | ON-053 | A tool that writes the tunable name, type and default list for one build (read-only, from the decompile), to diff builds and to feed a mod's defaults | Tool idea; R11.2 update check | Open |
-| ON-054 | What `SaveCategory` 0 and 1 mean exactly | Second pass | Open |
-| ON-055 | The basket flow step by step in one shop script | R7.6 or a second pass | Open |
-| ON-056 | Which tunables a given offline system needs | Per mod, with the defaults list | Open |
+| ON-054 | What `SaveCategory` 0 and 1 mean exactly | Second pass | Answered: 1 is the original per-character set (2,522), 0 everything since (15,411) ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
+| ON-055 | The basket flow step by step in one shop script | R7.6 or a second pass | Answered: the six steps in `clothes_shop_mp` ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
+| ON-056 | Which tunables a given offline system needs | Per mod, with the defaults list | Answered by method: per mod, read from the tunable index ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
 
 ### [Story systems that clash with an Online mode](/docs/online/story-systems-in-online-mode.md) (R5.7)
 
