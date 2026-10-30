@@ -82,7 +82,7 @@ Test only: GS-003 (does the return to story mode restart every script), CORE-001
 | P3.5 | [Stats and tunables](/docs/online/stats-and-tunables.md) (R7.3): the tunable index, save categories, the shop basket, unnamed service readers | CORE-010, ON-047, ON-054, ON-055, ON-056, GP-058 | scripts | Done, branch `research/second-pass-phase3`; new ON-072, ON-073 |
 | P3.6 | [The Online character creator](/docs/gameplay/player/online-character-creator.md) (R6.5): unlabelled morphs, slider scaling, outfit groups | GP-055, GP-056, GP-057 | scripts | Partly done, branch `research/second-pass-phase3` (GP-056 answered, GP-057 partly; GP-055 left) |
 | P3.7 | [Properties](/docs/online/properties.md) (R7.6): yachts and vehicles as properties, garages, entrances, instances, daily fees | ON-041, ON-042, ON-043, ON-044, ON-045, ON-046 | scripts | Partly done, with ON-028 (ON-042 and ON-043 partly left, ON-065 mostly, ON-066 open), branch `research/second-pass-phase3` |
-| P3.8 | [Organisations and businesses](/docs/online/organisations-and-businesses.md) (R7.7): production numbers, capacities, offline production, boss costs, challenges, business missions, transactions | ON-035, ON-036, ON-037, ON-038, ON-039, ON-040, ON-049, UI-011 | scripts | Partly done, branch `research/second-pass-phase3` (ON-036, ON-038, UI-011 answered; ON-035, ON-037, ON-039, ON-040, ON-049 left); new ON-075 |
+| P3.8 | [Organisations and businesses](/docs/online/organisations-and-businesses.md) (R7.7): production numbers, capacities, offline production, boss costs, challenges, business missions, transactions | ON-035, ON-036, ON-037, ON-038, ON-039, ON-040, ON-049, UI-011 | scripts | Partly done, branch `research/second-pass-phase3` (ON-036, ON-038, UI-011 answered; ON-035, ON-037, ON-039, ON-040, ON-049 left); new ON-075, ON-077 |
 | P3.9 | [Heists](/docs/online/heists.md) (R7.8): fail bands, casino targets, Cayo loot, the classic planning board, elite rewards, story arcs, crew skill | ON-019, ON-020, ON-021, ON-022, ON-023, ON-024, ON-025, GP-019 | scripts | Partly done, branch `research/second-pass-phase3` (ON-020, ON-022, ON-025 answered, ON-023 mostly; ON-019, ON-021, ON-024, GP-019 left); new ON-076 |
 | P3.10 | [DLC storylines](/docs/online/dlc-storylines.md) (R7.9): stats per flow step, voice-only flows, arrival updates, missing flows, mp2025_02 | ON-014, ON-015, ON-016, ON-017, ON-018 | scripts, data | Partly done, branch `research/second-pass-phase3` (ON-016 answered; ON-014, ON-015, ON-017, ON-018 left) |
 | P3.11 | [Creator internals](/docs/online/creator-internals.md) (R7.11): prop limits, hidden libraries, the two prop writers, checkpoint fields, other creators' placement | ON-007, ON-008, ON-010, ON-011, ON-012, ON-013 | scripts | Partly done, branch `research/second-pass-phase3` (ON-007 answered; ON-008, ON-010 to ON-013 left) |
@@ -118,14 +118,14 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [AI](#ai) (`AI-`) | 13 | 50 |
 | [The world](#the-world) (`WLD-`) | 4 | 19 |
 | [Gameplay](#gameplay) (`GP-`) | 17 | 86 |
-| [GTA Online](#gta-online) (`ON-`) | 13 | 76 |
+| [GTA Online](#gta-online) (`ON-`) | 13 | 77 |
 | [User interface](#user-interface) (`UI-`) | 6 | 20 |
 | [Audio](#audio) (`AUD-`) | 3 | 11 |
 | [Rendering](#rendering) (`REN-`) | 5 | 27 |
 | [Performance](#performance) (`PERF-`) | 9 | 28 |
 | [Scripting](#scripting) (`SCR-`) | 4 | 14 |
 | [File formats](#file-formats) (`FF-`) | 2 | 6 |
-| **Total** | | **430** |
+| **Total** | | **431** |
 
 ## Getting started
 
@@ -745,13 +745,14 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-035 | The nightclub's production and popularity numbers (their tunable names are hashed) | Next pass: match hashes to names from the scripts | Open |
+| ON-035 | The nightclub's production and popularity numbers (their tunable names are hashed) | Next pass: match hashes to names from the scripts | Mostly answered: the safe's pay bands by popularity, its $250,000 cap and 48-minute timer, the popularity change tunables, and each goods type's value, capacity and units per step ([R7.7 46.5.3](/docs/online/organisations-and-businesses.md#4653-the-nightclubs-safe-and-warehouse-second-pass)); production timing is ON-077 |
 | ON-036 | Special cargo warehouse capacities (16, 42 and 111 crates are **Known**) and where the scripts keep them | Next pass | Answered: fixed in the scripts; 22 warehouses in three sizes, 16, 42 and 111 crates ([R7.7 46.5.1](/docs/online/organisations-and-businesses.md#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass)) |
 | ON-037 | How production is stored in stats and advanced while offline or in another session | Next pass, with the stats file | Open |
 | ON-038 | What `gb_bosscost` and `gb_bosssetupcost` charge | Next pass, `freemode` | Answered: defaults $200,000 and $5,000, but no script reads them in this build ([R7.7 46.5.1](/docs/online/organisations-and-businesses.md#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass)); new ON-075 |
 | ON-039 | The MC challenge and VIP challenge rules (cash, RP, time) | Next pass, per script | Mostly answered: the 8 VIP and 3 MC challenges with their scripts, time limits, cash, RP and rules ([R7.7 46.5.2](/docs/online/organisations-and-businesses.md#4652-vip-and-mc-challenges-second-pass)); how the rival, solo and member percentages combine in the payout is left |
 | ON-040 | Business battles and the `fm_content_*` business missions | R7.9 and a later pass | Open |
 | ON-075 | Where registering as a boss is charged now (`gb_bosscost` and `gb_bosssetupcost` are read by no script) | Third pass, the boss registration code in `freemode` and `am_pi_menu` | Open |
+| ON-077 | How long a nightclub production step takes, and how technicians are assigned to goods types (the goods tunables are hashed; [R7.7 46.5.3](/docs/online/organisations-and-businesses.md#4653-the-nightclubs-safe-and-warehouse-second-pass)) | Third pass, the business hub code in `freemode` | Open |
 
 ### [Properties in GTA Online](/docs/online/properties.md) (R7.6)
 

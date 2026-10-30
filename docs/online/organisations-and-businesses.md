@@ -183,6 +183,46 @@ The MC time limits are in seconds: the script multiplies the tunable by 1,000 (`
 
 **Shared rules.** A boss has to wait 3 minutes (`gb_cooldown_until_next_boss_challenge`, 180,000 ms) between challenges, and 5 between work. Organisation members get half the RP (`gb_challenge_goon_rp_reward_percentage` 0.5). A rival organisation that wins gets 70% of the cash and RP (`gb_rival_org_*_reward_percentage`), and a player outside an organisation 30% of the cash (`gb_solo_cash_reward_percentage`). The wagers keep 10% for the agency (`gb_challenge_wager_agency_cut`). How these percentages combine in the end-of-challenge payout isn't traced.
 
+### 46.5.3 The nightclub's safe and warehouse (second pass)
+
+*Second pass, 2026-10-30.* **Verified** in `freemode` and `tuneables_processing`. The popularity tunables have names; the warehouse ones are known only by hash, so they're named here by the function that reads them.
+
+**The safe.** `freemode` pays into the safe on a timer kept in a stat. The timer is 2,880,000 ms (48 minutes, one in-game day), and when it runs out the script pays an amount picked by the current popularity (0 to 100). The amount comes from the `nightclubincomeuptopop<N>` tunables, where each band covers popularity up to N:
+
+| Popularity up to | 5 | 10 | 15 | 20 | 25 | 30 | 35 | 40 | 45 | 50 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Pay ($) | 1,500 | 1,600 | 1,800 | 2,000 | 2,200 | 2,500 | 8,000 | 8,500 | 9,000 | 9,500 |
+
+| Popularity up to | 55 | 60 | 65 | 70 | 75 | 80 | 85 | 90 | 95 | 100 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Pay ($) | 10,000 | 20,000 | 21,000 | 22,000 | 23,000 | 24,000 | 25,000 | 45,000 | 50,000 | 50,000 |
+
+- **Multiplier.** The pay is multiplied by a hashed float tunable, 1 by default (an event multiplier).
+- **Cap.** The safe holds at most `nightclubmaxsafevalue`, $250,000. A payment that would pass the cap is cut, and a full safe shows `CLUB_NO_PAY` instead of `CLUB_PAY`.
+- **Popularity changes.** These come from a nine-case function of tunables, each times 100:
+  - decay `nightclubpopdecay` -0.1;
+  - decay with the staff upgrade `inightclubpopdecaystaffupgrade` -0.05;
+  - gain from a "permission" (promotion) job `nightclubpopgainpermission` 0.25;
+  - six further hashed cases.
+
+  Which in-game step applies each one isn't traced.
+
+**The warehouse goods.** Three seven-case functions read the goods tunables, one value per goods type:
+
+| Type | Goods (**Known** order) | Value per unit | Capacity | Units per production step |
+| ---: | --- | ---: | ---: | ---: |
+| 0 | Cargo and shipments | $10,000 | 50 | 1 |
+| 1 | Sporting goods | $5,000 | 100 | 2 |
+| 2 | South American imports | $27,000 | 10 | 1 |
+| 3 | Pharmaceutical research | $11,475 | 20 | 1 |
+| 4 | Organic produce | $2,025 | 80 | 7 |
+| 5 | Printing and copying | $1,350 | 60 | 10 |
+| 6 | Cash creation | $4,725 | 40 | 3 |
+
+- **Which column is which.** The value column is multiplied by a unit count, so it is the sale value of each unit. The capacity column is divided by 5 elsewhere.
+- **The units column.** It is multiplied by a global multiplier and an event multiplier (both 1 by default). That makes it the amount added per production step (*probable*).
+- **Not traced.** How long a step takes, and how technicians are assigned to types. That is third-pass question ON-077.
+
 ## 46.6 What this means for modders
 
 These are Online systems: read them, never mod them in Online. For an offline or story-mode project:
@@ -196,7 +236,8 @@ These are Online systems: read them, never mod them in Online. For an offline or
 
 | Question | Where it goes |
 | --- | --- |
-| The nightclub's production and popularity numbers (their tunable names are hashed) | Next pass: match hashes to names from the scripts |
+| The nightclub's production and popularity numbers (their tunable names are hashed) | Mostly answered in [46.5.3](#4653-the-nightclubs-safe-and-warehouse-second-pass): the safe pay bands, cap and timer, and each goods type's value, capacity and units per step |
+| How long a nightclub production step takes and how technicians are assigned (ON-077) | Third pass, the business hub code in `freemode` |
 | Special cargo warehouse capacities (16, 42 and 111 crates are **Known**) and where the scripts keep them | Answered in [46.5.1](#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass) |
 | How production is stored in stats and advanced while offline or in another session | Next pass, with the stats file |
 | What `gb_bosscost` and `gb_bosssetupcost` charge | Answered in [46.5.1](#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass): nothing in this build (no script reads them) |
