@@ -153,8 +153,8 @@ Single services skip the basket and use `NET_GAMESERVER_BEGIN_SERVICE` then `_CH
 | What `SaveCategory` 0 and 1 mean exactly | Answered in [10.5.1](#1051-the-tunable-index-save-categories-and-the-basket-second-pass): 1 is the original per-character set, 0 everything since |
 | The basket flow step by step in one shop script | Answered in [10.5.1](#1051-the-tunable-index-save-categories-and-the-basket-second-pass) |
 | Which tunables a given offline system needs | Per mod; the index in [10.5.1](#1051-the-tunable-index-save-categories-and-the-basket-second-pass) gives each field's name and default |
-| The names behind the 7,296 tunables registered by hash only | Needs a name list; hash every candidate name |
-| Whether the two `SaveCategory` groups are saved as separate cloud files | In-game or cloud check (read-only) |
+| The names behind the 7,296 tunables registered by hash only | Third pass: needs a name list; hash every candidate name |
+| Whether the two `SaveCategory` groups are saved as separate cloud files | Third pass: in-game or cloud check (read-only) |
 
 ## 10.8 Test cards
 

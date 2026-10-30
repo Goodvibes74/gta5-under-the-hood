@@ -94,7 +94,7 @@ The other exit, 7 `SP_SWOOP_DOWN`, can't be taken: the check that picks between 
 | What the four character "slots" in the retry states are (two characters plus?) and how `HUD_SLOTONE` / `HUD_SLOTTWO` relate | Answered in [9.4.1](#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass) |
 | The order of states on the way back to story mode, step by step | Answered in [9.4.1](#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass) |
 | What the testbed session is used for in release builds | Answered in [9.4.1](#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass): unused; only level 5 enters it |
-| Which scripts outside `maintransition` ask for the return to story mode, and what retry state 13 waits for | Next pass, the callers of the state request |
+| Which scripts outside `maintransition` ask for the return to story mode, and what retry state 13 waits for | Third pass, the callers of the state request |
 
 ## 9.7 Test cards
 

@@ -170,8 +170,8 @@ Then `freemode` copies the entry into the transition data (`Global_2686090`) and
 | How the corona's settings are stored and sent to the controller | Answered in [13.5](#135-from-job-type-to-running-controller) |
 | How playlists and series step from job to job (`FMMC_PlayList_Controller`) | Answered in [13.7.1](#1371-playlists-and-walk-in-markers-second-pass) |
 | How a walk-in job marker in freemode hands over to the launcher | Answered in [13.7.1](#1371-playlists-and-walk-in-markers-second-pass) |
-| What the job value in start argument `.f_2` is, and what lobby flag bit 1 and `.f_880` are raised for | Next pass, the `freemode` and `maintransition` writers |
-| What the playlist's `.f_877` position is and how the launcher uses it | Next pass, `fmmc_launcher` state 10 |
+| What the job value in start argument `.f_2` is, and what lobby flag bit 1 and `.f_880` are raised for | Third pass, the `freemode` and `maintransition` writers |
+| What the playlist's `.f_877` position is and how the launcher uses it | Third pass, `fmmc_launcher` state 10 |
 
 ## 13.10 Test cards
 
