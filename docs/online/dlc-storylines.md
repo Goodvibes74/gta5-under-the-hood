@@ -38,7 +38,7 @@ Packs in `dlclist.xml` order (**Verified**), the update they belong to (**Known*
 | `mp2024_01` | Bottom Dollar Bounties | `BT24_FLOW` (2) | Buy a Bail Office; meet Maude Eccles | Maude Eccles |
 | `mp2024_02` | Agents of Sabotage | `HK24_FLW` (19) | Buy the Darnell Bros Garment Factory and meet Pavel for jobs from an ex-FIB agent; the Black Box, Brute Force, Fine Art and Project Breakaway files; buy the McKenzie Field Hangar for Oscar Guzman Flies Again | Pavel, Oscar Guzman |
 | `mp2025_01` | Money Fronts | `TYFLOW` (5) | Visit Martin Madrazo; buy the Hands On Car Wash to launder money | Martin Madrazo, Raf |
-| `mp2025_02` | (mansions) | `MP252_*` music events | Mansion intro cutscenes `XM25_MANSION_INTA` to `C`; mansions The Tongva Estate, Richman Villa, The Vinewood Residence | |
+| `mp2025_02` | A Safehouse in the Hills (the pack's `global` text says "Part of A Safehouse in the Hills", **Verified** in the second pass) | `MP252_*` music events | Mansion intro cutscenes `XM25_MANSION_INTA` to `C`; mansions The Tongva Estate, Richman Villa, The Vinewood Residence | |
 
 Flows with text outside the main text files (`XM4V_FLW` 22, `S25R_FLW` 6, `SR2CH_FLW` 6, `X24O_FLW`, `S25M_FLW`, `SR2RN_FLW`) are phone calls, whose subtitles live in each pack's dialogue blocks ([R9.2](/docs/audio/speech-and-dialogue.md); see 48.2.1).
 
@@ -117,7 +117,7 @@ A mod rebuilds the flow itself (a small state machine on its own save), reuses t
 | 1.69-3258 (2024-06-25) | Bottom Dollar Bounties | `bounty_targets`, `daily_bounty`, `dispatch_work`, `pizza_delivery`, `ufo_abduction` |
 | 1.70-3407 (2024-12-10) | Agents of Sabotage | `arms_trafficking`, `community_outreach`, `drone` and the eight `hacker_*` prep and finale scripts |
 | 1.71-3570 (2025-06-17) | Money Fronts | `car_wash_detailing`, `car_wash_work`, `cutscene`, `helitours_tour`, `helitours_work`, `tycoon_odd_jobs`, `weed_shop_delivery`, `weed_shop_work` |
-| 1.72-3717.0 (2025-12-10) | The December 2025 update (`mp2025_02`) | `firefighter`, `forklift_operator`, `getaway_driver`, `postal_worker`, `survival`, `survival_grouping`, `valentine_cheater` |
+| 1.72-3717.0 (2025-12-10) | A Safehouse in the Hills (`mp2025_02`) | `firefighter`, `forklift_operator`, `getaway_driver`, `postal_worker`, `survival`, `survival_grouping`, `valentine_cheater` |
 
 ## 48.7 Open questions
 
@@ -127,4 +127,4 @@ A mod rebuilds the flow itself (a small state machine on its own save), reuses t
 | The text of the voice-only flows (`XM4V_FLW`, `S25R_FLW`, `SR2CH_FLW` ...) | Answered in [48.2.1](#4821-the-phone-call-flows-second-pass): 40 phone calls in six DLC dialogue blocks |
 | Which update each `fm_content_*` script arrived in (compare decompile commits by build) | Answered in [48.6.1](#4861-when-each-fm_content_-script-arrived-second-pass) |
 | The flows for After Hours, Doomsday and the 2015 heists (no flow label family found) | Next pass |
-| The mp2025_02 update's name and story | Next pass, its pack text |
+| The mp2025_02 update's name and story | Partly answered (second pass): the name is A Safehouse in the Hills, from the pack's text; its 13 dialogue blocks (`X25A1AU` to `X25A6AU`, `X25MAAU`, `X25VNAU` ...) are not summarised, left for the third pass |
