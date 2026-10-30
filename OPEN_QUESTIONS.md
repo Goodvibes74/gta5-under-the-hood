@@ -84,7 +84,7 @@ Test only: GS-003 (does the return to story mode restart every script), CORE-001
 | P3.7 | [Properties](/docs/online/properties.md) (R7.6): yachts and vehicles as properties, garages, entrances, instances, daily fees | ON-041, ON-042, ON-043, ON-044, ON-045, ON-046 | scripts | Partly done, with ON-028 (ON-042 and ON-043 partly left, ON-065 mostly, ON-066 open), branch `research/second-pass-phase3` |
 | P3.8 | [Organisations and businesses](/docs/online/organisations-and-businesses.md) (R7.7): production numbers, capacities, offline production, boss costs, challenges, business missions, transactions | ON-035, ON-036, ON-037, ON-038, ON-039, ON-040, ON-049, UI-011 | scripts | Partly done, branch `research/second-pass-phase3` (ON-036, ON-038, UI-011 answered; ON-035, ON-037, ON-039, ON-040, ON-049 left); new ON-075 |
 | P3.9 | [Heists](/docs/online/heists.md) (R7.8): fail bands, casino targets, Cayo loot, the classic planning board, elite rewards, story arcs, crew skill | ON-019, ON-020, ON-021, ON-022, ON-023, ON-024, ON-025, GP-019 | scripts | Partly done, branch `research/second-pass-phase3` (ON-020, ON-022, ON-025 answered, ON-023 mostly; ON-019, ON-021, ON-024, GP-019 left); new ON-076 |
-| P3.10 | [DLC storylines](/docs/online/dlc-storylines.md) (R7.9): stats per flow step, voice-only flows, arrival updates, missing flows, mp2025_02 | ON-014, ON-015, ON-016, ON-017, ON-018 | scripts, data | Open |
+| P3.10 | [DLC storylines](/docs/online/dlc-storylines.md) (R7.9): stats per flow step, voice-only flows, arrival updates, missing flows, mp2025_02 | ON-014, ON-015, ON-016, ON-017, ON-018 | scripts, data | Partly done, branch `research/second-pass-phase3` (ON-016 answered; ON-014, ON-015, ON-017, ON-018 left) |
 | P3.11 | [Creator internals](/docs/online/creator-internals.md) (R7.11): prop limits, hidden libraries, the two prop writers, checkpoint fields, other creators' placement | ON-007, ON-008, ON-010, ON-011, ON-012, ON-013 | scripts | Open |
 | P3.12 | [Story systems in an Online mode](/docs/online/story-systems-in-online-mode.md) (R5.7): the shop table, ped brain sets | ON-057, ON-059 | scripts | Partly done, with R6.7 (ON-059 left) |
 
@@ -697,7 +697,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | --- | --- | --- | --- |
 | ON-014 | Which stats each flow keys on, step by step | Next pass, per flow function in `freemode` | Open |
 | ON-015 | The text of the voice-only flows (`XM4V_FLW`, `S25R_FLW`, `SR2CH_FLW` ...) | Dialogue files, R9.2 second pass | Open |
-| ON-016 | Which update each `fm_content_*` script arrived in (compare decompile commits by build) | Next pass, `git log` of the decompile | Open |
+| ON-016 | Which update each `fm_content_*` script arrived in (compare decompile commits by build) | Next pass, `git log` of the decompile | Answered: all 97 `fm_content_*` scripts dated by the decompile commit that added them ([R7.9 48.6.1](/docs/online/dlc-storylines.md#4861-when-each-fm_content_-script-arrived-second-pass)) |
 | ON-017 | The flows for After Hours, Doomsday and the 2015 heists (no flow label family found) | Next pass | Open |
 | ON-018 | The mp2025_02 update's name and story | Next pass, its pack text | Open |
 

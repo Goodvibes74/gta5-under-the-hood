@@ -84,12 +84,32 @@ For a story-mode or offline remake (never touch the live game):
 
 A mod rebuilds the flow itself (a small state machine on its own save), reuses the text labels and intro cutscenes by name, and writes each mission as a story-mode script ([missions cookbook](/modding/cookbook/missions.md)).
 
+### 48.6.1 When each `fm_content_*` script arrived (second pass)
+
+*Second pass, 2026-10-30.* The decompile repository adds each script in the commit for the build that first shipped it. Its history (178 commits up to build 3725) dates all 97 `fm_content_*` scripts. Commits and dates are **Verified** with `git log --diff-filter=A`; the update names are **Known**. Scripts in the first commit (September 2020) are older than the repository, so it only says they existed by then.
+
+| Commit (date) | Update (**Known**) | Scripts (`fm_content_` dropped) |
+| --- | --- | --- |
+| Initial commit (2020-09-17) | Before late 2020 | `business_battles`, `drug_vehicle`, `movie_props` |
+| 2020-12-15 | The Cayo Perico Heist | `golden_gun`, `island_dj`, `island_heist` |
+| 2021-07-20 | Los Santos Tuners | `auto_shop_delivery`, `phantom_car`, `sightseeing`, `slasher`, `tuner_robbery`, `vehicle_list` |
+| 2021-12-22 | The Contract | `payphone_hit`, `payphone_intro`, `security_contract`, `vip_contract_1` |
+| 1.59-2612 (2022-04-26) | Next-gen patches | `hsw_setup`, `hsw_time_trial`, `mp_intro` |
+| 1.61-2699 (2022-08-06) | The Criminal Enterprises | 17 scripts: `ammunation`, `bar_resupply`, `bike_shop_delivery`, `cargo`, `cerberus`, `club_management`, `club_odd_jobs`, `club_source`, `clubhouse_contracts`, `crime_scene`, `export_cargo`, `gunrunning`, `metal_detector`, `skydive`, `smuggler_plane`, `smuggler_trail`, `source_research` |
+| 2022-12-13 | Los Santos Drug Wars | `acid_lab_sell`, `acid_lab_setup`, `acid_lab_source`, `bank_shootout`, `convoy`, `drug_lab_work`, `robbery`, `stash_house`, `taxi_driver`, `xmas_mugger` |
+| 2944 (2023-06-13) | San Andreas Mercenaries | `armoured_truck`, `bicycle_time_trial`, `ghosthunt`, `possessed_animals`, `smuggler_ops`, `smuggler_resupply`, `smuggler_sell`, `test` |
+| 1.68-3095 (2023-12-12) | The Chop Shop | `chop_shop_delivery`, `tow_truck_work`, `xmas_truck` and the nine `vehrob_*` scripts |
+| 1.69-3258 (2024-06-25) | Bottom Dollar Bounties | `bounty_targets`, `daily_bounty`, `dispatch_work`, `pizza_delivery`, `ufo_abduction` |
+| 1.70-3407 (2024-12-10) | Agents of Sabotage | `arms_trafficking`, `community_outreach`, `drone` and the eight `hacker_*` prep and finale scripts |
+| 1.71-3570 (2025-06-17) | Money Fronts | `car_wash_detailing`, `car_wash_work`, `cutscene`, `helitours_tour`, `helitours_work`, `tycoon_odd_jobs`, `weed_shop_delivery`, `weed_shop_work` |
+| 1.72-3717.0 (2025-12-10) | The December 2025 update (`mp2025_02`) | `firefighter`, `forklift_operator`, `getaway_driver`, `postal_worker`, `survival`, `survival_grouping`, `valentine_cheater` |
+
 ## 48.7 Open questions
 
 | Question | Where it goes |
 | --- | --- |
 | Which stats each flow keys on, step by step | Next pass, per flow function in `freemode` |
 | The text of the voice-only flows (`XM4V_FLW`, `S25R_FLW`, `SR2CH_FLW` ...) | Dialogue files, R9.2 second pass |
-| Which update each `fm_content_*` script arrived in (compare decompile commits by build) | Next pass, `git log` of the decompile |
+| Which update each `fm_content_*` script arrived in (compare decompile commits by build) | Answered in [48.6.1](#4861-when-each-fm_content_-script-arrived-second-pass) |
 | The flows for After Hours, Doomsday and the 2015 heists (no flow label family found) | Next pass |
 | The mp2025_02 update's name and story | Next pass, its pack text |
