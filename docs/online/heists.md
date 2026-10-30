@@ -127,6 +127,17 @@ Cooldowns: `h4_cooldown_time` 2,880, `h4_cooldown_hard_time` 5,760 and `h4_solo_
 | Diamond Casino | A 900,000 ms (15-minute) time limit for each approach: stealth, subterfuge and direct |
 | Cayo Perico | The "Elite Thief" award pays `ih_award_elite_thief_cash` $200,000; a separate `cash_reward_elite_thief` has a default of $350,000 |
 
+**The classic planning board** (**Verified**). The board in a high-end apartment belongs to `fmmc_launcher`, the job lobby, not to `freemode`. One function in the launcher names four movies:
+
+| Movie | Shows |
+| --- | --- |
+| `heist_mp` | The board |
+| `heistmap_mp` | The map |
+| `heist_pre` | The prep board |
+| `instructional_buttons` | The button hints |
+
+The launcher requests these movies and draws them in the room with `DRAW_SCALEFORM_MOVIE_3D_SOLID` (5 calls). `am_mp_property_int`, the apartment interior, has the same name function, but only checks that `heist_pre` is loaded.
+
 ## 47.7 What this means for modders
 
 These are Online systems: read them, never mod them in Online. For a story-mode heist mod:
@@ -143,7 +154,7 @@ These are Online systems: read them, never mod them in Online. For a story-mode 
 | The units of the failure time bands (minutes of play, *probable*) | Next pass, the mission controller |
 | The casino target index order (gold or artwork at index 1) | Answered in [47.6.1](#4761-casino-targets-and-elite-challenges-second-pass): 0 cash, 1 gold, 2 artwork, 3 diamonds |
 | Cayo secondary loot values (cash, weed, coke, gold, paintings) and bag capacity | Next pass: hashed tunables near the primary values |
-| How the classic apartment board is drawn and which script owns it | Next pass, `freemode` |
+| How the classic apartment board is drawn and which script owns it | Answered in [47.6.1](#4761-casino-targets-and-elite-challenges-second-pass): `fmmc_launcher`, with `heist_mp`, `heistmap_mp` and `heist_pre` drawn in 3D |
 | Elite challenge rewards for each heist | Mostly answered in [47.6.1](#4761-casino-targets-and-elite-challenges-second-pass): the tunable values; the classic heists' real values are in the mission controller |
 | The classic heists' elite rewards and targets as set in the mission controller (ON-076) | Third pass, `fm_mission_controller` |
 | The heist story arcs and their contacts | [R7.9](/ROADMAP.md) |
