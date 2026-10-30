@@ -41,7 +41,7 @@ Where the game's scripts keep shared state: the global blocks, which script owns
 | Global | Block | References | Scripts | Most used by | Role |
 | --- | --- | --- | --- | --- | --- |
 | `Global_262145` | 1 | 863,136 | 806 | `tuneables_processing`, `freemode`, `am_criminal_damage`, `clothes_shop_mp` | **Tunables**: server-set values and switches (**Verified**, [online guide 7](/docs/online/07-freemode.md)) |
-| `Global_1950198` | 7 | 638,563 | 447 | `freemode`, the simple-interior scripts, `am_mp_mansion` | Freemode and interior state (**Known**) |
+| `Global_1950198` | 7 | 638,563 | 447 | `freemode`, the simple-interior scripts, `am_mp_mansion` | Local simple-interior state: entering and leaving interiors (**Verified**, below) |
 | `Global_2635562` | 10 | 504,993 | 494 | `freemode`, `public_mission_controller`, the deathmatch controllers | Job and mission session state (**Known**) |
 | `Global_2658291` | 10 | 371,140 | 795 | `freemode`, `am_vehicle_spawn`, `fm_mission_controller` | **Player broadcast data**, 468 values per player; value 0 is freemode's player state (**Verified**) |
 | `Global_4718592` | 18 | 264,829 | 681 | The creators (`fm_race_creator` ...) | **The FMMC mission structure** (the loaded job) |
@@ -55,13 +55,38 @@ Where the game's scripts keep shared state: the global blocks, which script owns
 | `Global_1892653` | 7 | 66,038 | 790 | `freemode`, `am_pi_menu`, `am_mp_property_int` | Player Online state (**Known**) |
 | `Global_80060` | 0 | 63,463 | 569 | The clothes shops, `wardrobe_mp` | Clothing (with `Global_80063`) (**Known**) |
 | `Global_1583765` | 6 | 54,501 | 513 | `freemode`, property interiors, the mod shops | Personal vehicles (**Known**) |
-| `Global_2097536` | 8 | 52,565 | 33 | `fmmc_launcher`, garages, `am_pi_menu` | Leaderboard and vehicle-list data (**Known**) |
-| `Global_2686090` | 10 | 43,435 | 542 | `freemode`, the mission controllers, `fmmc_launcher` | Job transition state (**Known**) |
+| `Global_2097536` | 8 | 52,565 | 33 | `fmmc_launcher`, garages, `am_pi_menu` | Leaderboard rows read for display (**Verified**, below) |
+| `Global_2686090` | 10 | 43,435 | 542 | `freemode`, the mission controllers, `fmmc_launcher` | Job transition state: the gamer handles of the players moving with the job (**Verified**, below) |
 | `Global_2685150` | 10 | 33,302 | 618 | `fmmc_launcher`, mission controllers | Job lobby state (**Known**) |
 | `Global_1679103` | 6 | 30,470 | 429 | `timershud`, the mission controllers | Mission HUD timers and counters (**Verified** for the take counter in [core guide 4](/docs/gameplay/weapons/weapons.md)) |
 | `Global_2649159` | 10 | 10,601 | 348 | `freemode` | **Server broadcast data**; value 0 is freemode's host state (**Verified**) |
 
 **Where the player broadcast data is used** (*second pass, 2026-10-25*, **Verified** counts, roles still open). Counting every `Global_2658291[player].f_<n>` and `Global_1845250[player].f_<n>` reference in the decompile shows how lopsided the two blocks are. In `Global_2658291` (468 values per player) scripts use 138 top-level fields, but one sub-structure, `.f_325`, takes 302,151 references, and inside it `.f_325.f_11` alone 101,492; next come `.f_204` (12,445) and `.f_203` (10,113), which scripts test and set bit by bit (`BitTest`, `SET_BIT`: per-player state flags), then `.f_276`, `.f_221`, `.f_76` and `.f_124`. In `Global_1845250` (880 values per player) 75 top-level fields are used; `.f_260` takes 154,902 references (its busiest parts are `.f_260.f_299`, `.f_397`, `.f_311`, `.f_543` and `.f_490`), then the bare entry (10,562), `.f_97` (5,527, a sub-structure with bit fields at `.f_97.f_32`), `.f_36`, `.f_808`, `.f_198` and `.f_879`. Field numbers change with every build; name a field by reading the natives next to its uses, starting with `.f_325.f_11` and `.f_260`.
+
+**Roles of the busiest broadcast fields** (*second pass, 2026-10-30*; read in `freemode` and `am_mp_mansion` at commit `6c18d3e8b`):
+
+| Field | Role | Evidence |
+| --- | --- | --- |
+| `Global_2658291[p].f_325` | **The interior the player is in** (the "simple interior" system: offices, bunkers, mansions, vehicles with an interior) | **Verified**: `.f_325.f_8` holds an interior ID, −1 for none, and one switch (`func_203` in `freemode`) maps it to an interior type |
+| `Global_2658291[p].f_325.f_11` | **Owner of that interior**: a player index, −1 for none | **Verified**: compared with the invalid-player value −1, read through `INT_TO_PLAYERINDEX`, and set to the player's own ID when they drive into their own vehicle interior (`am_mp_mansion`). In `freemode` its writers are the player's own ID (44 times), the owner chosen in the local interior state (`Global_1950198.f_3891`, `.f_4272`; 42 times) and helpers |
+| `Global_2658291[p].f_204`, `.f_203` | Per-player flag words | **Verified** as bit fields only (`BitTest`, `SET_BIT`, `CLEAR_BIT`), spread over about 30 bits each; the busiest bits in `freemode` are 19, 27 to 30 (`.f_204`) and 2, 28 (`.f_203`). Each bit is read through a one-line helper; naming them is per-bit work |
+| `Global_1845250[p].f_260` | **The player's stat-backed state**: owned properties, unlocks, preferences, cooldowns ([online guide 7](/docs/online/07-freemode.md), step 9) | **Verified** that `freemode` fills several parts from value-reading helpers called with a number (`.f_364` with 7212, `.f_415` with 8252, `.f_496` with 31558; that these are packed-stat indexes is our reading) and that every part is read through small per-player accessors. The busiest parts in `freemode` are `.f_439`, `.f_39` (with `ADD_BLIP_FOR_COORD`: a location), `.f_311`, `.f_496` and `.f_364`; naming them needs the packed-stat list (R7.3) |
+| `Global_1845250[p].f_97` | A small sub-structure with bit fields at `.f_97.f_28` and `.f_97.f_32` | **Verified** layout only. The job lobby's per-player state sits right before it at `.f_96` ([job lobby](/docs/online/job-lobby.md)) |
+
+**The Known rows, one use each** (*second pass, 2026-10-30*). For each global, the natives and strings on the lines that use it were counted in its top script (`git grep` at commit `6c18d3e8b`, the always-present `PLAYER_ID`, `SET_BIT` and `CLEAR_BIT` left out):
+
+| Global | Counted in | What sits next to it | Role now |
+| --- | --- | --- | --- |
+| `Global_1950198` | `freemode`, `am_mp_mansion` | Bit flags at `.f_751` (bit 31 set when the player drives into their own interior), the interior owner to enter (`.f_3891`, `.f_4272`, read through `INT_TO_PLAYERINDEX`), synchronized scenes | **Local simple-interior state**: entering and leaving interiors (**Verified** for the fields named) |
+| `Global_2635562` | `freemode` | `GET_NETWORK_TIME` (122), `GET_TIME_DIFFERENCE` (64), `GET_ID_OF_THIS_THREAD` (30), networked vehicles; `.f_491` holds an activity-type override with its script thread (read in the shared activity-type helper, [boot 3.4.1](/docs/00-getting-started/boot.md#341-the-level-indexes-second-pass)) | Freemode's activity timers and launched-activity state (**Known**, consistent) |
+| `Global_24529` | `fm_race_creator` | `GET_HASH_KEY`, `ARE_STRINGS_EQUAL` (44 each), text components, scaleform methods | Creator menu and text state (**Known**, consistent) |
+| `Global_80063`, `Global_80060` | `clothes_shop_mp` | `SET_PED_COMPONENT_VARIATION`, `DOES_SHOP_PED_APPAREL_HAVE_RESTRICTION_TAG`, `GET_PED_PALETTE_VARIATION`, the `multi_decal` tag (`Global_80063`); `Global_80060` only through helpers | Clothing shop item data (**Known**, consistent) |
+| `Global_2733002` | `am_pi_menu` | `DOES_ENTITY_EXIST` (54), `NETWORK_IS_ACTIVITY_SESSION` (21), vehicle checks | Interaction-menu local state, including the player's vehicles (**Known**, consistent) |
+| `Global_1892653` | `am_mp_property_int` | Few natives: `GET_HASH_KEY`, scaleform parameters, `PLAYSTATS_CHANGE_MC_ROLE` | Still **Known**; the property interior uses it only through helpers |
+| `Global_1583765` | `freemode` | Vehicle model names (`oppressor2`, `thruster`, `speedo4`), `IS_THIS_MODEL_A_BIKE`, radio station | Personal vehicles (**Known**, consistent) |
+| `Global_2097536` | `am_pi_menu`, `fmmc_launcher` | `LEADERBOARDS2_READ_GET_ROW_DATA_INT` and `_FLOAT` write into it; column labels `SCLB_C_RANK`, `SCLB_C_KILLS`, `SCLB_C_TIME`; one entry of 901 values per board holding rows of 75 values, a row count per board at `.f_2704` | **Leaderboard rows read for display** (**Verified**; the board IDs are in [server-backed screens 25.7](/docs/ui/server-backed-screens.md)) |
+| `Global_2686090` | `fmmc_launcher` | `NETWORK_ARE_HANDLES_THE_SAME` (21), `NETWORK_IS_HANDLE_VALID`, `NETWORK_GET_PLAYER_FROM_GAMER_HANDLE`, `NETWORK_HAS_PLAYER_STARTED_TRANSITION` | Job transition state: the gamer handles of the players moving with the job (**Verified** that it holds and compares gamer handles) |
+| `Global_2685150` | `fmmc_launcher` | Entities set as mission entities, `REGISTER_ENTITY_FOR_CUTSCENE`, `SET_CAM_COORD`, world offsets | Job lobby (corona) scene state: its camera and the peds and vehicles shown (**Known**, consistent) |
 
 ## 6.4 Story mode's globals (block 0), traced in earlier guides
 
@@ -99,6 +124,6 @@ Answered in the second pass: what the references into blocks 13 and 15 are (dead
 
 | Question | Where it goes |
 | --- | --- |
-| Field layout of the player broadcast data (`Global_1845250`, `Global_2658291`): the busiest fields are counted ([6.3](#63-the-most-used-globals)); their roles are not | R7.1 second pass |
+| Field layout of the player broadcast data (`Global_1845250`, `Global_2658291`) | Partly answered in [6.3](#63-the-most-used-globals): `.f_325` (interior and its owner) named; `.f_204`, `.f_203` are per-bit flags and the parts of `.f_260` need the packed-stat list (R7.3, R7.1) |
 | The tunable index list: which `Global_262145.f_<n>` is which tunable | R7.3 |
-| Roles of the **Known** rows above, by reading one use each | Second pass |
+| Roles of the **Known** rows above, by reading one use each | Answered in [6.3](#63-the-most-used-globals): three rows now **Verified** (`Global_1950198`, `Global_2097536`, `Global_2686090`), the rest checked as consistent; `Global_1892653` still unread |

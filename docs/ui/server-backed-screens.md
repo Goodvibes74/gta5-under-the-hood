@@ -100,20 +100,76 @@ Pages that read only stats (awards, unlocks, weapons) need nothing but stat valu
 
 "In Online" means a network game is running; the "one mode" is a state the script's own check (`func_307`) returns 2 for, which hides most entries in both lists (**Known**, not traced further). **Options** opens the Online settings the script fills itself (labels `PM_SETTING_*`): quickplay actions on foot and in a vehicle, enable or disable Passive Mode, spawn location (with choices such as "Hotel" and "Bunker"), matchmaking, player rank title, betting odds format, kill yourself, player overhead display, allow spectators, joint celebration, remain host after the next-job vote, filter quick-join content, join next mode from the spectator box, player text messages, and the GTA Online version. **Jobs** and **Playlists** open lists of UGC content (Rockstar, Rockstar Verified, My Jobs, Bookmarked, Recently Played) by type (Missions, Races, Stunt Races, Deathmatches, Last Team Standing, Capture, Versus, Survivals, Parachuting, King of the Hill, Arena War ...), each with its own "There are no ... available" message when the server returns nothing; that is where most of the script's 328 UGC calls go.
 
-## 25.6 What this means for modders
+## 25.6 Signed out: what the guards do (second pass)
+
+*Second pass (2026-10-30).* Read-only analysis of the guards in the build-3725 decompile (commit `6c18d3e8b`); nothing was run Online. Counts are calls in each script (**Verified**):
+
+| Script | `NETWORK_IS_SIGNED_ONLINE` | `NETWORK_HAS_VALID_ROS_CREDENTIALS` | `NETWORK_HAVE_ONLINE_PRIVILEGES` | `NET_GAMESERVER_IS_SESSION_VALID` | `NETWORK_IS_CLOUD_AVAILABLE` |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| `pausemenu_multiplayer` | 11 | 2 | 9 | 1 | 1 |
+| `am_pi_menu` | 9 | 6 | 5 | 12 | 1 |
+| `appinternet` | 6 | 4 | 4 | 22 | 2 |
+| `pausemenu_map` | 4 | 0 | 0 | 0 | 0 |
+| `appbusinesshub` | 2 | 2 | 0 | 12 | 0 |
+| `sctv` | 2 | 2 | 0 | 11 | 0 |
+| `am_contact_requests` | 2 | 2 | 0 | 1 | 1 |
+| `appmpjoblistnew` | 1 | 2 | 5 | 12 | 1 |
+| `mp_weapons` | 1 | 1 | 0 | 0 | 0 |
+| `appsecuroserv` | 0 | 0 | 0 | 3 | 1 |
+| `appmpemail`, `mp_awards`, `mp_unlocks` | 0 | 0 | 0 | 0 | 0 |
+
+What that means, screen by screen:
+
+- **The ONLINE tab in story mode** is the only one of these screens a signed-out player can open. When it opens and the player isn't signed in, `pausemenu_multiplayer` takes control of the frontend, empties all three columns and shows a "GTA Online" alert instead of the entry list (**Verified**). The text depends on the cause: "Log in to Rockstar Games to play GTA Online." (`HUD_CONNT`), "Internet connection has been lost ..." (`HUD_PLUGPU`, on a console with the cable out), or the game-update, system-update and disconnected messages (`HUD_GAMEUPD`, `HUD_SYSTUPD`, `HUD_DISCON`). Entering the store entry while signed out shows "You must be connected to Rockstar Games to access this screen." (`NOT_CONNECTED`). So none of the 22 entries in 25.5 works signed out, not even Options or Credits.
+- **The other Online screens in 25.2 run only inside a network session**, and a session can't start without sign-in, so for them "signed out" happens only when the connection drops mid-session. (`appinternet` and `pausemenu_map` also run in story mode, where the story websites and the map don't depend on these guards; **Known**, not traced per site.) Then the transaction-session guard (`NET_GAMESERVER_IS_SESSION_VALID`) fails first: the websites, business computers, interaction menu, job list and spectator TV show their warning or busy spinner instead of buying (**Verified** guard; that the warning is the visible result is our reading of the pattern in 25.3).
+- **Pages with no guard at all:** `mp_awards`, `mp_unlocks` (and `mp_weapons` apart from one Social Club check) read only stats, and `appmpemail` calls Social Club inbox natives without a sign-in check. With no connection the stat pages would still draw from the local stat values and the inbox would be empty (**Known**: what the engine returns signed out wasn't tested).
+- **The map page** (`pausemenu_map`) uses its checks for paid actions: one check function refuses (returns 12) when signed out before it asks whether the player can spend the money (**Verified**). The map itself has no sign-in check.
+
+## 25.7 Leaderboard IDs per screen (second pass)
+
+*Second pass (2026-10-30).* Leaderboards aren't read by a screen of their own. **30 scripts** compile in the same leaderboard library: the job lobby (`fmmc_launcher`), the interaction menu (`am_pi_menu`), the Online job controllers, two property scripts, and every minigame and activity that shows a board at the end. Each copy picks a board ID from the activity type, fills the column names, and reads with `LEADERBOARDS2_READ_BY_RANK`, `_BY_SCORE_INT`, `_BY_SCORE_FLOAT`, `_BY_RADIUS` or `_FRIENDS_BY_ROW` (**Verified**, counted with `git grep` at commit `6c18d3e8b`). The board definitions themselves aren't in any data file, so the names below come from the column and title labels each script sets next to the ID (English text from `global.gxt2`).
+
+| Board ID | Activity (title label) | Notes |
+| --- | --- | --- |
+| 815, 826 | Race (`SCLB_RCE_L1`) | 826 when the race has laps, 815 for point-to-point |
+| 824, 827 | GTA Race (`SCLB_GRCE_L1`) | Same split |
+| 825, 828 | Race with a co-driver (rally) | Same split |
+| 849, 928 | On Foot Race (`SCLB_FRCE_L1`) | Same split; race types 10 and 11 |
+| 975 | Race type 3 | Best lap, vehicle and rank columns |
+| 762 | Deathmatch and King of the Hill (`SCLB_DM`, `SCLB_KOTH`) | |
+| 822 | Team Deathmatch and Team King of the Hill | |
+| 823 | Vehicle Deathmatch (`SCLB_VEHDM`) | |
+| 791 | Survival (`SCLB_HRD`) | Score, wave, kills, deaths |
+| 777, 780 | Last Team Standing and missions (`SCLB_LTS`, `SCLB_MIS`) | 777 time-based, 780 score-based |
+| 795 | Parachute Jump (`SCLB_BJ`), Online | |
+| 274 | Parachute Jump, story mode (by location) | Cash column |
+| 193 | Golf | Story and Online share it (game type `SP` or `MP`) |
+| 190 | Darts | |
+| 283 | Tennis | Story and Online |
+| 749 | Arm Wrestling | Wins, losses, ratio |
+| 811 | Hunting | Score and time, location Chiliad Mountain State Wilderness |
+| 202 | Triathlon (by location) | |
+| 203, 912 | Shooting Range | 912 per challenge type (random, grid, covered) and weapon class |
+| 817 | Story-mode races | One board; a "Type" column says `OffroadRace`, `StuntPlaneRace` or `StreetRace` |
+| 965 to 974 | Pilot School lessons (`PS_TITLE`) | One board per lesson: time, distance, average height or score |
+| 192, 820, 850 | Story activities with gold, silver and bronze medal counts | By location |
+
+So the job lobby and the interaction menu read the Online boards (races, deathmatches, Survival, LTS, missions, parachuting), and each story minigame reads its own board at the end of a round. 39 distinct IDs in all; whether they stay the same in other builds wasn't checked.
+
+## 25.8 What this means for modders
 
 - **Single player only.** These screens are Online; don't run mods in GTA Online to explore them, and never call the transaction or UGC natives.
 - **For research,** the table in 25.2 says which scripts to read for each service; the guards in 25.3 are where a screen gives up when the server is missing.
 - **Story-mode mods are mostly unaffected:** the story UI (pause menu, phone, map) works without these services (**Known**); only Social Club features such as Snapmatic uploads need them.
 
-## 25.7 Open questions
+## 25.9 Open questions
 
 | Question | Where it goes |
 | --- | --- |
-| Which screens still work, partly, when signed out (an offline test is Online-adjacent; read-only analysis only) | Second pass from the guards |
+| Which screens still work, partly, when signed out (an offline test is Online-adjacent; read-only analysis only) | Answered from the guards in [25.6](#256-signed-out-what-the-guards-do-second-pass); what the engine returns signed out stays **Known** |
 | The full list of transaction calls per business app | R7.7 |
-| Leaderboard IDs read by each screen | Second pass |
+| Leaderboard IDs read by each screen | Answered in [25.7](#257-leaderboard-ids-per-screen-second-pass) |
 
-## 25.8 Test cards
+## 25.10 Test cards
 
 None: these screens are Online only.
