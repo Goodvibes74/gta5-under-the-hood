@@ -169,6 +169,7 @@ So the job lobby and the interaction menu read the Online boards (races, deathma
 | Which screens still work, partly, when signed out (an offline test is Online-adjacent; read-only analysis only) | Answered from the guards in [25.6](#256-signed-out-what-the-guards-do-second-pass); what the engine returns signed out stays **Known** |
 | The full list of transaction calls per business app | Answered in [organisations and businesses 46.5.1](/docs/online/organisations-and-businesses.md#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass) |
 | Leaderboard IDs read by each screen | Answered in [25.7](#257-leaderboard-ids-per-screen-second-pass) |
+| What the stat and Social Club inbox natives return when signed out (UI-020) | Third pass, the executable (read-only, no Online test) |
 
 ## 25.10 Test cards
 
