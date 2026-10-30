@@ -111,6 +111,36 @@ Each business has a desk app started by the property's interior script ([R7.6](/
 | `appavengeroperations` | 6,381 | `AVENGER_OPERATIONS_TERMINAL` | Avenger |
 | `appcovertops` | 7,832 | `COVERT_OPS` | Covert operations |
 
+### 46.5.1 Warehouse sizes, boss costs and the apps' transactions (second pass)
+
+*Second pass, 2026-10-30.* **Verified** in `freemode`, `tuneables_processing` and the business apps.
+
+**Special cargo warehouses.** The capacities are fixed in the scripts, not tunables. One shared function maps the 22 warehouse ids to three sizes, and a second turns the size into crates:
+
+| Size | Crates | Warehouse ids |
+| --- | ---: | --- |
+| Small | 16 | 1 to 5, 9 |
+| Medium | 42 | 7, 10 to 15, 21 |
+| Large | 111 | 6, 8, 16 to 20, 22 |
+
+**`gb_bosscost` and `gb_bosssetupcost`.** `tuneables_processing` registers them with defaults of **$200,000** and **$5,000**, but no script in this build reads either field. They no longer charge anything directly, and where registering as a boss is charged now is a third-pass question (ON-075).
+
+**Transactions per business app.** The count of distinct `NET_GAMESERVER_*` natives in each app, and the spend and earn natives it calls:
+
+| App | `NET_GAMESERVER_*` | Spend | Earn |
+| --- | ---: | --- | --- |
+| `appbikerbusiness` | 13 | `NETWORK_SPENT_PAY_BUSINESS_SUPPLIES`, `_PURCHASE_BUSINESS_PROPERTY`, `_TRADE_BUSINESS_PROPERTY`, `_UPGRADE_BUSINESS_PROPERTY` | `NETWORK_EARN_FROM_BUSINESS_PRODUCT`, `_FROM_PROPERTY`, `_SELL_ACID` |
+| `appbunkerbusiness` | 13 | `NETWORK_SPENT_PAY_BUSINESS_SUPPLIES`, `_UPGRADE_BUSINESS_PROPERTY` | `NETWORK_EARN_FROM_BUSINESS_PRODUCT`, `_SELL_ACID` |
+| `appbusinesshub` | 15 | `NETWORK_SPEND_BUY_MFGARAGE`, `_SET_DISCOUNT`, `NETWORK_SPENT_GENERIC`, `_REHIRE_DJ`, `_UPGRADE_NIGHTCLUB_AND_WAREHOUSE` | |
+| `apparcadebusiness` | 14 | `NETWORK_SPEND_ARCADE_MGMT`, `_BUY_MFGARAGE`, `_SET_DISCOUNT`, `_UPGRADE_ARCADE`, `NETWORK_SPENT_GENERIC` | |
+| `appsecuroserv` | 10 | `NETWORK_SPENT_PURCHASE_WAREHOUSE_PROPERTY`, `_UPGRADE_WAREHOUSE_PROPERTY`, and the three `_IMPEXP_WAREHOUSE_PROPERTY` ones (purchase, trade, upgrade) | `NETWORK_EARN_FROM_PROPERTY` |
+| `appsmuggler`, `apphackertruck` | 10 each | `NETWORK_SPENT_SKIP_CARGO_SOURCE_SETUP` | |
+| `appimportexport` | 9 | | |
+| `apphackerden` | 7 | `NETWORK_SPENT_GENERIC` | |
+| `appfixersecurity`, `appbailoffice`, `appavengeroperations`, `appcovertops` | 0 | | |
+
+The last four make no transaction of their own; they hand their actions to other scripts. The apps with server calls also carry the shared table of transaction service names (238 to 334 entries, depending on the app).
+
 ## 46.6 What this means for modders
 
 These are Online systems: read them, never mod them in Online. For an offline or story-mode project:
@@ -125,8 +155,9 @@ These are Online systems: read them, never mod them in Online. For an offline or
 | Question | Where it goes |
 | --- | --- |
 | The nightclub's production and popularity numbers (their tunable names are hashed) | Next pass: match hashes to names from the scripts |
-| Special cargo warehouse capacities (16, 42 and 111 crates are **Known**) and where the scripts keep them | Next pass |
+| Special cargo warehouse capacities (16, 42 and 111 crates are **Known**) and where the scripts keep them | Answered in [46.5.1](#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass) |
 | How production is stored in stats and advanced while offline or in another session | Next pass, with the stats file |
-| What `gb_bosscost` and `gb_bosssetupcost` charge | Next pass, `freemode` |
+| What `gb_bosscost` and `gb_bosssetupcost` charge | Answered in [46.5.1](#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass): nothing in this build (no script reads them) |
+| Where registering as a boss is charged now (ON-075) | Third pass, the boss registration code in `freemode` and `am_pi_menu` |
 | The MC challenge and VIP challenge rules (cash, RP, time) | Next pass, per script |
 | Business battles and the `fm_content_*` business missions | R7.9 and a later pass |
