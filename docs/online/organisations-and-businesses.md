@@ -141,6 +141,48 @@ Each business has a desk app started by the property's interior script ([R7.6](/
 
 The last four make no transaction of their own; they hand their actions to other scripts. The apps with server calls also carry the shared table of transaction service names (238 to 334 entries, depending on the app).
 
+### 46.5.2 VIP and MC challenges (second pass)
+
+*Second pass, 2026-10-30.* **Verified** in `am_pi_menu`, `freemode` and `tuneables_processing`; the names of the challenges are the menu text.
+
+**Which challenges there are.** The interaction menu's "VIP Challenges" page (`PIM_MAGCHL`) lists eight entries, and the "Club Challenges" page (`PI_BIK_1_5_T`) three. Each VIP entry passes a menu id to a function that returns that challenge's `_instances_permitted` tunable, and that ties the menu text to its internal name and script:
+
+| Menu text | Menu id | Internal name (tunables) | Script |
+| --- | ---: | --- | --- |
+| Cashing Out | 171 | `exec_cashing_*` | `gb_cashing_out` |
+| Salvage | 172 | `exec_salvage_*` | `gb_salvage` |
+| Auto Buyout | 163 | `gb_carjacking_*` | `gb_carjacking` |
+| Due Diligence | 160 | `gb_finders_keepers_*` | `gb_finderskeepers` |
+| Most Wanted | 153 | `gb_mostwanted_*` | `gb_fivestar` |
+| Point to Point | 162 | `gb_pointtopoint_*` | `gb_point_to_point` |
+| Courier Service | 155 | `gb_protectionracket_*` | `gb_collect_money` |
+| Market Manipulation | 154 | `gb_smashandgrab_*` | `gb_rob_shop` |
+| Search and Destroy (MC) | | `biker_search_and_destroy_*` | `gb_biker_search_and_destroy` |
+| Criminal Mischief (MC) | | `biker_mischief_*` | `gb_biker_criminal_mischief` |
+| Wheelie Rider (MC) | | `biker_wheelie_*` | `gb_biker_wheelie_rider` |
+
+Each script reads its own block (checked by finding a block-specific field, such as the bag value or the destination radius, in that script only).
+
+**The rules, from the tunable defaults.** Cash is the winner's default reward; RP is the winner's RP. Every VIP challenge also pays losers who took part $500 and 100 RP (`_minimum_participation_cash`, `_rp`), and has its own 10-minute cooldown.
+
+| Challenge | Time limit | Cash | RP | Other rules |
+| --- | --- | ---: | ---: | --- |
+| Cashing Out | 10 min | $5,000 bonus, plus $300 to $500 per ATM hack | 2,000 | One player needed; 60-second hacks; a combined-total cap of 30,000 (`exec_cashing_max_combined_total`); the chance of a wanted level rises 10% for each 10 seconds a hack takes, up to 50%, and 100% if the timer runs out; wanted level capped at 3; 10 at once |
+| Salvage | 10 min | $15,000 bonus | 2,000 | Two players needed; a 250 m area; four rebreathers active, one given at the start; 10 at once |
+| Auto Buyout | 10 min | $5,000, plus a bonus of 0.5% of the car's value (bonus capped at $5,000,000; car value capped at $500,000) | 2,000 | Six delivery areas, five points each, four deliveries a point |
+| Due Diligence | 10 min | $15,000; packages $100 each, rising $100 a package | 2,000 | A 200 m area; a flare after 60 seconds |
+| Most Wanted | 10 min | $2,000, plus a $3,000 bonus | 500 | Five stars; 15 seconds of grace in tunnels |
+| Point to Point | 10 min | $10,000 | 500 | 60 seconds to choose the destination; a 1 km destination radius; players count as taking part within 1 km, or 4 km at the start |
+| Courier Service | 10 min | $5,000; the bag is worth $8,000 | 1,500 | Cash drops when you take damage (from $50 for a fall to $200 for a car crash); death costs 15% (at least $200); three wanted stars |
+| Market Manipulation | 10 min | $5,000 | 2,000 | Wanted level capped at 5; a store can't be robbed again for 2 minutes; 15% of the cash dropped on death |
+| Search and Destroy | 600 s | $20,000 | 2,000 | Targets blipped for 3 minutes; 100 a kill, 200 a headshot, 300 melee, 500 a civilian (points); 4 at once |
+| Criminal Mischief | 600 s | $30,000 | 2,000 | Two players needed; 50 for a helicopter or plane and 50 for a police car (points); 10 at once |
+| Wheelie Rider | 300 s | $10,000 | 500 | 10 at once |
+
+The MC time limits are in seconds: the script multiplies the tunable by 1,000 (`gb_biker_wheelie_rider`).
+
+**Shared rules.** A boss has to wait 3 minutes (`gb_cooldown_until_next_boss_challenge`, 180,000 ms) between challenges, and 5 between work. Organisation members get half the RP (`gb_challenge_goon_rp_reward_percentage` 0.5). A rival organisation that wins gets 70% of the cash and RP (`gb_rival_org_*_reward_percentage`), and a player outside an organisation 30% of the cash (`gb_solo_cash_reward_percentage`). The wagers keep 10% for the agency (`gb_challenge_wager_agency_cut`). How these percentages combine in the end-of-challenge payout isn't traced.
+
 ## 46.6 What this means for modders
 
 These are Online systems: read them, never mod them in Online. For an offline or story-mode project:
@@ -159,5 +201,5 @@ These are Online systems: read them, never mod them in Online. For an offline or
 | How production is stored in stats and advanced while offline or in another session | Next pass, with the stats file |
 | What `gb_bosscost` and `gb_bosssetupcost` charge | Answered in [46.5.1](#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass): nothing in this build (no script reads them) |
 | Where registering as a boss is charged now (ON-075) | Third pass, the boss registration code in `freemode` and `am_pi_menu` |
-| The MC challenge and VIP challenge rules (cash, RP, time) | Next pass, per script |
+| The MC challenge and VIP challenge rules (cash, RP, time) | Mostly answered in [46.5.2](#4652-vip-and-mc-challenges-second-pass): the 11 challenges, their scripts and their tunables; how the payout percentages combine is left |
 | Business battles and the `fm_content_*` business missions | R7.9 and a later pass |

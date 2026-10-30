@@ -749,7 +749,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-036 | Special cargo warehouse capacities (16, 42 and 111 crates are **Known**) and where the scripts keep them | Next pass | Answered: fixed in the scripts; 22 warehouses in three sizes, 16, 42 and 111 crates ([R7.7 46.5.1](/docs/online/organisations-and-businesses.md#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass)) |
 | ON-037 | How production is stored in stats and advanced while offline or in another session | Next pass, with the stats file | Open |
 | ON-038 | What `gb_bosscost` and `gb_bosssetupcost` charge | Next pass, `freemode` | Answered: defaults $200,000 and $5,000, but no script reads them in this build ([R7.7 46.5.1](/docs/online/organisations-and-businesses.md#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass)); new ON-075 |
-| ON-039 | The MC challenge and VIP challenge rules (cash, RP, time) | Next pass, per script | Open |
+| ON-039 | The MC challenge and VIP challenge rules (cash, RP, time) | Next pass, per script | Mostly answered: the 8 VIP and 3 MC challenges with their scripts, time limits, cash, RP and rules ([R7.7 46.5.2](/docs/online/organisations-and-businesses.md#4652-vip-and-mc-challenges-second-pass)); how the rival, solo and member percentages combine in the payout is left |
 | ON-040 | Business battles and the `fm_content_*` business missions | R7.9 and a later pass | Open |
 | ON-075 | Where registering as a boss is charged now (`gb_bosscost` and `gb_bosssetupcost` are read by no script) | Third pass, the boss registration code in `freemode` and `am_pi_menu` | Open |
 
