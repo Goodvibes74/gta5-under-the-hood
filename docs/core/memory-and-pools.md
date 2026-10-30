@@ -123,5 +123,5 @@ So a heavy story mission typically: lowers the population budget, requests its m
 | --- | --- |
 | A PoolManager crash log from the test install names `cscenarioinfo` at size 250, the vanilla value, while the start-up log shows 885: was the modded `gameconfig.xml` not loaded on that launch, or does the crash log print the vanilla size? | Test card 1 on the next crash |
 | Real usage of the busiest pools in a heavy session (turn on PoolManager's usage warning for one launch) | Second pass |
-| Memory cost of each raised pool (bytes per slot) | Second pass |
-| The vanilla built-in sizes of the weapon arrays that WeaponLimitsAdjuster raises | Second pass |
+| Memory cost of each raised pool (bytes per slot) | Needs the executable or a memory tool: neither the scripts, `gameconfig.xml` nor PoolManager's logs give an item size (checked in the second pass) |
+| The vanilla built-in sizes of the weapon arrays that WeaponLimitsAdjuster raises | Partly answered (second pass): vanilla build 3725 already loads 140 `WEAPONINFO_FILE` entries from its DLC packs (67 of them vehicle weapons) and 20 `WEAPONCOMPONENTSINFO_FILE`s, counted in every pack's `content.xml` with `tools/dlc-scan.ps1`, so the built-in arrays hold at least that many plus the base files. The sizes themselves are in the executable |

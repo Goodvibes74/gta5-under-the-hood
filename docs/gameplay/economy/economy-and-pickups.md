@@ -51,6 +51,27 @@ How story-mode money is stored and spent, which scripts handle the money side of
 | `GET_SAFE_PICKUP_COORDS` | 119 | 145 | A safe place to drop a pickup |
 | `NETWORK_EARN_*`, `NETWORK_SPENT_*` | | | Online money (server) |
 
+### Where story money is booked (second pass)
+
+Every story debit and credit goes through one shared helper (in the shared code of 124 scripts; read in `respawn_controller`, build 3725, **Verified**). It takes the character, debit or credit, a transaction type and the amount. A debit always adds to `SPx_MONEY_TOTAL_SPENT`, then books the amount under at most one spending stat, chosen by the transaction type or, for shops, by the script that is running:
+
+| Stat (`SP0_`, `SP1_`, `SP2_` ...) | Booked when | Chosen by |
+| --- | --- | --- |
+| `MONEY_SPENT_ON_TATTOOS` | Transaction types 63 to 68 | Type |
+| `MONEY_SPENT_ON_TAXIS` | Type 21 | Type |
+| `MONEY_SPENT_IN_STRIP_CLUBS` | Type 25 | Type |
+| `MONEY_SPENT_PROPERTY` | Types 99 to 102 and 104 to 113 (property purchases) | Type |
+| `MONEY_SPENT_IN_CLOTHES` | Any other type, in `clothes_shop_sp` | Script |
+| `MONEY_SPENT_ON_HAIRDOS` | Any other type, in `hairdo_shop_sp` | Script |
+| `MONEY_SPENT_IN_BUYING_GUNS` | Any other type, in `gunclub_shop` | Script |
+| `MONEY_SPENT_CAR_MODS` | Any other type, in `carmod_shop` | Script |
+| `MONEY_SPENT_ON_HEALTHCARE` | Death (hospital types 125 to 129) | Booked by the respawn code before the helper runs |
+| `MONEY_SPENT_IN_COP_BRIBES` | Arrest (police station types 118 to 124) | Booked by the respawn code before the helper runs |
+
+That is the full family: **10 spending categories plus the total**, for each of the three characters. Any other debit is counted only in the total. The hospital types get 10% off when one unlock check in the helper passes (which unlock wasn't identified). A credit adds to `SPx_TOTAL_CASH_EARNED` instead.
+
+A second, smaller family is written directly by three shops, outside the helper: `SPx_SP_MONEY_SPENT_ON_WEAPONS` (`gunclub_shop`), `SPx_SP_MONEY_SPENT_ON_CLOTHES` (`clothes_shop_sp`, `clothes_shop_mp`) and `SPx_SP_MONEY_SPENT_ON_VEHICLES` (`appinternet`, the vehicle websites). They are only in those 4 scripts. No other story `MONEY_SPENT` name appears in the decompile; the rest (`MONEY_SPENT_PROPERTY_UTIL`, `MONEY_SPENT_JOB_ACTIVITY`, `MONEY_SPENT_BETTING` ...) are Online stats.
+
 ## What this means for modders
 
 - **Give or take story money** by changing `SP0_TOTAL_CASH` (or `SP1_`, `SP2_`) with `STAT_SET_INT`; the HUD shows the change. Record what you change if your mod should be undoable.
@@ -66,7 +87,7 @@ How story-mode money is stored and spent, which scripts handle the money side of
 | How `stock_controller` moves prices and which story events move which company | Second pass |
 | Where `pickup_controller` places each pickup and when they respawn | Second pass: its coordinate tables |
 | How shop robberies pay out (the till amounts) | Second pass: `shoprobberies` |
-| The full list of `SPx_MONEY_SPENT_*` categories | R1.7 |
+| The full list of `SPx_MONEY_SPENT_*` categories | Answered in [where story money is booked](#where-story-money-is-booked-second-pass) |
 
 ## Test cards
 

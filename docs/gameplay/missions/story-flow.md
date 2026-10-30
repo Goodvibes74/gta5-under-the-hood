@@ -207,4 +207,4 @@ Each triggerer covers the missions of its part of the story: it places the blip,
 | How `agency_heist2` and Blitz prep 3 are reached | R5.2 |
 | The pass and fail labels of each mission command: what happens on a fail | R5.2 (the mission side is in [guide 3](/docs/gameplay/missions/mission-anatomy.md#37-failing); the flow side is still open) |
 | What the flow integers (`f_99.f_58`) hold; index 120 is read 1,434 times | R5.1, R5.3 |
-| How `mission_repeat_controller` replays a mission without moving the flow | R5.2 |
+| How `mission_repeat_controller` replays a mission without moving the flow | Answered in [mission anatomy 3.9](/docs/gameplay/missions/mission-anatomy.md#39-passing) |

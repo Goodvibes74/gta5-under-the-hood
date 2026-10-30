@@ -68,7 +68,7 @@ From `player_controller_b` (function numbers are build-3725 decompiler names):
 | What each character's saved state holds (position, outfit, weapons, vehicle, money) and where in the story save | Second pass, with R1.7 saves and the [global map](/docs/core/global-map.md) |
 | The 42-entry scene table's conditions (time, place, mission state) | Second pass |
 | The meaning of switch flag bits 1, 2, 4, 8 | NativeDB notes plus a test card |
-| Who starts the `family_scene_*` scripts | R0.5 second pass (launch graph) |
+| Who starts the `family_scene_*` scripts | Answered: `main`, within 100 m of five house points ([launch graph](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass)) |
 
 ## 9.7 Test cards
 
