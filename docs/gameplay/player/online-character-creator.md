@@ -130,6 +130,16 @@ The creator stages its characters in the police line-up interior. The reference 
 | `CHAR_CREATOR_*` (15) | The seven skill points and the old lifestyle values |
 | `MESH_HASGRANDPARENT` | A head-blend flag |
 
+**From slider to saved value** (*second pass, 2026-10-30*, **Verified** in `maintransition` and the stat mapping file `mpstatscharactermappingdata.xml`):
+
+- **Features.** A slider runs 0 to 100. The morph value is `min + (max - min) × slider / 100`, where `min` and `max` are the item's two ends in the item table (-1 and 1 for every axis in the table above). That float is saved unchanged: micro morph *n* goes to `MP_STAT_FEATURE_n` (character float stats 137 to 156 for morphs 0 to 19). On load, the same loop reads `FEATURE_0` to `FEATURE_19` and passes each value straight to `SET_PED_MICRO_MORPH(ped, n, value)`, with no scaling. `FEATURE_20` is not read by that loop.
+- **Heritage.** After editing, the script reads the face back with `GET_PED_HEAD_BLEND_DATA` and saves its nine values:
+  - the three shape parents as `MESH_HEAD0` to `MESH_HEAD2` (int stats 2097 to 2099);
+  - the three skin parents as `MESH_TEX0` to `MESH_TEX2` (2100 to 2102);
+  - the shape, skin and third mixes as `MESH_HEADBLEND`, `MESH_TEXBLEND` and `MESH_VARBLEND` (float stats 134 to 136).
+
+  So the 0 to 100 Resemblance and Skin Tone sliders end up stored as the 0 to 1 mix floats the native returns.
+
 Server-authoritative stats are written through the server and only land when it accepts them ([stats and tunables](/docs/online/stats-and-tunables.md)). Offline there is no server and no session: the stats can't be written, and the creator only runs as part of the Online transition (`maintransition` checks `NETWORK_IS_GAME_IN_PROGRESS` 100 times).
 
 ## What this means for modders
@@ -149,10 +159,10 @@ Server-authoritative stats are written through the server and only land when it 
 | --- | --- |
 | How many normal and special parent heads each list has, and which characters the special ones are | In-game test: `GET_PED_HEAD_BLEND_NUM_HEADS` and `GET_PED_HEAD_BLEND_FIRST_INDEX` per type |
 | The two unlabelled morph-19 entries and the last column of the appearance table (which sex or body type each row is for) | Next pass, the item-table caller |
-| How the slider values (0 to 100, -1 to 1) are scaled into the saved `FEATURE_n` and `HEADBLEND_*` floats, and which `FEATURE_n` is which morph | Next pass, the save function and the stat enum mapping |
-| The outfit group names (`BEA`, `CAS` ...) and the components of each starter outfit | Next pass, the outfit tables |
-| The appearance fee and cooldown values | R7.3 tunables, `freemode` |
-| Which transition state opens the creator, and what menu `-1392473901` is (used 3 times, probably the character select) | R7.2 second pass |
+| How the slider values (0 to 100, -1 to 1) are scaled into the saved `FEATURE_n` and `HEADBLEND_*` floats, and which `FEATURE_n` is which morph | Answered in [What is saved](#what-is-saved) (second pass): `FEATURE_n` is morph *n*, saved as the raw morph value |
+| The outfit group names (`BEA`, `CAS` ...) and the components of each starter outfit | Partly answered (second pass): the text has no label for a group, only for each outfit (`FACE_O_M_BEA0` "The Dude", `FACE_O_F_BEA0` "The Siesta"), so the group names stay *probable* from the codes; the components are left |
+| The appearance fee and cooldown values | Answered in [R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass): $100,000, 48 minutes, at most 30 in 24 hours |
+| Which transition state opens the creator, and what menu `-1392473901` is (used 3 times, probably the character select) | Answered: the "LOBBY LIST" screen, and state 32 when the transition's destination is 2 ([R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) |
 
 ## Test cards
 

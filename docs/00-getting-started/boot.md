@@ -139,3 +139,4 @@ There are two ways in, and both end in the same place (**Verified**):
 | How exactly the engine starts `startup`, `initial` and `main` | Partly answered in [3.3](#33-inside-the-boot-scripts): no script starts them, and the order is forced by what each one reads and waits for; the engine call itself needs the executable |
 | What the numbers in the story mission table mean | Answered in [core guide 2](/docs/gameplay/missions/story-flow.md#22-the-mission-table) |
 | Whether the return to story mode restarts every script (test card 2) | R7.2 |
+| Which folder level index 5 loads (`common:/data/levels/stripped` is **Known**, not proven; GS-004) | Third pass, the executable's level list |

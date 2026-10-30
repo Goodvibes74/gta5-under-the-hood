@@ -247,16 +247,21 @@ One function in `freemode` gives the number of vehicle spaces, either for a prop
 | 6 | clubhouse (`PROP_CLUBHOUSE`) | 10 |
 | 8, 9, 10 | office garages (`PROP_OFFICE_GAR1` to `3`) | 20 each |
 | 11 | vehicle warehouse (`PROP_IE_WAREHOUSE`) | 8 (*probable*: the eight special vehicles, matching an eight-entry list in `appinternet`: `ruiner2`, `blazer5`, `phantom2`, `voltic2`, `dune4`/`dune5`, `wastelander`, `boxville5`, `technical2`) |
-| 12 | | 35 |
-| 13 | | 7 |
-| 14 | | 1 |
-| 15 to 22, 25, 32 | | 10 each |
-| 26 | | 20 |
-| 29 | | 50 (probably the Eclipse Blvd garage: five floors, the stats have five `MSTOREY_FLOOR` tooltips) |
-| 31 | | 2 |
-| 33, 34, 35 | | 20 each |
+| 12 | hangar (`PROP_HANGAR`) | 35 |
+| 13 | facility (`PROP_DEFUNCBASE`) | 7 |
+| 14 | nightclub (`PROP_NIGHTCLUB`) | 1 |
+| 15, 16, 17 | nightclub garage floors (`PROP_MEGAWARE_GAR1` to `3`) | 10 each |
+| 18, 19, 20 | Arena workshop garage floors (`PROP_ARENAWARS_GAR1` to `3`) | 10 each |
+| 21 | Diamond Casino penthouse garage (`PROP_CASINO_GAR1`) | 10 |
+| 22 | arcade garage (`PROP_ARCADE_GAR1`) | 10 |
+| 25 | auto shop (`PROP_AUTO_SHOP`) | 10 |
+| 26 | Agency garage (`PROP_SECURITY_OFFICE_GAR`) | 20 |
+| 29 | Eclipse Blvd garage (`MULTSTOREY_GAR_OWNED`) | 50 |
+| 31 | bail office (`PROP_BAIL_OFFICE`) | 2 |
+| 32 | hacker den (`PROP_HACKER_DEN`) | 10 |
+| 30, 33, 34, 35 | not in the slot-to-stat function; 33 to 35 have 20 spaces each | |
 
-Property indices past 115 (not in the table of 45.2) get sizes by index: 116 = 35, 117 = 7, 118 = 1, 119 to 127 = 10 (122 = 9), 128 = 20, 129 = 50, 132 = 2, 133 = 10, 135 to 137 = 20. Which business or vehicle each of these is, is still open (45.8).
+Property indices past 115 (not in the table of 45.2) get sizes by index: 116 = 35, 117 = 7, 118 = 1, 119 to 127 = 10 (122 = 9), 128 = 20, 129 = 50, 132 = 2, 133 = 10, 135 to 137 = 20. *Second pass (2026-10-30, **Verified**):* `freemode`'s slot-to-stat function names ownership slots 12 to 32 (the table above). The property indices 116 to 137 don't follow the slot numbers in a fixed offset, so which index is which property is still open (45.8).
 
 Every personal vehicle is one **record** in a per-character array of **607**, kept in stats flagged `IsVehicle` (4,412 of them): `MPSV_MODEL_n`, `MPSV_FLAGS_n` (mod flags), `MPSV_VEHICLE_BS_n` (control flags), `MPSV_LP0_n` (the plate, a 64-bit stat), `MPSV_PRICE_PAID_n`, `MPSV_PREMIUM_PAID_n` (insurance paid by whoever destroyed it), `MPSV_IMPOUND_TIME_n`, and for 133 of them `MPSV_OBTAINED_TIME_n`, plus `MPSV_VEHICLE_TIMESTAMP` and named one-offs (`MPSV_MODEL_BIKER_CLT`, `_TUNER_VEH`, `_SALVAGE_VEH`). A `freemode` function maps record numbers to stat numbers in blocks (records 0 to 9, 13 to 22, 26 to 35 ... with three unused numbers after each block of ten up to record 362, then straight runs), so a home's 13 reserved records hold up to 10 real cars. Colours, wheels and mods aren't among these stat names; where the full vehicle setup is kept is an open question.
 
@@ -293,6 +298,139 @@ The total is shown with `MP_PROP_UTIL` ("You paid your combined Property charges
 
 `am_mp_smpl_interior_ext` doesn't hold one coordinate list. Each interior type registers a table of about 40 functions; one of them returns the entrance data for an interior and entrance number (position, size, heading), which the script uses to draw the entry marker (`DRAW_MARKER` type 1, 0.75 m, in the interior's HUD colour) and the blip (`ADD_BLIP_FOR_COORD`). The three mansions' entrances are in the shared code: -2563.4, 1915.8, 167.8 · -1689.3, 481.8, 128.8 · 533.5, 770.8, 201.9 (interiors 177 to 179). The other types' lists sit behind those function pointers (open question).
 
+**The 180 simple interiors by number** (*second pass, 2026-10-30*, **Verified**). One function in `am_mp_smpl_interior_ext` names every id. The numbers inside the names can skip, so a range like 70–80 holds 11 bunkers named up to `BUNKER_12`. The `SIMPLE_INTERIOR_` prefix is dropped here.
+
+<details>
+<summary>All 180 ids</summary>
+
+| Ids | Names |
+| --- | --- |
+| 0–21 | `WAREHOUSE_1` to `WAREHOUSE_22` |
+| 22 | `FACTORY_METH_1` |
+| 23 | `FACTORY_WEED_1` |
+| 24 | `FACTORY_CRACK_1` |
+| 25 | `FACTORY_MONEY_1` |
+| 26 | `FACTORY_DOCUMENTS_1` |
+| 27 | `FACTORY_METH_2` |
+| 28 | `FACTORY_WEED_2` |
+| 29 | `FACTORY_CRACK_2` |
+| 30 | `FACTORY_MONEY_2` |
+| 31 | `FACTORY_DOCUMENTS_2` |
+| 32 | `FACTORY_METH_3` |
+| 33 | `FACTORY_WEED_3` |
+| 34 | `FACTORY_CRACK_3` |
+| 35 | `FACTORY_MONEY_3` |
+| 36 | `FACTORY_DOCUMENTS_3` |
+| 37 | `FACTORY_METH_4` |
+| 38 | `FACTORY_WEED_4` |
+| 39 | `FACTORY_CRACK_4` |
+| 40 | `FACTORY_MONEY_4` |
+| 41 | `FACTORY_DOCUMENTS_4` |
+| 42 | `RESTRICTED_INTERIOR_POLICE_STATION` |
+| 43 | `RESTRICTED_INTERIOR_MC_CLUBHOUSE` |
+| 44 | `RESTRICTED_INTERIOR_BANK_ROCKFORD` |
+| 45 | `RESTRICTED_INTERIOR_BANK_PILLBOX` |
+| 46 | `RESTRICTED_INTERIOR_BANK_ALTA` |
+| 47 | `RESTRICTED_INTERIOR_BANK_BURTON` |
+| 48 | `RESTRICTED_INTERIOR_BANK_PALETO` |
+| 49 | `RESTRICTED_INTERIOR_BANK_GRAND_SENORA` |
+| 50 | `RESTRICTED_INTERIOR_BANK_CHUMASH` |
+| 51 | `RESTRICTED_INTERIOR_ROCKCLUB` |
+| 52 | `RESTRICTED_INTERIOR_CHICKEN_FACTORY` |
+| 53–55 | `RESTRICTED_INTERIOR_CHICKEN_FACTORY_PART_2` to `RESTRICTED_INTERIOR_CHICKEN_FACTORY_PART_4` |
+| 56 | `RESTRICTED_INTERIOR_FARMHOUSE` |
+| 57 | `RESTRICTED_INTERIOR_HEIST_YACHT` |
+| 58 | `RESTRICTED_INTERIOR_RECYCLING_PLANT` |
+| 59 | `RESTRICTED_INTERIOR_BIOLAB` |
+| 60–69 | `IE_WAREHOUSE_1` to `IE_WAREHOUSE_10` |
+| 70–80 | `BUNKER_1` to `BUNKER_12` |
+| 81 | `ARMORY_TRUCK_1` |
+| 82 | `CREATOR_TRAILER_1` |
+| 83–87 | `HANGAR_1` to `HANGAR_5` |
+| 88 | `ARMORY_AIRCRAFT_1` |
+| 89–97 | `DEFUNCT_BASE_1` to `DEFUNCT_BASE_10` |
+| 98 | `RESTRICTED_INTERIOR_MEDIUM_GARAGE` |
+| 99 | `RESTRICTED_INTERIOR_LOWEND_STUDIO` |
+| 100 | `RESTRICTED_INTERIOR_MIDEND_APARTMENT` |
+| 101 | `CREATOR_AIRCRAFT_1` |
+| 102 | `HUB_LA_MESA` |
+| 103 | `HUB_MISSION_ROW` |
+| 104 | `HUB_STRAWBERRY_WAREHOUSE` |
+| 105 | `HUB_WEST_VINEWOOD` |
+| 106 | `HUB_CYPRESS_FLATS` |
+| 107 | `HUB_LSIA_WAREHOUSE` |
+| 108 | `HUB_ELYSIAN_ISLAND` |
+| 109 | `HUB_DOWNTOWN_VINEWOOD` |
+| 110 | `HUB_DEL_PERRO_BUILDING` |
+| 111 | `HUB_VESPUCCI_CANALS` |
+| 112–113 | `RESTRICTED_INTERIOR_SHERIFF` to `RESTRICTED_INTERIOR_SHERIFF2` |
+| 114 | `RESTRICTED_INTERIOR_UNION_DEPOSITORY_CARPARK` |
+| 115 | `RESTRICTED_INTERIOR_SIMEON_SHOWROOM` |
+| 116 | `RESTRICTED_INTERIOR_ABATTOIR` |
+| 117 | `HACKER_TRUCK` |
+| 118 | `RESTRICTED_INTERIOR_JEWEL_STORE` |
+| 119 | `RESTRICTED_INTERIOR_LIFE_INVADER` |
+| 120 | `RESTRICTED_INTERIOR_DJ_YACHT` |
+| 121 | `RESTRICTED_INTERIOR_MELANOMA_GARAGE` |
+| 122 | `ARENA_GARAGE_1` |
+| 123 | `CASINO` |
+| 124 | `CASINO_APT` |
+| 125 | `CASINO_VAL_GARAGE` |
+| 126 | `RESTRICTED_INTERIOR_HAYES_AUTOS` |
+| 127 | `RESTRICTED_INTERIOR_METH_LAB` |
+| 128 | `ARCADE_PALETO_BAY` |
+| 129 | `ARCADE_GRAPESEED` |
+| 130 | `ARCADE_DAVIS` |
+| 131 | `ARCADE_WEST_VINEWOOD` |
+| 132 | `ARCADE_ROCKFORD_HILLS` |
+| 133 | `ARCADE_LA_MESA` |
+| 134 | `RESTRICTED_INTERIOR_FIB_BUILDING` |
+| 135 | `RESTRICTED_INTERIOR_BIOLAB_AND_TUNNEL` |
+| 136 | `RESTRICTED_INTERIOR_FOUNDRY` |
+| 137 | `RESTRICTED_INTERIOR_MAX_RENDA` |
+| 138 | `RESTRICTED_INTERIOR_AIRCRAFT_CARRIER` |
+| 139–143 | `RESTRICTED_INTERIOR_AIRCRAFT_CARRIER_PART_2` to `RESTRICTED_INTERIOR_AIRCRAFT_CARRIER_PART_6` |
+| 144 | `RESTRICTED_INTERIOR_OMEGA` |
+| 145 | `SOLOMONS_OFFICE` |
+| 146 | `CASINO_NIGHTCLUB` |
+| 147 | `SUBMARINE` |
+| 148 | `MUSIC_STUDIO` |
+| 149 | `AUTO_SHOP_LA_MESA` |
+| 150 | `AUTO_SHOP_STRAWBERRY` |
+| 151 | `AUTO_SHOP_BURTON` |
+| 152 | `AUTO_SHOP_RANCHO` |
+| 153 | `AUTO_SHOP_MISSION_ROW` |
+| 154 | `CAR_MEET` |
+| 155 | `FIXER_HQ_HAWICK` |
+| 156 | `FIXER_HQ_ROCKFORD` |
+| 157 | `FIXER_HQ_SEOUL` |
+| 158 | `FIXER_HQ_VESPUCCI` |
+| 159 | `ACID_LAB` |
+| 160 | `JUGGALO_HIDEOUT` |
+| 161 | `MULTISTOREY_GARAGE` |
+| 162 | `SALVAGE_YARD_PALETO_BAY` |
+| 163 | `SALVAGE_YARD_SANDY_SHORES` |
+| 164 | `SALVAGE_YARD_LA_PUERTA` |
+| 165 | `SALVAGE_YARD_STRAWBERRY` |
+| 166 | `SALVAGE_YARD_MURIETTA_HEIGHTS` |
+| 167 | `BAIL_OFFICE_MISSION_ROW` |
+| 168 | `BAIL_OFFICE_WEST_VINEWOOD` |
+| 169 | `BAIL_OFFICE_DEL_PERRO` |
+| 170 | `BAIL_OFFICE_DAVIS` |
+| 171 | `BAIL_OFFICE_PALETO_BAY` |
+| 172 | `HACKER_DEN` |
+| 173 | `FIELD_HANGAR` |
+| 174 | `SMALL_BUSINESS_CAR_WASH` |
+| 175 | `SMALL_BUSINESS_WEED_SHOP` |
+| 176 | `SMALL_BUSINESS_HELI_TOURS` |
+| 177 | `MANSION_TONGVA_HILLS` |
+| 178 | `MANSION_WEST_VINEWOOD` |
+| 179 | `MANSION_EAST_VINEWOOD` |
+
+</details>
+
+Of the per-type entrance functions, six share the mansions' shape (position, second position, size): the mansions (177 to 179), the salvage yards (162 to 166), and four more that take an entrance number. The rest use other shapes and are still open (45.8).
+
 ### The business side
 
 What each business interior produces, sells and costs is in [organisations and businesses](/docs/online/organisations-and-businesses.md#464-the-business-loop) (R7.7).
@@ -312,9 +450,9 @@ These are Online systems: read them, never mod them in Online. For a story-mode 
 | --- | --- |
 | How the yacht, Kosatka and other vehicles-as-properties are bought and placed | Answered in [45.6a](#yachts-and-other-vehicles-as-properties) (second pass) |
 | Where garage capacities and vehicle slots are stored, and how a personal vehicle is saved per slot | Partly answered in [45.6a](#garage-sizes-and-personal-vehicle-records): sizes per slot and the 607 `MPSV_*` records; where colours and mods are kept is still open |
-| The simple-interior entrance positions and which script places the doors | Partly answered in [45.6a](#simple-interior-entrances): the mechanism and the mansions; the other types' positions sit behind per-type function pointers |
+| The simple-interior entrance positions and which script places the doors | Partly answered in [45.6a](#simple-interior-entrances): the mechanism, all 180 interior ids, and the entrances of the mansions and salvage yards; the other types' positions sit behind per-type function pointers |
 | Instance numbering of `am_mp_property_int` (owner id, building, or both) | Answered in [45.6a](#interior-instances): per owner, rows 0 to 31, 32 without an owner |
 | Daily property fees (utility bills) and how they are charged | Answered in [45.6a](#daily-property-fees-utility-bills) |
 | The business side of each simple interior | Answered in [organisations and businesses](/docs/online/organisations-and-businesses.md#464-the-business-loop) (R7.7) |
-| Which business or vehicle the garage indices 116 to 137 and ownership slots 12 to 35 are | Next pass, the slot-to-stat functions in `freemode` |
+| Which business or vehicle the garage indices 116 to 137 and ownership slots 12 to 35 are | Mostly answered (second pass): slots 12 to 32 named in [the garage table](#garage-sizes-and-personal-vehicle-records); slots 30 and 33 to 35 and the indices 116 to 137 left |
 | Where a personal vehicle's colours, wheels and mods are saved | Next pass, the vehicle save code in `freemode` and `carmod_shop` |

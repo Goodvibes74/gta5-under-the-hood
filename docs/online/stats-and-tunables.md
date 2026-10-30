@@ -76,6 +76,69 @@ Offline there is no server: a local mod must change its own saved values directl
 | Server transactions | 41 + 305 natives | Direct changes to the mod's saved cash; prices from the shop catalogues ([appearance and clothing](/docs/entities/peds/appearance-and-clothing.md)) or tunable defaults |
 | Cloud content (jobs) | | The local `.ugc` files ([Online data files](/docs/online/03-online-data-files.md)); R7.4 |
 
+### 10.5.1 The tunable index, save categories and the basket (second pass)
+
+*Second pass, 2026-10-30.* **Verified** in `tuneables_processing`, `clothes_shop_mp` and `common\data\mpstatssetup.xml` (`update.rpf`).
+
+**The tunable index.** Every tunable is one assignment of the form `Global_262145.f_<n> = <reader>(name hash, default)`. The three readers the decompile shows as `unk_` are, by their native hashes:
+
+| Hash | NativeDB name (**Known**) | Calls |
+| --- | --- | ---: |
+| `0x0D94071E55F4C9CE` | `_NETWORK_GET_TUNABLES_REGISTRATION_INT` | 23,449 |
+| `0x367E5E33E7F0DD1A` | `_NETWORK_GET_TUNABLES_REGISTRATION_FLOAT` | 6,241 |
+| `0xB327CF1B8C2C0EA3` | `_NETWORK_GET_TUNABLES_REGISTRATION_BOOL` | 5,297 |
+
+Read line by line, the script gives a complete index of field, type, name and default:
+
+- **34,987 assignments** in all.
+- 29,100 go to plain fields (`Global_262145.f_<n>`) and 5,887 to array elements.
+- 27,691 pass the name as `joaat("...")`, so the name can be read directly. The other 7,296 pass only a number, the hash of a name that isn't in the scripts.
+
+A few lines of script can rebuild the index from the decompile for any build. The fields move between builds, but the names stay.
+
+The fields `freemode` reads most show what the tunables are mostly for: prices and price multipliers. Examples:
+
+| Field | Reads in `freemode` | Name | Type, default |
+| --- | ---: | --- | --- |
+| `.f_17236` | 108 | `stunt_all_helmets` | float, 1.0 |
+| `.f_26303` | 99 | `aw_vehicle_mods_buy_it_now_price_multiplier` | float, 2.0 |
+| `.f_15065` | 60 | `male_and_female_uppers_all_uppers` | float, 1.0 |
+| `.f_31069` | 30 | `tuner_pursuit_race_place_xp_multiplier` | float, 1.2 |
+| `.f_22364` | 24 | `smug_mods_standard_price_smoke` | int, 68,500 |
+| `.f_1` | | `xp_multiplier` | float, 1.0 |
+
+**The appearance fee** (GP-058): changing a character's appearance costs `character_appearance_charge` = **$100,000**. The tunables limit how often it can be done:
+
+| Tunable | Default | Meaning |
+| --- | --- | --- |
+| `character_appearance_cooldown` | 2,880,000 ms | 48 minutes between changes |
+| `character_appearance_cap_time` | 86,400,000 ms | A 24-hour window |
+| `character_appearance_cap_instances` | 30 | Changes allowed in that window |
+
+**The two save categories.** All 17,933 stats are Online stats, and `SaveCategory` splits them:
+
+| | `SaveCategory="0"` | `SaveCategory="1"` |
+| --- | ---: | ---: |
+| Stats | 15,411 | 2,522 |
+| Biggest families | `MPSV_` (4,389), every `*PSTAT_` packed family, `MPPLY_` (592) | `CHAR_` (394), `AWD_` (349), `DAMAGE_` (169), `CONTACT_`, `SHOPFM_`, `HEIST_`, `CL_` |
+| Packed stats | all 6,403 | none |
+| Server-authoritative | 13,058 of 13,637 marked | 572 of 940 marked |
+| Owned by the game code (`coder`) | 174 | 510 |
+| Per character | 14,655 (account-level `MPPLY_` included here) | all |
+
+So category 1 is the original 2013-era per-character set: character basics, awards, damage and contacts, more of it owned by the game code and less of it server-checked. Category 0 is everything added since, and all the packed business stats. That the two are saved separately is **Known**, not seen in the scripts.
+
+**The basket, step by step** (`clothes_shop_mp`):
+
+1. If server transactions are off (`NET_GAMESERVER_USE_SERVER_TRANSACTIONS` false), the same bookkeeping runs with no server calls.
+2. Otherwise the game-server session must be valid and not refreshing (`NET_GAMESERVER_IS_SESSION_VALID`, `_IS_SESSION_REFRESH_PENDING`), or the purchase stops with an error flag.
+3. The script takes a free entry in a table of 15 pending transactions (84 values each). It refuses if any entry is still waiting on the server.
+4. It ends any open basket, then `NET_GAMESERVER_BASKET_START(category, action, ...)` opens one and the transaction is recorded in the table.
+5. `NET_GAMESERVER_BASKET_ADD_ITEM` adds each item: its catalogue key, price and quantity, also copied into the table entry. Prices come from `NET_GAMESERVER_GET_PRICE`, and keys are checked with `_CATALOG_ITEM_IS_VALID`.
+6. `NET_GAMESERVER_CHECKOUT_START` sends the basket, and the script polls the table entry until the server answers.
+
+Single services skip the basket and use `NET_GAMESERVER_BEGIN_SERVICE` then `_CHECKOUT_START` instead.
+
 ## 10.6 What this means for modders
 
 - **Don't write Online stats in story mode** to "unlock" things; offline mods should keep their own save and leave the game's stats alone.
@@ -87,9 +150,11 @@ Offline there is no server: a local mod must change its own saved values directl
 | Question | Where it goes |
 | --- | --- |
 | A tool that writes the tunable name, type and default list for one build (read-only, from the decompile), to diff builds and to feed a mod's defaults | Tool idea; R11.2 update check |
-| What `SaveCategory` 0 and 1 mean exactly | Second pass |
-| The basket flow step by step in one shop script | R7.6 or a second pass |
-| Which tunables a given offline system needs | Per mod, with the defaults list |
+| What `SaveCategory` 0 and 1 mean exactly | Answered in [10.5.1](#1051-the-tunable-index-save-categories-and-the-basket-second-pass): 1 is the original per-character set, 0 everything since |
+| The basket flow step by step in one shop script | Answered in [10.5.1](#1051-the-tunable-index-save-categories-and-the-basket-second-pass) |
+| Which tunables a given offline system needs | Per mod; the index in [10.5.1](#1051-the-tunable-index-save-categories-and-the-basket-second-pass) gives each field's name and default |
+| The names behind the 7,296 tunables registered by hash only | Third pass: needs a name list; hash every candidate name |
+| Whether the two `SaveCategory` groups are saved as separate cloud files | Third pass: in-game or cloud check (read-only) |
 
 ## 10.8 Test cards
 

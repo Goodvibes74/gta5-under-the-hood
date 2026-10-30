@@ -91,6 +91,47 @@ From the launch graph ([`reference/Script-Launch-Graph.md`](/scripting/script-la
 - **Network events** (queue 1): a switch over 60 event types (ids 151 to 249 in this build), including player joined and left, entity damage, and the one that carries script events.
 - **Script events**: one handler (3,083 lines) with **381 cases**, one per event hash. Each case first checks a flag in `Global_1690406` and returns if it is set, so Rockstar can switch any single event off through tunables. These are how players' scripts tell each other things (invites, bounties, business raids, "give cash", "join my organisation"). It is also the attack surface known from modding Online, which is why the switches exist.
 
+### 7.6.1 The 60 network event types (second pass)
+
+*Second pass, 2026-10-30.* **Verified** in `freemode`'s queue-1 switch. The scripts carry only the numbers. The table describes each type by what its handler reads (the size passed to `GET_EVENT_DATA`) and does, not by an engine name.
+
+| Type | Data size | What `freemode` does with it |
+| ---: | ---: | --- |
+| 151, 152 | | Set or clear one session flag |
+| 153 | 56 | A player joined: feed ticker with the name and crew tag |
+| 154 | 56 | A player left: ticker, and clean-up of that player's vehicles and blips |
+| 155 | 21 | A second "player left" ticker (`TICK_LEFT`) |
+| 157 | 1 | Stores one value |
+| 160, 161 | | One shared handler that checks the player's vehicle (decorators, engine health, seat) |
+| 162 | 1 | Network time and host checks (`GET_NETWORK_TIME`, `NETWORK_GET_HOST_PLAYER_INDEX`) |
+| 164, 189 | | Set one flag each |
+| 165 | 7 | Respawn bookkeeping: health, armour and ammo refills |
+| 166 | 9 | Same family as 165, with two more values |
+| 167, 168 | 4 | Set one bit each |
+| 173 | 2 | Session clean-up: waypoints, leaderboard reads, voice timeout, friendly fire |
+| **174** | 3 | **Script events**: reads the event's hash and passes it to the 381-case handler below |
+| 185 | 1 | Answers with a script event of its own (`_SEND_TU_SCRIPT_EVENT_NEW`) |
+| 186 | 13 | Entity damage: health, decorators and kill tickers |
+| 188 | 2 | Stores two values |
+| 190, 191 | | 191 reads the player's crew memberships (`mpply_crew_0_id` ...); 190 updates a stat copy |
+| 192 | 20 | Privilege checks (`NETWORK_HAVE_ONLINE_PRIVILEGES`, age restrictions) |
+| 193, 194 | | Phone soft-key refresh, and one other refresh |
+| 195, 197 | 21 | Voice chat requests: refused when blocked, muted, in a cutscene, on a call or under water; 197 also checks friends and leaves a voice session |
+| 196 | 15 | Stores the request's data |
+| 198 | 29 | Looks up a player from a gamer handle |
+| 202 | 2 | A player left a vehicle the local player is in (`OHD_PLYRLEFT`) |
+| 206 | 15 | Vehicle engine health and invincibility |
+| 212 | | Sets one flag |
+| 215 | 39 | Presence invites: reads, accepts or drops them (admin and tournament invites included) |
+| 233 | 13 | Nearby vehicles and their plates |
+| 237 | 1 | Stores one value |
+| 240 | 3 | Stores three values |
+| 245 | 4 | Stores four values |
+| 248 | 15 | A feed ticker with a player's name, from a gamer handle |
+| 156, 158, 159, 169 to 171, 175, 176, 179 to 183, 187, 204, 207 to 211, 213, 249 | | Listed in the switch but ignored (no handler) |
+
+**Script events.** Type 174's handler is one 3,082-line switch with 381 cases, each case a 32-bit hash. The build carries no names for these hashes; each case's purpose has to be read from its own code.
+
 ## 7.7 Globals it lives on
 
 Most referenced globals in `freemode` (**Verified** counts; roles are our reading):
@@ -122,7 +163,7 @@ It also calls `GET_NETWORK_TIME` 633 times, `NETWORK_IS_ACTIVITY_SESSION` 621 ti
 | Question | Where it goes |
 | --- | --- |
 | What each of the 183 running-state functions does in detail (this pass labels them from strings only) | R7.1 second pass, per system |
-| Names of the 60 network event ids and the main script event hashes | R7.2, R15 |
+| Names of the 60 network event ids and the main script event hashes | Partly answered in [7.6.1](#761-the-60-network-event-types-second-pass): every network event type described by its data and handler; the scripts carry no names for them or for the 381 script-event hashes |
 | The fields of the player and server broadcast data | R0.4 global map |
-| What `freemode_clearGlobals` resets and when | R7.2 |
-| How the host's rotation through participants works | R7.1 second pass |
+| What `freemode_clearGlobals` resets and when | Answered in [R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass): 31 reset steps, run once at `freemode` start |
+| How the host's rotation through participants works | Mostly answered (second pass): `freemode` has 47 separate counters, each visiting one of the 32 player slots per frame and wrapping to 0 (a full pass every 32 frames). The host's work uses the same pattern; which counter belongs to the host state was not pinned |

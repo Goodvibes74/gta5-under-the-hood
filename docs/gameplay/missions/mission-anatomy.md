@@ -127,7 +127,7 @@ The fail screen offers **Retry** (from the last checkpoint, when there is one), 
 4. Waits until `replay_controller` reaches state 7 or 8 (the player chose) or the game is shutting down.
 5. Releases Lamar from the player's group if he's alive and nearby, then runs the full cleanup (3.10).
 
-`jewelry_heist` has the same shape with 27 reasons. Several labels come from a table filled by crew choice (`Local_3373.f_201` to `f_217`): the reason "the gunman died" shows the chosen gunman's own line. Shared labels (`F_ARRESTED`, `F_BLEW`, `F_INSUFTAKE`, `F_SECESCAPE`) and heist-specific ones (`JH_FAILCLOSE`, `JH2_HCKDEAD`, `JWL_GASFAIL`, `F_GAS`) fill the rest. It plays `JH2A_MISSION_FAIL` or `JH2B_MISSION_FAIL` by approach (**Verified**).
+`jewelry_heist` has the same shape with 27 reasons. Most labels sit in a table (`Local_3373.f_201` to `f_217`), but it is filled once with fixed labels (`M_FAIL`, `F_ABANDON`, `F_KILLCREW`, `F_LOSECREW` ...), not by crew choice. A dead crew member gets one of three fixed lines by role: `JH2_HCKDEAD` "The hacker died.", `JH2_HCKGUN` "The gunman died." and `JH2_HCKDRV` "The driver died." (*second pass, 2026-10-30*, **Verified**: the only writes to the table are those fixed strings). Shared labels (`F_ARRESTED`, `F_BLEW`, `F_INSUFTAKE`, `F_SECESCAPE`) and heist-specific ones (`JH_FAILCLOSE`, `JH2_HCKDEAD`, `JWL_GASFAIL`, `F_GAS`) fill the rest. It plays `JH2A_MISSION_FAIL` or `JH2B_MISSION_FAIL` by approach (**Verified**).
 
 ## 3.8 Choices inside a mission
 
@@ -180,6 +180,6 @@ When the step is 4 (a restart is setting up), the same cleanup runs but clears t
 | Where `armenian1`, `jewelry_heist` and `trevor1` set the skip flag (`Global_96580`), since they don't do it in their own code | Next pass of R5.2 or R5.8 |
 | The exact meaning of `replay_controller` states 1 to 6 and 11 to 13 | R5.8 |
 | How the snapshot in `Global_108447` is restored on retry, and what it leaves out | Answered in [3.6](#36-checkpoints-retry-and-skip) |
-| How crew skill changes the heist take and the fail labels in `Local_3373` | R7.8 (heists) |
+| How crew skill changes the heist take and the fail labels in `Local_3373` | Partly answered (second pass): the fail labels are fixed, not chosen by crew; how crew skill changes the take is left for the third pass |
 | How `mission_repeat_controller` replays a mission without moving the flow (from guide 2) | Answered in [3.9](#39-passing) |
 | What the mission triggerers build before a mission starts (lead-in scenes, from guide 2) | R5.2 second pass |

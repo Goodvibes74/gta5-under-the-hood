@@ -47,6 +47,39 @@ Before the state machine runs (**Verified**, entry function): marks itself netwo
 | Cloud files | `CLOUD_CHECK_AVAILABILITY`, `NETWORK_IS_CLOUD_AVAILABLE` (11), `NETWORK_REQUEST_CLOUD_BACKGROUND_SCRIPTS` | Unavailable |
 | Way back | `SHUTDOWN_AND_LAUNCH_SINGLE_PLAYER_GAME`, `SHUTDOWN_AND_LOAD_MOST_RECENT_SAVE` (kicks) | |
 
+### 9.4.1 The offline branch, the slots, the way back and the testbed (second pass)
+
+*Second pass, 2026-10-30.* **Verified** in `maintransition`, `freemode` and `freemode_clearGlobals`.
+
+**The offline-mode branch can't be reached.** It is gated on one global flag. The only write to that flag anywhere in the build-3725 scripts sets it to 0, so the branch that logs `PLAYSTATS_STARTED_SESSION_IN_OFFLINEMODE` never runs on any platform. The normal path into state 24 is the other branch, which needs the cloud stat load to have succeeded.
+
+**The retry states and the slots.** States 10 to 14 retry loading the player's cloud saves:
+
+| State | Retries |
+| ---: | --- |
+| 10 `RETRY_LOADING` | Cloud save slot 0 (the account-wide `mpply_` stats) |
+| 11 `RETRY_LOADING_SLOT_1` | Cloud save slot 1 (the first character) |
+| 12 `RETRY_LOADING_SLOT_2` | Cloud save slot 2 (the second character) |
+| 13, 14 | Wait on any stat load still pending (14 shows `MP_SPINLOADING` and falls back if the cloud is unavailable) |
+
+Each one goes back to the HUD checks (4) when the load finishes, or to the waiting state (5) on failure. `HUD_SLOTONE` and `HUD_SLOTTWO` are the text "Slot 1" and "Slot 2". They label the two character saves in the warning screen shown when one or both failed to load. So there are two characters, plus the account-wide save.
+
+**The way back to story mode.** `maintransition` asks for state 63 `RETURN_TO_SINGLEPLAYER` directly from several places. Session errors go first through 58 `TERMINATE_SESSION` and 59 `WAIT_TERMINATE_SESSION`, which route the player on. State 63 then:
+
+1. Shows the "quitting" spinner (`HUD_QUITTING`).
+2. Waits until `startup_positioning`, the transition helper and every creator script have stopped, and the session is not busy.
+3. Ends the network game and clears the session data (UGC queries cancelled, invites and voice settings restored).
+4. Waits for the player switch to be ready to descend, then calls `NETWORK_ON_RETURN_TO_SINGLE_PLAYER`.
+5. Detaches and freezes the player ped, and moves to 64 `WAIT_FOR_SINGLEPLAYER_TO_START`, which keeps the spinner up until story mode takes over.
+
+The other exit, 7 `SP_SWOOP_DOWN`, can't be taken: the check that picks between them always returns true in this build.
+
+**The testbed session.** States 40 to 52 are entered only when `GET_INDEX_OF_CURRENT_LEVEL` is 5, the development level ([boot](/docs/00-getting-started/boot.md)). A release PC game loads level 1, so the testbed path is unused in release builds.
+
+**What opens the creator.** The transition keeps a destination value next to the state. When the destination is 2, the "into the session" step moves to 32 `START_CREATOR_PRE_LAUNCH_SCRIPT_CHECK`, the first creator state (33 then starts the creator script).
+
+**`freemode_clearGlobals`.** Only `freemode` starts it (stack 14,100), once, as one of its first steps; `main_persistent` and `FM_Maintain_Transition_Players` only preload it. `freemode` waits in a loop until the script reports it is done. The script runs 31 reset steps. Each step builds a default copy of one Online global block and writes it over the block: the player and session blocks, the interaction-menu and freemode local state (`Global_2733002`, the largest), the business, delivery and event blocks. So every session starts from clean defaults, whatever the previous session left behind.
+
 ## 9.5 What this means for modders
 
 - **Read the transition state, don't guess:** a mod that must not act during a transition can check `NETWORK_IS_IN_TRANSITION` / `NETWORK_IS_TRANSITION_STARTED`; the state global itself moves every build ([global map](/docs/core/global-map.md)).
@@ -57,10 +90,11 @@ Before the state machine runs (**Verified**, entry function): marks itself netwo
 
 | Question | Where it goes |
 | --- | --- |
-| What enables the offline-mode branch before `START_FM_LAUNCH_SCRIPT` (the function returning true), and whether it can be reached on PC | Second pass |
-| What the four character "slots" in the retry states are (two characters plus?) and how `HUD_SLOTONE` / `HUD_SLOTTWO` relate | R7.3 stats |
-| The order of states on the way back to story mode, step by step | Second pass |
-| What the testbed session is used for in release builds | Second pass |
+| What enables the offline-mode branch before `START_FM_LAUNCH_SCRIPT` (the function returning true), and whether it can be reached on PC | Answered in [9.4.1](#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass): it can't be reached in this build |
+| What the four character "slots" in the retry states are (two characters plus?) and how `HUD_SLOTONE` / `HUD_SLOTTWO` relate | Answered in [9.4.1](#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass) |
+| The order of states on the way back to story mode, step by step | Answered in [9.4.1](#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass) |
+| What the testbed session is used for in release builds | Answered in [9.4.1](#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass): unused; only level 5 enters it |
+| Which scripts outside `maintransition` ask for the return to story mode, and what retry state 13 waits for | Third pass, the callers of the state request |
 
 ## 9.7 Test cards
 

@@ -199,5 +199,5 @@ Answered in the second pass: what the references into blocks 13 and 15 are (dead
 | --- | --- |
 | Field layout of the player broadcast data (`Global_1845250`, `Global_2658291`) | Mostly answered in [6.3](#63-the-most-used-globals): `.f_325` named, 16 parts of `.f_260` named from the stat mapping file, every bit of `.f_204` and `.f_203` grouped by who writes it; single-bit names left (they need each helper's callers) |
 | The fields of the server broadcast data | Answered at block level in [6.3.1](#631-every-broadcast-block-by-its-registered-name-third-pass): all 37 blocks named, the busiest server fields typed |
-| The tunable index list: which `Global_262145.f_<n>` is which tunable | R7.3 |
+| The tunable index list: which `Global_262145.f_<n>` is which tunable | Answered in [R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass): every assignment in `tuneables_processing` gives field, type, name and default (27,691 with plain names) |
 | Roles of the **Known** rows above, by reading one use each | Answered in [6.3](#63-the-most-used-globals): `Global_1950198`, `Global_2097536`, `Global_2686090` and `Global_1892653` (`GPBD_FM_3`) now **Verified**, the rest checked as consistent |

@@ -111,6 +111,118 @@ Each business has a desk app started by the property's interior script ([R7.6](/
 | `appavengeroperations` | 6,381 | `AVENGER_OPERATIONS_TERMINAL` | Avenger |
 | `appcovertops` | 7,832 | `COVERT_OPS` | Covert operations |
 
+### 46.5.1 Warehouse sizes, boss costs and the apps' transactions (second pass)
+
+*Second pass, 2026-10-30.* **Verified** in `freemode`, `tuneables_processing` and the business apps.
+
+**Special cargo warehouses.** The capacities are fixed in the scripts, not tunables. One shared function maps the 22 warehouse ids to three sizes, and a second turns the size into crates:
+
+| Size | Crates | Warehouse ids |
+| --- | ---: | --- |
+| Small | 16 | 1 to 5, 9 |
+| Medium | 42 | 7, 10 to 15, 21 |
+| Large | 111 | 6, 8, 16 to 20, 22 |
+
+**`gb_bosscost` and `gb_bosssetupcost`.** `tuneables_processing` registers them with defaults of **$200,000** and **$5,000**, but no script in this build reads either field. They no longer charge anything directly, and where registering as a boss is charged now is a third-pass question (ON-075).
+
+**Transactions per business app.** The count of distinct `NET_GAMESERVER_*` natives in each app, and the spend and earn natives it calls:
+
+| App | `NET_GAMESERVER_*` | Spend | Earn |
+| --- | ---: | --- | --- |
+| `appbikerbusiness` | 13 | `NETWORK_SPENT_PAY_BUSINESS_SUPPLIES`, `_PURCHASE_BUSINESS_PROPERTY`, `_TRADE_BUSINESS_PROPERTY`, `_UPGRADE_BUSINESS_PROPERTY` | `NETWORK_EARN_FROM_BUSINESS_PRODUCT`, `_FROM_PROPERTY`, `_SELL_ACID` |
+| `appbunkerbusiness` | 13 | `NETWORK_SPENT_PAY_BUSINESS_SUPPLIES`, `_UPGRADE_BUSINESS_PROPERTY` | `NETWORK_EARN_FROM_BUSINESS_PRODUCT`, `_SELL_ACID` |
+| `appbusinesshub` | 15 | `NETWORK_SPEND_BUY_MFGARAGE`, `_SET_DISCOUNT`, `NETWORK_SPENT_GENERIC`, `_REHIRE_DJ`, `_UPGRADE_NIGHTCLUB_AND_WAREHOUSE` | |
+| `apparcadebusiness` | 14 | `NETWORK_SPEND_ARCADE_MGMT`, `_BUY_MFGARAGE`, `_SET_DISCOUNT`, `_UPGRADE_ARCADE`, `NETWORK_SPENT_GENERIC` | |
+| `appsecuroserv` | 10 | `NETWORK_SPENT_PURCHASE_WAREHOUSE_PROPERTY`, `_UPGRADE_WAREHOUSE_PROPERTY`, and the three `_IMPEXP_WAREHOUSE_PROPERTY` ones (purchase, trade, upgrade) | `NETWORK_EARN_FROM_PROPERTY` |
+| `appsmuggler`, `apphackertruck` | 10 each | `NETWORK_SPENT_SKIP_CARGO_SOURCE_SETUP` | |
+| `appimportexport` | 9 | | |
+| `apphackerden` | 7 | `NETWORK_SPENT_GENERIC` | |
+| `appfixersecurity`, `appbailoffice`, `appavengeroperations`, `appcovertops` | 0 | | |
+
+The last four make no transaction of their own; they hand their actions to other scripts. The apps with server calls also carry the shared table of transaction service names (238 to 334 entries, depending on the app).
+
+### 46.5.2 VIP and MC challenges (second pass)
+
+*Second pass, 2026-10-30.* **Verified** in `am_pi_menu`, `freemode` and `tuneables_processing`; the names of the challenges are the menu text.
+
+**Which challenges there are.** The interaction menu's "VIP Challenges" page (`PIM_MAGCHL`) lists eight entries, and the "Club Challenges" page (`PI_BIK_1_5_T`) three. Each VIP entry passes a menu id to a function that returns that challenge's `_instances_permitted` tunable, and that ties the menu text to its internal name and script:
+
+| Menu text | Menu id | Internal name (tunables) | Script |
+| --- | ---: | --- | --- |
+| Cashing Out | 171 | `exec_cashing_*` | `gb_cashing_out` |
+| Salvage | 172 | `exec_salvage_*` | `gb_salvage` |
+| Auto Buyout | 163 | `gb_carjacking_*` | `gb_carjacking` |
+| Due Diligence | 160 | `gb_finders_keepers_*` | `gb_finderskeepers` |
+| Most Wanted | 153 | `gb_mostwanted_*` | `gb_fivestar` |
+| Point to Point | 162 | `gb_pointtopoint_*` | `gb_point_to_point` |
+| Courier Service | 155 | `gb_protectionracket_*` | `gb_collect_money` |
+| Market Manipulation | 154 | `gb_smashandgrab_*` | `gb_rob_shop` |
+| Search and Destroy (MC) | | `biker_search_and_destroy_*` | `gb_biker_search_and_destroy` |
+| Criminal Mischief (MC) | | `biker_mischief_*` | `gb_biker_criminal_mischief` |
+| Wheelie Rider (MC) | | `biker_wheelie_*` | `gb_biker_wheelie_rider` |
+
+Each script reads its own block (checked by finding a block-specific field, such as the bag value or the destination radius, in that script only).
+
+**The rules, from the tunable defaults.** Cash is the winner's default reward; RP is the winner's RP. Every VIP challenge also pays losers who took part $500 and 100 RP (`_minimum_participation_cash`, `_rp`), and has its own 10-minute cooldown.
+
+| Challenge | Time limit | Cash | RP | Other rules |
+| --- | --- | ---: | ---: | --- |
+| Cashing Out | 10 min | $5,000 bonus, plus $300 to $500 per ATM hack | 2,000 | One player needed; 60-second hacks; a combined-total cap of 30,000 (`exec_cashing_max_combined_total`); the chance of a wanted level rises 10% for each 10 seconds a hack takes, up to 50%, and 100% if the timer runs out; wanted level capped at 3; 10 at once |
+| Salvage | 10 min | $15,000 bonus | 2,000 | Two players needed; a 250 m area; four rebreathers active, one given at the start; 10 at once |
+| Auto Buyout | 10 min | $5,000, plus a bonus of 0.5% of the car's value (bonus capped at $5,000,000; car value capped at $500,000) | 2,000 | Six delivery areas, five points each, four deliveries a point |
+| Due Diligence | 10 min | $15,000; packages $100 each, rising $100 a package | 2,000 | A 200 m area; a flare after 60 seconds |
+| Most Wanted | 10 min | $2,000, plus a $3,000 bonus | 500 | Five stars; 15 seconds of grace in tunnels |
+| Point to Point | 10 min | $10,000 | 500 | 60 seconds to choose the destination; a 1 km destination radius; players count as taking part within 1 km, or 4 km at the start |
+| Courier Service | 10 min | $5,000; the bag is worth $8,000 | 1,500 | Cash drops when you take damage (from $50 for a fall to $200 for a car crash); death costs 15% (at least $200); three wanted stars |
+| Market Manipulation | 10 min | $5,000 | 2,000 | Wanted level capped at 5; a store can't be robbed again for 2 minutes; 15% of the cash dropped on death |
+| Search and Destroy | 600 s | $20,000 | 2,000 | Targets blipped for 3 minutes; 100 a kill, 200 a headshot, 300 melee, 500 a civilian (points); 4 at once |
+| Criminal Mischief | 600 s | $30,000 | 2,000 | Two players needed; 50 for a helicopter or plane and 50 for a police car (points); 10 at once |
+| Wheelie Rider | 300 s | $10,000 | 500 | 10 at once |
+
+The MC time limits are in seconds: the script multiplies the tunable by 1,000 (`gb_biker_wheelie_rider`).
+
+**Shared rules.** A boss has to wait 3 minutes (`gb_cooldown_until_next_boss_challenge`, 180,000 ms) between challenges, and 5 between work. Organisation members get half the RP (`gb_challenge_goon_rp_reward_percentage` 0.5). A rival organisation that wins gets 70% of the cash and RP (`gb_rival_org_*_reward_percentage`), and a player outside an organisation 30% of the cash (`gb_solo_cash_reward_percentage`). The wagers keep 10% for the agency (`gb_challenge_wager_agency_cut`). How these percentages combine in the end-of-challenge payout isn't traced.
+
+### 46.5.3 The nightclub's safe and warehouse (second pass)
+
+*Second pass, 2026-10-30.* **Verified** in `freemode` and `tuneables_processing`. The popularity tunables have names; the warehouse ones are known only by hash, so they're named here by the function that reads them.
+
+**The safe.** `freemode` pays into the safe on a timer kept in a stat. The timer is 2,880,000 ms (48 minutes, one in-game day), and when it runs out the script pays an amount picked by the current popularity (0 to 100). The amount comes from the `nightclubincomeuptopop<N>` tunables, where each band covers popularity up to N:
+
+| Popularity up to | 5 | 10 | 15 | 20 | 25 | 30 | 35 | 40 | 45 | 50 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Pay ($) | 1,500 | 1,600 | 1,800 | 2,000 | 2,200 | 2,500 | 8,000 | 8,500 | 9,000 | 9,500 |
+
+| Popularity up to | 55 | 60 | 65 | 70 | 75 | 80 | 85 | 90 | 95 | 100 |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| Pay ($) | 10,000 | 20,000 | 21,000 | 22,000 | 23,000 | 24,000 | 25,000 | 45,000 | 50,000 | 50,000 |
+
+- **Multiplier.** The pay is multiplied by a hashed float tunable, 1 by default (an event multiplier).
+- **Cap.** The safe holds at most `nightclubmaxsafevalue`, $250,000. A payment that would pass the cap is cut, and a full safe shows `CLUB_NO_PAY` instead of `CLUB_PAY`.
+- **Popularity changes.** These come from a nine-case function of tunables, each times 100:
+  - decay `nightclubpopdecay` -0.1;
+  - decay with the staff upgrade `inightclubpopdecaystaffupgrade` -0.05;
+  - gain from a "permission" (promotion) job `nightclubpopgainpermission` 0.25;
+  - six further hashed cases.
+
+  Which in-game step applies each one isn't traced.
+
+**The warehouse goods.** Three seven-case functions read the goods tunables, one value per goods type:
+
+| Type | Goods (**Known** order) | Value per unit | Capacity | Units per production step |
+| ---: | --- | ---: | ---: | ---: |
+| 0 | Cargo and shipments | $10,000 | 50 | 1 |
+| 1 | Sporting goods | $5,000 | 100 | 2 |
+| 2 | South American imports | $27,000 | 10 | 1 |
+| 3 | Pharmaceutical research | $11,475 | 20 | 1 |
+| 4 | Organic produce | $2,025 | 80 | 7 |
+| 5 | Printing and copying | $1,350 | 60 | 10 |
+| 6 | Cash creation | $4,725 | 40 | 3 |
+
+- **Which column is which.** The value column is multiplied by a unit count, so it is the sale value of each unit. The capacity column is divided by 5 elsewhere.
+- **The units column.** It is multiplied by a global multiplier and an event multiplier (both 1 by default). That makes it the amount added per production step (*probable*).
+- **Not traced.** How long a step takes, and how technicians are assigned to types. That is third-pass question ON-077.
+
 ## 46.6 What this means for modders
 
 These are Online systems: read them, never mod them in Online. For an offline or story-mode project:
@@ -124,9 +236,11 @@ These are Online systems: read them, never mod them in Online. For an offline or
 
 | Question | Where it goes |
 | --- | --- |
-| The nightclub's production and popularity numbers (their tunable names are hashed) | Next pass: match hashes to names from the scripts |
-| Special cargo warehouse capacities (16, 42 and 111 crates are **Known**) and where the scripts keep them | Next pass |
+| The nightclub's production and popularity numbers (their tunable names are hashed) | Mostly answered in [46.5.3](#4653-the-nightclubs-safe-and-warehouse-second-pass): the safe pay bands, cap and timer, and each goods type's value, capacity and units per step |
+| How long a nightclub production step takes and how technicians are assigned (ON-077) | Third pass, the business hub code in `freemode` |
+| Special cargo warehouse capacities (16, 42 and 111 crates are **Known**) and where the scripts keep them | Answered in [46.5.1](#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass) |
 | How production is stored in stats and advanced while offline or in another session | Next pass, with the stats file |
-| What `gb_bosscost` and `gb_bosssetupcost` charge | Next pass, `freemode` |
-| The MC challenge and VIP challenge rules (cash, RP, time) | Next pass, per script |
+| What `gb_bosscost` and `gb_bosssetupcost` charge | Answered in [46.5.1](#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass): nothing in this build (no script reads them) |
+| Where registering as a boss is charged now (ON-075) | Third pass, the boss registration code in `freemode` and `am_pi_menu` |
+| The MC challenge and VIP challenge rules (cash, RP, time) | Mostly answered in [46.5.2](#4652-vip-and-mc-challenges-second-pass): the 11 challenges, their scripts and their tunables; how the payout percentages combine is left |
 | Business battles and the `fm_content_*` business missions | R7.9 and a later pass |

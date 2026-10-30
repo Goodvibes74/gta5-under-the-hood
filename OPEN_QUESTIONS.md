@@ -52,7 +52,7 @@ The questions are grouped into **batches**. A batch is one branch and one pull r
 | P1.3 | [HUD, colours and blips](/docs/ui/hud-colours-blips.md) (R8.4): blip sprite names and the `[HD]`/`[CRT]` colours | UI-001, UI-003 | data | Done, [#109](https://github.com/Goodvibes74/gta5-under-the-hood/pull/109) |
 | P1.4 | [Scaleform movies](/docs/ui/scaleform.md) (R8.2): movies loaded through variables, DLC movies, each movie's methods, interior maps | UI-007, UI-008, UI-009 | scripts, data | Done, [#110](https://github.com/Goodvibes74/gta5-under-the-hood/pull/110) (61 interior maps left) |
 | P1.5 | [Story-mode UI](/docs/ui/story-mode-ui.md) (R8.6): the stat list, mission stats and medals, the mission-passed screen | UI-013, UI-014, UI-015, GP-015 | scripts, data | Done, [#111](https://github.com/Goodvibes74/gta5-under-the-hood/pull/111) |
-| P1.6 | [Server-backed Online screens](/docs/ui/server-backed-screens.md) (R8.5): what `pausemenu_multiplayer` fills, the signed-out guards, leaderboard IDs | UI-005, UI-010, UI-012 | scripts | Done, [#112](https://github.com/Goodvibes74/gta5-under-the-hood/pull/112) and [#120](https://github.com/Goodvibes74/gta5-under-the-hood/pull/120) |
+| P1.6 | [Server-backed Online screens](/docs/ui/server-backed-screens.md) (R8.5): what `pausemenu_multiplayer` fills, the signed-out guards, leaderboard IDs | UI-005, UI-010, UI-012 | scripts | Done, [#112](https://github.com/Goodvibes74/gta5-under-the-hood/pull/112) and [#120](https://github.com/Goodvibes74/gta5-under-the-hood/pull/120); new UI-020 (third pass) |
 | P1.7 | Subtitles and phone-call lines (R5.6 with R8.6) | GP-008 | scripts | Done, [#113](https://github.com/Goodvibes74/gta5-under-the-hood/pull/113) |
 
 Test only: UI-002 (draw lists and depths), UI-017 (which DLC text block wins a clash). UI-011 (transactions per business app) is answered with P3.8.
@@ -61,7 +61,7 @@ Test only: UI-002 (draw lists and depths), UI-017 (which DLC text block wins a c
 
 | Batch | Topic | Questions | Kind | Status |
 | --- | --- | --- | --- | --- |
-| P2.1 | [Boot](/docs/00-getting-started/boot.md) and [runtime scripts](/docs/core/runtime-scripts.md) (R1.2, R0.2): how `main`, `initial` and `startup` start, force-cleanup bits, `profiler_registration`, level index 5, the path to `prologue1` | CORE-017, CORE-018, CORE-019, GS-001, GS-002, ON-060 | scripts | Done for scripts, [#114](https://github.com/Goodvibes74/gta5-under-the-hood/pull/114) and [#120](https://github.com/Goodvibes74/gta5-under-the-hood/pull/120) (CORE-018's engine side needs the executable) |
+| P2.1 | [Boot](/docs/00-getting-started/boot.md) and [runtime scripts](/docs/core/runtime-scripts.md) (R1.2, R0.2): how `main`, `initial` and `startup` start, force-cleanup bits, `profiler_registration`, level index 5, the path to `prologue1` | CORE-017, CORE-018, CORE-019, GS-001, GS-002, ON-060 | scripts | Done for scripts, [#114](https://github.com/Goodvibes74/gta5-under-the-hood/pull/114) and [#120](https://github.com/Goodvibes74/gta5-under-the-hood/pull/120) (CORE-018's engine side needs the executable); new GS-004, CORE-032 (third pass) |
 | P2.2 | [The global map](/docs/core/global-map.md) (R0.4): the player and server broadcast data, blocks 13 and 15, the **Known** rows | CORE-009, CORE-011, CORE-012, ON-003, ON-050 | scripts | Mostly done, [#115](https://github.com/Goodvibes74/gta5-under-the-hood/pull/115), [#120](https://github.com/Goodvibes74/gta5-under-the-hood/pull/120) and branch `research/second-pass-phase2-leftovers` (single-bit names of `.f_204`/`.f_203` and field-by-field server layouts left) |
 | P2.3 | [Saves](/docs/core/saves.md) (R1.7): the full section tree, the save upgrade, spending categories | CORE-022, CORE-023, GP-004 | scripts | Done, [#121](https://github.com/Goodvibes74/gta5-under-the-hood/pull/121) |
 | P2.4 | [Completion and autosave](/docs/core/completion-and-autosave.md) (R5.3): autosave triggers, completion flags, the 23 achievements, the retry snapshot, mission replays | CORE-005, CORE-006, CORE-007, CORE-025, GP-018, GP-020, GP-033 | scripts | Done, [#121](https://github.com/Goodvibes74/gta5-under-the-hood/pull/121) and branch `research/second-pass-phase2-leftovers` (four type 8/10 achievement stats unnamed) |
@@ -75,18 +75,18 @@ Test only: GS-003 (does the return to story mode restart every script), CORE-001
 
 | Batch | Topic | Questions | Kind | Status |
 | --- | --- | --- | --- | --- |
-| P3.1 | [Interaction menu, phone and apps](/docs/online/interaction-menu-phone-apps.md) (R7.10): the full interaction-menu tree, story phone slots, website pages, phone models | ON-026, ON-027, ON-028, ON-029 | scripts | Open (ON-028 partly answered with P3.7) |
-| P3.2 | [The job lobby](/docs/online/job-lobby.md) (R7.5): launcher states, start arguments, corona settings, playlists, walk-in markers, job types | ON-030, ON-031, ON-032, ON-033, ON-034, ON-006 | scripts | Open |
-| P3.3 | [Inside `freemode`](/docs/online/07-freemode.md) and [sessions](/docs/online/sessions-and-sync.md) (R7.1, R15.1): the event ids, the host's rotation, the running-state functions per system | ON-001, ON-002, ON-005, ON-051 | scripts | Open |
-| P3.4 | [Transitions](/docs/online/transitions-and-sessions.md) (R7.2): the offline branch, character slots, the way back to story mode, the testbed session, what opens the creator | ON-004, ON-061, ON-062, ON-063, ON-064, GP-059 | scripts | Open |
-| P3.5 | [Stats and tunables](/docs/online/stats-and-tunables.md) (R7.3): the tunable index, save categories, the shop basket, unnamed service readers | CORE-010, ON-047, ON-054, ON-055, ON-056, GP-058 | scripts | Open |
-| P3.6 | [The Online character creator](/docs/gameplay/player/online-character-creator.md) (R6.5): unlabelled morphs, slider scaling, outfit groups | GP-055, GP-056, GP-057 | scripts | Open |
-| P3.7 | [Properties](/docs/online/properties.md) (R7.6): yachts and vehicles as properties, garages, entrances, instances, daily fees | ON-041, ON-042, ON-043, ON-044, ON-045, ON-046 | scripts | Partly done, with ON-028 (ON-042 and ON-043 partly left; new ON-065, ON-066) |
-| P3.8 | [Organisations and businesses](/docs/online/organisations-and-businesses.md) (R7.7): production numbers, capacities, offline production, boss costs, challenges, business missions, transactions | ON-035, ON-036, ON-037, ON-038, ON-039, ON-040, ON-049, UI-011 | scripts | Open |
-| P3.9 | [Heists](/docs/online/heists.md) (R7.8): fail bands, casino targets, Cayo loot, the classic planning board, elite rewards, story arcs, crew skill | ON-019, ON-020, ON-021, ON-022, ON-023, ON-024, ON-025, GP-019 | scripts | Open |
-| P3.10 | [DLC storylines](/docs/online/dlc-storylines.md) (R7.9): stats per flow step, voice-only flows, arrival updates, missing flows, mp2025_02 | ON-014, ON-015, ON-016, ON-017, ON-018 | scripts, data | Open |
-| P3.11 | [Creator internals](/docs/online/creator-internals.md) (R7.11): prop limits, hidden libraries, the two prop writers, checkpoint fields, other creators' placement | ON-007, ON-008, ON-010, ON-011, ON-012, ON-013 | scripts | Open |
-| P3.12 | [Story systems in an Online mode](/docs/online/story-systems-in-online-mode.md) (R5.7): the shop table, ped brain sets | ON-057, ON-059 | scripts | Partly done, with R6.7 (ON-059 left) |
+| P3.1 | [Interaction menu, phone and apps](/docs/online/interaction-menu-phone-apps.md) (R7.10): the full interaction-menu tree, story phone slots, website pages, phone models | ON-026, ON-027, ON-028, ON-029 | scripts | Done, branch `research/second-pass-phase3`; new ON-067, ON-068, ON-069 |
+| P3.2 | [The job lobby](/docs/online/job-lobby.md) (R7.5): launcher states, start arguments, corona settings, playlists, walk-in markers, job types | ON-030, ON-031, ON-032, ON-033, ON-034, ON-006 | scripts | Mostly done, branch `research/second-pass-phase3`; job types 4 and 31 moved to the third pass (ON-006); new ON-070, ON-071 |
+| P3.3 | [Inside `freemode`](/docs/online/07-freemode.md) and [sessions](/docs/online/sessions-and-sync.md) (R7.1, R15.1): the event ids, the host's rotation, the running-state functions per system | ON-001, ON-002, ON-005, ON-051 | scripts | Partly done, branch `research/second-pass-phase3` (ON-051 answered, ON-005 mostly, ON-002 partly); ON-001 and the rest of ON-002 and ON-005 moved to the third pass |
+| P3.4 | [Transitions](/docs/online/transitions-and-sessions.md) (R7.2): the offline branch, character slots, the way back to story mode, the testbed session, what opens the creator | ON-004, ON-061, ON-062, ON-063, ON-064, GP-059 | scripts | Done, branch `research/second-pass-phase3`; new ON-074 |
+| P3.5 | [Stats and tunables](/docs/online/stats-and-tunables.md) (R7.3): the tunable index, save categories, the shop basket, unnamed service readers | CORE-010, ON-047, ON-054, ON-055, ON-056, GP-058 | scripts | Done, branch `research/second-pass-phase3`; new ON-072, ON-073 |
+| P3.6 | [The Online character creator](/docs/gameplay/player/online-character-creator.md) (R6.5): unlabelled morphs, slider scaling, outfit groups | GP-055, GP-056, GP-057 | scripts | Partly done, branch `research/second-pass-phase3` (GP-056 answered, GP-057 partly); GP-055 and the rest of GP-057 moved to the third pass |
+| P3.7 | [Properties](/docs/online/properties.md) (R7.6): yachts and vehicles as properties, garages, entrances, instances, daily fees | ON-041, ON-042, ON-043, ON-044, ON-045, ON-046 | scripts | Partly done, with ON-028, branch `research/second-pass-phase3` (ON-065 mostly, ON-042 and ON-043 partly); the rest of ON-042, ON-043 and ON-065, and ON-066, moved to the third pass |
+| P3.8 | [Organisations and businesses](/docs/online/organisations-and-businesses.md) (R7.7): production numbers, capacities, offline production, boss costs, challenges, business missions, transactions | ON-035, ON-036, ON-037, ON-038, ON-039, ON-040, ON-049, UI-011 | scripts | Mostly done, branch `research/second-pass-phase3` (ON-036, ON-038, UI-011 answered, ON-035 and ON-039 mostly); ON-037, ON-040, ON-049 and the rest of ON-035 and ON-039 moved to the third pass; new ON-075, ON-077 |
+| P3.9 | [Heists](/docs/online/heists.md) (R7.8): fail bands, casino targets, Cayo loot, the classic planning board, elite rewards, story arcs, crew skill | ON-019, ON-020, ON-021, ON-022, ON-023, ON-024, ON-025, GP-019 | scripts | Mostly done, branch `research/second-pass-phase3` (ON-019, ON-020, ON-022, ON-025 answered, ON-023 mostly, GP-019 partly); ON-021, ON-024 and the rest of ON-023 and GP-019 moved to the third pass; new ON-076 |
+| P3.10 | [DLC storylines](/docs/online/dlc-storylines.md) (R7.9): stats per flow step, voice-only flows, arrival updates, missing flows, mp2025_02 | ON-014, ON-015, ON-016, ON-017, ON-018 | scripts, data | Mostly done, branch `research/second-pass-phase3` (ON-015, ON-016 answered, ON-018 partly); ON-014, ON-017 and the rest of ON-018 moved to the third pass |
+| P3.11 | [Creator internals](/docs/online/creator-internals.md) (R7.11): prop limits, hidden libraries, the two prop writers, checkpoint fields, other creators' placement | ON-007, ON-008, ON-010, ON-011, ON-012, ON-013 | scripts | Partly done, branch `research/second-pass-phase3` (ON-007 answered); ON-008 and ON-010 to ON-013 moved to the third pass |
+| P3.12 | [Story systems in an Online mode](/docs/online/story-systems-in-online-mode.md) (R5.7): the shop table, ped brain sets | ON-057, ON-059 | scripts | Done, with R6.7, branch `research/second-pass-phase3`; new CORE-031 |
 
 Test only: GP-054 (parent head counts), ON-058 (story clothes shop with a freemode ped; single player only). Engine only: ON-009 (creator budget), ON-052 (migration). Later: ON-048 (service natives in story scripts), ON-053 (a tunables list tool; needs the maintainer, as `tools/` does).
 
@@ -111,21 +111,21 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | Category | Guides | Questions |
 | --- | --- | --- |
-| [Getting started](#getting-started) (`GS-`) | 1 | 3 |
-| [Core engine](#core-engine) (`CORE-`) | 8 | 30 |
+| [Getting started](#getting-started) (`GS-`) | 1 | 4 |
+| [Core engine](#core-engine) (`CORE-`) | 8 | 32 |
 | [Entities](#entities) (`ENT-`) | 9 | 39 |
 | [Physics](#physics) (`PHY-`) | 4 | 18 |
 | [AI](#ai) (`AI-`) | 13 | 50 |
 | [The world](#the-world) (`WLD-`) | 4 | 19 |
 | [Gameplay](#gameplay) (`GP-`) | 17 | 86 |
-| [GTA Online](#gta-online) (`ON-`) | 13 | 66 |
-| [User interface](#user-interface) (`UI-`) | 6 | 19 |
+| [GTA Online](#gta-online) (`ON-`) | 13 | 77 |
+| [User interface](#user-interface) (`UI-`) | 6 | 20 |
 | [Audio](#audio) (`AUD-`) | 3 | 11 |
 | [Rendering](#rendering) (`REN-`) | 5 | 27 |
 | [Performance](#performance) (`PERF-`) | 9 | 28 |
 | [Scripting](#scripting) (`SCR-`) | 4 | 14 |
 | [File formats](#file-formats) (`FF-`) | 2 | 6 |
-| **Total** | | **416** |
+| **Total** | | **431** |
 
 ## Getting started
 
@@ -133,9 +133,10 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GS-001 | Which level index 5 is | R1.6 or R4.6 | Answered: the network testbed level; which folder it loads stays **Known** ([boot 3.4.1](/docs/00-getting-started/boot.md#341-the-level-indexes-second-pass)) |
+| GS-001 | Which level index 5 is | R1.6 or R4.6 | Answered: the network testbed level; which folder it loads stays **Known** (GS-004, third pass; [boot 3.4.1](/docs/00-getting-started/boot.md#341-the-level-indexes-second-pass)) |
 | GS-002 | The exact path from a new game to `prologue1` | Answered: [boot 3.4.2](/docs/00-getting-started/boot.md#342-from-a-new-game-to-prologue1-second-pass) | Answered |
 | GS-003 | Whether the return to story mode restarts every script (test card 2) | R7.2 | Open |
+| GS-004 | Which folder level index 5 loads: confirm that the testbed level is `common:/data/levels/stripped` (only **Known** in [boot 3.4.1](/docs/00-getting-started/boot.md#341-the-level-indexes-second-pass)) | Third pass, the executable's level list | Open |
 
 ## Core engine
 
@@ -162,7 +163,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | CORE-009 | Field layout of the player broadcast data (`Global_1845250`, `Global_2658291`) | R7.1 second pass | Mostly answered: `.f_325` named, 16 parts of `.f_260` named from `mpstatscharactermappingdata.xml`, every bit of `.f_204`/`.f_203` grouped by who writes it ([global map 6.3](/docs/core/global-map.md#63-the-most-used-globals)); single-bit names left |
-| CORE-010 | The tunable index list: which `Global_262145.f_<n>` is which tunable | R7.3 | Open |
+| CORE-010 | The tunable index list: which `Global_262145.f_<n>` is which tunable | R7.3 | Answered: 34,987 assignments give field, type, name and default; 27,691 named, 7,296 by hash only ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
 | CORE-011 | What the references into blocks 13 and 15 are | Second pass | Answered: dead code behind two flags no script sets ([global map 6.2](/docs/core/global-map.md#62-the-blocks-with-how-much-they-are-used)) |
 | CORE-012 | Roles of the **Known** rows above, by reading one use each | Second pass | Answered: [global map 6.3](/docs/core/global-map.md#63-the-most-used-globals) (four rows **Verified**, including `Global_1892653` = `GPBD_FM_3`) |
 
@@ -179,11 +180,12 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| CORE-017 | Meaning of force-cleanup bits 8, 16, 32, 64 and 128 | R1.1 | Answered (16 and 32 are raised by the engine, cause open): [runtime scripts 1.3](/docs/core/runtime-scripts.md#every-force-cleanup-bit-second-pass) |
+| CORE-017 | Meaning of force-cleanup bits 8, 16, 32, 64 and 128 | R1.1 | Answered (16 and 32 are raised by the engine; their cause is CORE-032, third pass): [runtime scripts 1.3](/docs/core/runtime-scripts.md#every-force-cleanup-bit-second-pass) |
 | CORE-018 | What exactly the engine does to start `main`, `initial` and `startup`, and in which order | R1.2 | Partly answered: no script starts them, and the order follows from what each reads and waits for ([boot 3.3](/docs/00-getting-started/boot.md#33-inside-the-boot-scripts)); the engine call needs the executable |
 | CORE-019 | What `profiler_registration` (global block 2) is and whether anything starts it | R0.4 | Answered: empty script, block 2 never used ([runtime scripts 1.5](/docs/core/runtime-scripts.md#15-global-blocks)) |
 | CORE-020 | The story flags that pick the active mission triggerer | R5.1 | Open |
 | CORE-021 | Resolve table-driven launches (second pass of the graph) | R0.5 | Mostly answered: 502 non-literal launches, 220 followed back, ten tables read; 240 scripts nothing starts ([launch graph](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass)); `freemode`'s launches by request left |
+| CORE-032 | What the engine raises force-cleanup bits 16 and 32 for (no script raises them; [runtime scripts 1.3](/docs/core/runtime-scripts.md#every-force-cleanup-bit-second-pass)) | Third pass, in-game test logging `GET_CAUSE_OF_MOST_RECENT_FORCE_CLEANUP`, or the executable | Open |
 
 ### [Saves: what the story save holds and how scripts write it](/docs/core/saves.md) (R1.7)
 
@@ -208,6 +210,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | CORE-030 | Which natives changed between 3725 and 3889 | R11.1 second pass, with the native crossmap (R0.3) | Open |
+| CORE-031 | Which brain set the engine gives the random-ped brains added with `ADD_SCRIPT_TO_RANDOM_PED` (no script registers into sets 2 or 4) | Third pass, the executable | Open |
 
 ## Entities
 
@@ -532,7 +535,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | GP-016 | Where `armenian1`, `jewelry_heist` and `trevor1` set the skip flag (`Global_96580`), since they don't do it in their own code | Next pass of R5.2 or R5.8 | Open |
 | GP-017 | The exact meaning of `replay_controller` states 1 to 6 and 11 to 13 | R5.8 | Open |
 | GP-018 | How the snapshot in `Global_108447` is restored on retry, and what it leaves out | R5.3 | Answered: clock, weather, cash, weapons, outfits, tattoos, special ability, texts and the player ped are restored; other stats and the world aren't ([mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip)) |
-| GP-019 | How crew skill changes the heist take and the fail labels in `Local_3373` | R7.8 (heists) | Open |
+| GP-019 | How crew skill changes the heist take and the fail labels in `Local_3373` | Third pass (was: R7.8 (heists)) | Partly answered: the fail labels in `Local_3373` are a fixed table, and a dead crew member gets a fixed line by role ([mission anatomy](/docs/gameplay/missions/mission-anatomy.md)); how crew skill changes the take is left (third pass) |
 | GP-020 | How `mission_repeat_controller` replays a mission without moving the flow (from guide 2) | R5.3 | Answered: the flow-started flag is cleared and the game is saved and reloaded around the replay ([mission anatomy 3.9](/docs/gameplay/missions/mission-anatomy.md#39-passing)) |
 | GP-021 | What the mission triggerers build before a mission starts (lead-in scenes, from guide 2) | R5.2 second pass | Open |
 | GP-022 | Where `armenian1`, `jewelry_heist` and `trevor1` unlock their skip (they honour `Global_96581` but don't set `Global_96580` themselves) *(from the guide's text)* | Second pass | Open |
@@ -608,11 +611,11 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | GP-054 | How many normal and special parent heads each list has, and which characters the special ones are | In-game test: `GET_PED_HEAD_BLEND_NUM_HEADS` and `GET_PED_HEAD_BLEND_FIRST_INDEX` per type | Open |
-| GP-055 | The two unlabelled morph-19 entries and the last column of the appearance table (which sex or body type each row is for) | Next pass, the item-table caller | Open |
-| GP-056 | How the slider values (0 to 100, -1 to 1) are scaled into the saved `FEATURE_n` and `HEADBLEND_*` floats, and which `FEATURE_n` is which morph | Next pass, the save function and the stat enum mapping | Open |
-| GP-057 | The outfit group names (`BEA`, `CAS` ...) and the components of each starter outfit | Next pass, the outfit tables | Open |
-| GP-058 | The appearance fee and cooldown values | R7.3 tunables, `freemode` | Open |
-| GP-059 | Which transition state opens the creator, and what menu `-1392473901` is (used 3 times, probably the character select) | Partly answered: `-1392473901` is `FE_MENU_VERSION_TEXT_SELECTION`, the "LOBBY LIST" screen ([pause menu 23.5](/docs/ui/pause-menu.md#235-the-full-tree-menu-versions-tabs-and-panes)); the transition state is still R7.2 | Partly answered |
+| GP-055 | The two unlabelled morph-19 entries and the last column of the appearance table (which sex or body type each row is for) | Third pass (was: Next pass, the item-table caller) | Open |
+| GP-056 | How the slider values (0 to 100, -1 to 1) are scaled into the saved `FEATURE_n` and `HEADBLEND_*` floats, and which `FEATURE_n` is which morph | Next pass, the save function and the stat enum mapping | Answered: `FEATURE_n` is micro morph n, saved as min + (max - min) x slider / 100; heritage saved from `GET_PED_HEAD_BLEND_DATA` ([character creator](/docs/gameplay/player/online-character-creator.md#what-is-saved)) |
+| GP-057 | The outfit group names (`BEA`, `CAS` ...) and the components of each starter outfit | Third pass (was: Next pass, the outfit tables) | Partly answered: no group labels exist in the text, only per-outfit labels; components left ([character creator](/docs/gameplay/player/online-character-creator.md#open-questions)) |
+| GP-058 | The appearance fee and cooldown values | R7.3 tunables, `freemode` | Answered: `character_appearance_charge` $100,000, cooldown 48 minutes, cap 30 in 24 hours ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
+| GP-059 | Which transition state opens the creator, and what menu `-1392473901` is (used 3 times, probably the character select) | R7.2 (transitions) | Answered: `-1392473901` is `FE_MENU_VERSION_TEXT_SELECTION`, the "LOBBY LIST" screen ([pause menu 23.5](/docs/ui/pause-menu.md#235-the-full-tree-menu-versions-tabs-and-panes)); the creator opens through state 32 when the transition's destination is 2 ([R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) |
 
 ### [Online cosmetics and the shops that sell them](/docs/gameplay/player/online-cosmetic-shops.md) (R6.7)
 
@@ -672,104 +675,112 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-001 | What each of the 183 running-state functions does in detail (this pass labels them from strings only) | R7.1 second pass, per system | Open |
-| ON-002 | Names of the 60 network event ids and the main script event hashes | R7.2, R15 | Open |
+| ON-001 | What each of the 183 running-state functions does in detail (this pass labels them from strings only) | Third pass (was: R7.1 second pass, per system) | Open |
+| ON-002 | Names of the 60 network event ids and the main script event hashes | Third pass (was: R7.2, R15) | Partly answered: network events described by behaviour ([R7.1 7.6.1](/docs/online/07-freemode.md#761-the-60-network-event-types-second-pass)); no names exist in the scripts for the event types or the 381 script-event hashes |
 | ON-003 | The fields of the player and server broadcast data | R0.4 global map | Answered at block level: every player and server broadcast block named and sized, busiest server fields typed ([global map 6.3.1](/docs/core/global-map.md#631-every-broadcast-block-by-its-registered-name-third-pass)) |
-| ON-004 | What `freemode_clearGlobals` resets and when | R7.2 | Open |
-| ON-005 | How the host's rotation through participants works | R7.1 second pass | Open |
+| ON-004 | What `freemode_clearGlobals` resets and when | R7.2 | Answered: 31 steps that reset Online global blocks to defaults, started once by `freemode` at start ([R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) |
+| ON-005 | How the host's rotation through participants works | Third pass (was: R7.1 second pass) | Mostly answered: 47 per-system counters, each visiting one of the 32 player slots per frame and wrapping to 0; the host-state counter itself not pinned ([R7.1 open questions](/docs/online/07-freemode.md)) |
 
 ### [Rockstar Creator internals: how tracks and maps are built from props](/docs/online/creator-internals.md) (R7.11)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-006 | What job types 4 and 31 are, and what the even and odd race subtypes of a pair mean | Next pass, with the [job lobby](/ROADMAP.md) (R7.5) | Open |
-| ON-007 | The prop limit in `public_mission_creator`, which uses its own messages (`PMCE_F_P`, `PMCE_F_D`) | Second pass | Open |
-| ON-008 | The second dynamic list (library 15), library 39 and the other libraries with no text: hidden, Rockstar-only, or text in a pack not read | Second pass, with every DLC text block | Open |
+| ON-006 | What job types 4 and 31 are, and what the even and odd race subtypes of a pair mean | Third pass (was: Next pass, with the [job lobby](/ROADMAP.md) (R7.5)) | Mostly answered: odd race subtypes are one-lap (point-to-point) races; types 4 and 31 are handled with missions and Survival but stay unnamed ([R7.11 12.3](/docs/online/creator-internals.md#123-from-the-menu-to-a-creator)) |
+| ON-007 | The prop limit in `public_mission_creator`, which uses its own messages (`PMCE_F_P`, `PMCE_F_D`) | Second pass | Answered: 200 props and 20 dynamic props, with the other eleven limits ([R7.11 12.11.1](/docs/online/creator-internals.md#12111-the-mission-creators-limits-second-pass)) |
+| ON-008 | The second dynamic list (library 15), library 39 and the other libraries with no text: hidden, Rockstar-only, or text in a pack not read | Third pass (was: Second pass, with every DLC text block) | Open |
 | ON-009 | What `GET_USED_CREATOR_BUDGET` measures inside the engine | Reverse engineering, R1.5 (streaming) | Open |
-| ON-010 | Which jobs are saved by the full prop writer and which by the sparse one (`func_189`) | Second pass, compare with the 16 local classic missions ([R7.4](/file-formats/ugc-json.md)) | Open |
-| ON-011 | Meaning of `chs`, `chs2`, `chpp` and the `cpbs1` to `cpbs3` bits | Second pass, read the race controller's checkpoint code | Open |
-| ON-012 | How the deathmatch and mission controllers create dynamic props (the race is in 12.11) | Next pass | Open |
-| ON-013 | The other creators' own placement (spawn points, enemy waves, capture objects) | Second pass per creator | Open |
+| ON-010 | Which jobs are saved by the full prop writer and which by the sparse one (`func_189`) | Third pass (was: Second pass, compare with the 16 local classic missions ([R7.4](/file-formats/ugc-json.md))) | Open |
+| ON-011 | Meaning of `chs`, `chs2`, `chpp` and the `cpbs1` to `cpbs3` bits | Third pass (was: Second pass, read the race controller's checkpoint code) | Open |
+| ON-012 | How the deathmatch and mission controllers create dynamic props (the race is in 12.11) | Third pass (was: Next pass) | Open |
+| ON-013 | The other creators' own placement (spawn points, enemy waves, capture objects) | Third pass (was: Second pass per creator) | Open |
 
 ### [DLC storylines in GTA Online](/docs/online/dlc-storylines.md) (R7.9)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-014 | Which stats each flow keys on, step by step | Next pass, per flow function in `freemode` | Open |
-| ON-015 | The text of the voice-only flows (`XM4V_FLW`, `S25R_FLW`, `SR2CH_FLW` ...) | Dialogue files, R9.2 second pass | Open |
-| ON-016 | Which update each `fm_content_*` script arrived in (compare decompile commits by build) | Next pass, `git log` of the decompile | Open |
-| ON-017 | The flows for After Hours, Doomsday and the 2015 heists (no flow label family found) | Next pass | Open |
-| ON-018 | The mp2025_02 update's name and story | Next pass, its pack text | Open |
+| ON-014 | Which stats each flow keys on, step by step | Third pass (was: Next pass, per flow function in `freemode`) | Open |
+| ON-015 | The text of the voice-only flows (`XM4V_FLW`, `S25R_FLW`, `SR2CH_FLW` ...) | Dialogue files, R9.2 second pass | Answered: 40 phone calls whose subtitles are in six DLC dialogue blocks (`XM4VAU`, `SR2CHAU`, `SR2RNAU`, `X24OAU`, `S25MAU`, `S25RAU`), summarised per call family ([R7.9 48.2.1](/docs/online/dlc-storylines.md#4821-the-phone-call-flows-second-pass)) |
+| ON-016 | Which update each `fm_content_*` script arrived in (compare decompile commits by build) | Next pass, `git log` of the decompile | Answered: all 97 `fm_content_*` scripts dated by the decompile commit that added them ([R7.9 48.6.1](/docs/online/dlc-storylines.md#4861-when-each-fm_content_-script-arrived-second-pass)) |
+| ON-017 | The flows for After Hours, Doomsday and the 2015 heists (no flow label family found) | Third pass (was: Next pass) | Open |
+| ON-018 | The mp2025_02 update's name and story | Third pass (was: Next pass, its pack text) | Partly answered: the update is A Safehouse in the Hills, named in the pack's own text ([R7.9 48.2](/docs/online/dlc-storylines.md#482-updates-packs-and-flows)); its story, in 13 dialogue blocks, is left for the third pass |
 
 ### [Heists in GTA Online](/docs/online/heists.md) (R7.8)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-019 | The units of the failure time bands (minutes of play, *probable*) | Next pass, the mission controller | Open |
-| ON-020 | The casino target index order (gold or artwork at index 1) | Next pass: the target name function | Open |
-| ON-021 | Cayo secondary loot values (cash, weed, coke, gold, paintings) and bag capacity | Next pass: hashed tunables near the primary values | Open |
-| ON-022 | How the classic apartment board is drawn and which script owns it | Next pass, `freemode` | Open |
-| ON-023 | Elite challenge rewards for each heist | Next pass | Open |
-| ON-024 | The heist story arcs and their contacts | [R7.9](/ROADMAP.md) | Open |
-| ON-025 | Which script draws the apartment heist planning board for the classic heists *(from the guide's text)* | Second pass | Open |
+| ON-019 | The units of the failure time bands (minutes of play, *probable*) | Next pass, the mission controller | Answered: minutes; the mission controller compares each band times 60,000 with the mission's elapsed network time plus 10 seconds ([R7.8 47.3](/docs/online/heists.md#473-classic-heists)) |
+| ON-020 | The casino target index order (gold or artwork at index 1) | Next pass: the target name function | Answered: 0 cash, 1 gold, 2 artwork, 3 diamonds ([R7.8 47.6.1](/docs/online/heists.md#4761-casino-targets-and-elite-challenges-second-pass)) |
+| ON-021 | Cayo secondary loot values (cash, weed, coke, gold, paintings) and bag capacity | Third pass (was: Next pass: hashed tunables near the primary values) | Open |
+| ON-022 | How the classic apartment board is drawn and which script owns it | Next pass, `freemode` | Answered: owned by `fmmc_launcher`, movies `heist_mp`, `heistmap_mp`, `heist_pre` drawn with `DRAW_SCALEFORM_MOVIE_3D_SOLID` ([R7.8 47.6.1](/docs/online/heists.md#4761-casino-targets-and-elite-challenges-second-pass)) |
+| ON-023 | Elite challenge rewards for each heist | Third pass (was: Next pass) | Mostly answered: Doomsday, Casino and Cayo elite values from the tunables; classic heists only have overrides ([R7.8 47.6.1](/docs/online/heists.md#4761-casino-targets-and-elite-challenges-second-pass)); new ON-076 |
+| ON-024 | The heist story arcs and their contacts | Third pass (was: [R7.9](/ROADMAP.md)) | Open |
+| ON-025 | Which script draws the apartment heist planning board for the classic heists *(from the guide's text)* | Second pass | Answered: `fmmc_launcher` ([R7.8 47.6.1](/docs/online/heists.md#4761-casino-targets-and-elite-challenges-second-pass)) |
+| ON-076 | The classic heists' elite rewards and targets as set in the mission controller (the tunables only override them) | Third pass, `fm_mission_controller` | Open |
 
 ### [Interaction menu, phone and apps](/docs/online/interaction-menu-phone-apps.md) (R7.10)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-026 | The story-mode slot list (which apps each character has) | Second pass, `cellphone_controller` by character | Open |
-| ON-027 | The full interaction-menu tree and its conditions | Second pass, `am_pi_menu` | Open |
-| ON-028 | Every website page and what each sells | Second pass, `appinternet` | Partly answered: the eight selling sites with their numbers and stock counts ([R7.10 21.5](/docs/online/interaction-menu-phone-apps.md#215-the-internet)); the item-to-model list is left |
-| ON-029 | The Facade phone's movie and the character-to-phone mapping | Second pass | Open |
+| ON-026 | The story-mode slot list (which apps each character has) | Second pass, `cellphone_controller` by character | Answered: one story list for all three characters, and the Online list ([R7.10 21.2.1](/docs/online/interaction-menu-phone-apps.md#2121-the-slots-by-mode-and-the-phone-each-character-carries-second-pass)) |
+| ON-027 | The full interaction-menu tree and its conditions | Second pass, `am_pi_menu` | Answered: the top page with each item's conditions and all 144 pages by area ([R7.10 21.3.1](/docs/online/interaction-menu-phone-apps.md#2131-the-menu-tree-second-pass)); per-page conditions stay in each page's function |
+| ON-028 | Every website page and what each sells | Second pass, `appinternet` | Answered: the eight selling sites with their numbers and stock counts, and the 683-item model list ([R7.10 21.5](/docs/online/interaction-menu-phone-apps.md#215-the-internet)) |
+| ON-029 | The Facade phone's movie and the character-to-phone mapping | Second pass | Answered: `cellphone_facade` is Trevor's; the four-entry phone table ([R7.10 21.2.1](/docs/online/interaction-menu-phone-apps.md#2121-the-slots-by-mode-and-the-phone-each-character-carries-second-pass)) |
+| ON-067 | Who sets the story phone's Sniper-app flag, and what the two Online flags are that switch the phone to the Badger skin and empty slot 24 | Third pass, `cellphone_controller` callers | Open |
+| ON-068 | What website items 323, 324, 357 and 402 are (hashes set at start that match no model name) | Third pass, the preview code in `appinternet` | Open |
+| ON-069 | Each interaction-menu page's own show and grey conditions (the top page is mapped) | Third pass, `am_pi_menu` page by page | Open |
 
 ### [The job lobby (`fmmc_launcher`)](/docs/online/job-lobby.md) (R7.5)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-030 | The exact role of states 7 and 10, and which idle exits go to 4, 8 and 9 | Next pass, follow `func_13037`'s conditions | Open |
-| ON-031 | The meaning of each of the 21 start-argument values | Next pass, read a controller's entry function | Open |
-| ON-032 | How the corona's settings are stored and sent to the controller | Next pass, with `Global_2685150` | Open |
-| ON-033 | How playlists and series step from job to job (`FMMC_PlayList_Controller`) | Next pass | Open |
-| ON-034 | How a walk-in job marker in freemode hands over to the launcher | R7.1 second pass (`freemode`) | Open |
+| ON-030 | The exact role of states 7 and 10, and which idle exits go to 4, 8 and 9 | Next pass, follow `func_13037`'s conditions | Answered: state 7 starts the impromptu deathmatch, state 10 is the next playlist job; every idle exit with the flag and script that raises it ([R7.5 13.3](/docs/online/job-lobby.md#133-the-11-top-level-states)) |
+| ON-031 | The meaning of each of the 21 start-argument values | Next pass, read a controller's entry function | Answered: the launcher sets only the network instance (`.f_16`) and one job value (`.f_2`) ([R7.5 13.5](/docs/online/job-lobby.md#135-from-job-type-to-running-controller)) |
+| ON-032 | How the corona's settings are stored and sent to the controller | Next pass, with `Global_2685150` | Answered: host's choices in `GPBD_FM_2`, copied to the lobby state's `.f_669`; races also use `GlobalServerBD_Races` ([R7.5 13.5](/docs/online/job-lobby.md#135-from-job-type-to-running-controller)) |
+| ON-033 | How playlists and series step from job to job (`FMMC_PlayList_Controller`) | Next pass | Answered: each playlist job is a new session; the playlist hands the next content id to the launcher ([R7.5 13.7.1](/docs/online/job-lobby.md#1371-playlists-and-walk-in-markers-second-pass)) |
+| ON-034 | How a walk-in job marker in freemode hands over to the launcher | R7.1 second pass (`freemode`) | Answered: the walk-in conditions and the launcher flag `freemode` raises ([R7.5 13.7.1](/docs/online/job-lobby.md#1371-playlists-and-walk-in-markers-second-pass)) |
+| ON-070 | What the job value in start argument `.f_2` is, and what lobby flag bit 1 and `.f_880` are raised for | Third pass, the `freemode` and `maintransition` writers | Open |
+| ON-071 | What the playlist's `.f_877` position is and how the launcher uses it | Third pass, `fmmc_launcher` state 10 | Open |
 
 ### [Organisations and businesses](/docs/online/organisations-and-businesses.md) (R7.7)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-035 | The nightclub's production and popularity numbers (their tunable names are hashed) | Next pass: match hashes to names from the scripts | Open |
-| ON-036 | Special cargo warehouse capacities (16, 42 and 111 crates are **Known**) and where the scripts keep them | Next pass | Open |
-| ON-037 | How production is stored in stats and advanced while offline or in another session | Next pass, with the stats file | Open |
-| ON-038 | What `gb_bosscost` and `gb_bosssetupcost` charge | Next pass, `freemode` | Open |
-| ON-039 | The MC challenge and VIP challenge rules (cash, RP, time) | Next pass, per script | Open |
-| ON-040 | Business battles and the `fm_content_*` business missions | R7.9 and a later pass | Open |
+| ON-035 | The nightclub's production and popularity numbers (their tunable names are hashed) | Third pass (was: Next pass: match hashes to names from the scripts) | Mostly answered: the safe's pay bands by popularity, its $250,000 cap and 48-minute timer, the popularity change tunables, and each goods type's value, capacity and units per step ([R7.7 46.5.3](/docs/online/organisations-and-businesses.md#4653-the-nightclubs-safe-and-warehouse-second-pass)); production timing is ON-077 |
+| ON-036 | Special cargo warehouse capacities (16, 42 and 111 crates are **Known**) and where the scripts keep them | Next pass | Answered: fixed in the scripts; 22 warehouses in three sizes, 16, 42 and 111 crates ([R7.7 46.5.1](/docs/online/organisations-and-businesses.md#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass)) |
+| ON-037 | How production is stored in stats and advanced while offline or in another session | Third pass (was: Next pass, with the stats file) | Open |
+| ON-038 | What `gb_bosscost` and `gb_bosssetupcost` charge | Next pass, `freemode` | Answered: defaults $200,000 and $5,000, but no script reads them in this build ([R7.7 46.5.1](/docs/online/organisations-and-businesses.md#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass)); new ON-075 |
+| ON-039 | The MC challenge and VIP challenge rules (cash, RP, time) | Third pass (was: Next pass, per script) | Mostly answered: the 8 VIP and 3 MC challenges with their scripts, time limits, cash, RP and rules ([R7.7 46.5.2](/docs/online/organisations-and-businesses.md#4652-vip-and-mc-challenges-second-pass)); how the rival, solo and member percentages combine in the payout is left |
+| ON-040 | Business battles and the `fm_content_*` business missions | Third pass (was: R7.9 and a later pass) | Open |
+| ON-075 | Where registering as a boss is charged now (`gb_bosscost` and `gb_bosssetupcost` are read by no script) | Third pass, the boss registration code in `freemode` and `am_pi_menu` | Open |
+| ON-077 | How long a nightclub production step takes, and how technicians are assigned to goods types (the goods tunables are hashed; [R7.7 46.5.3](/docs/online/organisations-and-businesses.md#4653-the-nightclubs-safe-and-warehouse-second-pass)) | Third pass, the business hub code in `freemode` | Open |
 
 ### [Properties in GTA Online](/docs/online/properties.md) (R7.6)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | ON-041 | How the yacht, Kosatka and other vehicles-as-properties are bought and placed | Next pass, `freemode` yacht code | Answered: websites, stats, the 36 yacht spots ([45.6a](/docs/online/properties.md#yachts-and-other-vehicles-as-properties)) |
-| ON-042 | Where garage capacities and vehicle slots are stored, and how a personal vehicle is saved per slot | Next pass, with the vehicle stats | Partly answered: spaces per slot and the 607 `MPSV_*` records ([45.6a](/docs/online/properties.md#garage-sizes-and-personal-vehicle-records)); where colours and mods are kept is ON-066 |
-| ON-043 | The simple-interior entrance positions and which script places the doors | Next pass, `am_mp_smpl_interior_ext` tables | Partly answered: the per-type function table and the mansions ([45.6a](/docs/online/properties.md#simple-interior-entrances)); the other positions are left |
+| ON-042 | Where garage capacities and vehicle slots are stored, and how a personal vehicle is saved per slot | Third pass (was: Next pass, with the vehicle stats) | Partly answered: spaces per slot and the 607 `MPSV_*` records ([45.6a](/docs/online/properties.md#garage-sizes-and-personal-vehicle-records)); where colours and mods are kept is ON-066 |
+| ON-043 | The simple-interior entrance positions and which script places the doors | Third pass (was: Next pass, `am_mp_smpl_interior_ext` tables) | Partly answered: the per-type function table, all 180 simple-interior ids named, and the entrances of the mansions and salvage yards ([45.6a](/docs/online/properties.md#simple-interior-entrances)); the other types' positions are left |
 | ON-044 | Instance numbering of `am_mp_property_int` (owner id, building, or both) | Next pass | Answered: per owner, rows 0 to 31, 32 without an owner ([45.6a](/docs/online/properties.md#interior-instances)) |
 | ON-045 | Daily property fees (utility bills) and how they are charged | Next pass, `freemode` | Answered: every 48 minutes, fees per property ([45.6a](/docs/online/properties.md#daily-property-fees-utility-bills)) |
 | ON-046 | The business side of each simple interior | [R7.7](/ROADMAP.md) | Answered in [organisations and businesses](/docs/online/organisations-and-businesses.md#464-the-business-loop) |
-| ON-065 | Which business or vehicle the garage indices 116 to 137 and ownership slots 12 to 35 are | Next pass, the slot-to-stat functions in `freemode` | Open |
-| ON-066 | Where a personal vehicle's colours, wheels and mods are saved | Next pass, the vehicle save code in `freemode` and `carmod_shop` | Open |
+| ON-065 | Which business or vehicle the garage indices 116 to 137 and ownership slots 12 to 35 are | Third pass (was: Next pass, the slot-to-stat functions in `freemode`) | Mostly answered: ownership slots 12 to 32 named from `freemode`'s slot-to-stat function (hangar, facility, nightclub, the garage floors, auto shop, Agency, Eclipse Blvd, bail office, hacker den); slots 30, 33 to 35 and indices 116 to 137 left ([45.6a](/docs/online/properties.md#garage-sizes-and-personal-vehicle-records)) |
+| ON-066 | Where a personal vehicle's colours, wheels and mods are saved | Third pass (was: Next pass, the vehicle save code in `freemode` and `carmod_shop`) | Open |
 
 ### [Rockstar services](/docs/online/rockstar-services.md) (R15.2)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-047 | The unnamed (`unk_`) tunable readers and which service natives they are | Second pass, NativeDB hashes | Open |
+| ON-047 | The unnamed (`unk_`) tunable readers and which service natives they are | Second pass, NativeDB hashes | Answered: `_NETWORK_GET_TUNABLES_REGISTRATION_INT`, `_FLOAT` and `_BOOL` ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
 | ON-048 | Which story-mode scripts call any service native, and why | Second pass, per script | Open |
-| ON-049 | The catalogue item keys and categories | R7.7 | Open |
+| ON-049 | The catalogue item keys and categories | Third pass (was: R7.7) | Open |
 
 ### [Sessions and sync](/docs/online/sessions-and-sync.md) (R15.1)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | ON-050 | The layout of the big broadcast blocks | Second pass, per controller | Answered at block level: the 37 broadcast blocks with their registered names, sizes and users ([global map 6.3.1](/docs/core/global-map.md#631-every-broadcast-block-by-its-registered-name-third-pass)); field-by-field layouts stay per controller |
-| ON-051 | Event type numbers and what each does | Second pass, `freemode`'s event handler | Open |
+| ON-051 | Event type numbers and what each does | Second pass, `freemode`'s event handler | Answered: all 60 network event types with their data size and what `freemode` does; 174 carries script events, 186 is entity damage ([R7.1 7.6.1](/docs/online/07-freemode.md#761-the-60-network-event-types-second-pass)) |
 | ON-052 | How migration chooses a new owner and host | Engine reverse engineering | Open |
 
 ### [Stats, tunables and the server's role](/docs/online/stats-and-tunables.md) (R7.3)
@@ -777,9 +788,11 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | ON-053 | A tool that writes the tunable name, type and default list for one build (read-only, from the decompile), to diff builds and to feed a mod's defaults | Tool idea; R11.2 update check | Open |
-| ON-054 | What `SaveCategory` 0 and 1 mean exactly | Second pass | Open |
-| ON-055 | The basket flow step by step in one shop script | R7.6 or a second pass | Open |
-| ON-056 | Which tunables a given offline system needs | Per mod, with the defaults list | Open |
+| ON-054 | What `SaveCategory` 0 and 1 mean exactly | Second pass | Answered: 1 is the original per-character set (2,522), 0 everything since (15,411) ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
+| ON-055 | The basket flow step by step in one shop script | R7.6 or a second pass | Answered: the six steps in `clothes_shop_mp` ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
+| ON-056 | Which tunables a given offline system needs | Per mod, with the defaults list | Answered by method: per mod, read from the tunable index ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
+| ON-072 | The names behind the 7,296 tunables registered by hash only | Third pass: needs a name list; hash every candidate name | Open |
+| ON-073 | Whether the two `SaveCategory` groups are saved as separate cloud files | Third pass: in-game or cloud check (read-only) | Open |
 
 ### [Story systems that clash with an Online mode](/docs/online/story-systems-in-online-mode.md) (R5.7)
 
@@ -787,17 +800,18 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | --- | --- | --- | --- |
 | ON-057 | The full shop table (index, position, type) from `shop_controller` | Second pass; feeds shop mods | Answered: all 65 entries by script, the cosmetic shops with name, position and interior ([R6.7](/docs/gameplay/player/online-cosmetic-shops.md#the-shop-table)) |
 | ON-058 | What exactly `clothes_shop_sp` does with a freemode ped (refuses, shows story stock, or breaks) | In-game test | Open |
-| ON-059 | What sets 2 and 4 contain (ped brains) | Second pass | Open |
+| ON-059 | What sets 2 and 4 contain (ped brains) | Second pass | Answered: no script registers into sets 2 or 4; the three `pb_prostitute` ped brains take no set ([R5.7 7.3](/docs/online/story-systems-in-online-mode.md#73-script-brains-and-brain-sets)); new CORE-031 |
 | ON-060 | How bits 16, 32 and 64 in these masks are raised (they end some systems on other occasions) | R1.2 second pass | Partly answered: 64 with 8 by `main`, `mission_repeat_controller`, `benchmark`; 16 and 32 only by the engine ([runtime scripts 1.3](/docs/core/runtime-scripts.md#every-force-cleanup-bit-second-pass)) |
 
 ### [Transitions and sessions](/docs/online/transitions-and-sessions.md) (R7.2)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-061 | What enables the offline-mode branch before `START_FM_LAUNCH_SCRIPT` (the function returning true), and whether it can be reached on PC | Second pass | Open |
-| ON-062 | What the four character "slots" in the retry states are (two characters plus?) and how `HUD_SLOTONE` / `HUD_SLOTTWO` relate | R7.3 stats | Open |
-| ON-063 | The order of states on the way back to story mode, step by step | Second pass | Open |
-| ON-064 | What the testbed session is used for in release builds | Second pass | Open |
+| ON-061 | What enables the offline-mode branch before `START_FM_LAUNCH_SCRIPT` (the function returning true), and whether it can be reached on PC | Second pass | Answered: unreachable; its flag is only ever cleared ([R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) |
+| ON-062 | What the four character "slots" in the retry states are (two characters plus?) and how `HUD_SLOTONE` / `HUD_SLOTTWO` relate | R7.3 stats | Answered: cloud save slots 0 (account), 1 and 2 (the two characters); "Slot 1" and "Slot 2" label the character saves ([R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) |
+| ON-063 | The order of states on the way back to story mode, step by step | Second pass | Answered: 63 then 64, step by step ([R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) |
+| ON-064 | What the testbed session is used for in release builds | Second pass | Answered: only level 5 (development) enters it; unused in release ([R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) |
+| ON-074 | Which scripts outside `maintransition` ask for the return to story mode, and what retry state 13 waits for | Third pass, the callers of the state request | Open |
 
 ## User interface
 
@@ -829,9 +843,10 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| UI-010 | Which screens still work, partly, when signed out (an offline test is Online-adjacent; read-only analysis only) | Second pass from the guards | Answered from the guards: [server-backed screens 25.6](/docs/ui/server-backed-screens.md#256-signed-out-what-the-guards-do-second-pass) |
-| UI-011 | The full list of transaction calls per business app | R7.7 | Open |
+| UI-010 | Which screens still work, partly, when signed out (an offline test is Online-adjacent; read-only analysis only) | Second pass from the guards | Answered from the guards (what the engine returns signed out is UI-020, third pass): [server-backed screens 25.6](/docs/ui/server-backed-screens.md#256-signed-out-what-the-guards-do-second-pass) |
+| UI-011 | The full list of transaction calls per business app | R7.7 | Answered: per-app counts of `NET_GAMESERVER_*` natives and the spend and earn natives ([R7.7 46.5.1](/docs/online/organisations-and-businesses.md#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass)) |
 | UI-012 | Leaderboard IDs read by each screen | Second pass | Answered: 39 board IDs in a library shared by 30 scripts ([server-backed screens 25.7](/docs/ui/server-backed-screens.md#257-leaderboard-ids-per-screen-second-pass)) |
+| UI-020 | What the stat and Social Club inbox natives return when signed out, which decides what `mp_awards`, `mp_unlocks` and `appmpemail` show ([server-backed screens 25.6](/docs/ui/server-backed-screens.md#256-signed-out-what-the-guards-do-second-pass), only **Known**) | Third pass, the executable (read-only, no Online test) | Open |
 
 ### [Story-mode UI](/docs/ui/story-mode-ui.md) (R8.6)
 

@@ -38,9 +38,24 @@ Packs in `dlclist.xml` order (**Verified**), the update they belong to (**Known*
 | `mp2024_01` | Bottom Dollar Bounties | `BT24_FLOW` (2) | Buy a Bail Office; meet Maude Eccles | Maude Eccles |
 | `mp2024_02` | Agents of Sabotage | `HK24_FLW` (19) | Buy the Darnell Bros Garment Factory and meet Pavel for jobs from an ex-FIB agent; the Black Box, Brute Force, Fine Art and Project Breakaway files; buy the McKenzie Field Hangar for Oscar Guzman Flies Again | Pavel, Oscar Guzman |
 | `mp2025_01` | Money Fronts | `TYFLOW` (5) | Visit Martin Madrazo; buy the Hands On Car Wash to launder money | Martin Madrazo, Raf |
-| `mp2025_02` | (mansions) | `MP252_*` music events | Mansion intro cutscenes `XM25_MANSION_INTA` to `C`; mansions The Tongva Estate, Richman Villa, The Vinewood Residence | |
+| `mp2025_02` | A Safehouse in the Hills (the pack's `global` text says "Part of A Safehouse in the Hills", **Verified** in the second pass) | `MP252_*` music events | Mansion intro cutscenes `XM25_MANSION_INTA` to `C`; mansions The Tongva Estate, Richman Villa, The Vinewood Residence | |
 
-Flows with text outside the main text files (`XM4V_FLW` 22, `S25R_FLW` 6, `SR2CH_FLW` 6, `X24O_FLW`, `S25M_FLW`, `SR2RN_FLW`) are *probably* phone conversations, whose lines live in the dialogue files ([R9.2](/docs/audio/speech-and-dialogue.md)).
+Flows with text outside the main text files (`XM4V_FLW` 22, `S25R_FLW` 6, `SR2CH_FLW` 6, `X24O_FLW`, `S25M_FLW`, `SR2RN_FLW`) are phone calls, whose subtitles live in each pack's dialogue blocks ([R9.2](/docs/audio/speech-and-dialogue.md); see 48.2.1).
+
+### 48.2.1 The phone-call flows (second pass)
+
+*Second pass, 2026-10-30.* **Verified** by reading `freemode`, which returns each call's conversation root with its dialogue block (for example `XM4VAU`). The subtitles were then matched in the packs' `americandlc.rpf`: each line is the root plus `_<n>`, so `XM4V_FLW_1A_1` is the first line of call `XM4V_FLW_1A`. `freemode` names 40 roots, and every one has lines. In short, in our own words:
+
+| Calls (block, pack) | Caller | What the calls cover |
+| --- | --- | --- |
+| `XM4V_FLW_1A` to `14C`, 22 calls (`XM4VAU`, `mp2023_02` The Chop Shop) | Vincent Effenburger (names himself) | The Cluckin' Bell Farm Raid: the opening offer (four versions, by how the player knows Vincent: not yet, from the Diamond Casino, or from his mall security job at Rockford Plaza), then one call after each setup step (the train, the weapons and gear, the getaway car, the supply-line sabotage, with an "A" or "B" version for a clean or loud result), the go-ahead for the raid, and the pay-out calls after the finale and its replays |
+| `SR2CH_FLW_1A` to `6A`, 6 calls (`SR2CHAU`, `mp2023_01` San Andreas Mercenaries) | Charlie (**Known**; he calls the player "TL") | The Merryweather storyline between Project Overthrow jobs: a cobalt find, Coil weapons tech in stolen crates, a rescue, and the final split between Merryweather and the government |
+| `SR2RN_FLW_1A`, `1B`, 2 calls (`SR2RNAU`, same pack) | Ron | Two versions of Ron's opening call: one about the player going into business with the Fooligans in Sandy Shores, one general pitch (*probable*: which condition picks each isn't traced) |
+| `X24O_FLW_1A`, `2A`, 2 calls (`X24OAU`, `mp2024_02` Agents of Sabotage) | Oscar Guzman (names himself) | The offer of the McKenzie Field hangar, and the follow-up after buying it |
+| `S25M_FLW_1A`, `2A`, 2 calls (`S25MAU`, `mp2025_01` Money Fronts) | Martin Madrazo (names himself) | An invitation to meet someone important at the airport (two versions) |
+| `S25R_FLW_1A` to `7A`, 6 calls (`S25RAU`, same pack) | Raf (*probable*: the speaker's name isn't in the subtitles) | Money Fronts' laundering businesses: the car wash, Higgins Helitours, Smoke on the Water, one call when both are owned, and a warning to slow down when too much money goes through at once |
+
+The call-to-pack mapping follows from which pack's `americandlc.rpf` holds each block (**Verified**). The update names are **Known**.
 
 ## 48.3 How a flow works
 
@@ -84,12 +99,32 @@ For a story-mode or offline remake (never touch the live game):
 
 A mod rebuilds the flow itself (a small state machine on its own save), reuses the text labels and intro cutscenes by name, and writes each mission as a story-mode script ([missions cookbook](/modding/cookbook/missions.md)).
 
+### 48.6.1 When each `fm_content_*` script arrived (second pass)
+
+*Second pass, 2026-10-30.* The decompile repository adds each script in the commit for the build that first shipped it. Its history (178 commits up to build 3725) dates all 97 `fm_content_*` scripts. Commits and dates are **Verified** with `git log --diff-filter=A`; the update names are **Known**. Scripts in the first commit (September 2020) are older than the repository, so it only says they existed by then.
+
+| Commit (date) | Update (**Known**) | Scripts (`fm_content_` dropped) |
+| --- | --- | --- |
+| Initial commit (2020-09-17) | Before late 2020 | `business_battles`, `drug_vehicle`, `movie_props` |
+| 2020-12-15 | The Cayo Perico Heist | `golden_gun`, `island_dj`, `island_heist` |
+| 2021-07-20 | Los Santos Tuners | `auto_shop_delivery`, `phantom_car`, `sightseeing`, `slasher`, `tuner_robbery`, `vehicle_list` |
+| 2021-12-22 | The Contract | `payphone_hit`, `payphone_intro`, `security_contract`, `vip_contract_1` |
+| 1.59-2612 (2022-04-26) | Next-gen patches | `hsw_setup`, `hsw_time_trial`, `mp_intro` |
+| 1.61-2699 (2022-08-06) | The Criminal Enterprises | 17 scripts: `ammunation`, `bar_resupply`, `bike_shop_delivery`, `cargo`, `cerberus`, `club_management`, `club_odd_jobs`, `club_source`, `clubhouse_contracts`, `crime_scene`, `export_cargo`, `gunrunning`, `metal_detector`, `skydive`, `smuggler_plane`, `smuggler_trail`, `source_research` |
+| 2022-12-13 | Los Santos Drug Wars | `acid_lab_sell`, `acid_lab_setup`, `acid_lab_source`, `bank_shootout`, `convoy`, `drug_lab_work`, `robbery`, `stash_house`, `taxi_driver`, `xmas_mugger` |
+| 2944 (2023-06-13) | San Andreas Mercenaries | `armoured_truck`, `bicycle_time_trial`, `ghosthunt`, `possessed_animals`, `smuggler_ops`, `smuggler_resupply`, `smuggler_sell`, `test` |
+| 1.68-3095 (2023-12-12) | The Chop Shop | `chop_shop_delivery`, `tow_truck_work`, `xmas_truck` and the nine `vehrob_*` scripts |
+| 1.69-3258 (2024-06-25) | Bottom Dollar Bounties | `bounty_targets`, `daily_bounty`, `dispatch_work`, `pizza_delivery`, `ufo_abduction` |
+| 1.70-3407 (2024-12-10) | Agents of Sabotage | `arms_trafficking`, `community_outreach`, `drone` and the eight `hacker_*` prep and finale scripts |
+| 1.71-3570 (2025-06-17) | Money Fronts | `car_wash_detailing`, `car_wash_work`, `cutscene`, `helitours_tour`, `helitours_work`, `tycoon_odd_jobs`, `weed_shop_delivery`, `weed_shop_work` |
+| 1.72-3717.0 (2025-12-10) | A Safehouse in the Hills (`mp2025_02`) | `firefighter`, `forklift_operator`, `getaway_driver`, `postal_worker`, `survival`, `survival_grouping`, `valentine_cheater` |
+
 ## 48.7 Open questions
 
 | Question | Where it goes |
 | --- | --- |
 | Which stats each flow keys on, step by step | Next pass, per flow function in `freemode` |
-| The text of the voice-only flows (`XM4V_FLW`, `S25R_FLW`, `SR2CH_FLW` ...) | Dialogue files, R9.2 second pass |
-| Which update each `fm_content_*` script arrived in (compare decompile commits by build) | Next pass, `git log` of the decompile |
+| The text of the voice-only flows (`XM4V_FLW`, `S25R_FLW`, `SR2CH_FLW` ...) | Answered in [48.2.1](#4821-the-phone-call-flows-second-pass): 40 phone calls in six DLC dialogue blocks |
+| Which update each `fm_content_*` script arrived in (compare decompile commits by build) | Answered in [48.6.1](#4861-when-each-fm_content_-script-arrived-second-pass) |
 | The flows for After Hours, Doomsday and the 2015 heists (no flow label family found) | Next pass |
-| The mp2025_02 update's name and story | Next pass, its pack text |
+| The mp2025_02 update's name and story | Partly answered (second pass): the name is A Safehouse in the Hills, from the pack's text; its 13 dialogue blocks (`X25A1AU` to `X25A6AU`, `X25MAAU`, `X25VNAU` ...) are not summarised, left for the third pass |
