@@ -140,8 +140,8 @@
   "OPEN_QUESTIONS.md": {
     "mtime": 1793354926.3689775,
     "seen": 1793355226.0339923,
-    "ast_hash": "c77e461ab06a07246422549435c3b1cd",
-    "semantic_hash": "c77e461ab06a07246422549435c3b1cd"
+    "ast_hash": "5807f424b5dd968b8f3a3fef69374a3e",
+    "semantic_hash": "5807f424b5dd968b8f3a3fef69374a3e"
   },
   "README.md": {
     "mtime": 1793040995.6147776,
@@ -338,14 +338,14 @@
   "docs/core/completion-and-autosave.md": {
     "mtime": 1793344526.0110428,
     "seen": 1793353978.7544239,
-    "ast_hash": "3be616bab68b1ea8964a07f69a0c6a70",
-    "semantic_hash": "3be616bab68b1ea8964a07f69a0c6a70"
+    "ast_hash": "a0791efa9206d2cfc75f642f55e559a4",
+    "semantic_hash": "a0791efa9206d2cfc75f642f55e559a4"
   },
   "docs/core/global-map.md": {
     "mtime": 1793340101.4436796,
     "seen": 1793340578.72882,
-    "ast_hash": "9edfa114c3436f3206d8d815ac1af956",
-    "semantic_hash": "9edfa114c3436f3206d8d815ac1af956"
+    "ast_hash": "fb0997f29e3e3b0de89d55dbb4e74975",
+    "semantic_hash": "fb0997f29e3e3b0de89d55dbb4e74975"
   },
   "docs/core/memory-and-pools.md": {
     "mtime": 1793344526.1277797,
@@ -356,8 +356,8 @@
   "docs/core/runtime-scripts.md": {
     "mtime": 1793344526.2485402,
     "seen": 1793353978.755201,
-    "ast_hash": "7ae9166d151ca033ec4d29223d5d3cac",
-    "semantic_hash": "7ae9166d151ca033ec4d29223d5d3cac"
+    "ast_hash": "f05ab22040bb119fdfc8befa720b0711",
+    "semantic_hash": "f05ab22040bb119fdfc8befa720b0711"
   },
   "docs/core/saves.md": {
     "mtime": 1793344526.3593247,
@@ -1448,8 +1448,8 @@
   "scripting/script-launch-graph.md": {
     "mtime": 1793344527.1354759,
     "seen": 1793353978.758095,
-    "ast_hash": "117e9f212875088effa3e109b80e9129",
-    "semantic_hash": "117e9f212875088effa3e109b80e9129"
+    "ast_hash": "45d4c376ee09e24a4305b89534694f0e",
+    "semantic_hash": "45d4c376ee09e24a4305b89534694f0e"
   },
   "scripting/script-vm.md": {
     "mtime": 1793040995.6587777,
