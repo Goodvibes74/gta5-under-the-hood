@@ -77,7 +77,7 @@ Test only: GS-003 (does the return to story mode restart every script), CORE-001
 | --- | --- | --- | --- | --- |
 | P3.1 | [Interaction menu, phone and apps](/docs/online/interaction-menu-phone-apps.md) (R7.10): the full interaction-menu tree, story phone slots, website pages, phone models | ON-026, ON-027, ON-028, ON-029 | scripts | Done, branch `research/second-pass-phase3` |
 | P3.2 | [The job lobby](/docs/online/job-lobby.md) (R7.5): launcher states, start arguments, corona settings, playlists, walk-in markers, job types | ON-030, ON-031, ON-032, ON-033, ON-034, ON-006 | scripts | Mostly done, branch `research/second-pass-phase3` (job types 4 and 31 unnamed) |
-| P3.3 | [Inside `freemode`](/docs/online/07-freemode.md) and [sessions](/docs/online/sessions-and-sync.md) (R7.1, R15.1): the event ids, the host's rotation, the running-state functions per system | ON-001, ON-002, ON-005, ON-051 | scripts | Partly done, branch `research/second-pass-phase3` (ON-005 mostly answered; ON-001, ON-002, ON-051 left) |
+| P3.3 | [Inside `freemode`](/docs/online/07-freemode.md) and [sessions](/docs/online/sessions-and-sync.md) (R7.1, R15.1): the event ids, the host's rotation, the running-state functions per system | ON-001, ON-002, ON-005, ON-051 | scripts | Partly done, branch `research/second-pass-phase3` (ON-051 answered, ON-005 mostly, ON-002 partly; ON-001 left) |
 | P3.4 | [Transitions](/docs/online/transitions-and-sessions.md) (R7.2): the offline branch, character slots, the way back to story mode, the testbed session, what opens the creator | ON-004, ON-061, ON-062, ON-063, ON-064, GP-059 | scripts | Open |
 | P3.5 | [Stats and tunables](/docs/online/stats-and-tunables.md) (R7.3): the tunable index, save categories, the shop basket, unnamed service readers | CORE-010, ON-047, ON-054, ON-055, ON-056, GP-058 | scripts | Open |
 | P3.6 | [The Online character creator](/docs/gameplay/player/online-character-creator.md) (R6.5): unlabelled morphs, slider scaling, outfit groups | GP-055, GP-056, GP-057 | scripts | Open |
@@ -673,7 +673,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | ON-001 | What each of the 183 running-state functions does in detail (this pass labels them from strings only) | R7.1 second pass, per system | Open |
-| ON-002 | Names of the 60 network event ids and the main script event hashes | R7.2, R15 | Open |
+| ON-002 | Names of the 60 network event ids and the main script event hashes | R7.2, R15 | Partly answered: network events described by behaviour ([R7.1 7.6.1](/docs/online/07-freemode.md#761-the-60-network-event-types-second-pass)); no names exist in the scripts for the event types or the 381 script-event hashes |
 | ON-003 | The fields of the player and server broadcast data | R0.4 global map | Answered at block level: every player and server broadcast block named and sized, busiest server fields typed ([global map 6.3.1](/docs/core/global-map.md#631-every-broadcast-block-by-its-registered-name-third-pass)) |
 | ON-004 | What `freemode_clearGlobals` resets and when | R7.2 | Open |
 | ON-005 | How the host's rotation through participants works | R7.1 second pass | Mostly answered: 47 per-system counters, each visiting one of the 32 player slots per frame and wrapping to 0; the host-state counter itself not pinned ([R7.1 open questions](/docs/online/07-freemode.md)) |
@@ -769,7 +769,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | ON-050 | The layout of the big broadcast blocks | Second pass, per controller | Answered at block level: the 37 broadcast blocks with their registered names, sizes and users ([global map 6.3.1](/docs/core/global-map.md#631-every-broadcast-block-by-its-registered-name-third-pass)); field-by-field layouts stay per controller |
-| ON-051 | Event type numbers and what each does | Second pass, `freemode`'s event handler | Open |
+| ON-051 | Event type numbers and what each does | Second pass, `freemode`'s event handler | Answered: all 60 network event types with their data size and what `freemode` does; 174 carries script events, 186 is entity damage ([R7.1 7.6.1](/docs/online/07-freemode.md#761-the-60-network-event-types-second-pass)) |
 | ON-052 | How migration chooses a new owner and host | Engine reverse engineering | Open |
 
 ### [Stats, tunables and the server's role](/docs/online/stats-and-tunables.md) (R7.3)
