@@ -450,7 +450,7 @@ These are Online systems: read them, never mod them in Online. For a story-mode 
 | --- | --- |
 | How the yacht, Kosatka and other vehicles-as-properties are bought and placed | Answered in [45.6a](#yachts-and-other-vehicles-as-properties) (second pass) |
 | Where garage capacities and vehicle slots are stored, and how a personal vehicle is saved per slot | Partly answered in [45.6a](#garage-sizes-and-personal-vehicle-records): sizes per slot and the 607 `MPSV_*` records; where colours and mods are kept is still open |
-| The simple-interior entrance positions and which script places the doors | Partly answered in [45.6a](#simple-interior-entrances): the mechanism and the mansions; the other types' positions sit behind per-type function pointers |
+| The simple-interior entrance positions and which script places the doors | Partly answered in [45.6a](#simple-interior-entrances): the mechanism, all 180 interior ids, and the entrances of the mansions and salvage yards; the other types' positions sit behind per-type function pointers |
 | Instance numbering of `am_mp_property_int` (owner id, building, or both) | Answered in [45.6a](#interior-instances): per owner, rows 0 to 31, 32 without an owner |
 | Daily property fees (utility bills) and how they are charged | Answered in [45.6a](#daily-property-fees-utility-bills) |
 | The business side of each simple interior | Answered in [organisations and businesses](/docs/online/organisations-and-businesses.md#464-the-business-loop) (R7.7) |
