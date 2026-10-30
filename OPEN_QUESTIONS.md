@@ -86,7 +86,7 @@ Test only: GS-003 (does the return to story mode restart every script), CORE-001
 | P3.9 | [Heists](/docs/online/heists.md) (R7.8): fail bands, casino targets, Cayo loot, the classic planning board, elite rewards, story arcs, crew skill | ON-019, ON-020, ON-021, ON-022, ON-023, ON-024, ON-025, GP-019 | scripts | Partly done, branch `research/second-pass-phase3` (ON-020, ON-022, ON-025 answered, ON-023 mostly; ON-019, ON-021, ON-024, GP-019 left); new ON-076 |
 | P3.10 | [DLC storylines](/docs/online/dlc-storylines.md) (R7.9): stats per flow step, voice-only flows, arrival updates, missing flows, mp2025_02 | ON-014, ON-015, ON-016, ON-017, ON-018 | scripts, data | Partly done, branch `research/second-pass-phase3` (ON-016 answered; ON-014, ON-015, ON-017, ON-018 left) |
 | P3.11 | [Creator internals](/docs/online/creator-internals.md) (R7.11): prop limits, hidden libraries, the two prop writers, checkpoint fields, other creators' placement | ON-007, ON-008, ON-010, ON-011, ON-012, ON-013 | scripts | Partly done, branch `research/second-pass-phase3` (ON-007 answered; ON-008, ON-010 to ON-013 left) |
-| P3.12 | [Story systems in an Online mode](/docs/online/story-systems-in-online-mode.md) (R5.7): the shop table, ped brain sets | ON-057, ON-059 | scripts | Partly done, with R6.7 (ON-059 left) |
+| P3.12 | [Story systems in an Online mode](/docs/online/story-systems-in-online-mode.md) (R5.7): the shop table, ped brain sets | ON-057, ON-059 | scripts | Done, with R6.7, branch `research/second-pass-phase3`; new CORE-031 |
 
 Test only: GP-054 (parent head counts), ON-058 (story clothes shop with a freemode ped; single player only). Engine only: ON-009 (creator budget), ON-052 (migration). Later: ON-048 (service natives in story scripts), ON-053 (a tunables list tool; needs the maintainer, as `tools/` does).
 
@@ -112,7 +112,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | Category | Guides | Questions |
 | --- | --- | --- |
 | [Getting started](#getting-started) (`GS-`) | 1 | 3 |
-| [Core engine](#core-engine) (`CORE-`) | 8 | 30 |
+| [Core engine](#core-engine) (`CORE-`) | 8 | 31 |
 | [Entities](#entities) (`ENT-`) | 9 | 39 |
 | [Physics](#physics) (`PHY-`) | 4 | 18 |
 | [AI](#ai) (`AI-`) | 13 | 50 |
@@ -125,7 +125,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [Performance](#performance) (`PERF-`) | 9 | 28 |
 | [Scripting](#scripting) (`SCR-`) | 4 | 14 |
 | [File formats](#file-formats) (`FF-`) | 2 | 6 |
-| **Total** | | **426** |
+| **Total** | | **427** |
 
 ## Getting started
 
@@ -208,6 +208,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | CORE-030 | Which natives changed between 3725 and 3889 | R11.1 second pass, with the native crossmap (R0.3) | Open |
+| CORE-031 | Which brain set the engine gives the random-ped brains added with `ADD_SCRIPT_TO_RANDOM_PED` (no script registers into sets 2 or 4) | Third pass, the executable | Open |
 
 ## Entities
 
@@ -796,7 +797,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | --- | --- | --- | --- |
 | ON-057 | The full shop table (index, position, type) from `shop_controller` | Second pass; feeds shop mods | Answered: all 65 entries by script, the cosmetic shops with name, position and interior ([R6.7](/docs/gameplay/player/online-cosmetic-shops.md#the-shop-table)) |
 | ON-058 | What exactly `clothes_shop_sp` does with a freemode ped (refuses, shows story stock, or breaks) | In-game test | Open |
-| ON-059 | What sets 2 and 4 contain (ped brains) | Second pass | Open |
+| ON-059 | What sets 2 and 4 contain (ped brains) | Second pass | Answered: no script registers into sets 2 or 4; the three `pb_prostitute` ped brains take no set ([R5.7 7.3](/docs/online/story-systems-in-online-mode.md#73-script-brains-and-brain-sets)); new CORE-031 |
 | ON-060 | How bits 16, 32 and 64 in these masks are raised (they end some systems on other occasions) | R1.2 second pass | Partly answered: 64 with 8 by `main`, `mission_repeat_controller`, `benchmark`; 16 and 32 only by the engine ([runtime scripts 1.3](/docs/core/runtime-scripts.md#every-force-cleanup-bit-second-pass)) |
 
 ### [Transitions and sessions](/docs/online/transitions-and-sessions.md) (R7.2)

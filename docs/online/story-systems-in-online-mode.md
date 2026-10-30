@@ -56,7 +56,7 @@ Each story script registers a force-cleanup mask with `HAS_FORCE_CLEANUP_OCCURRE
 | 8 | 5 | 13 | Online: `AM_MP_PROPERTY_EXT`, `AM_MP_GARAGE_CONTROL`, `AM_MP_CARWASH_LAUNCH`; beds, showers and laptops in Online properties (`ob_mp_bed_high`, `laptop_trigger`) |
 | 9 (1 and 8) | 1 | 15 | Both modes: `act_cinema`; ATMs (`prop_atm_01` to `_03`, `prop_fleeca_atm` → `atm_trigger`), vending machines (`ob_vend1`, `ob_vend2`), telescopes, shop tills (`ob_cashregister`) |
 
-Sets 2 and 4 hold the ped brains (scripts attached to random peds) (**Known**).
+Sets 2 and 4 hold the ped brains (scripts attached to random peds) (**Known**). *Second pass (2026-10-30, **Verified**):* no script registers anything into set 2 or 4; every world-point and object brain uses set 1, 8 or 9. The only ped brains in the build are three `ADD_SCRIPT_TO_RANDOM_PED("pb_prostitute", ...)` calls, one per hooker model (`s_f_y_hooker_01` to `_03`), and that native takes no set argument. So the switches that disable 4 and enable 2 act on brains the engine owns, if any. Which set the engine gives a random-ped brain is CORE-031 (third pass).
 
 **Who switches the sets** (**Verified**):
 
@@ -99,5 +99,6 @@ Consequences:
 | --- | --- |
 | The full shop table (index, position, type) from `shop_controller` | Second pass; feeds shop mods |
 | What exactly `clothes_shop_sp` does with a freemode ped (refuses, shows story stock, or breaks) | In-game test |
-| What sets 2 and 4 contain (ped brains) | Second pass |
+| What sets 2 and 4 contain (ped brains) | Answered in [7.3](#73-script-brains-and-brain-sets) (second pass): no script registers into them; the three `pb_prostitute` ped brains take no set |
+| Which brain set the engine gives the random-ped brains added with `ADD_SCRIPT_TO_RANDOM_PED` (CORE-031) | Third pass, the executable |
 | How bits 16, 32 and 64 in these masks are raised (they end some systems on other occasions) | R1.2 second pass |
