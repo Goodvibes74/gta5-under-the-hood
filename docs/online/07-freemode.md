@@ -165,5 +165,5 @@ It also calls `GET_NETWORK_TIME` 633 times, `NETWORK_IS_ACTIVITY_SESSION` 621 ti
 | What each of the 183 running-state functions does in detail (this pass labels them from strings only) | R7.1 second pass, per system |
 | Names of the 60 network event ids and the main script event hashes | Partly answered in [7.6.1](#761-the-60-network-event-types-second-pass): every network event type described by its data and handler; the scripts carry no names for them or for the 381 script-event hashes |
 | The fields of the player and server broadcast data | R0.4 global map |
-| What `freemode_clearGlobals` resets and when | R7.2 |
+| What `freemode_clearGlobals` resets and when | Answered in [R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass): 31 reset steps, run once at `freemode` start |
 | How the host's rotation through participants works | Mostly answered (second pass): `freemode` has 47 separate counters, each visiting one of the 32 player slots per frame and wrapping to 0 (a full pass every 32 frames). The host's work uses the same pattern; which counter belongs to the host state was not pinned |

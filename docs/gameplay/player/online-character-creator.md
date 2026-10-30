@@ -152,7 +152,7 @@ Server-authoritative stats are written through the server and only land when it 
 | How the slider values (0 to 100, -1 to 1) are scaled into the saved `FEATURE_n` and `HEADBLEND_*` floats, and which `FEATURE_n` is which morph | Next pass, the save function and the stat enum mapping |
 | The outfit group names (`BEA`, `CAS` ...) and the components of each starter outfit | Next pass, the outfit tables |
 | The appearance fee and cooldown values | R7.3 tunables, `freemode` |
-| Which transition state opens the creator, and what menu `-1392473901` is (used 3 times, probably the character select) | R7.2 second pass |
+| Which transition state opens the creator, and what menu `-1392473901` is (used 3 times, probably the character select) | Answered: the "LOBBY LIST" screen, and state 32 when the transition's destination is 2 ([R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) |
 
 ## Test cards
 
