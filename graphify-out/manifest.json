@@ -138,10 +138,10 @@
     "semantic_hash": "e8c326deccd5ad357ff28c29fd8f1323"
   },
   "OPEN_QUESTIONS.md": {
-    "mtime": 1793340222.2213757,
-    "seen": 1793340578.7277868,
-    "ast_hash": "7cf8bc9d68481554f1d4ff6244653c06",
-    "semantic_hash": "7cf8bc9d68481554f1d4ff6244653c06"
+    "mtime": 1793344525.791808,
+    "seen": 1793353978.7533872,
+    "ast_hash": "29ed4e006a8e2d708ea682a2ddf8f2f4",
+    "semantic_hash": "29ed4e006a8e2d708ea682a2ddf8f2f4"
   },
   "README.md": {
     "mtime": 1793040995.6147776,
@@ -330,16 +330,16 @@
     "semantic_hash": "38d751c9616db650b84cc2897b68200f"
   },
   "docs/core/archives-and-content.md": {
-    "mtime": 1793040995.625198,
-    "seen": 1793041533.9843397,
-    "ast_hash": "988c1bdfc6c996ae902a0b029e010a53",
-    "semantic_hash": "988c1bdfc6c996ae902a0b029e010a53"
+    "mtime": 1793344525.8987296,
+    "seen": 1793353978.7540143,
+    "ast_hash": "b0a8a27315d8b6d7d3e8e22909232207",
+    "semantic_hash": "b0a8a27315d8b6d7d3e8e22909232207"
   },
   "docs/core/completion-and-autosave.md": {
-    "mtime": 1793040995.625198,
-    "seen": 1793041533.9843407,
-    "ast_hash": "19e5f796d84588b18c2d84b30a253a51",
-    "semantic_hash": "19e5f796d84588b18c2d84b30a253a51"
+    "mtime": 1793344526.0110428,
+    "seen": 1793353978.7544239,
+    "ast_hash": "3be616bab68b1ea8964a07f69a0c6a70",
+    "semantic_hash": "3be616bab68b1ea8964a07f69a0c6a70"
   },
   "docs/core/global-map.md": {
     "mtime": 1793340101.4436796,
@@ -348,28 +348,28 @@
     "semantic_hash": "9edfa114c3436f3206d8d815ac1af956"
   },
   "docs/core/memory-and-pools.md": {
-    "mtime": 1793040995.625198,
-    "seen": 1793041533.984343,
-    "ast_hash": "08df8eb1b0669dbd0fe0f24b9c883788",
-    "semantic_hash": "08df8eb1b0669dbd0fe0f24b9c883788"
+    "mtime": 1793344526.1277797,
+    "seen": 1793353978.7548003,
+    "ast_hash": "2a306fc0b34f08f407ca79bf0645db44",
+    "semantic_hash": "2a306fc0b34f08f407ca79bf0645db44"
   },
   "docs/core/runtime-scripts.md": {
-    "mtime": 1793040995.625198,
-    "seen": 1793041533.9843442,
-    "ast_hash": "88a1031cc0bdd78bc05825577b87308b",
-    "semantic_hash": "88a1031cc0bdd78bc05825577b87308b"
+    "mtime": 1793344526.2485402,
+    "seen": 1793353978.755201,
+    "ast_hash": "7ae9166d151ca033ec4d29223d5d3cac",
+    "semantic_hash": "7ae9166d151ca033ec4d29223d5d3cac"
   },
   "docs/core/saves.md": {
-    "mtime": 1793040995.625198,
-    "seen": 1793041533.9843454,
-    "ast_hash": "0dc6a8d6eb150ab616965d43f40d2412",
-    "semantic_hash": "0dc6a8d6eb150ab616965d43f40d2412"
+    "mtime": 1793344526.3593247,
+    "seen": 1793353978.7556334,
+    "ast_hash": "88c12bfd2a744619bbdaadde0580455f",
+    "semantic_hash": "88c12bfd2a744619bbdaadde0580455f"
   },
   "docs/core/streaming.md": {
-    "mtime": 1793040995.625198,
-    "seen": 1793041533.9843466,
-    "ast_hash": "105258a384cdcd88739eeac12e3b14e9",
-    "semantic_hash": "105258a384cdcd88739eeac12e3b14e9"
+    "mtime": 1793344526.486298,
+    "seen": 1793353978.7559786,
+    "ast_hash": "33c59b5acb5d545cdbb4c99f5dc35866",
+    "semantic_hash": "33c59b5acb5d545cdbb4c99f5dc35866"
   },
   "docs/core/surviving-updates.md": {
     "mtime": 1793040995.625198,
@@ -480,10 +480,10 @@
     "semantic_hash": "df88737738a46a93138c2cfa57bf9fc6"
   },
   "docs/gameplay/economy/economy-and-pickups.md": {
-    "mtime": 1793040995.6307242,
-    "seen": 1793041533.9843686,
-    "ast_hash": "bffa427f74f6661b8a8e117ac732d2ee",
-    "semantic_hash": "bffa427f74f6661b8a8e117ac732d2ee"
+    "mtime": 1793344526.603966,
+    "seen": 1793353978.7563205,
+    "ast_hash": "21a69166da6dcfad291c578b83ecf8d7",
+    "semantic_hash": "21a69166da6dcfad291c578b83ecf8d7"
   },
   "docs/gameplay/missions/README.md": {
     "mtime": 1793040995.6307242,
@@ -504,10 +504,10 @@
     "semantic_hash": "0ebd2d2bc508a836af5434f6ba9d2669"
   },
   "docs/gameplay/missions/mission-anatomy.md": {
-    "mtime": 1793040995.63096,
-    "seen": 1793041533.984379,
-    "ast_hash": "9b7f0f4644b00bcf9c86720fd56f5ff4",
-    "semantic_hash": "9b7f0f4644b00bcf9c86720fd56f5ff4"
+    "mtime": 1793344526.7059596,
+    "seen": 1793353978.7566733,
+    "ast_hash": "c942557461bdc89aa7f2e169571a10b5",
+    "semantic_hash": "c942557461bdc89aa7f2e169571a10b5"
   },
   "docs/gameplay/missions/replay-director-and-editor.md": {
     "mtime": 1793040995.63096,
@@ -516,10 +516,10 @@
     "semantic_hash": "87370ab7bc112bd59ac72e65b2d7c8e9"
   },
   "docs/gameplay/missions/story-flow.md": {
-    "mtime": 1793040995.63096,
-    "seen": 1793041533.9843824,
-    "ast_hash": "1f4efb1f7486f4d2b99869c7a950a998",
-    "semantic_hash": "1f4efb1f7486f4d2b99869c7a950a998"
+    "mtime": 1793344526.8232067,
+    "seen": 1793353978.757172,
+    "ast_hash": "210c8a600d75b075637c3bde51d15e80",
+    "semantic_hash": "210c8a600d75b075637c3bde51d15e80"
   },
   "docs/gameplay/missions/story-script-catalog.md": {
     "mtime": 1793040995.63096,
@@ -540,10 +540,10 @@
     "semantic_hash": "ab35f876dc76524192e56a70af75946c"
   },
   "docs/gameplay/player/character-switching.md": {
-    "mtime": 1793040995.6363544,
-    "seen": 1793041533.9843876,
-    "ast_hash": "f9bb397bc1006f747cf70b3980bb5dc1",
-    "semantic_hash": "f9bb397bc1006f747cf70b3980bb5dc1"
+    "mtime": 1793344526.9801245,
+    "seen": 1793353978.7575762,
+    "ast_hash": "7d50b86fe12104dbbc162c7576dacd33",
+    "semantic_hash": "7d50b86fe12104dbbc162c7576dacd33"
   },
   "docs/gameplay/player/controls-and-camera.md": {
     "mtime": 1793040995.6363544,
@@ -1446,10 +1446,10 @@
     "semantic_hash": "fc9c3a51948c64ddc0a9a508f3f885b7"
   },
   "scripting/script-launch-graph.md": {
-    "mtime": 1793040995.6587777,
-    "seen": 1793041533.9846222,
-    "ast_hash": "0ab723b166d7e1e72efcdfce69c28253",
-    "semantic_hash": "0ab723b166d7e1e72efcdfce69c28253"
+    "mtime": 1793344527.1354759,
+    "seen": 1793353978.758095,
+    "ast_hash": "117e9f212875088effa3e109b80e9129",
+    "semantic_hash": "117e9f212875088effa3e109b80e9129"
   },
   "scripting/script-vm.md": {
     "mtime": 1793040995.6587777,

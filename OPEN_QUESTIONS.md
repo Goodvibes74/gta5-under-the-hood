@@ -63,11 +63,11 @@ Test only: UI-002 (draw lists and depths), UI-017 (which DLC text block wins a c
 | --- | --- | --- | --- | --- |
 | P2.1 | [Boot](/docs/00-getting-started/boot.md) and [runtime scripts](/docs/core/runtime-scripts.md) (R1.2, R0.2): how `main`, `initial` and `startup` start, force-cleanup bits, `profiler_registration`, level index 5, the path to `prologue1` | CORE-017, CORE-018, CORE-019, GS-001, GS-002, ON-060 | scripts | Done for scripts, [#114](https://github.com/Goodvibes74/gta5-under-the-hood/pull/114) and branch `research/R1.2-boot-second-pass` (CORE-018's engine side needs the executable) |
 | P2.2 | [The global map](/docs/core/global-map.md) (R0.4): the player and server broadcast data, blocks 13 and 15, the **Known** rows | CORE-009, CORE-011, CORE-012, ON-003, ON-050 | scripts | Partly done, [#115](https://github.com/Goodvibes74/gta5-under-the-hood/pull/115) and branch `research/R0.4-global-map-second-pass-2` (per-bit and per-stat field names, server broadcast fields left) |
-| P2.3 | [Saves](/docs/core/saves.md) (R1.7): the full section tree, the save upgrade, spending categories | CORE-022, CORE-023, GP-004 | scripts | Open |
-| P2.4 | [Completion and autosave](/docs/core/completion-and-autosave.md) (R5.3): autosave triggers, completion flags, the 23 achievements, the retry snapshot, mission replays | CORE-005, CORE-006, CORE-007, CORE-025, GP-018, GP-020, GP-033 | scripts | Open |
-| P2.5 | [Archives and content](/docs/core/archives-and-content.md) (R1.6): load phases per change set, `update2.rpf` and the mods folder copy | CORE-002, CORE-003 | data | Open |
-| P2.6 | [Script launch graph](/scripting/script-launch-graph.md) (R0.5): table-driven launches, and the scripts nobody starts by name | CORE-021, GP-009, GP-040 | scripts | Open |
-| P2.7 | [Streaming](/docs/core/streaming.md) and [memory](/docs/core/memory-and-pools.md) (R1.5, R1.4): the SRLs, pool slot costs, vanilla weapon array sizes | CORE-015, CORE-016, CORE-028 | scripts, engine | Open |
+| P2.3 | [Saves](/docs/core/saves.md) (R1.7): the full section tree, the save upgrade, spending categories | CORE-022, CORE-023, GP-004 | scripts | Done, branch `research/second-pass-phase2` |
+| P2.4 | [Completion and autosave](/docs/core/completion-and-autosave.md) (R5.3): autosave triggers, completion flags, the 23 achievements, the retry snapshot, mission replays | CORE-005, CORE-006, CORE-007, CORE-025, GP-018, GP-020, GP-033 | scripts | Done, branch `research/second-pass-phase2` (six Online achievement checks left for R7.3) |
+| P2.5 | [Archives and content](/docs/core/archives-and-content.md) (R1.6): load phases per change set, `update2.rpf` and the mods folder copy | CORE-002, CORE-003 | data | Partly done, branch `research/second-pass-phase2` (the moment each change-set group runs needs the executable) |
+| P2.6 | [Script launch graph](/scripting/script-launch-graph.md) (R0.5): table-driven launches, and the scripts nobody starts by name | CORE-021, GP-009, GP-040 | scripts | Mostly done, branch `research/second-pass-phase2` (`freemode`'s activity table and the property tables left) |
+| P2.7 | [Streaming](/docs/core/streaming.md) and [memory](/docs/core/memory-and-pools.md) (R1.5, R1.4): the SRLs, pool slot costs, vanilla weapon array sizes | CORE-015, CORE-016, CORE-028 | scripts, engine | Partly done, branch `research/second-pass-phase2` (CORE-028 answered; pool slot costs and the built-in weapon array sizes need the executable) |
 
 Test only: GS-003 (does the return to story mode restart every script), CORE-001 (overlay or replace between two packs), CORE-013, CORE-014 (pool use in a heavy session), CORE-026, CORE-027, CORE-029 (streaming and memory measurements). Engine only: CORE-024 (the save file format). Later: CORE-030 (natives changed in build 3889, with R11.1).
 
@@ -144,17 +144,17 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | CORE-001 | Which data file types overlay (merge) and which replace; how duplicate names between packs resolve | Second pass (test with two packs defining the same handling name) | Open |
-| CORE-002 | The exact load phases for each change-set group | Second pass, with R1.2 boot | Open |
-| CORE-003 | What `update2.rpf` holds in build 3725 and why the mods folder has a copy | Second pass | Open |
+| CORE-002 | The exact load phases for each change-set group | Second pass, with R1.2 boot | Partly answered: the 12 groups, which packs use which, how the title update feeds the `UPDATE` groups ([archives 8.6.1](/docs/core/archives-and-content.md#861-the-change-set-groups-second-pass)); the exact moment each runs needs the executable |
+| CORE-003 | What `update2.rpf` holds in build 3725 and why the mods folder has a copy | Second pass | Answered: scripts, text, shaders, job files and the version moved there from `update.rpf`; the mods copy differs in 9 shaders ([archives 8.2.1](/docs/core/archives-and-content.md#821-what-update2rpf-holds-second-pass)) |
 
 ### [Completion, autosave and achievements](/docs/core/completion-and-autosave.md) (R5.3)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | CORE-004 | The text of each completion label (block not found) | Second pass, with every text block | Answered: [completion 16.3](/docs/core/completion-and-autosave.md#163-the-completion-list) (199 have text; 121 are internal names with no text) |
-| CORE-005 | What each completion entry's flags and map numbers mean | Second pass, `func_699` | Open |
-| CORE-006 | Every autosave trigger, from the request fields | Second pass, follow `Global_102468` | Open |
-| CORE-007 | Which 23 achievements the controller awards, by name | Second pass, with the achievement list | Open |
+| CORE-005 | What each completion entry's flags and map numbers mean | Second pass, `func_699` | Answered: the 12 values of an entry, the heist-choice flag, the packed IDs and the completion position ([completion 16.3](/docs/core/completion-and-autosave.md#163-the-completion-list)) |
+| CORE-006 | Every autosave trigger, from the request fields | Second pass, follow `Global_102468` | Answered: the 11 request values, the 220 scripts that ask, the 9 missions that don't, and when the controller refuses or waits ([completion 16.5.1](/docs/core/completion-and-autosave.md#1651-how-a-save-is-asked-for-and-when-it-is-refused-second-pass)) |
+| CORE-007 | Which 23 achievements the controller awards, by name | Second pass, with the achievement list | Answered: the 23 IDs with their conditions (**Verified**) and names (**Known**) ([completion 16.6](/docs/core/completion-and-autosave.md#166-achievements)); six Online conditions in their own functions left for R7.3 |
 | CORE-008 | `SC_MSC_` labels whose text is in a text block not read in the first pass *(from the guide's text)* | Second pass | Answered: [completion 16.3](/docs/core/completion-and-autosave.md#163-the-completion-list) |
 
 ### [The global variable map](/docs/core/global-map.md) (R0.4)
@@ -172,8 +172,8 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | --- | --- | --- | --- |
 | CORE-013 | A PoolManager crash log from the test install names `cscenarioinfo` at size 250, the vanilla value, while the start-up log shows 885: was the modded `gameconfig.xml` not loaded on that launch, or does the crash log print the vanilla size? | Test card 1 on the next crash | Open |
 | CORE-014 | Real usage of the busiest pools in a heavy session (turn on PoolManager's usage warning for one launch) | Second pass | Open |
-| CORE-015 | Memory cost of each raised pool (bytes per slot) | Second pass | Open |
-| CORE-016 | The vanilla built-in sizes of the weapon arrays that WeaponLimitsAdjuster raises | Second pass | Open |
+| CORE-015 | Memory cost of each raised pool (bytes per slot) | Second pass | Open: needs the executable or a memory tool (scripts, `gameconfig.xml` and PoolManager's logs give no item size) |
+| CORE-016 | The vanilla built-in sizes of the weapon arrays that WeaponLimitsAdjuster raises | Second pass | Partly answered: vanilla loads 140 weapon-info and 20 weapon-component files from its packs, a lower bound ([memory 7.9](/docs/core/memory-and-pools.md#79-open-questions)); the built-in sizes need the executable |
 
 ### [Runtime scripts: the scripts that keep the game running](/docs/core/runtime-scripts.md) (R0.2)
 
@@ -183,16 +183,16 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | CORE-018 | What exactly the engine does to start `main`, `initial` and `startup`, and in which order | R1.2 | Partly answered: no script starts them, and the order follows from what each reads and waits for ([boot 3.3](/docs/00-getting-started/boot.md#33-inside-the-boot-scripts)); the engine call needs the executable |
 | CORE-019 | What `profiler_registration` (global block 2) is and whether anything starts it | R0.4 | Answered: empty script, block 2 never used ([runtime scripts 1.5](/docs/core/runtime-scripts.md#15-global-blocks)) |
 | CORE-020 | The story flags that pick the active mission triggerer | R5.1 | Open |
-| CORE-021 | Resolve table-driven launches (second pass of the graph) | R0.5 | Open |
+| CORE-021 | Resolve table-driven launches (second pass of the graph) | R0.5 | Mostly answered: 502 non-literal launches, 220 followed back to 391 scripts, six tables read, 296 scripts nothing starts ([launch graph](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass)); `freemode`'s activity table and the property tables left |
 
 ### [Saves: what the story save holds and how scripts write it](/docs/core/saves.md) (R1.7)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| CORE-022 | The full tree of nested and run-time-named sections, with offsets | Second pass: walk every registration function | Open |
-| CORE-023 | What the upgrade function does for older save versions | Second pass, `startup` `func_21` | Open |
+| CORE-022 | The full tree of nested and run-time-named sections, with offsets | Second pass: walk every registration function | Answered: all 67 top-level sections and 58 loose fields with offsets, deeper levels summarised ([saves 15.4](/docs/core/saves.md#154-whats-in-the-story-save)) |
+| CORE-023 | What the upgrade function does for older save versions | Second pass, `startup` `func_21` | Answered: six fixes for versions 1.0 to 1.5 ([saves 15.5.1](/docs/core/saves.md#1551-the-save-upgrade)) |
 | CORE-024 | The save file's on-disk format and how names map to it | Reverse engineering, outside the scripts | Open |
-| CORE-025 | What triggers an autosave, and completion | R5.3 | Open |
+| CORE-025 | What triggers an autosave, and completion | R5.3 | Answered with CORE-006 ([completion 16.5.1](/docs/core/completion-and-autosave.md#1651-how-a-save-is-asked-for-and-when-it-is-refused-second-pass)) |
 
 ### [Streaming: how assets get into memory](/docs/core/streaming.md) (R1.5)
 
@@ -200,7 +200,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | --- | --- | --- | --- |
 | CORE-026 | How `TextureQuality` values map to the menu, and how much memory each level takes on shared graphics | R18.2, R18.3 | Open |
 | CORE-027 | The streaming memory budget (how the engine splits RAM between stores), and what HeapAdjuster changes in it | R18.3 | Open |
-| CORE-028 | Which SRLs exist (13 names in scripts) and what each covers | Second pass | Open |
+| CORE-028 | Which SRLs exist (13 names in scripts) and what each covers | Second pass | Answered: 207 SRLs in `srllist.meta` plus 14 DLC lists, 20 started by name ([streaming 10.4.1](/docs/core/streaming.md#1041-the-srls-second-pass)) |
 | CORE-029 | Measure a pop-in case: drive fast through the city at `LodScale` 0 and 0.5 with a frame-time log, compare hitches and memory | Test card below, R18.2 | Open |
 
 ### [Surviving game updates](/docs/core/surviving-updates.md) (R11.1, R11.2, R11.3, R11.4, R11.5)
@@ -502,7 +502,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | GP-001 | How `stock_controller` moves prices and which story events move which company | Second pass | Open |
 | GP-002 | Where `pickup_controller` places each pickup and when they respawn | Second pass: its coordinate tables | Open |
 | GP-003 | How shop robberies pay out (the till amounts) | Second pass: `shoprobberies` | Open |
-| GP-004 | The full list of `SPx_MONEY_SPENT_*` categories | R1.7 | Open |
+| GP-004 | The full list of `SPx_MONEY_SPENT_*` categories | R1.7 | Answered: 10 categories plus the total, and a second shop family `SPx_SP_MONEY_SPENT_*` ([economy](/docs/gameplay/economy/economy-and-pickups.md#where-story-money-is-booked-second-pass)) |
 
 ### [Cutscenes and dialogue](/docs/gameplay/missions/cutscenes-and-dialogue.md) (R5.6)
 
@@ -531,9 +531,9 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | --- | --- | --- | --- |
 | GP-016 | Where `armenian1`, `jewelry_heist` and `trevor1` set the skip flag (`Global_96580`), since they don't do it in their own code | Next pass of R5.2 or R5.8 | Open |
 | GP-017 | The exact meaning of `replay_controller` states 1 to 6 and 11 to 13 | R5.8 | Open |
-| GP-018 | How the snapshot in `Global_108447` is restored on retry, and what it leaves out | R5.3 | Open |
+| GP-018 | How the snapshot in `Global_108447` is restored on retry, and what it leaves out | R5.3 | Answered: clock, weather, cash, weapons, outfits, tattoos, special ability, texts and the player ped are restored; other stats and the world aren't ([mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip)) |
 | GP-019 | How crew skill changes the heist take and the fail labels in `Local_3373` | R7.8 (heists) | Open |
-| GP-020 | How `mission_repeat_controller` replays a mission without moving the flow (from guide 2) | R5.3 | Open |
+| GP-020 | How `mission_repeat_controller` replays a mission without moving the flow (from guide 2) | R5.3 | Answered: the flow-started flag is cleared and the game is saved and reloaded around the replay ([mission anatomy 3.9](/docs/gameplay/missions/mission-anatomy.md#39-passing)) |
 | GP-021 | What the mission triggerers build before a mission starts (lead-in scenes, from guide 2) | R5.2 second pass | Open |
 | GP-022 | Where `armenian1`, `jewelry_heist` and `trevor1` unlock their skip (they honour `Global_96581` but don't set `Global_96580` themselves) *(from the guide's text)* | Second pass | Open |
 
@@ -556,7 +556,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | GP-030 | How `agency_heist2` and Blitz prep 3 are reached | R5.2 | Open |
 | GP-031 | The pass and fail labels of each mission command: what happens on a fail | R5.2 (the mission side is in [guide 3](/docs/gameplay/missions/mission-anatomy.md#37-failing); the flow side is still open) | Partly answered |
 | GP-032 | What the flow integers (`f_99.f_58`) hold; index 120 is read 1,434 times | R5.1, R5.3 | Open |
-| GP-033 | How `mission_repeat_controller` replays a mission without moving the flow | R5.2 | Open |
+| GP-033 | How `mission_repeat_controller` replays a mission without moving the flow | R5.2 | Answered with GP-020 ([mission anatomy 3.9](/docs/gameplay/missions/mission-anatomy.md#39-passing)) |
 
 ### [Strangers, freaks and side content](/docs/gameplay/missions/strangers-and-freaks.md) (R5.4)
 
@@ -573,7 +573,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | GP-037 | What each character's saved state holds (position, outfit, weapons, vehicle, money) and where in the story save | Second pass, with R1.7 saves and the [global map](/docs/core/global-map.md) | Open |
 | GP-038 | The 42-entry scene table's conditions (time, place, mission state) | Second pass | Open |
 | GP-039 | The meaning of switch flag bits 1, 2, 4, 8 | NativeDB notes plus a test card | Open |
-| GP-040 | Who starts the `family_scene_*` scripts | R0.5 second pass (launch graph) | Open |
+| GP-040 | Who starts the `family_scene_*` scripts | R0.5 second pass (launch graph) | Answered: `main`, within 100 m of five house points ([launch graph](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass)) |
 
 ### [Controls and camera](/docs/gameplay/player/controls-and-camera.md) (R6.4)
 

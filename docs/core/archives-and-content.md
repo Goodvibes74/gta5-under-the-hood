@@ -2,7 +2,7 @@
 
 How GTA V decides what to load: RPF archives, the DLC pack list, each pack's `setup2.xml` and `content.xml`, the order in which packs override each other, what OpenIV's mods folder does, and the difference between add-on and replacement mods. Roadmap topic **R1.6** in the [roadmap](/ROADMAP.md). Builds on the pack inventory in [DLC packs](/docs/entities/vehicles/dlc-packs.md) and the [RPF format page](/file-formats/rpf.md).
 
-**How it was made.** `common\data\dlclist.xml` was extracted from the vanilla `update\update.rpf` and from a modded copy in OpenIV's mods folder, and `setup2.xml` (plus `content.xml` for two packs) from 8 vanilla DLC packs and 12 add-on packs of a test install, with the read-only [RPF tools](/tools/README.md). The setup fields were read with PowerShell's XML parser. **Verified** unless marked **Known**.
+**How it was made.** `common\data\dlclist.xml` was extracted from the vanilla `update\update.rpf` and from a modded copy in OpenIV's mods folder, and `setup2.xml` (plus `content.xml` for two packs) from 8 vanilla DLC packs and 12 add-on packs of a test install, with the read-only [RPF tools](/tools/README.md). The setup fields were read with PowerShell's XML parser. **Verified** unless marked **Known**. *Second pass (2026-10-30):* `update2.rpf` and the title update's own `setup2.xml` and `content.xml` were listed and read, every vanilla pack's `setup2.xml` was collected with `tools/dlc-scan.ps1`, and the change-set group names were read as strings from `GTA5.exe`.
 
 ## 8.1 Short version
 
@@ -20,11 +20,29 @@ How GTA V decides what to load: RPF archives, the DLC pack list, each pack's `se
 | `common.rpf` | Base data files (`common\data\...`): the original `handling.meta`, `weapons.meta`, `gameconfig.xml` and the rest, later overridden by the title update |
 | `x64a.rpf` to `x64w.rpf` | Base platform assets: models, textures, map, audio, the first four DLC packs (`platform:/dlcPacks/mpBeach/` and so on, **Known**: they have no folder in `updateddlcpacks`) |
 | `update\update.rpf` | The title update: newer copies of data files, compiled scripts (`script_rel.rpf`), `dlclist.xml`, `gameconfig.xml`, text |
-| `update\update2.rpf` | A second title-update archive (later builds) |
+| `update\update2.rpf` | A second title-update archive: the files that change with every update (scripts, text, shaders, Online job files; [8.2.1](#821-what-update2rpf-holds-second-pass)) |
 | `update\x64\dlcpacks\<pack>\dlc.rpf` | One per DLC pack: `setup2.xml`, `content.xml`, data files, nested archives |
 | `Mods\...` | OpenIV's mods folder: full copies of any of the above that a mod changed, plus add-on packs |
 
 Rockstar's archives encrypt each file; add-on packs made with OpenIV usually don't ([RPF format](/file-formats/rpf.md)).
+
+### 8.2.1 What `update2.rpf` holds (second pass)
+
+Listed with [`tools/rpf-cw.ps1`](/tools/README.md) from a vanilla build 1.0.3725.0 install (**Verified**). `update2.rpf` is 494 MB and holds 11,243 files, in seven groups:
+
+| Path inside `update2.rpf` | Files | What |
+| --- | ---: | --- |
+| `x64\levels\gta5\script\script_rel.rpf` | 1,143 `.ysc` | **Every compiled game script** (the archive is 385 MB) |
+| `x64\data\lang\<language>_rel.rpf` | 13 archives, 7,930 `.gxt2` | **All game text**, one archive per language |
+| `common\shaders\win32_40_final`, `win32_40_lq_final`, `win32_nvstereo_final` | 375 each | **Compiled shaders**, for the normal, low-quality and NVIDIA 3D Vision paths; plus 26 `.sps` shader presets in `common\shaders\db` and `preload.list` |
+| `common\data\ugc` | 1,001 `.ugc` | Rockstar-made Online job and mission files ([UGC files](/docs/online/creator-internals.md)) |
+| `common\data\version.txt` | 1 | The build number: `3725.0-dev_ng_Live`, Online version `1.72`, replay version 4 |
+| `common\data\gta5_cache_y.dat` | 1 | The engine's startup cache |
+| `x64\data\credits.ymt` | 1 | The end credits |
+
+None of these paths is in `update.rpf` any more: `update.rpf` (2.0 GB, 18,393 files) keeps the data files, `dlc_patch` folders, streamed assets and the title-update pack definition, while every file Rockstar changes in nearly every update (scripts, text, shaders, job files, the version) moved to the smaller `update2.rpf`. *Known* reading: a small update then only has to replace one 500 MB archive instead of the 2 GB one.
+
+**Why the mods folder has a copy.** OpenIV copies an archive into `Mods\` the first time a mod edits it, and from then on the game reads the copy. The test install's `Mods\update\update2.rpf` has the same 11,243 file names as the vanilla one; **9 files differ**, all shaders in `common\shaders\win32_40_final` (`default`, `deferred_lightingms`, `deferred_lightingms0`, `ptfx_sprite`, `vehicle_mesh`, `vehicle_tire` and three `vehicle_vehglass` shaders): a graphics mod replaced them. The catch is the same as for `update.rpf`: this copy also freezes the build's **scripts and text**, so after a game update the game would run old scripts from the mods folder until the copy is rebuilt ([surviving updates](/docs/core/surviving-updates.md)).
 
 ## 8.3 `dlclist.xml`
 
@@ -85,6 +103,29 @@ An add-on car needs exactly the first set; most "my car is invisible / doesn't s
 
 **Known** (to check): which file types merge (overlay) and which replace, and how two packs that both define the same vehicle or handling name resolve; this is R1.6's second pass.
 
+### 8.6.1 The change-set groups (second pass)
+
+**The twelve groups.** The executable holds the group names in one table, in this order (**Verified**, read as strings from `GTA5.exe` build 3725): `GROUP_EARLY_ON`, `GROUP_STARTUP`, `GROUP_MAP`, `GROUP_MAP_SP`, `GROUP_ON_DEMAND`, `GROUP_TITLEUPDATE_STARTUP`, `GROUP_UPDATE_STREAMING`, `GROUP_UPDATE_TEXT`, `GROUP_UPDATE_DLC_PATCH`, `GROUP_UPDATE_DLC_METADATA`, `GROUP_UPDATE_WEAPON_PATCH`, `GROUP_POST_DLC_PATCH`.
+
+**Who uses them**, counted over the `setup2.xml` of the 89 packs in `update\x64\dlcpacks` (read with [`tools/dlc-scan.ps1`](/tools/README.md); **Verified**):
+
+| Group | Packs | Which |
+| --- | ---: | --- |
+| `GROUP_STARTUP` | 73 | Nearly every content pack |
+| `GROUP_ON_DEMAND` | 43 | Content packs with parts switched on later (story or Online only) |
+| `GROUP_EARLY_ON` | 41 | Every level pack (map patches) and the `patchday` packs |
+| `GROUP_UPDATE_STREAMING` | 40 | The level packs and the `patchday` packs |
+| `GROUP_MAP` | 37 | Content packs that add map data |
+| `GROUP_TITLEUPDATE_STARTUP`, `GROUP_UPDATE_TEXT`, `_DLC_PATCH`, `_DLC_METADATA`, `_WEAPON_PATCH` | 24 each | Only `patchday2ng` to `patchday24ng` (the title-update patch packs) |
+| `GROUP_POST_DLC_PATCH` | 22 | `patchday3ng` to `patchday24ng` |
+| `GROUP_MAP_SP` | 0 | No vanilla pack |
+
+The pack types are 47 compat packs, 40 level packs and 2 paid packs (`patchday1ng`, `mppatchesng`).
+
+**How the `UPDATE` groups are fed.** The title update is a pack itself: `update.rpf` has its own `setup2.xml` (type `EXTRACONTENT_TU_PACK`, device `TitleUpdateDLC`) and `content.xml`. Its six change sets are `CCS_TITLE_UPDATE_STARTUP`, `_STREAMING`, `_TEXT`, `_DLC_PATCH`, `_DLC_METADATA` and `_WEAPON_PATCH`, all in its `GROUP_ON_DEMAND`; the `GROUP_UPDATE_*` and `GROUP_TITLEUPDATE_STARTUP` group names are those six change sets' phases, and the `patchday` packs join them. What each holds: streaming enables the patched scaleform, animation and particle archives (`scaleform_generic.rpf`, `expressions.rpf`, `ptfx.rpf` ...); text enables `textpatch.meta`; DLC metadata enables `shop_vehicle.meta`, the gen-9 car colour files, the heist-island heightmap and water, and `communitystats.meta`; the DLC patch enables `ExtraTitleUpdateData.meta`. Five more change sets (`CCS_TITLE_UPDATE_DLC_DOWNTOWN_01`, `_INDUST_02`, `_BEVERLY_01`, `_SANPEDRO_01`, `_COUNTRY_04`) are empty in this build (**Verified**).
+
+**When each runs** stays **Known**: early-on before the start-up phase (level and streaming patches are mounted first), start-up and map while the game loads, on-demand when the game switches between story mode and Online (the scripts call `ON_ENTER_SP` and `ON_ENTER_MP`, 3 scripts each). The exact moment of each `UPDATE` group is inside the executable.
+
 ## 8.7 What this means for modders
 
 - **Prefer add-on packs to editing Rockstar's archives.** A new car, ped, weapon or data change in your own pack with one `dlclist.xml` line survives updates and can be switched off by removing the line.
@@ -98,5 +139,5 @@ An add-on car needs exactly the first set; most "my car is invisible / doesn't s
 | Question | Where it goes |
 | --- | --- |
 | Which data file types overlay (merge) and which replace; how duplicate names between packs resolve | Second pass (test with two packs defining the same handling name) |
-| The exact load phases for each change-set group | Second pass, with R1.2 boot |
-| What `update2.rpf` holds in build 3725 and why the mods folder has a copy | Second pass |
+| The exact load phases for each change-set group | Partly answered in [8.6.1](#861-the-change-set-groups-second-pass): the 12 groups, which packs use which, and how the title update feeds the `UPDATE` groups; the exact moment each runs needs the executable |
+| What `update2.rpf` holds in build 3725 and why the mods folder has a copy | Answered in [8.2.1](#821-what-update2rpf-holds-second-pass) |

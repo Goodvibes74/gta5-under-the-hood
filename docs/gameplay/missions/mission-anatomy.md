@@ -90,7 +90,16 @@ Most of the code of a stage is in step 1. A stage with a cutscene follows a fixe
 1. The "failed at this checkpoint" counter in the mission's save record (`f_9092.f_330[mission].f_1`, [guide 2](/docs/gameplay/missions/story-flow.md#23-where-the-flow-lives-in-the-save)) goes back to 0.
 2. `PLAYSTATS_MISSION_CHECKPOINT` sends the short code, the checkpoint, the old and the new number (telemetry; for the finale it adds `A` or `B` from flow integer `f_205[7]`).
 3. The current checkpoint (`Global_102466`) and the "last checkpoint" flag (`Global_96582`) are set.
-4. **A snapshot of the player** goes into `Global_108447`: position and vehicle, weather, current weapon, every character's outfit and props, all weapons and attachments of all three characters, and the purchased-weapon stats. This is what a retry gives back, so a retry doesn't keep ammo or damage from the failed attempt (**Verified** capture; restore **Known**).
+4. **A snapshot of the player** goes into `Global_108447`: position and vehicle, weather, current weapon, every character's outfit and props, all weapons and attachments of all three characters, and the purchased-weapon stats. This is what a retry gives back, so a retry doesn't keep ammo or damage from the failed attempt (**Verified** capture; restore read in the second pass, below).
+
+**Restoring the snapshot** (*second pass*, `replay_controller` build 3725, **Verified**). When the player retries (or skips), `replay_controller` recreates the snapshot's vehicle (with its colours, mods, plate and roof state) and applies the rest; the mission's own checkpoint code places the player (**Known**):
+
+1. **Always:** the clock time and date, and the weather.
+2. **For the characters:** each character's special-ability charge (the `SPx_SPECIAL_ABILITY` stats), weapons and attachments, outfit components and props, and tattoos are copied back into the story save; each character's cash is set back to the snapshot amount, and the bank-account log is rewound to its length at the checkpoint (up to 11 entries), so money spent or earned during the failed attempt is undone.
+3. **Phone:** text messages received after the snapshot's time are deleted.
+4. **The player ped:** the outfit is re-applied; wetness, blood and visible damage are cleared; the snapshot's current weapon is selected if the ped still has it; health is set to full and stamina reset; the wanted level is cleared.
+
+**What it leaves out:** anything that isn't in the snapshot. Stats other than special ability (kills, distances, the `MONEY_SPENT_*` bookkeeping), completion entries, collectables and flow flags set during the failed attempt stay as they are; so does the world (other vehicles, peds, doors).
 
 The checkpoint names are the developers' and say what the checkpoint is for: `armenian1` has `OPENING_CUTSCENE`, `CHOOSE_CAR`, `CHASE_MID_POINT`, `LOSE_COPS`, `GO_TO_HOUSE`; `trevor1` has `Get to Chase`, `Chase the bikers`, `Caravan Park Fight`, `Drive to the trailer`, `Push the trailer`, `Kill / Threaten Ortega`, `Drop Off Ron`; `jewelry_heist` has `STAGE_DRIVE_TO_STORE`, `STAGE_ROOF` (approach A only), `STAGE_GRAB_LOOT`, `STAGE_BIKE_CHASE`, `..._START_OF_TUNNEL`, `..._END_OF_TUNNEL`, `STAGE_CUTSCENE_RAMP_DOWN`, `STAGE_RETURN_TO_BASE`. 150 scripts record checkpoints this way.
 
@@ -138,6 +147,16 @@ The shared pass routine (`func_5` in `armenian1`, **Verified**):
 2. If neither passed nor failed yet, sets **bit 4 (passed)** on the slot, sets bit 1 of `Global_80529` and stores the mission number and the game timer (`Global_80545`, `Global_80546`).
 3. `flow_controller` (moves the strand on, [guide 2](/docs/gameplay/missions/story-flow.md#24-the-flow-program)) and `mission_repeat_controller` (replays from the pause menu, which must not move the flow) read those values (**Verified** that both read `Global_80529`).
 
+**How a replay leaves the flow alone** (*second pass*, `mission_repeat_controller` build 3725, **Verified**). Replaying a mission from the pause menu works by saving the whole game first and loading it again afterwards:
+
+1. The controller fades the screen out, calls `SET_PLAYER_IS_REPEATING_A_MISSION(true)`, stores the player's position in the save, and writes a temporary save with `QUEUE_MISSION_REPEAT_SAVE`. It waits while `GET_STATUS_OF_MISSION_REPEAT_SAVE` is 1 (busy); if it returns 2 (failed), the replay is called off.
+2. It clears the save's **flow-started flag** (`f_9092`, the first value of `FLOW_STRUCT`). `flow_controller` only runs the flow while that flag is set, so nothing the replayed mission does (its pass bit, flow flags) moves a strand.
+3. It starts the mission script itself (stack 64,500; strangers-and-freaks missions by name) and `mission_stat_watcher` (stack 1,828) for the medal screen, and waits for the mission to end. For the heist finales it also waits for the extra scripts they launch.
+4. On a pass it waits up to 20 seconds for the stats screen and up to 30 more while it is shown (missions 19, 21, 22, 84, 85 and 90 skip this wait), fades out, and calls `QUEUE_MISSION_REPEAT_LOAD`; on a fail or quit it loads straight away. The load puts back the game exactly as it was before the replay, so money, weapons and story state from the replay are gone.
+5. Finally it sets the flow-started flag again, clears the running-mission bits in `Global_80529`, calls `SET_PLAYER_IS_REPEATING_A_MISSION(false)` and ends.
+
+If a force cleanup hits during a replay (going to GTA Online), the controller queues the same load before it ends, so the Online switch doesn't keep the replay's state.
+
 Before calling it, `armenian1`'s final stage stops the last cutscene, unlocks Franklin's special ability for good, shows the save and wardrobe tutorials, and records the end-of-mission stats; after it, the full cleanup runs. Medals are worked out from the mission's stat list in the mission table (`f_16`, `f_17`; `mission_stat_watcher`, started by `replay_controller`); that is part of R5.3.
 
 ## 3.10 Cleanup
@@ -160,7 +179,7 @@ When the step is 4 (a restart is setting up), the same cleanup runs but clears t
 | --- | --- |
 | Where `armenian1`, `jewelry_heist` and `trevor1` set the skip flag (`Global_96580`), since they don't do it in their own code | Next pass of R5.2 or R5.8 |
 | The exact meaning of `replay_controller` states 1 to 6 and 11 to 13 | R5.8 |
-| How the snapshot in `Global_108447` is restored on retry, and what it leaves out | R5.3 |
+| How the snapshot in `Global_108447` is restored on retry, and what it leaves out | Answered in [3.6](#36-checkpoints-retry-and-skip) |
 | How crew skill changes the heist take and the fail labels in `Local_3373` | R7.8 (heists) |
-| How `mission_repeat_controller` replays a mission without moving the flow (from guide 2) | R5.3 |
+| How `mission_repeat_controller` replays a mission without moving the flow (from guide 2) | Answered in [3.9](#39-passing) |
 | What the mission triggerers build before a mission starts (lead-in scenes, from guide 2) | R5.2 second pass |

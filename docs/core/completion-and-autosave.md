@@ -40,6 +40,21 @@ Each entry is registered by one call (`func_699` in this build) with: entry numb
 | 13 | 5% | 4 | 5 / 4 | `SC_FR_` friend activities (`SC_FR_BAR`, `SC_FR_CIN`, `SC_FR_DAR`, `SC_FR_STR`) |
 | 0, 4, 6, 8, 12, 14 | none | 44, 1, 20, 33, 13, 2 | | Tracked only: extra strangers and freaks (`SC_RC_EPS*`, `SC_RC_HUN*`), odd jobs (`OJDG*`, `OJTX*`) and others |
 
+**One entry's 12 values** (*second pass*: read in the registration call `func_699` of `standard_global_reg`, the controller and the shared "mark done" helper; **Verified**):
+
+| Value | Holds | Set by |
+| ---: | --- | --- |
+| 0 to 3 | The text label (16 characters) | Registration |
+| 4 | Weight | Registration |
+| 5 | Done flag | The "mark done" helper |
+| 6 | Group (0 to 14, table below) | Registration |
+| 7 | "Heist choice" flag: 1 on 7 entries (`M_AH3a`, `M_FH2a`, `M_DH2A`, `SC_JWL_P_CHOICE`, `SC_FINP1_CHOICE`, `SC_FINP2_CHOICE`, `SC_FIN_K_CHOICE`). The mission they point to is resolved through the approach the player chose (the flow's heist int IDs), so either approach completes the entry | Registration |
+| 8 | Two 7-bit IDs packed together: the low 7 bits are what the entry is (the mission number in the mission table for groups 1 and 2, the activity number for groups 3 to 6, the stranger-or-freak mission number for groups 7 and 8), the next 7 bits a variant (the course or round: `SC_MG_OFF1` to `6` are activity 4, variants 0 to 5; the shooting range is activity 11). 127 means "none" | Registration |
+| 9 | Unused (always 0) | Registration |
+| 10, 11 | X and Y of where the entry was completed, for the JSON summary (`x`, `y`) | The "mark done" helper |
+
+Two registration arguments are always 0 in this build (unused flags). The "mark done" helper (in 147 scripts) sets the done flag, stores the X and Y it is given and sets the packed-stat bool `891 + entry`; its 478 calls pass 0, 0 except the strangers-and-freaks pass code, which gives Tonya 3 and 4 the fixed point 406.38, -1,635.86 (Strawberry) and Mrs Philips 2 the point 1,973.84, 3,814.89 (Sandy Shores), and random-event code, which passes the event's own position (13 of the 38 `re_` scripts in the same form). So the map numbers are a completion position, not a blip.
+
 **The sum** (`func_153` in the controller, **Verified**): for each counted group it adds the weights of completed entries; if every entry of the group is done it sets the group to its full share instead (55, 10, 0, 10, 5, 15, 5). Random events add four times their weight and are set to the full 5% once 14 are done (the needed count, `14`, is set next to the list). The seven group totals are added into the save's total.
 
 **The text of the labels** (*second pass*, **Verified**). 199 of the 320 labels have English text in `global.gxt2`: every story mission (`M_ARM1` "Franklin and Lamar", `M_FAM1` "Father/Son", `M_MIC4` "Meltdown"), every counted stranger and freak (`SC_RC_EPS3` "Assuming The Truth"), every minigame (`SC_MG_TRI1` "Triathlon 1: Trailer Park", `SC_MGPS11` "Flight School - Skydiving") and every misc entry. The 121 without text exist in no American text file, base or DLC, so they are internal names the game never shows as text: all 60 random events (`RE*`), the 42 tracked-only entries of group 0 (taxi `OJTX*` and trafficking `OJDG*` odd jobs, extra random-event variants, `SC_FR_ARRACT`), 11 in group 6 (air and ground trafficking `OJDA*`, `OJDG1` to `5`, hunting `OJHU`), 7 in group 1 (the five assassinations `ASS1` to `5`, `FHPB`, `DHP1`) and 1 in group 4 (`MGSP`).
@@ -68,9 +83,57 @@ When asked (`Global_114638` in this build), the controller (**Verified**):
 - **Player setting:** `GET_IS_AUTO_SAVE_OFF` (3 scripts) reads the "autosave off" option. `IS_AUTO_SAVE_IN_PROGRESS` (18 scripts) lets other scripts wait for a save to finish.
 - **Replays:** `mission_repeat_controller` uses `QUEUE_MISSION_REPEAT_SAVE` and `_LOAD` to save before a replayed mission and restore after it (saves (R1.7)).
 
+### 16.5.1 How a save is asked for, and when it is refused (second pass)
+
+**The request** (`Global_102468`, 11 values in build 3725; **Verified** in `autosave_controller` and the shared request helpers):
+
+| Value | Meaning |
+| ---: | --- |
+| 0 | "Don't save" flag: when set, the controller drops the request |
+| 1 to 4 | The controller's progress: request picked up, `DO_AUTO_SAVE` called, the save started, request finished |
+| 5, 6 | Bookkeeping: the request had no type; the "autosave is off" message has been shown once |
+| 7 | Request type set by the caller (0 or 1) |
+| 8 | "Save behind a faded screen": the controller skips its wait for the screen to fade in and tells the engine not to fade in after a load (`SET_FADE_IN_AFTER_LOAD(false)`) |
+| 9 | Game timer when the request was picked up |
+| 10 | How many requests are queued. A caller adds 1 only if none is queued (two with value 8 set); a second request in the same moment is dropped |
+
+**Who asks** (counted with `git grep`: the shared helper that adds to value 10 is called in **220 scripts**): `flow_controller` after a story mission passes and after a completion recount; the 63 strangers-and-freaks mission scripts; 34 random events; the heist controllers and preps (12); shops and mod shops (23, including every `*_carmod` script and the wardrobes); taxi jobs (11); activities (golf, tennis, darts, triathlon, off-road races, flight school, the shooting range, stunt planes, bail bonds, assassinations, towing, trafficking, hunting, yoga, the fairground, the cable car ...); collectables (letter scraps, spaceship parts, the diving and sonar pickups, for-sale signs, bridges, the photography challenges); and the controllers `main`, `player_controller`, `vehicle_gen_controller`, `social_controller`, `code_controller`, `mission_repeat_controller`, `mission_stat_watcher` and `director_mode`. Eight `_mp` scripts carry the same code but don't run in story mode.
+
+**Missions that don't autosave when they pass:** the flow skips the request when bit 0 of the mission's flag value (the last argument of its mission-table entry, `f_15`) is set. Nine missions have it: `prologue1`, `michael4`, `finale_intro`, `finale_heist2_intro`, `finaleA`, `finaleB`, `finaleC1`, `finaleC2` and `finale_credits`. It also skips the request while a mission marks itself running (`Global_65010`, set in 92 scripts).
+
+**When the controller refuses** a request (it marks it finished without saving): the game is in a transition (`Global_80280`); the story flow hasn't started, or the prologue strand isn't active; the current character isn't a valid story character; the player stands in an area where saving is blocked; or the "don't save" flag is set. **When it waits** (tries again next frame): the player is injured, a save or a memory-card operation is already running, a mission is being set up, the player isn't playing, a character switch is in progress, the phone is busy (unless `apptrackify` runs), or the screen isn't faded in (unless value 8 is set). Then it records which flow strands need a fade-in after a load, calls `CLEAR_REPLAY_STATS` and `DO_AUTO_SAVE`, and shows `SAVE_OFF` once if the player has autosave turned off (**Verified**).
+
 ## 16.6 Achievements
 
 `achievement_controller` polls conditions every frame and awards achievements that aren't tied to a single mission (**Verified**): 23 achievement IDs are tested directly with `HAS_ACHIEVEMENT_BEEN_PASSED`; it reads stats (`STAT_GET_INT`, 15 calls), DLC weapon components and profile settings. Missions award their own: `GIVE_ACHIEVEMENT_TO_PLAYER` appears in 409 scripts through a shared helper, and progress achievements use `SET_ACHIEVEMENT_PROGRESS` / `GET_ACHIEVEMENT_PROGRESS` (240 scripts each).
+
+**The 23 IDs the controller checks** (*second pass*). The condition is **Verified** from the controller; the name is **Known** (the game's text files don't hold achievement names; they come from the platforms' lists, and each condition below matches its name's description). The first seven rows are story-mode conditions, IDs 29 to 49 are checked in the Online part of the script, and ID 50 adds both modes:
+
+| ID | Name (**Known**) | Condition in the controller |
+| ---: | --- | --- |
+| 12 | Solid Gold, Baby! | 70 gold medals in story missions (progress in `num_gold_medals_obtained`) |
+| 14 | San Andreas Sightseer | 97.5% of the map uncovered (`GET_MINIMAP_FOW_DISCOVERY_RATIO`), story mode only |
+| 17 | Multi-Disciplined | Gold in all 6 disciplines it checks (progress in `num_discipline_gold_earned`) |
+| 22 | Show Off | 50 stunt jumps (`GET_NUM_SUCCESSFUL_STUNT_JUMPS`) |
+| 24 | Three Man Army | A wanted level of 3 or more, outside a mission, with the other two characters, kept for the time the controller counts |
+| 25 | Out of Your Depth | Attacked (the shark attack animation) or killed by a tiger shark (`a_c_sharktiger`) in the water |
+| 27 | A Lot of Cheddar | The three characters' `MONEY_TOTAL_SPENT` add up to $200,000,000 (progress in `num_cash_spent`) |
+| 29 | Pimp My Sidearm | A weapon check on the player, every 5 seconds |
+| 33 | Off the Plane | An Online check in its own function |
+| 34, 35, 36 | Three-Bit Gangster, Making Moves, Above the Law | Online rank 25, 50, 100 |
+| 37 | Numero Uno | An Online check in its own function |
+| 38 | The Midnight Club | 5 custom races won (`mpply_total_custom_races_won`) |
+| 39 | Unnatural Selection | An Online stat (index 48) reaching 10 |
+| 40 | Backseat Driver | An Online stat (index 52) above 0 |
+| 41 | Run Like The Wind | A bit in the Online player data |
+| 43 | Decorated | An Online stat (index 756) reaching 30 |
+| 44 | Stick Up Kid | An Online stat (index 14) reaching 20 |
+| 45 | Enjoy Your Stay | An Online check in its own function |
+| 48 | Dialling Digits | An Online contact-service check (index 11) |
+| 49 | American Dream | An Online check in its own function |
+| 50 | A New Perspective | 15 hours in first-person view, story and Online added together (`first_person_cam_time`, `mp_first_person_cam_time`) |
+
+The controller also shows `CHEAT_ACHIEVE` (`CHEAT_TROPHIE` on PlayStation) when cheats are switched on. Every other achievement is awarded by the mission or activity that earns it.
 
 ## 16.7 What this means for modders
 
@@ -83,9 +146,10 @@ When asked (`Global_114638` in this build), the controller (**Verified**):
 
 | Question | Where it goes |
 | --- | --- |
-| What each completion entry's flags and map numbers mean | Second pass, `func_699` |
-| Every autosave trigger, from the request fields | Second pass, follow `Global_102468` |
-| Which 23 achievements the controller awards, by name | Second pass, with the achievement list |
+| What each completion entry's flags and map numbers mean | Answered in [16.3](#163-the-completion-list) (one entry's 12 values) |
+| Every autosave trigger, from the request fields | Answered in [16.5.1](#1651-how-a-save-is-asked-for-and-when-it-is-refused-second-pass) |
+| Which 23 achievements the controller awards, by name | Answered in [16.6](#166-achievements) (conditions **Verified**, names **Known**) |
+| The Online achievement checks that sit in their own functions (IDs 29, 33, 37, 45, 48, 49) and the stats behind indexes 14, 48, 52 and 756 | With the Online stat list (R7.3) |
 
 ## 16.9 Test cards
 

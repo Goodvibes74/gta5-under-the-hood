@@ -69,6 +69,33 @@ The sphere load scene's usual arguments: radius 20 with flag 1 (497 calls), radi
 | `START_PLAYER_SWITCH` and the `SWITCH_*` family | The sky-camera character switch, which streams the destination while the camera is up | 291 |
 | `LOAD_ALL_OBJECTS_NOW` | Finish all pending requests at once (blocks) | 270 |
 
+### 10.4.1 The SRLs (second pass)
+
+**Where they are** (**Verified**, build 3725). The list of streamed request lists is a data file, `common\data\streaming\srllist.meta` in `update.rpf` (a `CStreamingRequestMasterList`), loaded with the content type `STREAMING_REQUEST_LISTS_FILE`. It names **207 SRLs**, each a file `<name>_srl.ymt` under `levels\gta5\streaming\` (206 entries point into the base archives, `platform:`; one, `mic_1_mcs_1_srl`, points into `update.rpf`). **14 DLC packs** add their own `srllist.meta` (`mpheist`, `mpheist3`, `mpheist4`, `mpluxe`, `mplowrider`, `mpbattle`, `mpchristmas2017`, `mpchristmas3`, `mpsecurity`, `mpvinewood`, `mp2023_02`, `mp2024_02`, `mp2025_01`, `mp2025_02`), and `mpluxe`'s `dlc_patch` folder holds a newer `gtao_intro_male_srl.ymt`.
+
+**What they cover.** 183 of the 207 are named after a **cutscene** (`fam_1_int_srl`, `trv_2_mcs_4_concat_srl`, `ep_7_rcm_srl` ...: the `_int`, `_ext`, `_mcs_`, `_rcm`, `_ig_` parts are the cutscene names; the GTA Online intro, `GTAO_INTRO_MALE` and `GTAO_INTRO_FEMALE`, is one of them), so a cutscene's camera path has its assets loaded ahead. The other 24 are scripted camera moves: custom character switches (`carsteal1_customswitch`, `exile1_customswitch`, `fin_2b_customswitch`, `mike2_mike_to_frank`, `michaeltofiretruck`), set pieces (`ah3bHeliCrash`, `ex3crash`, `JHRAMPDOWNSCENE`, `family_2_Timelapse`, `trafficControl`, `fbi_4_binoculars`, the cable car `cablecar_up` and `cablecar_down`, `CHI1_Methlab_Arrival`, `finbconf`, `extreme3_outro` ...).
+
+**Which scripts start one by name.** `PREFETCH_SRL` names **20 SRLs** in the decompile: 13 written in the call and 7 held in a variable (resolved by reading where the variable is set):
+
+| SRL | Script |
+| --- | --- |
+| `GTAO_INTRO_MALE` | `fm_intro`, `maintransition`, `selector` (and the dev copy `fm_intro_cut_dev`) |
+| `chinese2_farmhouse_cutscene`, `chinese2_explosion_cutscene` | `chinese2` |
+| `chi_1_mcs_1`, `CHI1_Methlab_Arrival` | `chinese1` |
+| `TREV3_TRAILER_ARRIVAL_CUTSCENE` | `trevor3` |
+| `JHRAMPDOWNSCENE` | `jewelry_heist` |
+| `family_2_Timelapse_srl` | `family2` |
+| `finbconf` | `finaleb` |
+| `ah3bHeliCrash` | `agency_heist3b` |
+| `michaelToFiretruck` | `agency_heist3a` |
+| `ass_construction` | `assassin_construction` |
+| `cablecar_up`, `cablecar_down` | `cablecar` |
+| `carsteal1_customswitch`, `exile1_customswitch`, `fin_2b_customswitch` | `carsteal1`, `exile1`, `finale_heist2b` |
+| `fbi_4_binoculars` | `fbi4` |
+| `mph_hum_key_mcs1_Script_srl`, `MPH_TUT_EXT_SRL` | `fmmc_launcher`, `fm_mission_controller` (Online heists; these two come from a DLC list) |
+
+The cutscene SRLs aren't named by any script: *Known*, the cutscene system uses the SRL that matches the cutscene's name by itself.
+
 ## 10.5 IPLs, interiors and LOD
 
 - **IPLs** are optional map sections (`.ymap`) switched on and off by name: damaged and repaired buildings, interiors' shells, event props, the Online map additions. 371 distinct names are requested in the scripts; `IS_IPL_ACTIVE` is checked 7,158 times. Requesting an IPL is cheap; loading its contents happens when the focus is near (**Known**).
@@ -120,7 +147,7 @@ Function.Call(Hash.NEW_LOAD_SCENE_START_SPHERE, dest.X, dest.Y, dest.Z, 50f, 0);
 | --- | --- |
 | How `TextureQuality` values map to the menu, and how much memory each level takes on shared graphics | R18.2, R18.3 |
 | The streaming memory budget (how the engine splits RAM between stores), and what HeapAdjuster changes in it | R18.3 |
-| Which SRLs exist (13 names in scripts) and what each covers | Second pass |
+| Which SRLs exist (13 names in scripts) and what each covers | Answered in [10.4.1](#1041-the-srls-second-pass): 207 in the base list plus 14 DLC lists; 20 started by name |
 | Measure a pop-in case: drive fast through the city at `LodScale` 0 and 0.5 with a frame-time log, compare hitches and memory | Test card below, R18.2 |
 
 ## 10.9 Test cards
