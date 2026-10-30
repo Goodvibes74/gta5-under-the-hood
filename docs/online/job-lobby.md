@@ -36,17 +36,32 @@ The entry function runs once (sets up the activity session flag, clears follower
 | ---: | --- | --- |
 | 0 | 1 | Reset: sets state 1 |
 | 1 | 2 | Start-up: reads session invites (`NETWORK_SESSION_WAS_INVITED`, `_GET_INVITER`) and where the player was, then goes idle |
-| 2 | 4, 5, 8, 9, 10 | Idle in freemode, watching for a job to join. *Probable* from its exits: 4 when the player is joining a lobby, 8 when a job list or quick job is requested, 9 when a job is already set up, 10 for one other case |
+| 2 | 4, 5, 8, 9, 10 | Idle in freemode, watching the lobby flags that other scripts raise (the table below) |
 | 3 | 5 | Waits; goes to cleanup when one player check passes (*probable*: the player has left or finished the job) |
 | 4 | 5, 9 | **The lobby.** Hides HUD and feed, plays the `MenuMGHeistIn` screen effect, draws the corona screens, handles vehicle, outfit and property entry (the largest state: about 5,200 functions reachable) |
 | 5 | 3 | Cleanup after a job or a cancelled lobby (`func_9459`, `func_9451`) |
 | 6 | 2 | After a fade: deletes the loaded data file (`DATAFILE_DELETE`), fades in and goes idle |
-| 7 | | A two-function state; not settled |
+| 7 | | Starts `FM_Impromptu_DM_Controler` directly (stack 64,500, the 21-value argument block with instance 0) and stays until it ends |
 | 8 | 4, 5, 9 | **Finding a job**: the UGC queries (`UGC_QUERY_MY_CONTENT`, `_BY_CATEGORY`, `UGC_GET_BOOKMARKED_CONTENT`, `_MOST_RECENTLY_PLAYED_CONTENT`, `_CREW_CONTENT` ...), privilege checks, activity groups (`NETWORK_JOIN_GROUP_ACTIVITY`), and the series names ("Stunt Series", "Community Race Series", "Cayo Perico Series" ...) |
 | 9 | 5 | **Running the job**: launches the controller (13.5) and waits for it; random trains are turned off for the job (`DELETE_ALL_TRAINS`, `SET_RANDOM_TRAINS`) |
-| 10 | 5 | Another job path (`func_26`), *probably* a job started from a property or planning board |
+| 10 | 5 | The next job of a playlist: loads the job whose content id the playlist controller left in the lobby state, then cleans up and continues |
 
 The state setter is called with a fixed state 38 times; the busiest source is the idle logic (`func_13037`, 14 calls to states 4, 5, 8, 9 and 10).
+
+**What makes the idle state move** (*second pass, 2026-10-30*, **Verified**). Idle doesn't decide on its own. Each exit is a flag in the lobby state (`Global_2685150`) that another script raises, and idle checks them in this order:
+
+| Flag | Raised by | Idle goes to |
+| --- | --- | --- |
+| `.f_3` bit 0 (return to a job in progress) | `main_persistent` | 9, after putting the player back at the stored position |
+| `.f_693` (the player is already in the job's session) | `freemode`, `maintransition`, `main_persistent`, the launcher | 9 when the job is ready, otherwise 4 (the lobby) or 5 (cleanup) |
+| Bit 1 | `freemode`, `maintransition`, `main_persistent` | 8 |
+| Bit 2 (a job picked inside a property) | the property scripts (`am_mp_property_int`, `am_mp_auto_shop`, `am_mp_bail_office`, `am_mp_submarine` ...) | 8 |
+| `.f_14` or `.f_880` (play again or a quick job) | the job controllers when they end (`.f_14`), `freemode` (`.f_880`) | 8 |
+| Bit 5 (a job picked from a list or board) | the phone apps (`appmpjoblistnew`, `appjipmp`, `appsecuroserv`, the business apps), the planning boards (`heist_island_planning`, `gb_casino_heist_planning`, `gb_gang_ops_planning`), `freemode`'s walk-in markers | 8 |
+| `.f_724` (cancel) | `freemode`, `maintransition`, `main_persistent` | 5 |
+| A join request in another block | `freemode` | joins that player's job, then cleanup |
+| `.f_723` (the job is already loaded) | `freemode`, `maintransition` | 9 |
+| `.f_870` (next playlist job) | `FMMC_PlayList_Controller` | 10 |
 
 ## 13.4 The activity table
 
@@ -82,6 +97,21 @@ Survival picks `FM_Survival_Controller` or `FM_Horde_Controler` from one flag of
 3. The stack size comes from the activity: **89,500** for all the job controllers, minigames and the larger boss jobs; 8,344, 5,050, 2,050 or 1,424 for smaller events.
 4. With the screen faded out where required, `START_NEW_SCRIPT_WITH_ARGS(name, args, 21, stack)` starts it with a 21-value argument block (the instance and the activity among them), then `SET_SCRIPT_AS_NO_LONGER_NEEDED`.
 
+**The 21 start-argument values** (*second pass*, **Verified** in `fmmc_launcher` and the controllers' entry code). The block is a shared launch structure, and the launcher fills only two of its values. The rest keep their defaults: -1 at `.f_1`, `.f_9`, `.f_19` and `.f_20`, and 0 everywhere else.
+
+| Value | Set to | Used by the controller for |
+| --- | --- | --- |
+| `.f_16` | The job's network instance (from the player's broadcast data) | `NETWORK_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT(32, false, instance)`, so every player in the job joins the same script instance; also the tutorial-session gang join |
+| `.f_2` | A value copied from the player's broadcast data | Kept with `.f_1` when an instance is set, and passed on to the job setup |
+
+So a job controller needs almost nothing from its arguments: the job itself comes from the loaded job file (`Global_4718592`) and the settings come from the corona (below).
+
+**How the corona's settings reach the controller** (*second pass*, **Verified**). There are three steps:
+
+1. The corona host's choices are shared in the host's player broadcast block `GPBD_FM_2` (`Global_1882572`, [global map 6.3.1](/docs/core/global-map.md#631-every-broadcast-block-by-its-registered-name-third-pass)).
+2. Before launch, each player's launcher copies them into the lobby state's settings part (`Global_2685150.f_669`, 48 writes in the launcher). The controllers read that part directly; each of the main controllers writes back to it about 29 times.
+3. **Races** use one more step. The launcher fills a local 35-value race settings block (`Global_4456484`, 23 fields). The race controllers copy it into `GlobalServerBD_Races` (`Global_4456449`) and register that as host broadcast data, and the host then copies its fields into the race's own server data. Weather is one example: field `.f_15` becomes the race's weather value, which the controller turns into `EXTRASUNNY`, `RAIN`, `SMOG` and the others.
+
 ## 13.6 The lobby screens
 
 The corona's text gives its options (**Verified**, labels used by `fmmc_launcher`):
@@ -103,6 +133,28 @@ Most of the clothing labels in the script (`TORSO_P`, `LEGS_P`, `FEET_P`, `PROPS
 
 The launcher doesn't draw the end of a job. The like/dislike rating (`ES_HELP_TU`, `ES_HELP_TD`) and the "next job" screen (`FM_NXT_RAC`, `FM_NXT_DM`, `FM_NXT_MIS`, `FM_NXT_LTS`, `FM_NXT_CTF` ...) are shared code compiled into each controller (`fm_race_controler`, `fm_mission_controller`, `fm_deathmatch_controler` ...). The rating screen is also used by story-mode activities (`country_race`, `darts`, `triathlonsp`, the `rampage` scripts): 39 scripts contain one of these labels. Once the controller ends, the launcher's state goes to cleanup (5) and back to idle (**Verified**, transitions above).
 
+### 13.7.1 Playlists and walk-in markers (second pass)
+
+*Second pass, 2026-10-30.* **Verified**.
+
+**Playlists.** `FMMC_PlayList_Controller` registers two host blocks (218 values of playlist state, and 1,345 values: 42 a player for 32 players, the running scores) and one player block (9 values a player plus one). Each player moves through its own states (0 start, 3 and 4 between jobs, 5 waiting, 6 leaving). Between jobs the host checks that everyone has reached the waiting state, then marks the next job ready. Each player then does four things:
+
+1. Raises the launcher's playlist flag (`Global_2685150.f_870`).
+2. Copies the next job's content id (24 characters) into `.f_871`, and a position from the next job's data into `.f_877`.
+3. Stops the leaderboard and celebration audio scenes.
+4. Calls `NETWORK_DO_TRANSITION_TO_NEW_GAME` (32 players).
+
+Every job of a playlist is played in a fresh session. The launcher, in state 10, loads the job named in `.f_871`.
+
+**Walk-in markers.** `freemode` keeps the job markers in a list of 95-value entries (`Global_794954.f_4`). A marker hands over when all of these hold:
+
+- The player is within 1 × 1 × 2.75 m of it and facing within 45° of its heading.
+- The player has control.
+- No pause menu, phone or cutscene is up.
+- A one-second timer has run, and the player presses the context button (control 51).
+
+Then `freemode` copies the entry into the transition data (`Global_2686090`) and raises the launcher's bit 5 (13.3). The launcher goes from idle to finding the job (8), then to the lobby (4).
+
 ## 13.8 What this means for modders
 
 - **None of this runs in story mode.** `fmmc_launcher` waits on `NETWORK_IS_GAME_IN_PROGRESS` and the cloud. Don't run mods in GTA Online to drive it; accounts get banned.
@@ -113,11 +165,11 @@ The launcher doesn't draw the end of a job. The like/dislike rating (`ES_HELP_TU
 
 | Question | Where it goes |
 | --- | --- |
-| The exact role of states 7 and 10, and which idle exits go to 4, 8 and 9 | Next pass, follow `func_13037`'s conditions |
-| The meaning of each of the 21 start-argument values | Next pass, read a controller's entry function |
-| How the corona's settings are stored and sent to the controller | Next pass, with `Global_2685150` |
-| How playlists and series step from job to job (`FMMC_PlayList_Controller`) | Next pass |
-| How a walk-in job marker in freemode hands over to the launcher | R7.1 second pass (`freemode`) |
+| The exact role of states 7 and 10, and which idle exits go to 4, 8 and 9 | Answered in [13.3](#133-the-11-top-level-states) (second pass) |
+| The meaning of each of the 21 start-argument values | Answered in [13.5](#135-from-job-type-to-running-controller): only the instance and one job value are set |
+| How the corona's settings are stored and sent to the controller | Answered in [13.5](#135-from-job-type-to-running-controller) |
+| How playlists and series step from job to job (`FMMC_PlayList_Controller`) | Answered in [13.7.1](#1371-playlists-and-walk-in-markers-second-pass) |
+| How a walk-in job marker in freemode hands over to the launcher | Answered in [13.7.1](#1371-playlists-and-walk-in-markers-second-pass) |
 
 ## 13.10 Test cards
 

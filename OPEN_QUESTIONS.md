@@ -75,9 +75,9 @@ Test only: GS-003 (does the return to story mode restart every script), CORE-001
 
 | Batch | Topic | Questions | Kind | Status |
 | --- | --- | --- | --- | --- |
-| P3.1 | [Interaction menu, phone and apps](/docs/online/interaction-menu-phone-apps.md) (R7.10): the full interaction-menu tree, story phone slots, website pages, phone models | ON-026, ON-027, ON-028, ON-029 | scripts | Open (ON-028 partly answered with P3.7) |
-| P3.2 | [The job lobby](/docs/online/job-lobby.md) (R7.5): launcher states, start arguments, corona settings, playlists, walk-in markers, job types | ON-030, ON-031, ON-032, ON-033, ON-034, ON-006 | scripts | Open |
-| P3.3 | [Inside `freemode`](/docs/online/07-freemode.md) and [sessions](/docs/online/sessions-and-sync.md) (R7.1, R15.1): the event ids, the host's rotation, the running-state functions per system | ON-001, ON-002, ON-005, ON-051 | scripts | Open |
+| P3.1 | [Interaction menu, phone and apps](/docs/online/interaction-menu-phone-apps.md) (R7.10): the full interaction-menu tree, story phone slots, website pages, phone models | ON-026, ON-027, ON-028, ON-029 | scripts | Done, branch `research/second-pass-phase3` |
+| P3.2 | [The job lobby](/docs/online/job-lobby.md) (R7.5): launcher states, start arguments, corona settings, playlists, walk-in markers, job types | ON-030, ON-031, ON-032, ON-033, ON-034, ON-006 | scripts | Mostly done, branch `research/second-pass-phase3` (job types 4 and 31 unnamed) |
+| P3.3 | [Inside `freemode`](/docs/online/07-freemode.md) and [sessions](/docs/online/sessions-and-sync.md) (R7.1, R15.1): the event ids, the host's rotation, the running-state functions per system | ON-001, ON-002, ON-005, ON-051 | scripts | Partly done, branch `research/second-pass-phase3` (ON-005 mostly answered; ON-001, ON-002, ON-051 left) |
 | P3.4 | [Transitions](/docs/online/transitions-and-sessions.md) (R7.2): the offline branch, character slots, the way back to story mode, the testbed session, what opens the creator | ON-004, ON-061, ON-062, ON-063, ON-064, GP-059 | scripts | Open |
 | P3.5 | [Stats and tunables](/docs/online/stats-and-tunables.md) (R7.3): the tunable index, save categories, the shop basket, unnamed service readers | CORE-010, ON-047, ON-054, ON-055, ON-056, GP-058 | scripts | Open |
 | P3.6 | [The Online character creator](/docs/gameplay/player/online-character-creator.md) (R6.5): unlabelled morphs, slider scaling, outfit groups | GP-055, GP-056, GP-057 | scripts | Open |
@@ -676,13 +676,13 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-002 | Names of the 60 network event ids and the main script event hashes | R7.2, R15 | Open |
 | ON-003 | The fields of the player and server broadcast data | R0.4 global map | Answered at block level: every player and server broadcast block named and sized, busiest server fields typed ([global map 6.3.1](/docs/core/global-map.md#631-every-broadcast-block-by-its-registered-name-third-pass)) |
 | ON-004 | What `freemode_clearGlobals` resets and when | R7.2 | Open |
-| ON-005 | How the host's rotation through participants works | R7.1 second pass | Open |
+| ON-005 | How the host's rotation through participants works | R7.1 second pass | Mostly answered: 47 per-system counters, each visiting one of the 32 player slots per frame and wrapping to 0; the host-state counter itself not pinned ([R7.1 open questions](/docs/online/07-freemode.md)) |
 
 ### [Rockstar Creator internals: how tracks and maps are built from props](/docs/online/creator-internals.md) (R7.11)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-006 | What job types 4 and 31 are, and what the even and odd race subtypes of a pair mean | Next pass, with the [job lobby](/ROADMAP.md) (R7.5) | Open |
+| ON-006 | What job types 4 and 31 are, and what the even and odd race subtypes of a pair mean | Next pass, with the [job lobby](/ROADMAP.md) (R7.5) | Mostly answered: odd race subtypes are one-lap (point-to-point) races; types 4 and 31 are handled with missions and Survival but stay unnamed ([R7.11 12.3](/docs/online/creator-internals.md#123-from-the-menu-to-a-creator)) |
 | ON-007 | The prop limit in `public_mission_creator`, which uses its own messages (`PMCE_F_P`, `PMCE_F_D`) | Second pass | Open |
 | ON-008 | The second dynamic list (library 15), library 39 and the other libraries with no text: hidden, Rockstar-only, or text in a pack not read | Second pass, with every DLC text block | Open |
 | ON-009 | What `GET_USED_CREATOR_BUDGET` measures inside the engine | Reverse engineering, R1.5 (streaming) | Open |
@@ -717,20 +717,20 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-026 | The story-mode slot list (which apps each character has) | Second pass, `cellphone_controller` by character | Open |
-| ON-027 | The full interaction-menu tree and its conditions | Second pass, `am_pi_menu` | Open |
-| ON-028 | Every website page and what each sells | Second pass, `appinternet` | Partly answered: the eight selling sites with their numbers and stock counts ([R7.10 21.5](/docs/online/interaction-menu-phone-apps.md#215-the-internet)); the item-to-model list is left |
-| ON-029 | The Facade phone's movie and the character-to-phone mapping | Second pass | Open |
+| ON-026 | The story-mode slot list (which apps each character has) | Second pass, `cellphone_controller` by character | Answered: one story list for all three characters, and the Online list ([R7.10 21.2.1](/docs/online/interaction-menu-phone-apps.md#2121-the-slots-by-mode-and-the-phone-each-character-carries-second-pass)) |
+| ON-027 | The full interaction-menu tree and its conditions | Second pass, `am_pi_menu` | Answered: the top page with each item's conditions and all 144 pages by area ([R7.10 21.3.1](/docs/online/interaction-menu-phone-apps.md#2131-the-menu-tree-second-pass)); per-page conditions stay in each page's function |
+| ON-028 | Every website page and what each sells | Second pass, `appinternet` | Answered: the eight selling sites with their numbers and stock counts, and the 683-item model list ([R7.10 21.5](/docs/online/interaction-menu-phone-apps.md#215-the-internet)) |
+| ON-029 | The Facade phone's movie and the character-to-phone mapping | Second pass | Answered: `cellphone_facade` is Trevor's; the four-entry phone table ([R7.10 21.2.1](/docs/online/interaction-menu-phone-apps.md#2121-the-slots-by-mode-and-the-phone-each-character-carries-second-pass)) |
 
 ### [The job lobby (`fmmc_launcher`)](/docs/online/job-lobby.md) (R7.5)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-030 | The exact role of states 7 and 10, and which idle exits go to 4, 8 and 9 | Next pass, follow `func_13037`'s conditions | Open |
-| ON-031 | The meaning of each of the 21 start-argument values | Next pass, read a controller's entry function | Open |
-| ON-032 | How the corona's settings are stored and sent to the controller | Next pass, with `Global_2685150` | Open |
-| ON-033 | How playlists and series step from job to job (`FMMC_PlayList_Controller`) | Next pass | Open |
-| ON-034 | How a walk-in job marker in freemode hands over to the launcher | R7.1 second pass (`freemode`) | Open |
+| ON-030 | The exact role of states 7 and 10, and which idle exits go to 4, 8 and 9 | Next pass, follow `func_13037`'s conditions | Answered: state 7 starts the impromptu deathmatch, state 10 is the next playlist job; every idle exit with the flag and script that raises it ([R7.5 13.3](/docs/online/job-lobby.md#133-the-11-top-level-states)) |
+| ON-031 | The meaning of each of the 21 start-argument values | Next pass, read a controller's entry function | Answered: the launcher sets only the network instance (`.f_16`) and one job value (`.f_2`) ([R7.5 13.5](/docs/online/job-lobby.md#135-from-job-type-to-running-controller)) |
+| ON-032 | How the corona's settings are stored and sent to the controller | Next pass, with `Global_2685150` | Answered: host's choices in `GPBD_FM_2`, copied to the lobby state's `.f_669`; races also use `GlobalServerBD_Races` ([R7.5 13.5](/docs/online/job-lobby.md#135-from-job-type-to-running-controller)) |
+| ON-033 | How playlists and series step from job to job (`FMMC_PlayList_Controller`) | Next pass | Answered: each playlist job is a new session; the playlist hands the next content id to the launcher ([R7.5 13.7.1](/docs/online/job-lobby.md#1371-playlists-and-walk-in-markers-second-pass)) |
+| ON-034 | How a walk-in job marker in freemode hands over to the launcher | R7.1 second pass (`freemode`) | Answered: the walk-in conditions and the launcher flag `freemode` raises ([R7.5 13.7.1](/docs/online/job-lobby.md#1371-playlists-and-walk-in-markers-second-pass)) |
 
 ### [Organisations and businesses](/docs/online/organisations-and-businesses.md) (R7.7)
 

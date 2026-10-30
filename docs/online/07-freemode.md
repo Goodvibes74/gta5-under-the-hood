@@ -125,4 +125,4 @@ It also calls `GET_NETWORK_TIME` 633 times, `NETWORK_IS_ACTIVITY_SESSION` 621 ti
 | Names of the 60 network event ids and the main script event hashes | R7.2, R15 |
 | The fields of the player and server broadcast data | R0.4 global map |
 | What `freemode_clearGlobals` resets and when | R7.2 |
-| How the host's rotation through participants works | R7.1 second pass |
+| How the host's rotation through participants works | Mostly answered (second pass): `freemode` has 47 separate counters, each visiting one of the 32 player slots per frame and wrapping to 0 (a full pass every 32 frames). The host's work uses the same pattern; which counter belongs to the host state was not pinned |

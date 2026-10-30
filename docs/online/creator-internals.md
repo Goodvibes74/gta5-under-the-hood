@@ -68,6 +68,11 @@ Race subtypes come in pairs; what separates the even and odd number of a pair is
 
 The hub's own menu text (**Verified**, labels): "Create a custom Land, Sea or Air Race", "Create a custom GTA Deathmatch", "Create a Capture", "Create a Last Team Standing", "Create a custom Survival mode", "Create a custom King of the Hill mode", "Create a Mission", "Create a Race in the Arena", "Create a Deathmatch in the Arena" and "Load Creation". Four tutorials are tracked by the stats `mpply_done_race_creator_tut`, `_dm_`, `_surv_` and `_koth_creator_tut`.
 
+*Second pass, 2026-10-30* (**Verified** in `fm_race_controler`):
+
+- **Even and odd race subtypes.** One check in the race controller is true for the odd subtypes (1, 3, 5, 7, 11, 13, 19, 25, 31) and for 21, 23, 26 and 32. For those races it forces one lap and counts the finish as a checkpoint. Every other race takes its lap count from the corona. So in each pair, the even number is a lap race and the odd number a point-to-point race (*probable*, from that behaviour).
+- **Types 4 and 31.** They appear in the same check as missions, Gang Attack and Survival in 23 scripts (the creators, `appmpjoblistnew`, the mission, race and deathmatch controllers), and type 31 is paired with Survival in 12 more checks. Neither has a name or a creator branch of its own in this build.
+
 ## 12.4 The camera and the cursor
 
 The creator does not move the player around to place things; it flies a camera.
@@ -236,7 +241,7 @@ Checkpoints are drawn with `CREATE_CHECKPOINT` (14 calls in the controller) from
 
 | Question | Where it goes |
 | --- | --- |
-| What job types 4 and 31 are, and what the even and odd race subtypes of a pair mean | Next pass, with the [job lobby](/ROADMAP.md) (R7.5) |
+| What job types 4 and 31 are, and what the even and odd race subtypes of a pair mean | Mostly answered above (second pass): odd subtypes are one-lap (point-to-point) races; types 4 and 31 are handled with missions and Survival but stay unnamed |
 | The prop limit in `public_mission_creator`, which uses its own messages (`PMCE_F_P`, `PMCE_F_D`) | Second pass |
 | The second dynamic list (library 15), library 39 and the other libraries with no text: hidden, Rockstar-only, or text in a pack not read | Second pass, with every DLC text block |
 | What `GET_USED_CREATOR_BUDGET` measures inside the engine | Reverse engineering, R1.5 (streaming) |
