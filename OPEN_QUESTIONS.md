@@ -83,7 +83,7 @@ Test only: GS-003 (does the return to story mode restart every script), CORE-001
 | P3.6 | [The Online character creator](/docs/gameplay/player/online-character-creator.md) (R6.5): unlabelled morphs, slider scaling, outfit groups | GP-055, GP-056, GP-057 | scripts | Partly done, branch `research/second-pass-phase3` (GP-056 answered, GP-057 partly; GP-055 left) |
 | P3.7 | [Properties](/docs/online/properties.md) (R7.6): yachts and vehicles as properties, garages, entrances, instances, daily fees | ON-041, ON-042, ON-043, ON-044, ON-045, ON-046 | scripts | Partly done, with ON-028 (ON-042 and ON-043 partly left, ON-065 mostly, ON-066 open), branch `research/second-pass-phase3` |
 | P3.8 | [Organisations and businesses](/docs/online/organisations-and-businesses.md) (R7.7): production numbers, capacities, offline production, boss costs, challenges, business missions, transactions | ON-035, ON-036, ON-037, ON-038, ON-039, ON-040, ON-049, UI-011 | scripts | Partly done, branch `research/second-pass-phase3` (ON-036, ON-038, UI-011 answered; ON-035, ON-037, ON-039, ON-040, ON-049 left); new ON-075 |
-| P3.9 | [Heists](/docs/online/heists.md) (R7.8): fail bands, casino targets, Cayo loot, the classic planning board, elite rewards, story arcs, crew skill | ON-019, ON-020, ON-021, ON-022, ON-023, ON-024, ON-025, GP-019 | scripts | Open |
+| P3.9 | [Heists](/docs/online/heists.md) (R7.8): fail bands, casino targets, Cayo loot, the classic planning board, elite rewards, story arcs, crew skill | ON-019, ON-020, ON-021, ON-022, ON-023, ON-024, ON-025, GP-019 | scripts | Partly done, branch `research/second-pass-phase3` (ON-020 answered, ON-023 mostly; ON-019, ON-021, ON-022, ON-024, ON-025, GP-019 left); new ON-076 |
 | P3.10 | [DLC storylines](/docs/online/dlc-storylines.md) (R7.9): stats per flow step, voice-only flows, arrival updates, missing flows, mp2025_02 | ON-014, ON-015, ON-016, ON-017, ON-018 | scripts, data | Open |
 | P3.11 | [Creator internals](/docs/online/creator-internals.md) (R7.11): prop limits, hidden libraries, the two prop writers, checkpoint fields, other creators' placement | ON-007, ON-008, ON-010, ON-011, ON-012, ON-013 | scripts | Open |
 | P3.12 | [Story systems in an Online mode](/docs/online/story-systems-in-online-mode.md) (R5.7): the shop table, ped brain sets | ON-057, ON-059 | scripts | Partly done, with R6.7 (ON-059 left) |
@@ -118,14 +118,14 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [AI](#ai) (`AI-`) | 13 | 50 |
 | [The world](#the-world) (`WLD-`) | 4 | 19 |
 | [Gameplay](#gameplay) (`GP-`) | 17 | 86 |
-| [GTA Online](#gta-online) (`ON-`) | 13 | 75 |
+| [GTA Online](#gta-online) (`ON-`) | 13 | 76 |
 | [User interface](#user-interface) (`UI-`) | 6 | 19 |
 | [Audio](#audio) (`AUD-`) | 3 | 11 |
 | [Rendering](#rendering) (`REN-`) | 5 | 27 |
 | [Performance](#performance) (`PERF-`) | 9 | 28 |
 | [Scripting](#scripting) (`SCR-`) | 4 | 14 |
 | [File formats](#file-formats) (`FF-`) | 2 | 6 |
-| **Total** | | **425** |
+| **Total** | | **426** |
 
 ## Getting started
 
@@ -706,12 +706,13 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | ON-019 | The units of the failure time bands (minutes of play, *probable*) | Next pass, the mission controller | Open |
-| ON-020 | The casino target index order (gold or artwork at index 1) | Next pass: the target name function | Open |
+| ON-020 | The casino target index order (gold or artwork at index 1) | Next pass: the target name function | Answered: 0 cash, 1 gold, 2 artwork, 3 diamonds ([R7.8 47.6.1](/docs/online/heists.md#4761-casino-targets-and-elite-challenges-second-pass)) |
 | ON-021 | Cayo secondary loot values (cash, weed, coke, gold, paintings) and bag capacity | Next pass: hashed tunables near the primary values | Open |
 | ON-022 | How the classic apartment board is drawn and which script owns it | Next pass, `freemode` | Open |
-| ON-023 | Elite challenge rewards for each heist | Next pass | Open |
+| ON-023 | Elite challenge rewards for each heist | Next pass | Mostly answered: Doomsday, Casino and Cayo elite values from the tunables; classic heists only have overrides ([R7.8 47.6.1](/docs/online/heists.md#4761-casino-targets-and-elite-challenges-second-pass)); new ON-076 |
 | ON-024 | The heist story arcs and their contacts | [R7.9](/ROADMAP.md) | Open |
 | ON-025 | Which script draws the apartment heist planning board for the classic heists *(from the guide's text)* | Second pass | Open |
+| ON-076 | The classic heists' elite rewards and targets as set in the mission controller (the tunables only override them) | Third pass, `fm_mission_controller` | Open |
 
 ### [Interaction menu, phone and apps](/docs/online/interaction-menu-phone-apps.md) (R7.10)
 

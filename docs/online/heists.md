@@ -112,6 +112,21 @@ A "boost" set of weights (necklace and bonds 40%, diamond 20%, tequila 0) applie
 
 Cooldowns: `h4_cooldown_time` 2,880, `h4_cooldown_hard_time` 5,760 and `h4_solo_cooldown` 5,760 (*probably* seconds: 48 and 96 minutes). The Kosatka's on-call cooldown is `island_heist_on_call_cool_down` 3,600.
 
+### 47.6.1 Casino targets and elite challenges (second pass)
+
+*Second pass, 2026-10-30.* **Verified** in `gb_casino_heist_planning` and `tuneables_processing`.
+
+**Casino target index.** The planning board's target-name function switches on the index: 0 `CH_TARGET_0` "CASH", 1 "GOLD", 2 "ARTWORK", 3 "DIAMONDS".
+
+**Elite challenges in the tunables.** What the tunables set differs by heist:
+
+| Heist | What the tunables hold |
+| --- | --- |
+| Classic heists (Fleeca, Prison Break, Humane Labs, Series A, Pacific Standard) | Only overrides, all defaulting to -1 ("use the script's value"): a cash reward per heist (`cash_reward_override_elite_objectives_*`) and a target per objective (time, vehicle damage, ped damage, enemy kills, health damage, and extraction for the Prison Break). The real values are in the mission controller (third pass, ON-076) |
+| Doomsday Act I to III | Time limits of 330,000 ms (5.5 minutes, the IAA job), 900,000 ms (15 minutes, the sub job) and 1,800,000 ms (30 minutes, the silo); targets of 78 kills (IAA job), 5 Avenger damage (sub job) and 150 headshots (silo) |
+| Diamond Casino | A 900,000 ms (15-minute) time limit for each approach: stealth, subterfuge and direct |
+| Cayo Perico | The "Elite Thief" award pays `ih_award_elite_thief_cash` $200,000; a separate `cash_reward_elite_thief` has a default of $350,000 |
+
 ## 47.7 What this means for modders
 
 These are Online systems: read them, never mod them in Online. For a story-mode heist mod:
@@ -126,8 +141,9 @@ These are Online systems: read them, never mod them in Online. For a story-mode 
 | Question | Where it goes |
 | --- | --- |
 | The units of the failure time bands (minutes of play, *probable*) | Next pass, the mission controller |
-| The casino target index order (gold or artwork at index 1) | Next pass: the target name function |
+| The casino target index order (gold or artwork at index 1) | Answered in [47.6.1](#4761-casino-targets-and-elite-challenges-second-pass): 0 cash, 1 gold, 2 artwork, 3 diamonds |
 | Cayo secondary loot values (cash, weed, coke, gold, paintings) and bag capacity | Next pass: hashed tunables near the primary values |
 | How the classic apartment board is drawn and which script owns it | Next pass, `freemode` |
-| Elite challenge rewards for each heist | Next pass |
+| Elite challenge rewards for each heist | Mostly answered in [47.6.1](#4761-casino-targets-and-elite-challenges-second-pass): the tunable values; the classic heists' real values are in the mission controller |
+| The classic heists' elite rewards and targets as set in the mission controller (ON-076) | Third pass, `fm_mission_controller` |
 | The heist story arcs and their contacts | [R7.9](/ROADMAP.md) |
