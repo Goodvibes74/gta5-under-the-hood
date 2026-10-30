@@ -535,7 +535,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | GP-016 | Where `armenian1`, `jewelry_heist` and `trevor1` set the skip flag (`Global_96580`), since they don't do it in their own code | Next pass of R5.2 or R5.8 | Open |
 | GP-017 | The exact meaning of `replay_controller` states 1 to 6 and 11 to 13 | R5.8 | Open |
 | GP-018 | How the snapshot in `Global_108447` is restored on retry, and what it leaves out | R5.3 | Answered: clock, weather, cash, weapons, outfits, tattoos, special ability, texts and the player ped are restored; other stats and the world aren't ([mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip)) |
-| GP-019 | How crew skill changes the heist take and the fail labels in `Local_3373` | R7.8 (heists) | Open |
+| GP-019 | How crew skill changes the heist take and the fail labels in `Local_3373` | R7.8 (heists) | Partly answered: the fail labels in `Local_3373` are a fixed table, and a dead crew member gets a fixed line by role ([mission anatomy](/docs/gameplay/missions/mission-anatomy.md)); how crew skill changes the take is left (third pass) |
 | GP-020 | How `mission_repeat_controller` replays a mission without moving the flow (from guide 2) | R5.3 | Answered: the flow-started flag is cleared and the game is saved and reloaded around the replay ([mission anatomy 3.9](/docs/gameplay/missions/mission-anatomy.md#39-passing)) |
 | GP-021 | What the mission triggerers build before a mission starts (lead-in scenes, from guide 2) | R5.2 second pass | Open |
 | GP-022 | Where `armenian1`, `jewelry_heist` and `trevor1` unlock their skip (they honour `Global_96581` but don't set `Global_96580` themselves) *(from the guide's text)* | Second pass | Open |
