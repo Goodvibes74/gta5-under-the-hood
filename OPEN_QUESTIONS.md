@@ -62,11 +62,11 @@ Test only: UI-002 (draw lists and depths), UI-017 (which DLC text block wins a c
 | Batch | Topic | Questions | Kind | Status |
 | --- | --- | --- | --- | --- |
 | P2.1 | [Boot](/docs/00-getting-started/boot.md) and [runtime scripts](/docs/core/runtime-scripts.md) (R1.2, R0.2): how `main`, `initial` and `startup` start, force-cleanup bits, `profiler_registration`, level index 5, the path to `prologue1` | CORE-017, CORE-018, CORE-019, GS-001, GS-002, ON-060 | scripts | Done for scripts, [#114](https://github.com/Goodvibes74/gta5-under-the-hood/pull/114) and [#120](https://github.com/Goodvibes74/gta5-under-the-hood/pull/120) (CORE-018's engine side needs the executable) |
-| P2.2 | [The global map](/docs/core/global-map.md) (R0.4): the player and server broadcast data, blocks 13 and 15, the **Known** rows | CORE-009, CORE-011, CORE-012, ON-003, ON-050 | scripts | Partly done, [#115](https://github.com/Goodvibes74/gta5-under-the-hood/pull/115) and [#120](https://github.com/Goodvibes74/gta5-under-the-hood/pull/120) (per-bit and per-stat field names, server broadcast fields left) |
+| P2.2 | [The global map](/docs/core/global-map.md) (R0.4): the player and server broadcast data, blocks 13 and 15, the **Known** rows | CORE-009, CORE-011, CORE-012, ON-003, ON-050 | scripts | Mostly done, [#115](https://github.com/Goodvibes74/gta5-under-the-hood/pull/115), [#120](https://github.com/Goodvibes74/gta5-under-the-hood/pull/120) and branch `research/second-pass-phase2-leftovers` (single-bit names of `.f_204`/`.f_203` and field-by-field server layouts left) |
 | P2.3 | [Saves](/docs/core/saves.md) (R1.7): the full section tree, the save upgrade, spending categories | CORE-022, CORE-023, GP-004 | scripts | Done, [#121](https://github.com/Goodvibes74/gta5-under-the-hood/pull/121) |
-| P2.4 | [Completion and autosave](/docs/core/completion-and-autosave.md) (R5.3): autosave triggers, completion flags, the 23 achievements, the retry snapshot, mission replays | CORE-005, CORE-006, CORE-007, CORE-025, GP-018, GP-020, GP-033 | scripts | Done, [#121](https://github.com/Goodvibes74/gta5-under-the-hood/pull/121) (six Online achievement checks left for R7.3) |
+| P2.4 | [Completion and autosave](/docs/core/completion-and-autosave.md) (R5.3): autosave triggers, completion flags, the 23 achievements, the retry snapshot, mission replays | CORE-005, CORE-006, CORE-007, CORE-025, GP-018, GP-020, GP-033 | scripts | Done, [#121](https://github.com/Goodvibes74/gta5-under-the-hood/pull/121) and branch `research/second-pass-phase2-leftovers` (four type 8/10 achievement stats unnamed) |
 | P2.5 | [Archives and content](/docs/core/archives-and-content.md) (R1.6): load phases per change set, `update2.rpf` and the mods folder copy | CORE-002, CORE-003 | data | Partly done, [#121](https://github.com/Goodvibes74/gta5-under-the-hood/pull/121) (the moment each change-set group runs needs the executable) |
-| P2.6 | [Script launch graph](/scripting/script-launch-graph.md) (R0.5): table-driven launches, and the scripts nobody starts by name | CORE-021, GP-009, GP-040 | scripts | Mostly done, [#121](https://github.com/Goodvibes74/gta5-under-the-hood/pull/121) (`freemode`'s activity table and the property tables left) |
+| P2.6 | [Script launch graph](/scripting/script-launch-graph.md) (R0.5): table-driven launches, and the scripts nobody starts by name | CORE-021, GP-009, GP-040 | scripts | Mostly done, [#121](https://github.com/Goodvibes74/gta5-under-the-hood/pull/121) and branch `research/second-pass-phase2-leftovers` (`freemode`'s launches by request left) |
 | P2.7 | [Streaming](/docs/core/streaming.md) and [memory](/docs/core/memory-and-pools.md) (R1.5, R1.4): the SRLs, pool slot costs, vanilla weapon array sizes | CORE-015, CORE-016, CORE-028 | scripts, engine | Partly done, [#121](https://github.com/Goodvibes74/gta5-under-the-hood/pull/121) (CORE-028 answered; pool slot costs and the built-in weapon array sizes need the executable) |
 
 Test only: GS-003 (does the return to story mode restart every script), CORE-001 (overlay or replace between two packs), CORE-013, CORE-014 (pool use in a heavy session), CORE-026, CORE-027, CORE-029 (streaming and memory measurements). Engine only: CORE-024 (the save file format). Later: CORE-030 (natives changed in build 3889, with R11.1).
@@ -154,17 +154,17 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | CORE-004 | The text of each completion label (block not found) | Second pass, with every text block | Answered: [completion 16.3](/docs/core/completion-and-autosave.md#163-the-completion-list) (199 have text; 121 are internal names with no text) |
 | CORE-005 | What each completion entry's flags and map numbers mean | Second pass, `func_699` | Answered: the 12 values of an entry, the heist-choice flag, the packed IDs and the completion position ([completion 16.3](/docs/core/completion-and-autosave.md#163-the-completion-list)) |
 | CORE-006 | Every autosave trigger, from the request fields | Second pass, follow `Global_102468` | Answered: the 11 request values, the 220 scripts that ask, the 9 missions that don't, and when the controller refuses or waits ([completion 16.5.1](/docs/core/completion-and-autosave.md#1651-how-a-save-is-asked-for-and-when-it-is-refused-second-pass)) |
-| CORE-007 | Which 23 achievements the controller awards, by name | Second pass, with the achievement list | Answered: the 23 IDs with their conditions (**Verified**) and names (**Known**) ([completion 16.6](/docs/core/completion-and-autosave.md#166-achievements)); six Online conditions in their own functions left for R7.3 |
+| CORE-007 | Which 23 achievements the controller awards, by name | Second pass, with the achievement list | Answered: the 23 IDs with their conditions (**Verified**) and names (**Known**); Online stats named from the stat mapping file except four type 8/10 stats and one packed bool ([completion 16.6](/docs/core/completion-and-autosave.md#166-achievements)) |
 | CORE-008 | `SC_MSC_` labels whose text is in a text block not read in the first pass *(from the guide's text)* | Second pass | Answered: [completion 16.3](/docs/core/completion-and-autosave.md#163-the-completion-list) |
 
 ### [The global variable map](/docs/core/global-map.md) (R0.4)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| CORE-009 | Field layout of the player broadcast data (`Global_1845250`, `Global_2658291`) | R7.1 second pass | Partly answered: `.f_325` (interior and owner) named, `.f_204`/`.f_203` bit flags, `.f_260` filled from stats ([global map 6.3](/docs/core/global-map.md#63-the-most-used-globals)); per-bit and per-stat names left (R7.3) |
+| CORE-009 | Field layout of the player broadcast data (`Global_1845250`, `Global_2658291`) | R7.1 second pass | Mostly answered: `.f_325` named, 16 parts of `.f_260` named from `mpstatscharactermappingdata.xml`, every bit of `.f_204`/`.f_203` grouped by who writes it ([global map 6.3](/docs/core/global-map.md#63-the-most-used-globals)); single-bit names left |
 | CORE-010 | The tunable index list: which `Global_262145.f_<n>` is which tunable | R7.3 | Open |
 | CORE-011 | What the references into blocks 13 and 15 are | Second pass | Answered: dead code behind two flags no script sets ([global map 6.2](/docs/core/global-map.md#62-the-blocks-with-how-much-they-are-used)) |
-| CORE-012 | Roles of the **Known** rows above, by reading one use each | Second pass | Answered: [global map 6.3](/docs/core/global-map.md#63-the-most-used-globals) (three rows **Verified**, `Global_1892653` still unread) |
+| CORE-012 | Roles of the **Known** rows above, by reading one use each | Second pass | Answered: [global map 6.3](/docs/core/global-map.md#63-the-most-used-globals) (four rows **Verified**, including `Global_1892653` = `GPBD_FM_3`) |
 
 ### [Memory, pools and limits](/docs/core/memory-and-pools.md) (R1.4)
 
@@ -183,7 +183,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | CORE-018 | What exactly the engine does to start `main`, `initial` and `startup`, and in which order | R1.2 | Partly answered: no script starts them, and the order follows from what each reads and waits for ([boot 3.3](/docs/00-getting-started/boot.md#33-inside-the-boot-scripts)); the engine call needs the executable |
 | CORE-019 | What `profiler_registration` (global block 2) is and whether anything starts it | R0.4 | Answered: empty script, block 2 never used ([runtime scripts 1.5](/docs/core/runtime-scripts.md#15-global-blocks)) |
 | CORE-020 | The story flags that pick the active mission triggerer | R5.1 | Open |
-| CORE-021 | Resolve table-driven launches (second pass of the graph) | R0.5 | Mostly answered: 502 non-literal launches, 220 followed back to 391 scripts, six tables read, 296 scripts nothing starts ([launch graph](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass)); `freemode`'s activity table and the property tables left |
+| CORE-021 | Resolve table-driven launches (second pass of the graph) | R0.5 | Mostly answered: 502 non-literal launches, 220 followed back, ten tables read; 240 scripts nothing starts ([launch graph](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass)); `freemode`'s launches by request left |
 
 ### [Saves: what the story save holds and how scripts write it](/docs/core/saves.md) (R1.7)
 
@@ -674,7 +674,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | --- | --- | --- | --- |
 | ON-001 | What each of the 183 running-state functions does in detail (this pass labels them from strings only) | R7.1 second pass, per system | Open |
 | ON-002 | Names of the 60 network event ids and the main script event hashes | R7.2, R15 | Open |
-| ON-003 | The fields of the player and server broadcast data | R0.4 global map | Partly answered: busiest player fields named or typed ([global map 6.3](/docs/core/global-map.md#63-the-most-used-globals)); server broadcast fields left |
+| ON-003 | The fields of the player and server broadcast data | R0.4 global map | Answered at block level: every player and server broadcast block named and sized, busiest server fields typed ([global map 6.3.1](/docs/core/global-map.md#631-every-broadcast-block-by-its-registered-name-third-pass)) |
 | ON-004 | What `freemode_clearGlobals` resets and when | R7.2 | Open |
 | ON-005 | How the host's rotation through participants works | R7.1 second pass | Open |
 
@@ -768,7 +768,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-050 | The layout of the big broadcast blocks | Second pass, per controller | Open |
+| ON-050 | The layout of the big broadcast blocks | Second pass, per controller | Answered at block level: the 37 broadcast blocks with their registered names, sizes and users ([global map 6.3.1](/docs/core/global-map.md#631-every-broadcast-block-by-its-registered-name-third-pass)); field-by-field layouts stay per controller |
 | ON-051 | Event type numbers and what each does | Second pass, `freemode`'s event handler | Open |
 | ON-052 | How migration chooses a new owner and host | Engine reverse engineering | Open |
 

@@ -52,7 +52,7 @@ Where the game's scripts keep shared state: the global blocks, which script owns
 | `Global_2673271` | 10 | 174,111 | 690 | `freemode`, the simple interiors | Local session state, including "am I host" (**Verified**) |
 | `Global_4980736` | 19 | 114,619 | 262 | The creators | Second FMMC structure |
 | `Global_2733002` | 10 | 104,424 | 767 | `freemode`, `am_pi_menu` | Freemode local state, interaction menu (**Known**) |
-| `Global_1892653` | 7 | 66,038 | 790 | `freemode`, `am_pi_menu`, `am_mp_property_int` | Player Online state (**Known**) |
+| `Global_1892653` | 7 | 66,038 | 790 | `freemode`, `am_pi_menu`, `am_mp_property_int` | **Player broadcast data `GPBD_FM_3`**, 615 values per player (**Verified**, [6.3.1](#631-every-broadcast-block-by-its-registered-name-third-pass)) |
 | `Global_80060` | 0 | 63,463 | 569 | The clothes shops, `wardrobe_mp` | Clothing (with `Global_80063`) (**Known**) |
 | `Global_1583765` | 6 | 54,501 | 513 | `freemode`, property interiors, the mod shops | Personal vehicles (**Known**) |
 | `Global_2097536` | 8 | 52,565 | 33 | `fmmc_launcher`, garages, `am_pi_menu` | Leaderboard rows read for display (**Verified**, below) |
@@ -73,6 +73,79 @@ Where the game's scripts keep shared state: the global blocks, which script owns
 | `Global_1845250[p].f_260` | **The player's stat-backed state**: owned properties, unlocks, preferences, cooldowns ([online guide 7](/docs/online/07-freemode.md), step 9) | **Verified** that `freemode` fills several parts from value-reading helpers called with a number (`.f_364` with 7212, `.f_415` with 8252, `.f_496` with 31558; that these are packed-stat indexes is our reading) and that every part is read through small per-player accessors. The busiest parts in `freemode` are `.f_439`, `.f_39` (with `ADD_BLIP_FOR_COORD`: a location), `.f_311`, `.f_496` and `.f_364`; naming them needs the packed-stat list (R7.3) |
 | `Global_1845250[p].f_97` | A small sub-structure with bit fields at `.f_97.f_28` and `.f_97.f_32` | **Verified** layout only. The job lobby's per-player state sits right before it at `.f_96` ([job lobby](/docs/online/job-lobby.md)) |
 
+**Who sets each bit of `.f_204` and `.f_203`** (*third pass, 2026-10-31*, **Verified**: every `SET_BIT` and `CLEAR_BIT` on the two words, counted per script with `git grep` at commit `6c18d3e8b`). The bits fall into four groups by the scripts that write them, which says what they are about:
+
+| Group | `.f_204` bits | `.f_203` bits | Written by |
+| --- | --- | --- | --- |
+| Shared header code | 6, 7, 10, 13, 14, 15, 19, 25 to 30 | 15, 18 to 21 | About 250 to 263 scripts each (every property, activity and job script carries the same helpers); bits 26, 28 and 30 sit next to vehicle fades and repositioning and `am_mp_car_meet_property` checks |
+| Vehicle mod shops | 2 to 5, 9, 12, 16 to 18, 20 to 23 | 4, 9 to 14, 16, 17, 22 to 27 | The 15 or 16 `*_carmod` scripts and `carmod_shop` (with `am_mp_property_int`, `am_mp_arena_garage`, `am_vehicle_spawn`, `gb_gangops`, `gb_vehicle_export` or `am_mp_ie_warehouse` for single bits) |
+| Jobs | | 3 (job controllers: races, deathmatches, missions), 29 (deathmatch modes and Hunt the Beast; the setter applies player health, melee and explosive damage modifiers) | `fm_*_controler`, `fm_mission_controller`, `gb_deathmatch`, `am_hunt_the_beast` |
+| `freemode` alone | 8 (`am_mp_property_int` only) | 2, 5 to 8, 30, 31 (set next to tutorial-session and screen-fade checks), 28 (71 scripts: seats and menus, set next to the GTA Online logo texture, night vision and network receive restrictions) | `freemode` |
+
+A bit's exact name needs its callers: most are written through one-line "set or clear bit N" helpers.
+
+**The parts of `.f_260`, named** (*third pass*, **Verified**). `freemode` fills them through a helper that turns a stat number into the current character's stat (`_GET_STAT_HASH_FOR_CHARACTER_STAT` with type 0) and reads it. The numbers are indexes into `common\data\mpstatscharactermappingdata.xml` in `update.rpf`, whose comments name every entry (`<!-- 6551 - MP_STAT_NIGHTCLUB_OWNED -->`; 18,486 int stats, 527 bools, 225 floats and smaller lists for strings, dates, vectors and user IDs). That names 16 parts:
+
+| Part | Stat | Part | Stat |
+| --- | --- | --- | --- |
+| `.f_156` | `OWNED_IE_WAREHOUSE` | `.f_415` | `CASINOAPT_OWNED` |
+| `.f_297` | `RESEARCHTOTALFORFACTORY5` | `.f_439` | `ARCADE_OWNED` |
+| `.f_304` | `HANGAR_OWNED` | `.f_496` | `AUTO_SHOP_OWNED` |
+| `.f_311` | `DBASE_OWNED` (the facility) | `.f_504` | `SALVAGE_YARD_OWNED` |
+| `.f_321` | `BUSINESSHUB_OWNED` | `.f_519` | `FIXER_HQ_OWNED` |
+| `.f_364` | `NIGHTCLUB_OWNED` | `.f_524` | `MULTSTOREY_GAR_OWNED` |
+| `.f_392` | `SU20PSTAT_INT193` | `.f_531` | `BAIL_OFFICE_OWNED` |
+| `.f_394` | `BIKER_BAR_RESUPPLY_CASH` | `.f_543`, `.f_546` | `HACKER_DEN_OWNED`, `MCKENZIE_HANGAR_OWNED` |
+
+So the busiest parts are which property of each kind the player owns (`.f_439` the arcade, `.f_311` the facility, `.f_543` the hacker den). Two more parts, `.f_395` and `.f_396`, come from packed stats (indexes 26,808 and 41,216), which the mapping file doesn't cover. The stat names are `MP_STAT_` plus the name above; the per-character stat is `MP0_` or `MP1_` plus the name.
+
+### 6.3.1 Every broadcast block, by its registered name (third pass)
+
+Each script that shares data over the network registers it with `NETWORK_REGISTER_PLAYER_BROADCAST_VARIABLES` (one copy per player, 32 players) or `NETWORK_REGISTER_HOST_BROADCAST_VARIABLES` (one copy, written by the host), and passes a **name**. `freemode` registers 33 global blocks this way (15 player, 18 host); the job controllers add four (**Verified**, every registration in the decompile; "scripts" and "references" counted with `git grep`):
+
+| Global | Name | Kind | Values | Per player | Scripts | References |
+| --- | --- | --- | ---: | ---: | ---: | ---: |
+| `Global_1845250` | `GPBD_FM` | Player | 28,161 | 880 | 793 | 198,235 |
+| `Global_2658291` | `GlobalplayerBD` | Player | 14,977 | 468 | 795 | 371,140 |
+| `Global_1892653` | `GPBD_FM_3` | Player | 19,681 | 615 | 790 | 66,038 |
+| `Global_1882572` | `GPBD_FM_2` | Player | 10,081 | 315 | 478 | 15,387 |
+| `Global_1912395` | `GPBD_FM_4` | Player | 10,081 | 315 | 325 | 2,232 |
+| `Global_1983167` | `GPBD_Flow` | Player | 4,769 | 149 | 327 | 7,189 |
+| `Global_1927920` | `GPBD_SCTV` (spectator TV) | Player | 6,369 | 199 | 316 | 1,608 |
+| `Global_1877158` | `GPBD_FM_HeistPlanning` | Player | 2,465 | 77 | 307 | 856 |
+| `Global_1976315` | `GPBD_CasinoHeist` | Player | 2,177 | 68 | 293 | 1,498 |
+| `Global_1980733` | `GPBD_HeistIsland` | Player | 1,697 | 53 | 125 | 1,064 |
+| `Global_1979868` | `GPBD_NetHeistPlanningGeneric` | Player | 865 | 27 | 39 | 202 |
+| `Global_1873924` | `GPBD_Kicking` (vote kicks) | Player | 3,201 | 100 | 5 | 31 |
+| `Global_1873411` | `GPBD_MissionName` | Player | 513 | 16 | 28 | 56 |
+| `Global_4514608` | `GPBD_Interactions` | Player | 673 | 21 | 73 | 251 |
+| `Global_2700170` | `g_AMC_playerBD` | Player | 8,225 | 257 | 3 | 16 |
+| `Global_2649159` | `GSBD` | Host | 1,264 | | 348 | 10,601 |
+| `Global_2650423` | `GSBD_BlockB` | Host | 2,156 | | 261 | 5,369 |
+| `Global_2652579` | `GSBD_BlockC` | Host | 2,711 | | 403 | 1,243 |
+| `Global_1835511` | `GSBD_FM` | Host | 652 | | 281 | 1,152 |
+| `Global_2625811` | `GSBD_MissionsShared` | Host | 2,757 | | 19 | 413 |
+| `Global_2655290` | `GSBD_MissionRequest` | Host | 657 | | 19 | 350 |
+| `Global_2655947` | `GSBD_MissionList` | Host | 210 | | 3 | 11 |
+| `Global_2656382` | `GSBD_ActivitySelector` | Host | 922 | | 6 | 55 |
+| `Global_2657304` | `GSBD_Betting` | Host | 581 | | 25 | 215 |
+| `Global_2657885` | `GSBD_HoldUp` (store hold-ups) | Host | 171 | | 7 | 88 |
+| `Global_2656157` | `GSBD_ExclusionAreas` | Host | 225 | | 4 | 51 |
+| `Global_1922477`, `Global_2658056` | `GSBD_FM_events` (two blocks with the same name) | Host | 525, 235 | | 319, 299 | 1,232, 1,732 |
+| `Global_1882120` | `GSBD_RandomEvents` | Host | 367 | | 27 | 141 |
+| `Global_1943442` | `GSBD_PropertyInstances` | Host | 464 | | 4 | 22 |
+| `Global_1935536` | `GSBD_HeistPlanning` | Host | 35 | | 5 | 249 |
+| `Global_1877125` | `GSBD_Kicking` | Host | 33 | | 3 | 14 |
+| `Global_4515281` | `GSBD_SyncedInteractions` | Host | 132 | | 3 | 93 |
+| `Global_1926563` | `g_MissionControllerserverBD_LB` (job leaderboard) | Host | 1,350 | | 87 | 1,478 |
+| `Global_1057198` | `g_sMC_serverBDEndJob` (end of job) | Host | 240 | | 11 | 412 |
+| `Global_1689064` | `GlobalServerBD_DM` | Host | 27 | | 255 | 689 |
+| `Global_4456449` | `GlobalServerBD_Races` | Host | 35 | | 95 | 677 |
+
+"Per player" is (values − 1) / 32: the first value is the array length. The last four host blocks are registered by the job controllers (deathmatch, race, mission and survival controllers, `public_mission_controller`), not `freemode`.
+
+**The busiest server fields** (read in `freemode`, **Verified** by the natives on the lines that use them): `GSBD.f_2` is a table of networked **entity areas** (`NETWORK_ADD_ENTITY_AREA`, `NETWORK_ENTITY_AREA_IS_OCCUPIED`, 4 values a slot); `GSBD.f_461` holds positions with a radius tested with `VDIST` (11 groups of 5); `GSBD.f_904` mirrors a value from each player's `GlobalplayerBD.f_358`; `GSBD.f_818` is a set of per-player bit flags and slots; `GSBD_BlockB.f_199` is a list of 15-value entries with a cloud-time stamp and a script host check (140 references, the busiest server field); `GSBD_BlockC.f_97` is a per-player table of 33 values timed with `GET_NETWORK_TIME`; `GSBD_BlockC.f_2613` holds networked vehicle IDs (`NET_TO_VEH`); `GSBD_FM.f_410` drives a host-created pickup (`CREATE_PICKUP_ROTATE` with `pickup_custom_script`, a random seed at `.f_197`); `GSBD_FM.f_183` and `.f_269` are per-player bit flags.
+
 **The Known rows, one use each** (*second pass, 2026-10-30*). For each global, the natives and strings on the lines that use it were counted in its top script (`git grep` at commit `6c18d3e8b`, the always-present `PLAYER_ID`, `SET_BIT` and `CLEAR_BIT` left out):
 
 | Global | Counted in | What sits next to it | Role now |
@@ -82,7 +155,7 @@ Where the game's scripts keep shared state: the global blocks, which script owns
 | `Global_24529` | `fm_race_creator` | `GET_HASH_KEY`, `ARE_STRINGS_EQUAL` (44 each), text components, scaleform methods | Creator menu and text state (**Known**, consistent) |
 | `Global_80063`, `Global_80060` | `clothes_shop_mp` | `SET_PED_COMPONENT_VARIATION`, `DOES_SHOP_PED_APPAREL_HAVE_RESTRICTION_TAG`, `GET_PED_PALETTE_VARIATION`, the `multi_decal` tag (`Global_80063`); `Global_80060` only through helpers | Clothing shop item data (**Known**, consistent) |
 | `Global_2733002` | `am_pi_menu` | `DOES_ENTITY_EXIST` (54), `NETWORK_IS_ACTIVITY_SESSION` (21), vehicle checks | Interaction-menu local state, including the player's vehicles (**Known**, consistent) |
-| `Global_1892653` | `am_mp_property_int` | Few natives: `GET_HASH_KEY`, scaleform parameters, `PLAYSTATS_CHANGE_MC_ROLE` | Still **Known**; the property interior uses it only through helpers |
+| `Global_1892653` | `freemode` (registration) | `NETWORK_REGISTER_PLAYER_BROADCAST_VARIABLES(&Global_1892653, 19681, "GPBD_FM_3")` | **Verified**: the third of freemode's player broadcast blocks, 615 values per player; its busiest sub-structure is `.f_10` (`.f_10.f_77.f_3` alone has 291 references in `freemode`) |
 | `Global_1583765` | `freemode` | Vehicle model names (`oppressor2`, `thruster`, `speedo4`), `IS_THIS_MODEL_A_BIKE`, radio station | Personal vehicles (**Known**, consistent) |
 | `Global_2097536` | `am_pi_menu`, `fmmc_launcher` | `LEADERBOARDS2_READ_GET_ROW_DATA_INT` and `_FLOAT` write into it; column labels `SCLB_C_RANK`, `SCLB_C_KILLS`, `SCLB_C_TIME`; one entry of 901 values per board holding rows of 75 values, a row count per board at `.f_2704` | **Leaderboard rows read for display** (**Verified**; the board IDs are in [server-backed screens 25.7](/docs/ui/server-backed-screens.md)) |
 | `Global_2686090` | `fmmc_launcher` | `NETWORK_ARE_HANDLES_THE_SAME` (21), `NETWORK_IS_HANDLE_VALID`, `NETWORK_GET_PLAYER_FROM_GAMER_HANDLE`, `NETWORK_HAS_PLAYER_STARTED_TRANSITION` | Job transition state: the gamer handles of the players moving with the job (**Verified** that it holds and compares gamer handles) |
@@ -124,6 +197,7 @@ Answered in the second pass: what the references into blocks 13 and 15 are (dead
 
 | Question | Where it goes |
 | --- | --- |
-| Field layout of the player broadcast data (`Global_1845250`, `Global_2658291`) | Partly answered in [6.3](#63-the-most-used-globals): `.f_325` (interior and its owner) named; `.f_204`, `.f_203` are per-bit flags and the parts of `.f_260` need the packed-stat list (R7.3, R7.1) |
+| Field layout of the player broadcast data (`Global_1845250`, `Global_2658291`) | Mostly answered in [6.3](#63-the-most-used-globals): `.f_325` named, 16 parts of `.f_260` named from the stat mapping file, every bit of `.f_204` and `.f_203` grouped by who writes it; single-bit names left (they need each helper's callers) |
+| The fields of the server broadcast data | Answered at block level in [6.3.1](#631-every-broadcast-block-by-its-registered-name-third-pass): all 37 blocks named, the busiest server fields typed |
 | The tunable index list: which `Global_262145.f_<n>` is which tunable | R7.3 |
-| Roles of the **Known** rows above, by reading one use each | Answered in [6.3](#63-the-most-used-globals): three rows now **Verified** (`Global_1950198`, `Global_2097536`, `Global_2686090`), the rest checked as consistent; `Global_1892653` still unread |
+| Roles of the **Known** rows above, by reading one use each | Answered in [6.3](#63-the-most-used-globals): `Global_1950198`, `Global_2097536`, `Global_2686090` and `Global_1892653` (`GPBD_FM_3`) now **Verified**, the rest checked as consistent |

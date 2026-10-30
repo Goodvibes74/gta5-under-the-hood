@@ -118,22 +118,24 @@ When asked (`Global_114638` in this build), the controller (**Verified**):
 | 24 | Three Man Army | A wanted level of 3 or more, outside a mission, with the other two characters, kept for the time the controller counts |
 | 25 | Out of Your Depth | Attacked (the shark attack animation) or killed by a tiger shark (`a_c_sharktiger`) in the water |
 | 27 | A Lot of Cheddar | The three characters' `MONEY_TOTAL_SPENT` add up to $200,000,000 (progress in `num_cash_spent`) |
-| 29 | Pimp My Sidearm | A weapon check on the player, every 5 seconds |
-| 33 | Off the Plane | An Online check in its own function |
-| 34, 35, 36 | Three-Bit Gangster, Making Moves, Above the Law | Online rank 25, 50, 100 |
-| 37 | Numero Uno | An Online check in its own function |
+| 29 | Pimp My Sidearm | Every 5 seconds, the player's weapons are checked against two lists of weapon components (44 and 51 entries); one fitted component from the lists awards it |
+| 33 | Off the Plane | The Online race tutorial is done (`MP_STAT_FM_RACETUT_DONE`), or one of two tutorial flags is set |
+| 34, 35, 36 | Three-Bit Gangster, Making Moves, Above the Law | Online rank 25, 50, 100, worked out from the character's XP (`MP_STAT_CHAR_XP_FM`) |
+| 37 | Numero Uno | A character flag of the stat type 10 list (index 8), which the mapping file doesn't name |
 | 38 | The Midnight Club | 5 custom races won (`mpply_total_custom_races_won`) |
-| 39 | Unnatural Selection | An Online stat (index 48) reaching 10 |
-| 40 | Backseat Driver | An Online stat (index 52) above 0 |
+| 39 | Unnatural Selection | An Online stat (type 8 list, index 48) reaching 10 |
+| 40 | Backseat Driver | An Online stat (type 8 list, index 52) above 0 |
 | 41 | Run Like The Wind | A bit in the Online player data |
-| 43 | Decorated | An Online stat (index 756) reaching 30 |
-| 44 | Stick Up Kid | An Online stat (index 14) reaching 20 |
-| 45 | Enjoy Your Stay | An Online check in its own function |
-| 48 | Dialling Digits | An Online contact-service check (index 11) |
-| 49 | American Dream | An Online check in its own function |
+| 43 | Decorated | 30 platinum awards (`MP_STAT_CHAR_FM_PLAT_AWARD_COUNT`) |
+| 44 | Stick Up Kid | An Online stat (type 8 list, index 14) reaching 20 |
+| 45 | Enjoy Your Stay | All 9 bits of `MP_STAT_CHAR_ACH45_TRACKER` set (a tracker that Online activities fill) |
+| 48 | Dialling Digits | A packed bool (index 11) |
+| 49 | American Dream | Three bools all set: `MP_STAT_CL_BUY_APPARTMENT`, `CL_BUY_GARAGE`, `CL_BUY_INSURANCE` |
 | 50 | A New Perspective | 15 hours in first-person view, story and Online added together (`first_person_cam_time`, `mp_first_person_cam_time`) |
 
 The controller also shows `CHEAT_ACHIEVE` (`CHEAT_TROPHIE` on PlayStation) when cheats are switched on. Every other achievement is awarded by the mission or activity that earns it.
+
+**How the stat numbers were named** (*third pass*, **Verified**). The controller turns a number into a stat with `_GET_STAT_HASH_FOR_CHARACTER_STAT(type, index, character)`. For types 0 (int) and 2 (bool) the index is an entry of `common\data\mpstatscharactermappingdata.xml` in `update.rpf`, whose comments give each entry's name (see [global map 6.3](/docs/core/global-map.md#63-the-most-used-globals)). Types 8 and 10 aren't in that file, so indexes 14, 48 and 52 (type 8) and 8 (type 10) stay unnamed.
 
 ## 16.7 What this means for modders
 
@@ -149,7 +151,7 @@ The controller also shows `CHEAT_ACHIEVE` (`CHEAT_TROPHIE` on PlayStation) when 
 | What each completion entry's flags and map numbers mean | Answered in [16.3](#163-the-completion-list) (one entry's 12 values) |
 | Every autosave trigger, from the request fields | Answered in [16.5.1](#1651-how-a-save-is-asked-for-and-when-it-is-refused-second-pass) |
 | Which 23 achievements the controller awards, by name | Answered in [16.6](#166-achievements) (conditions **Verified**, names **Known**) |
-| The Online achievement checks that sit in their own functions (IDs 29, 33, 37, 45, 48, 49) and the stats behind indexes 14, 48, 52 and 756 | With the Online stat list (R7.3) |
+| The Online achievement checks that sit in their own functions (IDs 29, 33, 37, 45, 48, 49) and the stats behind indexes 14, 48, 52 and 756 | Mostly answered in [16.6](#166-achievements) from the stat mapping file; the type 8 and type 10 stats (IDs 37, 39, 40, 44) and packed bool 11 (ID 48) left |
 
 ## 16.9 Test cards
 
