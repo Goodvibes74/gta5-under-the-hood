@@ -101,7 +101,7 @@ Test only: GP-054 (parent head counts), ON-058 (story clothes shop with a freemo
 | P4.5 | [Cutscenes and dialogue](/docs/gameplay/missions/cutscenes-and-dialogue.md) (R5.6): the cutscene files and `dialogue_handler`'s globals | GP-005, GP-007 | scripts, data | Done, branch `research/second-pass-phase4` (GP-005 answered, GP-007 mostly) |
 | P4.6 | [Character switching](/docs/gameplay/player/character-switching.md) (R6.1): saved character state, the scene table | GP-037, GP-038 | scripts | Done, branch `research/second-pass-phase4` (GP-037 answered, GP-038 mostly) |
 | P4.7 | [Respawn](/docs/gameplay/player/respawn-death-and-arrest.md) and [health](/docs/gameplay/player/health-armour-death.md) (R6.2, R3.8): the building table, free respawns, hospital packs, armour items, DLC health configs | GP-060, GP-061, GP-063, GP-065, GP-066, GP-051, GP-052 | scripts, data | Done, branch `research/second-pass-phase4` (all seven answered) |
-| P4.8 | [Economy and pickups](/docs/gameplay/economy/economy-and-pickups.md) (R3.9): stock prices, pickup placement, shop robbery pay | GP-001, GP-002, GP-003 | scripts | Open |
+| P4.8 | [Economy and pickups](/docs/gameplay/economy/economy-and-pickups.md) (R3.9): stock prices, pickup placement, shop robbery pay | GP-001, GP-002, GP-003 | scripts | Done, branch `research/second-pass-phase4` (GP-002, GP-003 answered, GP-001 mostly); new GP-090 |
 | P4.9 | [Controls and camera](/docs/gameplay/player/controls-and-camera.md) (R6.4): control names, disable helpers, context numbers | GP-041, GP-042, GP-044 | scripts, data | Open |
 | P4.10 | [Skills](/docs/gameplay/player/skills-and-abilities.md), [flying](/docs/gameplay/player/flying.md) and [weapons](/docs/gameplay/weapons/weapons.md) (R3.6, R3.4, R3.1): skill gains, ability types, starting skills, DLC flying blocks, flight lessons, AI flight missions, weapon unlocks, ammo caps | GP-067, GP-069, GP-070, GP-045, GP-046, GP-047, GP-048, GP-077, GP-078 | scripts, data | Open |
 
@@ -117,7 +117,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [Physics](#physics) (`PHY-`) | 4 | 18 |
 | [AI](#ai) (`AI-`) | 13 | 50 |
 | [The world](#the-world) (`WLD-`) | 4 | 19 |
-| [Gameplay](#gameplay) (`GP-`) | 17 | 89 |
+| [Gameplay](#gameplay) (`GP-`) | 17 | 90 |
 | [GTA Online](#gta-online) (`ON-`) | 13 | 77 |
 | [User interface](#user-interface) (`UI-`) | 6 | 20 |
 | [Audio](#audio) (`AUD-`) | 3 | 11 |
@@ -125,7 +125,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [Performance](#performance) (`PERF-`) | 9 | 28 |
 | [Scripting](#scripting) (`SCR-`) | 4 | 14 |
 | [File formats](#file-formats) (`FF-`) | 2 | 6 |
-| **Total** | | **435** |
+| **Total** | | **436** |
 
 ## Getting started
 
@@ -503,9 +503,10 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-001 | How `stock_controller` moves prices and which story events move which company | Second pass | Open |
-| GP-002 | Where `pickup_controller` places each pickup and when they respawn | Second pass: its coordinate tables | Open |
-| GP-003 | How shop robberies pay out (the till amounts) | Second pass: `shoprobberies` | Open |
+| GP-001 | How `stock_controller` moves prices and which story events move which company | Second pass | Mostly answered: LCN random walk with caps, BAWSAQ read from community stats, the stock events of `lester1` and the five assassinations; counter-to-company mapping and names are new GP-090 ([economy](/docs/gameplay/economy/economy-and-pickups.md#the-stock-market-second-pass)) |
+| GP-002 | Where `pickup_controller` places each pickup and when they respawn | Second pass: its coordinate tables | Answered: 253 pickups in seven groups, 10-minute regeneration, removed during mission types 13 and 14 ([economy](/docs/gameplay/economy/economy-and-pickups.md#the-pickups-pickup_controller-places-second-pass)) |
+| GP-003 | How shop robberies pay out (the till amounts) | Second pass: `shoprobberies` | Answered: bag $220 to $786 (dropped bag $50 to $219); own till grabs $10 to $50 each ([economy](/docs/gameplay/economy/economy-and-pickups.md#what-a-shop-robbery-pays-second-pass)) |
+| GP-090 | Which company each of the 126 `sm_` stock counters feeds, and the English names of the 80 companies (`BSS_BSTR_` labels, not in the base text files) | Third pass | Open |
 | GP-004 | The full list of `SPx_MONEY_SPENT_*` categories | R1.7 | Answered: 10 categories plus the total, and a second shop family `SPx_SP_MONEY_SPENT_*` ([economy](/docs/gameplay/economy/economy-and-pickups.md#where-story-money-is-booked-second-pass)) |
 
 ### [Cutscenes and dialogue](/docs/gameplay/missions/cutscenes-and-dialogue.md) (R5.6)
