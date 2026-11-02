@@ -102,10 +102,10 @@ Test only: GP-054 (parent head counts), ON-058 (story clothes shop with a freemo
 | P4.6 | [Character switching](/docs/gameplay/player/character-switching.md) (R6.1): saved character state, the scene table | GP-037, GP-038 | scripts | Done, branch `research/second-pass-phase4` (GP-037 answered, GP-038 mostly) |
 | P4.7 | [Respawn](/docs/gameplay/player/respawn-death-and-arrest.md) and [health](/docs/gameplay/player/health-armour-death.md) (R6.2, R3.8): the building table, free respawns, hospital packs, armour items, DLC health configs | GP-060, GP-061, GP-063, GP-065, GP-066, GP-051, GP-052 | scripts, data | Done, branch `research/second-pass-phase4` (all seven answered) |
 | P4.8 | [Economy and pickups](/docs/gameplay/economy/economy-and-pickups.md) (R3.9): stock prices, pickup placement, shop robbery pay | GP-001, GP-002, GP-003 | scripts | Done, branch `research/second-pass-phase4` (GP-002, GP-003 answered, GP-001 mostly); new GP-090 |
-| P4.9 | [Controls and camera](/docs/gameplay/player/controls-and-camera.md) (R6.4): control names, disable helpers, context numbers | GP-041, GP-042, GP-044 | scripts, data | Open |
+| P4.9 | [Controls and camera](/docs/gameplay/player/controls-and-camera.md) (R6.4): control names, disable helpers, context numbers | GP-041, GP-042, GP-044 | scripts, data | Done, branch `main-km1sze` (all three answered; control IDs from 257 up shifted by 37 in build 3717); new GP-091 |
 | P4.10 | [Skills](/docs/gameplay/player/skills-and-abilities.md), [flying](/docs/gameplay/player/flying.md) and [weapons](/docs/gameplay/weapons/weapons.md) (R3.6, R3.4, R3.1): skill gains, ability types, starting skills, DLC flying blocks, flight lessons, AI flight missions, weapon unlocks, ammo caps | GP-067, GP-069, GP-070, GP-045, GP-046, GP-047, GP-048, GP-077, GP-078 | scripts, data | Open |
 
-Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), GP-039 (switch flags), GP-043 (two scripts disabling controls), GP-049, GP-050, GP-053 (regeneration, hurt thresholds, armour split), GP-062, GP-064 (arrest weapons, respawn point choice), GP-068 (shooting, strength, stealth), GP-071, GP-072, GP-075 (breath, drowning, swim speed). Engine: GP-023 (what NoEditorRestrictions patches). Elsewhere: GP-027 (R13.2), GP-073 (swimming stat entries), GP-074 (R2.3), GP-076 (a question for the install's owner), GP-079 (R2.5), GP-080 (R3.2).
+Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), GP-039 (switch flags), GP-043 (two scripts disabling controls), GP-091 (old control numbers on build 3717+), GP-049, GP-050, GP-053 (regeneration, hurt thresholds, armour split), GP-062, GP-064 (arrest weapons, respawn point choice), GP-068 (shooting, strength, stealth), GP-071, GP-072, GP-075 (breath, drowning, swim speed). Engine: GP-023 (what NoEditorRestrictions patches). Elsewhere: GP-027 (R13.2), GP-073 (swimming stat entries), GP-074 (R2.3), GP-076 (a question for the install's owner), GP-079 (R2.5), GP-080 (R3.2).
 
 ## By category
 
@@ -117,7 +117,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [Physics](#physics) (`PHY-`) | 4 | 18 |
 | [AI](#ai) (`AI-`) | 13 | 50 |
 | [The world](#the-world) (`WLD-`) | 4 | 19 |
-| [Gameplay](#gameplay) (`GP-`) | 17 | 90 |
+| [Gameplay](#gameplay) (`GP-`) | 17 | 91 |
 | [GTA Online](#gta-online) (`ON-`) | 13 | 77 |
 | [User interface](#user-interface) (`UI-`) | 6 | 20 |
 | [Audio](#audio) (`AUD-`) | 3 | 11 |
@@ -125,7 +125,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [Performance](#performance) (`PERF-`) | 9 | 28 |
 | [Scripting](#scripting) (`SCR-`) | 4 | 14 |
 | [File formats](#file-formats) (`FF-`) | 2 | 6 |
-| **Total** | | **436** |
+| **Total** | | **437** |
 
 ## Getting started
 
@@ -587,10 +587,11 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-041 | The names of controls 365 to 401 | Second pass: the game's own control list (`controls.xml`, settings menu text) | Open |
-| GP-042 | Which shared helpers produce the near-identical disable counts, and what each blocks | Second pass | Open |
+| GP-041 | The names of controls 365 to 401 | Second pass: the game's own control list (`controls.xml`, settings menu text) | Answered: since build 3717 the 37 creator controls sit at 257 to 293 and the old 257 to 364 moved to 294 to 401, so 365 to 401 are the old 328 to 364 (`VEH_HYDRAULICS_*`, `VEH_MELEE_*`, `VEH_ROCKET_BOOST`, `VEH_TRANSFORM` ...) ([controls](/docs/gameplay/player/controls-and-camera.md#the-numbering-changed-in-build-3717-second-pass)) |
+| GP-042 | Which shared helpers produce the near-identical disable counts, and what each blocks | Second pass | Answered: three Online combat, weapon-select and pause helpers (247 scripts), two vehicle-control helpers (321 scripts), a story lead-in freeze (85) ([controls](/docs/gameplay/player/controls-and-camera.md#the-shared-disable-helpers-second-pass)) |
 | GP-043 | How `SET_INPUT_EXCLUSIVE` and `DISABLE_CONTROL_ACTION` interact when two scripts disagree | In-game test | Open |
-| GP-044 | The context and mode numbers, read from the scripts' own constants | Second pass | Open |
+| GP-044 | The context and mode numbers, read from the scripts' own constants | Second pass | Answered: contexts 0 on foot, 1 car, 2 bike, 3 boat, 4 plane, 5 sub, 6 heli, 7 turret; mode 4 first person, 3 and 4 treated alike by the help-text helper ([controls](/docs/gameplay/player/controls-and-camera.md#the-view-mode-first-and-third-person)) |
+| GP-091 | Whether the `PAD` natives on build 3717+ still treat an old control number (257 to 364) as the old control, so old mods keep working | In-game test (controls test card 4) | Open |
 
 ### [Flying](/docs/gameplay/player/flying.md) (R3.4)
 

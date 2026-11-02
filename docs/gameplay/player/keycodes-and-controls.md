@@ -155,6 +155,8 @@ These are the keyboard codes used by the trainer.
 
 These are GTA V controller IDs. The names are the standard GTA/FiveM names.
 
+**Build 3717 and later:** every ID on this page is below 257 and unchanged. From 257 up, the game's scripts now use the old number + 37 (Rockstar inserted 37 creator controls), so the FiveM list linked below is out of date above 256. See [controls and camera](/docs/gameplay/player/controls-and-camera.md#the-numbering-changed-in-build-3717-second-pass) (**Verified** in the build 3725 scripts).
+
 ### Xbox and PlayStation button names
 
 | Xbox | PlayStation 4 | PlayStation 5 |
@@ -236,6 +238,6 @@ These are GTA V controller IDs. The names are the standard GTA/FiveM names.
 
 Controller IDs are action IDs, not universal physical button codes. An ID can behave differently on foot, in a vehicle, in a menu, or in a special mode. For trainer menu bindings, the frontend IDs 187-217 are the most relevant.
 
-The complete GTA V control list is available here:
+The complete GTA V control list (old numbering above 256, see the note at the top of this section) is available here:
 
 <https://docs.fivem.net/docs/game-references/controls/>
