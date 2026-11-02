@@ -95,7 +95,7 @@ Test only: GP-054 (parent head counts), ON-058 (story clothes shop with a freemo
 | Batch | Topic | Questions | Kind | Status |
 | --- | --- | --- | --- | --- |
 | P4.1 | [Story flow](/docs/gameplay/missions/story-flow.md) (R5.1): the remaining command types, table fields, hidden missions, fails, the flow integers, the active triggerer | GP-028, GP-029, GP-030, GP-031, GP-032, CORE-020 | scripts | Mostly done, branch `research/second-pass-phase4` (GP-028, GP-030, CORE-020 answered, GP-031 mostly, GP-029 and GP-032 partly); new CORE-033 |
-| P4.2 | [Mission anatomy](/docs/gameplay/missions/mission-anatomy.md) and [replay](/docs/gameplay/missions/replay-director-and-editor.md) (R5.2, R5.8): skip flags, replay states, lead-ins, replay event types, director mode areas | GP-016, GP-017, GP-021, GP-022, GP-024, GP-025, GP-026 | scripts | Open |
+| P4.2 | [Mission anatomy](/docs/gameplay/missions/mission-anatomy.md) and [replay](/docs/gameplay/missions/replay-director-and-editor.md) (R5.2, R5.8): skip flags, replay states, lead-ins, replay event types, director mode areas | GP-016, GP-017, GP-021, GP-022, GP-024, GP-025, GP-026 | scripts | Mostly done, branch `research/second-pass-phase4` (GP-016, GP-017, GP-022, GP-024, GP-026 answered, GP-021 and GP-025 partly); new GP-087 |
 | P4.3 | [Minigames and activities](/docs/gameplay/missions/minigames-and-activities.md) (R5.5): medal thresholds, golf, activity unlocks, towing bonus | GP-010, GP-011, GP-012, GP-014 | scripts | Open |
 | P4.4 | [Strangers and freaks](/docs/gameplay/missions/strangers-and-freaks.md) (R5.4): unlock conditions, world points, brain flags | GP-034, GP-035, GP-036 | scripts, data | Open |
 | P4.5 | [Cutscenes and dialogue](/docs/gameplay/missions/cutscenes-and-dialogue.md) (R5.6): the cutscene files and `dialogue_handler`'s globals | GP-005, GP-007 | scripts, data | Open |
@@ -117,7 +117,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [Physics](#physics) (`PHY-`) | 4 | 18 |
 | [AI](#ai) (`AI-`) | 13 | 50 |
 | [The world](#the-world) (`WLD-`) | 4 | 19 |
-| [Gameplay](#gameplay) (`GP-`) | 17 | 86 |
+| [Gameplay](#gameplay) (`GP-`) | 17 | 87 |
 | [GTA Online](#gta-online) (`ON-`) | 13 | 77 |
 | [User interface](#user-interface) (`UI-`) | 6 | 20 |
 | [Audio](#audio) (`AUD-`) | 3 | 11 |
@@ -125,7 +125,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [Performance](#performance) (`PERF-`) | 9 | 28 |
 | [Scripting](#scripting) (`SCR-`) | 4 | 14 |
 | [File formats](#file-formats) (`FF-`) | 2 | 6 |
-| **Total** | | **432** |
+| **Total** | | **433** |
 
 ## Getting started
 
@@ -533,23 +533,24 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-016 | Where `armenian1`, `jewelry_heist` and `trevor1` set the skip flag (`Global_96580`), since they don't do it in their own code | Next pass of R5.2 or R5.8 | Open |
-| GP-017 | The exact meaning of `replay_controller` states 1 to 6 and 11 to 13 | R5.8 | Open |
+| GP-016 | Where `armenian1`, `jewelry_heist` and `trevor1` set the skip flag (`Global_96580`), since they don't do it in their own code | Next pass of R5.2 or R5.8 | Answered: `flow_controller` opens the fail screen for every mission the flow runs and sets the flag there (two fails without progress, bit 16 clear) ([mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip)) |
+| GP-017 | The exact meaning of `replay_controller` states 1 to 6 and 11 to 13 | R5.8 | Answered: states 0 to 13 named, with the replay types that pick the menu ([mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip)) |
 | GP-018 | How the snapshot in `Global_108447` is restored on retry, and what it leaves out | R5.3 | Answered: clock, weather, cash, weapons, outfits, tattoos, special ability, texts and the player ped are restored; other stats and the world aren't ([mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip)) |
 | GP-019 | How crew skill changes the heist take and the fail labels in `Local_3373` | Third pass (was: R7.8 (heists)) | Partly answered: the fail labels in `Local_3373` are a fixed table, and a dead crew member gets a fixed line by role ([mission anatomy](/docs/gameplay/missions/mission-anatomy.md)); how crew skill changes the take is left (third pass) |
 | GP-020 | How `mission_repeat_controller` replays a mission without moving the flow (from guide 2) | R5.3 | Answered: the flow-started flag is cleared and the game is saved and reloaded around the replay ([mission anatomy 3.9](/docs/gameplay/missions/mission-anatomy.md#39-passing)) |
-| GP-021 | What the mission triggerers build before a mission starts (lead-in scenes, from guide 2) | R5.2 second pass | Open |
-| GP-022 | Where `armenian1`, `jewelry_heist` and `trevor1` unlock their skip (they honour `Global_96581` but don't set `Global_96580` themselves) *(from the guide's text)* | Second pass | Open |
+| GP-021 | What the mission triggerers build before a mission starts (lead-in scenes, from guide 2) | R5.2 second pass | Partly answered: what each triggerer creates and its lead-in labels; no triggerer plays a cutscene. Which scene goes with which mission, and the handover, moved to the third pass ([mission anatomy 3.3.1](/docs/gameplay/missions/mission-anatomy.md#331-before-the-script-starts-the-lead-in-second-pass)) |
+| GP-022 | Where `armenian1`, `jewelry_heist` and `trevor1` unlock their skip (they honour `Global_96581` but don't set `Global_96580` themselves) *(from the guide's text)* | Second pass | Answered with GP-016 ([mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip)) |
 
 ### [Replay, director mode and the Rockstar Editor](/docs/gameplay/missions/replay-director-and-editor.md) (R5.8)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | GP-023 | What exactly NoEditorRestrictions patches, and the vanilla limits it lifts (free camera distance, restricted areas) | Second pass with the executable; test card 3 | Open |
-| GP-024 | The meaning of `replay_controller` states 1 to 6 and 11 to 13 | Second pass (also open in mission anatomy) | Open |
-| GP-025 | The `REPLAY_START_EVENT` and `REPLAY_RECORD_BACK_FOR_TIME` type numbers | Second pass | Open |
-| GP-026 | Where director mode's restricted places (the prison and others) are defined | Second pass: the area checks in `director_mode` | Open |
+| GP-024 | The meaning of `replay_controller` states 1 to 6 and 11 to 13 | Second pass (also open in mission anatomy) | Answered with GP-017 ([mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip)) |
+| GP-025 | The `REPLAY_START_EVENT` and `REPLAY_RECORD_BACK_FOR_TIME` type numbers | Second pass | Partly answered: who passes each value (4 and 3 story missions, 1 and 0 side missions, 2 six scripts); the engine meaning is new GP-087 ([replay guide](/docs/gameplay/missions/replay-director-and-editor.md#the-clip-recorder)) |
+| GP-026 | Where director mode's restricted places (the prison and others) are defined | Second pass: the area checks in `director_mode` | Answered: a 200 m circle around the prison is the only restricted area; the other spots only move the start point ([replay guide](/docs/gameplay/missions/replay-director-and-editor.md#director-mode-director_mode)) |
 | GP-027 | The 10 post effects `startup` registers for the editor | R13.2 second pass | Open |
+| GP-087 | What the engine does with the type number of `REPLAY_RECORD_BACK_FOR_TIME` and `REPLAY_START_EVENT` (values 0 to 4) | Third pass, the executable | Open |
 
 ### [The story mission flow: how missions unlock](/docs/gameplay/missions/story-flow.md) (R5.1)
 

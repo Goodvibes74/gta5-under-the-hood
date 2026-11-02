@@ -43,6 +43,18 @@ Three systems that share the word "replay" and are easy to mix up: the **mission
 
 **Verified (arguments):** `REPLAY_RECORD_BACK_FOR_TIME(back, forward, type)` is called most often with 5 s back and 5 s forward (86 calls), 3 and 2 (60), 5 and 10 (46), 3 and 5 (44), 0 and 10 (40). `REPLAY_START_EVENT` takes a type: 4 (274 calls), 1 (50), 3 (35), 0 (5). **Known:** these become the "Action Replay" and mission clips the editor offers without the player pressing record.
 
+**The type numbers (second pass).** Neither Rockstar's names nor NativeDB's give the type argument a meaning (NativeDB calls it `p2` and `p0`). Who passes which value, counted over the build-3725 decompile with `git grep -o` (**Verified**):
+
+| Value | `REPLAY_RECORD_BACK_FOR_TIME` calls (scripts) | `REPLAY_START_EVENT` calls | Who uses it |
+| ---: | ---: | ---: | --- |
+| 4 | 745 (78) | 274 (69 scripts) | Story missions, the default |
+| 3 | 328 (75) | 35 (19 scripts) | Story missions (`armenian2`, `carsteal1`, `fbi1`, `jewelry_heist` ...) and assassinations |
+| 1 | 74 (26) | 50 (36 scripts) | Strangers and freaks (`barry1`, the Epsilon, Extreme and Fanatic missions) |
+| 0 | 90 (28) | 5 (5 scripts) | Strangers and freaks (`josh1` to `josh4`, `minute1`, `nigel2`, `paparazzo1` ...) |
+| 2 | 9 (6) | none | Six story missions: `agency_heist3a`, `armenian1`, `carsteal3`, `fbi1`, `prologue1`, `trevor1` |
+
+The split (4 and 3 for story missions, 1 and 0 for side missions, 2 in only six scripts) suggests a priority or a clip category that the engine uses to rank automatic clips. What it really does needs the executable (third pass, GP-087).
+
 **Known (engine):** recording keeps a rolling buffer of the world's state (entity positions, animations, effects, sounds), not video; the editor replays it through the replay director and its cameras ([cameras](/docs/rendering/cameras.md)). Scripts don't run during playback, which is why the game asks scripts to clean up first.
 
 ## Director mode (`director_mode`)
@@ -52,6 +64,7 @@ Three systems that share the word "replay" and are easy to mix up: the **mission
 - **Start:** launched on the `MISSION` stack after a fade, with the player invincible and frozen while it loads ([runtime scripts](/docs/core/runtime-scripts.md)); it calls 1,049 different natives.
 - **Menus (labels):** actor categories and the shortlist (`CM_BOOD` "Switch Actor", `CM_GEN` "Gender"), props and outfits, vehicles (`CM_VEHOPT`), weapons, settings, locations (`CM_LOCDE01` "Quick travel to a pre-defined location."), and the button to open the editor.
 - **Locations:** `CM_LOC_0` and `CM_LOC_1` are the two user locations; `CM_LOC_2` to `CM_LOC_28` are LS International Airport, Docks, LS Downtown, Del Perro Pier, Vinewood Hills, Wind Farm, Sandy Shores, Stab City, Fort Zancudo, Canyon, Cable Car, Paleto Bay, The Lighthouse, Vineyard, Richards Majestic Studio, Golf Club, Altruist Camp, Power Station, Saw Mill, Quarry Pit, Dam, Storm Drain, Observatory, Radio Telescope Array, LSU, Cove and Mt. Gordo.
+- **Where the rules come from (second pass):** every frame the script fills a state bitset from plain checks on the player (in water, submerged, in the air or climbing, on top of a vehicle, being arrested, on a train, wanted above two stars, in cover, a passenger, in a submersible) and one area check. The **prison** is the only restricted place: a flat circle of 200 m around (1701.7, 2586.3), height ignored, which drives `CM_WARN07`. Nothing else in the script marks an area as off limits. A separate list of 22 spots (Lester's house by its interior `v_lesters`, the hospital by `v_hospital`, others by coordinates, and four special cases switched by `Global_80529` bits 4 to 7) only moves the player's starting point out of interiors and awkward places when director mode puts them into the world (**Verified**, `director_mode`).
 - **Rules:** the warnings above, plus `CM_DISABLEDE1` "Option is disabled for this actor." and `CM_DISABLEDE2` "Option is currently disabled." for options that don't fit the current actor or state.
 - **World state:** it saves and restores the weather (`SET_CURR_WEATHER_STATE`, [time and weather](/docs/world/time-and-weather.md)), overrides the sea (`WATER_OVERRIDE_SET_*`) and switches all vehicle generators (`SET_ALL_VEHICLE_GENERATORS_ACTIVE`).
 
@@ -69,9 +82,10 @@ Three systems that share the word "replay" and are easy to mix up: the **mission
 | Question | Where it goes |
 | --- | --- |
 | What exactly NoEditorRestrictions patches, and the vanilla limits it lifts (free camera distance, restricted areas) | Second pass with the executable; test card 3 |
-| The meaning of `replay_controller` states 1 to 6 and 11 to 13 | Second pass (also open in mission anatomy) |
-| The `REPLAY_START_EVENT` and `REPLAY_RECORD_BACK_FOR_TIME` type numbers | Second pass |
-| Where director mode's restricted places (the prison and others) are defined | Second pass: the area checks in `director_mode` |
+| The meaning of `replay_controller` states 1 to 6 and 11 to 13 | Answered in [mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip) |
+| The `REPLAY_START_EVENT` and `REPLAY_RECORD_BACK_FOR_TIME` type numbers | Partly answered in [the clip recorder](#the-clip-recorder): who uses each value; what the engine does with it is third pass (GP-087) |
+| Where director mode's restricted places (the prison and others) are defined | Answered in [director mode](#director-mode-director_mode): the prison circle is the only one |
+| What the engine does with the type number of `REPLAY_RECORD_BACK_FOR_TIME` and `REPLAY_START_EVENT` (GP-087) | Third pass, the executable |
 | The 10 post effects `startup` registers for the editor | R13.2 second pass |
 
 ## Test cards

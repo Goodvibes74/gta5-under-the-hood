@@ -41,6 +41,19 @@ Every one of the three does the same things in the same order before its loop (*
 
 `jewelry_heist` adds the heist parts before its loop: it reads which approach the player chose (3.8) and the chosen crew, and puts the take counter on screen.
 
+### 3.3.1 Before the script starts: the lead-in (second pass)
+
+The few seconds before a mission, with characters already waiting at the blip, belong to the mission triggerer, not the mission (**Verified** counts, the four build-3725 triggerers):
+
+| Triggerer | Peds created | Vehicles | Objects | Synchronized scenes | Lead-in conversation and animation labels (examples) |
+| --- | ---: | ---: | ---: | ---: | --- |
+| A | 10 | 22 | 9 | 15 | `AR2_INTRO_LI`, `ARM3_INT_LI`, `FAM3_INTLID`, `JHS1_LI_1`, `LES1A_INTL1`, `MISSHEIST_JEWELLEADINOUT` |
+| B | 17 | 16 | 12 | 46 | `CHINESE_1_INT_LEADIN`, `DH2A_INT_LI1` to `_LI3`, `DS2B_INT_LI1` to `_LI3`, `FIB1_LEADINA`, `TR2_INT_LI1`, the `..._LEADIN_LOOP` / `_ACTION` pairs (`HUSB_`, `RUSS_`, `OLDMAN1_`) |
+| C | 11 | 12 | 4 | 26 | `CST3_INT_LI`, `FBI5_INT_LI`, `FH1_INTLI3`, `M1_INT_LI`, `TRV5_INT_LI1` |
+| D | 25 | 16 | 10 | 13 | `AH_INTL`, `FBS1_INT_LI`, `FINC1_INTLI`, `SOL2_INTA_LI` |
+
+No triggerer requests a cutscene: every intro cutscene (`armenian_1_int` and so on) is played by the mission script. The lead-in is built from ordinary peds and vehicles, synchronized scenes and a short conversation (the `_LI` labels). Our reading of the `_LOOP` / `_ACTION` label pairs is that a scene loops until the player walks up and then plays its action part, after which the mission takes over those entities. Which scene belongs to which mission, and how the handover works, are left for the third pass.
+
 ## 3.4 The main loop
 
 Each frame (**Verified**, `armenian1`):
@@ -107,15 +120,28 @@ The checkpoint names are the developers' and say what the checkpoint is for: `ar
 
 | State | What it means |
 | --- | --- |
+| 0 | The fail moment: screen flash and the `MissionFailedSounds` sounds, controls and the feed blocked, then a fade out; when faded, it picks the menu state from the replay type (below) |
+| 1 | The menu: **Retry**, **Skip** (when allowed), **Exit** |
+| 2 | The menu with a restart: **Retry** from the checkpoint and **Restart** from the start when there is a checkpoint (`f_2` above 0), otherwise only **Restart**; plus **Skip** and **Exit** |
+| 3 | "Are you sure" for Restart: yes relaunches from the start and clears the checkpoint, no goes back to 2 |
+| 4 | "Are you sure" for Exit (`REPLAY_REJ`): yes rejects the replay, no goes back to the menu |
+| 5 | "Are you sure" for Skip: yes relaunches with the skip, no goes back to the menu |
+| 6 | A single **OK** screen with no retry, for replay type 2; OK rejects the replay |
 | 7 | Player chose retry; the mission is being relaunched |
-| 8 | Player chose exit (or the mission can't be replayed) |
+| 8 | Replay rejected (the player chose exit, or the mission can't be replayed) |
 | 9 | Relaunched mission is starting from a checkpoint |
 | 10 | Relaunched mission is starting, set-up stage |
-| 11 to 13 | Restart paths that end the replay (to check) |
+| 11 | Replay rejected for a story mission (replay types 0 to 4): it waits for `flow_controller`, which then takes the mission command's fail label ([story flow 2.4.2](/docs/gameplay/missions/story-flow.md#242-what-a-fail-does-to-the-flow)) |
+| 12 | `replay_controller` has ended (set just before it terminates); a new replay may start |
+| 13 | The replay is over (checkpoint cleared): the controller waits until no mission of types 0, 2, 3, 4, 9 or 10 runs, then ends |
+
+The state values 0 to 6, 11, 12 and 13 were added in the second pass (**Verified**, `replay_controller` build 3725; the names are ours). The replay type (`Global_102429.f_11`) is set by whoever opens the screen. For a mission run by the flow it is `flow_controller`, from the mission table: 4 for Michael's family events (`me_amanda1`, `me_jimmy1`, `me_tracey1`), 3 for `carsteal4` and `fbi3`, 2 when field 15 bit 2 is set, 1 when bit 17 is set, otherwise 0. Strangers and freaks use type 6 and the bail bonds type 5. Type 1 gets menu 2, type 2 gets screen 6, and every other type gets menu 1.
 
 The fail screen offers **Retry** (from the last checkpoint, when there is one), **Restart** (from the start), **Skip** and **Exit**. `Global_102429.f_2` holds the checkpoint to restart from. When the relaunched mission starts, it checks for state 9 or 10, reads `f_2` and jumps to that checkpoint's stage with step 4 (**Verified**).
 
-**Skip ("skip this section").** The skip button appears when `Global_96580` is set. In 72 mission scripts that set it, the rule is: the player has failed at least **twice** at the same checkpoint and the mission's option flags (mission table field 15, bit 16) don't forbid it (**Verified** in `abigail1`). Choosing skip sets `Global_96581`, adds 1 to the `times_mission_skipped` stat, and the relaunched mission starts **one checkpoint later** than it would have. When the failed checkpoint is the last one (the "last checkpoint" flag), the screen offers to skip the whole mission instead (`REPLAY_SKIPM` instead of `REPLAY_SKIPS`). `armenian1`, `jewelry_heist` and `trevor1` don't contain the check that sets `Global_96580` themselves, but all three honour `Global_96581`; where their skip unlock happens is an open question (3.12).
+**Skip ("skip this section").** The skip button appears when `Global_96580` is set. In 72 mission scripts that set it, the rule is: the player has failed at least **twice** at the same checkpoint and the mission's option flags (mission table field 15, bit 16) don't forbid it (**Verified** in `abigail1`). Choosing skip sets `Global_96581`, adds 1 to the `times_mission_skipped` stat, and the relaunched mission starts **one checkpoint later** than it would have. When the failed checkpoint is the last one (the "last checkpoint" flag), the screen offers to skip the whole mission instead (`REPLAY_SKIPM` instead of `REPLAY_SKIPS`). `armenian1`, `jewelry_heist` and `trevor1` don't contain the check that sets `Global_96580` themselves, but all three honour `Global_96581`.
+
+**Where story missions get their skip** (*second pass*, **Verified**). For every mission the flow runs, `flow_controller` opens the fail screen itself, so the skip check is in `flow_controller`, not in the mission. When the mission command sees a fail, and field 15 bit 1 isn't set, `flow_controller` records the checkpoint stat (`PLAYSTATS_MISSION_CHECKPOINT`), sets the replay type, resets `Global_102429` to state 0 and sets `Global_96580` when all of these hold: the replay type is 0 to 4; the checkpoint reached is at least the mission's minimum (1 for `prologue1`, 0 for every other mission); field 15 bit 16 is clear; and `missionFailsNoProgress` is 2 or more. So the rule is two fails **without progress**, not two fails at one checkpoint. The 72 scripts with their own copy of the check are the ones that open the screen themselves: the strangers and freaks (fails counted in `SAVED_RANDOM_CHARACTERS`), the four bail bonds (fails counted in `BAIL_BOND_SAVED_STRUCT`), towing and the two trafficking scripts. `mission_repeat_controller` has a copy for replays started from the pause menu.
 
 ## 3.7 Failing
 
@@ -177,9 +203,9 @@ When the step is 4 (a restart is setting up), the same cleanup runs but clears t
 
 | Question | Where it goes |
 | --- | --- |
-| Where `armenian1`, `jewelry_heist` and `trevor1` set the skip flag (`Global_96580`), since they don't do it in their own code | Next pass of R5.2 or R5.8 |
-| The exact meaning of `replay_controller` states 1 to 6 and 11 to 13 | R5.8 |
+| Where `armenian1`, `jewelry_heist` and `trevor1` set the skip flag (`Global_96580`), since they don't do it in their own code | Answered in [3.6](#36-checkpoints-retry-and-skip): `flow_controller` sets it for every mission the flow runs |
+| The exact meaning of `replay_controller` states 1 to 6 and 11 to 13 | Answered in [3.6](#36-checkpoints-retry-and-skip) |
 | How the snapshot in `Global_108447` is restored on retry, and what it leaves out | Answered in [3.6](#36-checkpoints-retry-and-skip) |
 | How crew skill changes the heist take and the fail labels in `Local_3373` | Partly answered (second pass): the fail labels are fixed, not chosen by crew; how crew skill changes the take is left for the third pass |
 | How `mission_repeat_controller` replays a mission without moving the flow (from guide 2) | Answered in [3.9](#39-passing) |
-| What the mission triggerers build before a mission starts (lead-in scenes, from guide 2) | R5.2 second pass |
+| What the mission triggerers build before a mission starts (lead-in scenes, from guide 2) | Partly answered in [3.3.1](#331-before-the-script-starts-the-lead-in-second-pass): what each triggerer creates and its lead-in labels; which scene goes with which mission, and the handover, are third pass |
