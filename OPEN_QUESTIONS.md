@@ -100,7 +100,7 @@ Test only: GP-054 (parent head counts), ON-058 (story clothes shop with a freemo
 | P4.4 | [Strangers and freaks](/docs/gameplay/missions/strangers-and-freaks.md) (R5.4): unlock conditions, world points, brain flags | GP-034, GP-035, GP-036 | scripts, data | Mostly done, branch `research/second-pass-phase4` (GP-036 answered, GP-034 mostly; GP-035 moved to the third pass); new GP-089 |
 | P4.5 | [Cutscenes and dialogue](/docs/gameplay/missions/cutscenes-and-dialogue.md) (R5.6): the cutscene files and `dialogue_handler`'s globals | GP-005, GP-007 | scripts, data | Done, branch `research/second-pass-phase4` (GP-005 answered, GP-007 mostly) |
 | P4.6 | [Character switching](/docs/gameplay/player/character-switching.md) (R6.1): saved character state, the scene table | GP-037, GP-038 | scripts | Done, branch `research/second-pass-phase4` (GP-037 answered, GP-038 mostly) |
-| P4.7 | [Respawn](/docs/gameplay/player/respawn-death-and-arrest.md) and [health](/docs/gameplay/player/health-armour-death.md) (R6.2, R3.8): the building table, free respawns, hospital packs, armour items, DLC health configs | GP-060, GP-061, GP-063, GP-065, GP-066, GP-051, GP-052 | scripts, data | Open |
+| P4.7 | [Respawn](/docs/gameplay/player/respawn-death-and-arrest.md) and [health](/docs/gameplay/player/health-armour-death.md) (R6.2, R3.8): the building table, free respawns, hospital packs, armour items, DLC health configs | GP-060, GP-061, GP-063, GP-065, GP-066, GP-051, GP-052 | scripts, data | Done, branch `research/second-pass-phase4` (all seven answered) |
 | P4.8 | [Economy and pickups](/docs/gameplay/economy/economy-and-pickups.md) (R3.9): stock prices, pickup placement, shop robbery pay | GP-001, GP-002, GP-003 | scripts | Open |
 | P4.9 | [Controls and camera](/docs/gameplay/player/controls-and-camera.md) (R6.4): control names, disable helpers, context numbers | GP-041, GP-042, GP-044 | scripts, data | Open |
 | P4.10 | [Skills](/docs/gameplay/player/skills-and-abilities.md), [flying](/docs/gameplay/player/flying.md) and [weapons](/docs/gameplay/weapons/weapons.md) (R3.6, R3.4, R3.1): skill gains, ability types, starting skills, DLC flying blocks, flight lessons, AI flight missions, weapon unlocks, ammo caps | GP-067, GP-069, GP-070, GP-045, GP-046, GP-047, GP-048, GP-077, GP-078 | scripts, data | Open |
@@ -606,8 +606,8 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | --- | --- | --- | --- |
 | GP-049 | The player's regeneration rate, delay and cap in numbers | Test card 2 | Open |
 | GP-050 | What exactly changes below the fatigued and hurt thresholds | In-game test | Open |
-| GP-051 | The 5 armour item percentages, read from the shop's data | Second pass: `gunclub_shop` item table | Open |
-| GP-052 | Which personalities each DLC pack adds and their health configs | Second pass with [`tools/dlc-scan.ps1`](/tools/README.md) | Open |
+| GP-051 | The 5 armour item percentages, read from the shop's data | Second pass: `gunclub_shop` item table | Answered: 20, 40, 60, 80 and 100% (`WT_BA_0` to `4`) ([health](/docs/gameplay/player/health-armour-death.md#armour)) |
+| GP-052 | Which personalities each DLC pack adds and their health configs | Second pass with [`tools/dlc-scan.ps1`](/tools/README.md) | Answered: none; the 23 DLC personality files only add holster and movement data for 57 weapons, and no pack has its own `pedhealth.meta` ([health](/docs/gameplay/player/health-armour-death.md#where-it-lives)) |
 | GP-053 | How armour splits damage between armour and health for each damage type | R3.1 second pass, in-game test | Open |
 
 ### [The Online character creator](/docs/gameplay/player/online-character-creator.md) (R6.5)
@@ -636,13 +636,13 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-060 | What the "building" table tied to each restart point drives | Second pass | Open |
-| GP-061 | Which respawn states (global values 7 and 9) and money categories (3 and 4) skip the charges | Second pass: trace the writers of those globals | Open |
+| GP-060 | What the "building" table tied to each restart point drives | Second pass | Answered: the static map-blip table; hospitals own blips 14 to 18 (sprite 61), police stations 7 to 13 (sprite 60) ([respawn](/docs/gameplay/player/respawn-death-and-arrest.md#the-restart-points)) |
+| GP-061 | Which respawn states (global values 7 and 9) and money categories (3 and 4) skip the charges | Second pass: trace the writers of those globals | Answered: 7 and 9 are `replay_controller` states (a retry relaunching); 3 and 4 are the contact-sheet account values of anyone but the three main characters ([respawn](/docs/gameplay/player/respawn-death-and-arrest.md#what-it-costs)) |
 | GP-062 | Exactly which weapons survive an arrest | Test card 2 | Open |
-| GP-063 | Which of the 10 hospital damage packs is chosen when | Second pass: read the selector in `respawn_controller` | Open |
+| GP-063 | Which of the 10 hospital damage packs is chosen when | Second pass: read the selector in `respawn_controller` | Answered: one pack at random, each 1 in 10 ([respawn](/docs/gameplay/player/respawn-death-and-arrest.md#what-every-respawn-resets)) |
 | GP-064 | Whether the engine picks the nearest enabled point or uses other rules (wanted level, water, the exile) | Test card 3 | Open |
-| GP-065 | What the "building" table that `standard_global_init` fills next to each hospital and police station drives (blips, doors, state) *(from the guide's text)* | Second pass | Open |
-| GP-066 | The two respawn states (7 and 9) that skip the death charge, and money categories 3 and 4 that skip both charges *(from the guide's text)* | Second pass | Open |
+| GP-065 | What the "building" table that `standard_global_init` fills next to each hospital and police station drives (blips, doors, state) *(from the guide's text)* | Second pass | Answered with GP-060 ([respawn](/docs/gameplay/player/respawn-death-and-arrest.md#the-restart-points)) |
+| GP-066 | The two respawn states (7 and 9) that skip the death charge, and money categories 3 and 4 that skip both charges *(from the guide's text)* | Second pass | Answered with GP-061 ([respawn](/docs/gameplay/player/respawn-death-and-arrest.md#what-it-costs)) |
 
 ### [Player skills and abilities](/docs/gameplay/player/skills-and-abilities.md) (R3.6)
 

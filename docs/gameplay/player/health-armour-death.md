@@ -19,7 +19,7 @@ How much health peds and players have, where those numbers come from, the thresh
 | File | What it holds | Count (build 3725) |
 | --- | --- | --- |
 | `common:/data/pedhealth.meta` | Health configs: default health and armour, and the fatigued, hurt, injured, dying and dog-takedown thresholds | 10 configs |
-| `update:/x64/data/metadata/pedpersonality.ymt` | Ped personalities; each names a `HealthConfigHash` | 96 personalities (DLC packs add more through `PED_PERSONALITY_FILE`: 23 entries across the packs) |
+| `update:/x64/data/metadata/pedpersonality.ymt` | Ped personalities; each names a `HealthConfigHash` | 96 personalities. DLC packs load 23 more `pedpersonality.meta` files through `PED_PERSONALITY_FILE`, but none of them adds a personality (second pass, see below) |
 | `common:/data/peds.meta` and `update:/x64/data/peds.ymt` | Each ped model names its personality (**Known**) | R14.2 |
 | `common:/data/pickups.meta` (update copy) | Health and armour pickup rewards | `REWARD_HEALTH` 100, `REWARD_HEALTH_ENTER_VEHICLE` 50, `REWARD_ARMOUR` 100 |
 | `common:/data/effects/peds/peddamage.xml`, `bloodfx.dat` | Blood and damage decals on peds | R13.3 |
@@ -50,13 +50,15 @@ Values from `pedhealth.meta`. Health and armour are entity units; "usable" is he
 - **`MeleeCardinalFatalAttackCheck`**: whether a single melee hit from certain directions can kill (on for `Weak` and `GULL`).
 - **Headshots** kill outright when the ped "suffers critical hits" (the default); `SET_PED_SUFFERS_CRITICAL_HITS(ped, false)` turns that off, which missions do for bosses and allies.
 
+**What the DLC personality files add** (*second pass*, **Verified**, all 23 `common\data\pedpersonality.meta` files extracted from the DLC packs with the CodeWalker library). Each file has only two sections, `MovementModeUnholsterData` and `MovementModes`: the holster clips and movement modes for the weapons that pack adds. Together they cover 57 weapons, from `WEAPON_FLAREGUN` (`mpheist`) to `WEAPON_NEWSPAPER` (`mp2025_02`), and `mpbiker` and `mpchristmas2017` add the most (7 each). No file has a `PedPersonalities` section, and no DLC pack has its own `pedhealth.meta`. Every ped added by DLC therefore uses one of the 96 base personalities and the 10 base health configs.
+
 ## Regeneration
 
 **Known:** in story mode the player's health refills by itself, slowly, up to half the bar (150 of 200), and stops after damage until a delay passes. Armour never regenerates. Scripts tune it with `SET_PLAYER_HEALTH_RECHARGE_MULTIPLIER` (118 scripts, 318 calls; 0 turns it off) and `SET_PLAYER_HEALTH_RECHARGE_MAX_PERCENT` (114 scripts, 165 calls); both are mostly called by Online controllers.
 
 ## Armour
 
-**Verified:** `gunclub_shop` (Ammu-Nation) never adds armour. Each body armour item has a percentage, and buying it sets armour to `floor(GET_PLAYER_MAX_ARMOUR / 100 × percentage)`, but only if your armour is below that. The shop's display code also checks the 20% and 40% steps. **Known:** the five armour items are 20, 40, 60, 80 and 100% (super light to super heavy), and the story maximum is 100. Pickups give 100 (`REWARD_ARMOUR`).
+**Verified:** `gunclub_shop` (Ammu-Nation) never adds armour. Each body armour item has a percentage, and buying it sets armour to `floor(GET_PLAYER_MAX_ARMOUR / 100 × percentage)`, but only if your armour is below that. The shop's display code also checks the 20% and 40% steps. *Second pass* (**Verified**): the shop registers the five items (`WT_BA_0` to `WT_BA_4`, super light to super heavy) with **20, 40, 60, 80 and 100%**, the same in every Ammu-Nation layout. The story maximum is 100 (**Known**). Pickups give 100 (`REWARD_ARMOUR`).
 
 **Known (engine):** armour absorbs bullet and melee damage before health; fall, fire, explosion and drowning damage mostly go to health.
 
@@ -110,8 +112,8 @@ Values from `pedhealth.meta`. Health and armour are entity units; "usable" is he
 | --- | --- |
 | The player's regeneration rate, delay and cap in numbers | Test card 2 |
 | What exactly changes below the fatigued and hurt thresholds | In-game test |
-| The 5 armour item percentages, read from the shop's data | Second pass: `gunclub_shop` item table |
-| Which personalities each DLC pack adds and their health configs | Second pass with [`tools/dlc-scan.ps1`](/tools/README.md) |
+| The 5 armour item percentages, read from the shop's data | Answered in [armour](#armour): 20, 40, 60, 80, 100% |
+| Which personalities each DLC pack adds and their health configs | Answered in [where it lives](#where-it-lives): none; the DLC files only add holster clips and movement modes for 57 new weapons |
 | How armour splits damage between armour and health for each damage type | R3.1 second pass, in-game test |
 
 ## Test cards

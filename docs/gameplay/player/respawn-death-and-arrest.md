@@ -35,7 +35,7 @@ What happens after "Wasted" or "Busted" in story mode: where the 5 hospitals and
 | 5 | `RESPAWN@POLICE@PALETO_BAY` | −440.74, 6019.89, 30.49 | 314.9 |
 | 6 | `RESPAWN@POLICE@VINEWOOD` | 639.18, 1.77, 81.79 | 238.0 |
 
-The names in brackets are the usual names for those buildings (**Known**). Each point is also tied to an entry in another global table (a "building" entry) that `standard_global_init` fills alongside; what that table drives (blips, doors, state) is not traced (open question).
+The names in brackets are the usual names for those buildings (**Known**). Each point is also tied to an entry in another global table that `standard_global_init` fills alongside. *Second pass* (**Verified**): that table is the **static map-blip table** (`Global_34155` in build 3725, 263 entries, the same one the activity launchers and the flow's blip commands use). Hospital slots 0 to 4 own blips 14 to 18 with sprite 61 (the hospital cross), and police slots 0 to 6 own blips 7 to 13 with sprite 60 (the police star); each blip is placed at its building's coordinates. So the entry is the building's blip on the map, not a door or a building state.
 
 **Verified:** to decide which hospital you woke up at, `respawn_controller` measures the distance from where you died to each enabled hospital and takes the nearest. **Known:** the engine uses the same rule to choose where to put you.
 
@@ -56,7 +56,7 @@ The names in brackets are the usual names for those buildings (**Known**). Each 
 | Death | 5% of the character's cash | `floor(cash / 100) × 5`, clamped to 0 to 5,000 | `SPx_MONEY_SPENT_ON_HEALTHCARE` |
 | Arrest | The smaller of $300 and your cash | Clamped to 0 to 300 | `SPx_MONEY_SPENT_IN_COP_BRIBES` |
 
-Cash is read from `SP0_TOTAL_CASH`, `SP1_TOTAL_CASH` or `SP2_TOTAL_CASH` (Michael, Franklin, Trevor). The death charge is skipped in two respawn states the script tracks in a global (values 7 and 9; not decoded). Both charges are skipped when the character's money category is 3 or 4 (also not decoded; open question).
+Cash is read from `SP0_TOTAL_CASH`, `SP1_TOTAL_CASH` or `SP2_TOTAL_CASH` (Michael, Franklin, Trevor). *Second pass* (**Verified**): the death charge is skipped when the mission replay is relaunching a mission, that is when `replay_controller`'s state is 7 (retry chosen) or 9 (restarting from a checkpoint) ([mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip)). A death that leads into a retry costs nothing, and the arrest code skips its weapon removal while the replay is relaunching (states 7, 9 and 10). The "money category" is a field of the current character's contact sheet that says whose bank account to use: 0, 1 and 2 for Michael, Franklin and Trevor, and 4 for every other contact (no entry uses 3). Both charges are skipped for 3 and 4, so a player who isn't one of the three main characters pays nothing.
 
 ### What an arrest takes
 
@@ -69,7 +69,7 @@ Cash is read from `SP0_TOTAL_CASH`, `SP1_TOTAL_CASH` or `SP2_TOTAL_CASH` (Michae
 - Removes the player's helmet (`REMOVE_PED_HELMET`) and parachute pack (`CLEAR_PED_PARACHUTE_PACK_VARIATION`), and resets some outfit parts by character.
 - Deletes peds the script tracked for the player.
 - Unless a global flag says not to: `CLEAR_WEATHER_TYPE_PERSIST`, `CLEAR_TIMECYCLE_MODIFIER` and `SET_RANDOM_WEATHER_TYPE` (its only caller in the game), then `UNLOAD_ALL_CLOUD_HATS`. So a death rerolls the weather and drops any script screen look.
-- After a death, applies one of ten blood-and-bandage damage packs, `HOSPITAL_0` to `HOSPITAL_9` (`APPLY_PED_DAMAGE_PACK`).
+- After a death, applies one of ten blood-and-bandage damage packs, `HOSPITAL_0` to `HOSPITAL_9` (`APPLY_PED_DAMAGE_PACK`). *Second pass* (**Verified**): the pack is drawn at random when the respawn starts (`GET_RANDOM_INT_IN_RANGE(0, 10)`), one pack per respawn, each equally likely; nothing about the death or the hospital changes the choice.
 
 ## How missions take over
 
@@ -106,10 +106,10 @@ Counts are **Verified**; the "What it does" column is **Known**, from the native
 
 | Question | Where it goes |
 | --- | --- |
-| What the "building" table tied to each restart point drives | Second pass |
-| Which respawn states (global values 7 and 9) and money categories (3 and 4) skip the charges | Second pass: trace the writers of those globals |
+| What the "building" table tied to each restart point drives | Answered in [the restart points](#the-restart-points): it is the point's map blip |
+| Which respawn states (global values 7 and 9) and money categories (3 and 4) skip the charges | Answered in [what it costs](#what-it-costs): replay states 7 and 9, and a player who isn't Michael, Franklin or Trevor |
 | Exactly which weapons survive an arrest | Test card 2 |
-| Which of the 10 hospital damage packs is chosen when | Second pass: read the selector in `respawn_controller` |
+| Which of the 10 hospital damage packs is chosen when | Answered in [what every respawn resets](#what-every-respawn-resets): one at random, each with a 1 in 10 chance |
 | Whether the engine picks the nearest enabled point or uses other rules (wanted level, water, the exile) | Test card 3 |
 
 ## Test cards
