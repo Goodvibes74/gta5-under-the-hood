@@ -99,7 +99,7 @@ Test only: GP-054 (parent head counts), ON-058 (story clothes shop with a freemo
 | P4.3 | [Minigames and activities](/docs/gameplay/missions/minigames-and-activities.md) (R5.5): medal thresholds, golf, activity unlocks, towing bonus | GP-010, GP-011, GP-012, GP-014 | scripts | Mostly done, branch `research/second-pass-phase4` (GP-010, GP-014 answered, GP-012 mostly, GP-011 partly); new GP-088 |
 | P4.4 | [Strangers and freaks](/docs/gameplay/missions/strangers-and-freaks.md) (R5.4): unlock conditions, world points, brain flags | GP-034, GP-035, GP-036 | scripts, data | Mostly done, branch `research/second-pass-phase4` (GP-036 answered, GP-034 mostly; GP-035 moved to the third pass); new GP-089 |
 | P4.5 | [Cutscenes and dialogue](/docs/gameplay/missions/cutscenes-and-dialogue.md) (R5.6): the cutscene files and `dialogue_handler`'s globals | GP-005, GP-007 | scripts, data | Done, branch `research/second-pass-phase4` (GP-005 answered, GP-007 mostly) |
-| P4.6 | [Character switching](/docs/gameplay/player/character-switching.md) (R6.1): saved character state, the scene table | GP-037, GP-038 | scripts | Open |
+| P4.6 | [Character switching](/docs/gameplay/player/character-switching.md) (R6.1): saved character state, the scene table | GP-037, GP-038 | scripts | Done, branch `research/second-pass-phase4` (GP-037 answered, GP-038 mostly) |
 | P4.7 | [Respawn](/docs/gameplay/player/respawn-death-and-arrest.md) and [health](/docs/gameplay/player/health-armour-death.md) (R6.2, R3.8): the building table, free respawns, hospital packs, armour items, DLC health configs | GP-060, GP-061, GP-063, GP-065, GP-066, GP-051, GP-052 | scripts, data | Open |
 | P4.8 | [Economy and pickups](/docs/gameplay/economy/economy-and-pickups.md) (R3.9): stock prices, pickup placement, shop robbery pay | GP-001, GP-002, GP-003 | scripts | Open |
 | P4.9 | [Controls and camera](/docs/gameplay/player/controls-and-camera.md) (R6.4): control names, disable helpers, context numbers | GP-041, GP-042, GP-044 | scripts, data | Open |
@@ -577,8 +577,8 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-037 | What each character's saved state holds (position, outfit, weapons, vehicle, money) and where in the story save | Second pass, with R1.7 saves and the [global map](/docs/core/global-map.md) | Open |
-| GP-038 | The 42-entry scene table's conditions (time, place, mission state) | Second pass | Open |
+| GP-037 | What each character's saved state holds (position, outfit, weapons, vehicle, money) and where in the story save | Second pass, with R1.7 saves and the [global map](/docs/core/global-map.md) | Answered: `PP_INFO_STRUCT` with its named arrays per character; cash is in the `SP0` to `SP2_TOTAL_CASH` stats ([switching 9.4.1](/docs/gameplay/player/character-switching.md#941-what-is-saved-for-each-character-second-pass)) |
+| GP-038 | The 42-entry scene table's conditions (time, place, mission state) | Second pass | Mostly answered: six-hour blocks, flag-switched weighted lists, a forced scene, the pull toward a waiting mission; each scene's own check and Trevor's pickers moved to the third pass ([switching 9.4.2](/docs/gameplay/player/character-switching.md#942-which-arrival-scene-is-picked-second-pass)) |
 | GP-039 | The meaning of switch flag bits 1, 2, 4, 8 | NativeDB notes plus a test card | Open |
 | GP-040 | Who starts the `family_scene_*` scripts | R0.5 second pass (launch graph) | Answered: `main`, within 100 m of five house points ([launch graph](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass)) |
 
