@@ -54,6 +54,18 @@ From `armenian1` and the patterns across all scripts (**Verified**):
 7. **Exit states.** As each actor's last shot ends, `CAN_SET_EXIT_STATE_FOR_REGISTERED_ENTITY(handle, model)` turns true once; the script gives that actor its next task right then (Lamar walks to the car, the closet doors freeze), and `CAN_SET_EXIT_STATE_FOR_CAMERA` is when the gameplay camera is set behind the player. Done right, play resumes mid-motion with no fade.
 8. **Remove.** `REMOVE_CUTSCENE()` once it has finished, and release the models.
 
+### 6.3.1 The cutscene files (second pass)
+
+**How it was counted.** Every archive the game loads was listed with the CodeWalker library (the method of `tools/rpf-cw.ps1`): the 24 archives in the game folder, `update\update.rpf`, `update\update2.rpf` and the 89 `dlc.rpf` packs under `update\x64\dlcpacks`. Files were counted by extension (**Verified**, build 1.0.3725.0 Legacy; every cutscene file came from a Rockstar archive, none from a mod).
+
+- **A cutscene lives in an archive of its own:** `x64\anim\cutscene\cuts_<name>.rpf`. Inside are the cutscene's `.cut` file (the scene description: cameras, cuts, the entities and their handles, sections) and its animation clips as `.ycd` dictionaries.
+- **The base game** has 82 `cuts_*.rpf` archives in `x64c.rpf`, holding **465 `.cut` files**. One archive can hold several related cutscenes: the largest are `cuts_tv.rpf` (55, the in-game TV shows), `cuts_random_peds.rpf` (51), `cuts_mp.rpf` (37), `cuts_fame_or_shame.rpf` (27) and `cuts_oddjobs.rpf` (14).
+- **The DLC packs** add 123 more `cuts_*.rpf` archives with **342 `.cut` files** in 26 packs. The most are in `mpheist` (60), `mpsecurity` (35), `mpheist4` (31), `patchday3ng` (30) and `mpheist3` (22). `update.rpf` and `update2.rpf` have none.
+- **807 files, 772 names, 729 scenes.** 33 names are in both the base game and a pack, and the pack's newer copy wins ([archives and content](/docs/core/archives-and-content.md)). 69 files are numbered parts of a longer scene (`jhrs_1_int_p2.cut`, `sum23_cm6_ext_p1.cut`), which leaves 729 cutscenes when the parts count as one. Our reading is that the parts are the sections `REQUEST_CUTSCENE_WITH_PLAYBACK_LIST` can choose from.
+- **The clips:** 8,994 `.ycd` files across the 205 archives; the therapy sessions (`cuts_drf.rpf`, 642) and `cuts_random_peds.rpf` (557) have the most. The `.cut` files themselves are small, from 1.6 KB to 86 KB (median 8.5 KB).
+
+The names follow the mission codes (`armenian_1_int`, `fbi_...`, `family_...`, `ah_...` for the Bureau Raid) and the Online update codes (`mph_` for the heists, `fix_` for The Contract, `hs4_` for Cayo Perico, `xm25_` ...). **Known:** the `.cut` file is a PSO resource that CodeWalker opens; a file-format page for it is still to be written.
+
 ## 6.4 Online cutscenes and the player's character
 
 - **Handles.** Online cutscenes have actor slots named `MP_1` to `MP_4` for up to four players, plus scene-specific names (`MP_Lamar_Car`, `MP_Plane`, `MP_Car_generic`) and gender-specific scenes with `MP_Male_Character` / `MP_Female_Character` (**Verified** handle counts in 6.1).
@@ -85,6 +97,20 @@ From `armenian1` and the patterns across all scripts (**Verified**):
 
 **The request globals** (question GP-007, the parts read here): the copy of the speaker list, the block name (24 characters), the two display flags with their "off" twins, the extra flag, and the root and a priority (clamped so that 8 to 11 become 7), which the helper hands to the queueing function. `dialogue_handler` keeps the built conversation in one block (`Global_22602` in this build), whose fields 368 to 370 hold the three flags and whose lines and speakers sit in arrays of six values each. Field-by-field naming of the rest is left to the global map (R0.4).
 
+**The full request, field by field** (*second pass*, **Verified**: the request helpers compiled into `armenian1` and the state switch in `dialogue_handler`; the global numbers are build-3725 pointers). A script never writes the active conversation directly. It fills a **pending** set of globals, and the queueing function copies them into the **active** set only when the request is accepted:
+
+| What | Pending | Active | Notes |
+| --- | --- | --- | --- |
+| Speaker list (voices and peds) | `Global_22437` | `Global_22272` | The mission's speaker structure, copied whole |
+| Text block | `Global_23053` (24 chars) | `Global_23059` | For example `ARM1AUD` |
+| Root | passed as an argument | `Global_22602` (first 24 chars) | For example `ARM1_LEAVEG` |
+| Line to start from | `Global_23987` (24 chars) | `Global_23981` | Set by the "play one line" helper (`ARM1_LEAVEG_1`) |
+| Show subtitles / add to brief / extra flag | `Global_23970`, `23971`, `23972` (their "off" twins `23968`, `23969`) | `Global_22602.f_368`, `f_369`, `f_370` | As described above |
+| Phone call or face to face | `Global_22990` | `Global_22989` | Picks the phone path in `dialogue_handler` |
+| Priority | passed as an argument | `Global_22985` | Values 8 to 11 become 7 |
+
+**Who wins.** `dialogue_handler`'s state (`Global_22983`) is 0 when it is idle. A new request is accepted when the handler is idle, or when it is busy and the new request has a higher priority. In that case a face-to-face request stops the current conversation and takes over, while a phone request gives up. A request is also refused while any scripted conversation is still playing. Once a request is accepted, the state goes to 1 (build the conversation: load the text block and the lines, along the phone or the face-to-face path), to 4 while the conversation plays and to 6 while it ends. States 2, 3 and 5 are short steps in between, and their exact roles are left open.
+
 ## 6.6 What this means for modders
 
 - **Copy the sequence, including exit states.** A mod cutscene that fades out, plays and fades in works, but the seamless version is: dress in the asset window, register, start, and use `CAN_SET_EXIT_STATE_FOR_REGISTERED_ENTITY` and `CAN_SET_EXIT_STATE_FOR_CAMERA` to hand each actor and the camera back mid-motion.
@@ -98,8 +124,8 @@ From `armenian1` and the patterns across all scripts (**Verified**):
 
 | Question | Where it goes |
 | --- | --- |
-| How many cutscene files ship (`.cut` in the `x64` archives and DLC packs) and how they are organised | R0.7 atlas, R13.4 animation |
+| How many cutscene files ship (`.cut` in the `x64` archives and DLC packs) and how they are organised | Answered in [6.3.1](#631-the-cutscene-files-second-pass) |
 | Exact meanings of the `START_CUTSCENE` and `REGISTER_ENTITY_FOR_CUTSCENE` flag bits | Second pass, in-game tests |
-| The layout of `dialogue_handler`'s request globals (speakers, root, block, flags) | Partly answered in [6.5](#subtitles-and-phone-calls-second-pass) (the flags, block, root and priority); the rest of the conversation block is R0.4 |
+| The layout of `dialogue_handler`'s request globals (speakers, root, block, flags) | Mostly answered in [6.5](#subtitles-and-phone-calls-second-pass): every request field and its active copy; the in-between handler states 2, 3 and 5 are third pass |
 
 Answered in the second pass: how subtitles are hidden or shown, and how phone calls differ from face-to-face lines ([6.5](#subtitles-and-phone-calls-second-pass)).
