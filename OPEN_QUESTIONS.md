@@ -96,7 +96,7 @@ Test only: GP-054 (parent head counts), ON-058 (story clothes shop with a freemo
 | --- | --- | --- | --- | --- |
 | P4.1 | [Story flow](/docs/gameplay/missions/story-flow.md) (R5.1): the remaining command types, table fields, hidden missions, fails, the flow integers, the active triggerer | GP-028, GP-029, GP-030, GP-031, GP-032, CORE-020 | scripts | Mostly done, branch `research/second-pass-phase4` (GP-028, GP-030, CORE-020 answered, GP-031 mostly, GP-029 and GP-032 partly); new CORE-033 |
 | P4.2 | [Mission anatomy](/docs/gameplay/missions/mission-anatomy.md) and [replay](/docs/gameplay/missions/replay-director-and-editor.md) (R5.2, R5.8): skip flags, replay states, lead-ins, replay event types, director mode areas | GP-016, GP-017, GP-021, GP-022, GP-024, GP-025, GP-026 | scripts | Mostly done, branch `research/second-pass-phase4` (GP-016, GP-017, GP-022, GP-024, GP-026 answered, GP-021 and GP-025 partly); new GP-087 |
-| P4.3 | [Minigames and activities](/docs/gameplay/missions/minigames-and-activities.md) (R5.5): medal thresholds, golf, activity unlocks, towing bonus | GP-010, GP-011, GP-012, GP-014 | scripts | Open |
+| P4.3 | [Minigames and activities](/docs/gameplay/missions/minigames-and-activities.md) (R5.5): medal thresholds, golf, activity unlocks, towing bonus | GP-010, GP-011, GP-012, GP-014 | scripts | Mostly done, branch `research/second-pass-phase4` (GP-010, GP-014 answered, GP-012 mostly, GP-011 partly); new GP-088 |
 | P4.4 | [Strangers and freaks](/docs/gameplay/missions/strangers-and-freaks.md) (R5.4): unlock conditions, world points, brain flags | GP-034, GP-035, GP-036 | scripts, data | Open |
 | P4.5 | [Cutscenes and dialogue](/docs/gameplay/missions/cutscenes-and-dialogue.md) (R5.6): the cutscene files and `dialogue_handler`'s globals | GP-005, GP-007 | scripts, data | Open |
 | P4.6 | [Character switching](/docs/gameplay/player/character-switching.md) (R6.1): saved character state, the scene table | GP-037, GP-038 | scripts | Open |
@@ -117,7 +117,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [Physics](#physics) (`PHY-`) | 4 | 18 |
 | [AI](#ai) (`AI-`) | 13 | 50 |
 | [The world](#the-world) (`WLD-`) | 4 | 19 |
-| [Gameplay](#gameplay) (`GP-`) | 17 | 87 |
+| [Gameplay](#gameplay) (`GP-`) | 17 | 88 |
 | [GTA Online](#gta-online) (`ON-`) | 13 | 77 |
 | [User interface](#user-interface) (`UI-`) | 6 | 20 |
 | [Audio](#audio) (`AUD-`) | 3 | 11 |
@@ -125,7 +125,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [Performance](#performance) (`PERF-`) | 9 | 28 |
 | [Scripting](#scripting) (`SCR-`) | 4 | 14 |
 | [File formats](#file-formats) (`FF-`) | 2 | 6 |
-| **Total** | | **433** |
+| **Total** | | **434** |
 
 ## Getting started
 
@@ -522,11 +522,12 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | GP-009 | Who starts `minigame_stats_tracker` and `minigame_ending_stinger` (not started by name in this build) | Next pass: search by hash | Answered: neither is named anywhere, by string or hash ([minigames 42.5](/docs/gameplay/missions/minigames-and-activities.md#425-scoring)) |
-| GP-010 | The flight-school, range and triathlon medal thresholds | Next pass: read each script's goal tables | Open |
-| GP-011 | Golf: course data, AI foursome behaviour, how the score is kept | Next pass | Open |
-| GP-012 | How the flow unlocks each activity (blips appear after story missions) | Next pass, with [story flow](/docs/gameplay/missions/story-flow.md) | Open |
+| GP-010 | The flight-school, range and triathlon medal thresholds | Next pass: read each script's goal tables | Answered: flight school 90/80/70 per lesson with the 12 lessons' goals, the range's points goals per challenge, triathlon has no medals (top three for completion) ([minigames 42.5.1](/docs/gameplay/missions/minigames-and-activities.md#4251-medals-and-goals-second-pass)) |
+| GP-011 | Golf: course data, AI foursome behaviour, how the score is kept | Next pass | Partly answered: nine holes, par 36, strokes against par, the save fields; how the AI players choose shots moved to the third pass ([minigames 42.5.1](/docs/gameplay/missions/minigames-and-activities.md#4251-medals-and-goals-second-pass)) |
+| GP-012 | How the flow unlocks each activity (blips appear after story missions) | Next pass, with [story flow](/docs/gameplay/missions/story-flow.md) | Mostly answered: one bit per activity in flow bitset ID 0, set by `code_controller` entries; six are armed by strands. Who arms the other twelve is new GP-088 ([minigames 42.2.1](/docs/gameplay/missions/minigames-and-activities.md#4221-how-an-activity-is-unlocked-second-pass)) |
 | GP-013 | The sea-race labels (`SNCA`, `SSC`, `SCAA`, `SCAB`) and street-race labels in English | Text files ([R8.3](/ROADMAP.md)) | Answered: [minigames 42.2](/docs/gameplay/missions/minigames-and-activities.md#422-the-activity-list) |
-| GP-014 | The towing quick-bonus check (what the 12 s timer measures) | Next pass | Open |
+| GP-014 | The towing quick-bonus check (what the 12 s timer measures) | Next pass | Answered: 12 s from entering the job's target area to the end; pay and bonus only after 5 completed jobs ([minigames 42.4](/docs/gameplay/missions/minigames-and-activities.md#424-fees-and-pay)) |
+| GP-088 | Which scripts arm the `code_controller` entries that unlock base jumps, golf, hunting, off-road, flight school, the races, stunts, towing and trafficking, since no strand does | Third pass | Open |
 | GP-015 | What starts `minigame_stats_tracker`'s medal result screen (`mission_complete` Scaleform, `SET_MEDAL`); no script starts it by name *(from the guide's text)* | Second pass | Answered: nothing starts it in this build ([minigames 42.5](/docs/gameplay/missions/minigames-and-activities.md#425-scoring)) |
 
 ### [Anatomy of a story mission](/docs/gameplay/missions/mission-anatomy.md) (R5.2)

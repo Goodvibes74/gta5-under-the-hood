@@ -47,6 +47,32 @@ The ids below are the game's own (they index the completion list, the launchers'
 
 **Online only** (never started in story mode): `golf_mp`, `tennis_network_mp`, `pilot_school_mp`, `range_modern_mp`, `stripclub_mp`, the casino games (`casinoroulette`, `blackjack`, `three_card_poker`) and the arcade cabinets. The cabinet games are started by Online's `am_mp_arc_cab_manager` and the arcade props scripts, and five of the nine register as network scripts (**Verified**).
 
+### 42.2.1 How an activity is unlocked (second pass)
+
+**The gate is one bit per activity** (**Verified**). Every activity launcher writes its activity id into a local at set-up and, before it does anything, tests that bit of the flow's **bitset ID 0** (`MF_CONTROL_BITSETIDS[0]`, [story flow 2.3](/docs/gameplay/missions/story-flow.md#23-where-the-flow-lives-in-the-save)). If the bit is clear, the launcher ends. Tennis passes `-1` and so has no gate. The bits are set by `code_controller`, one code entry per activity, and a code entry runs once its flow *run code ID* command (or another script) arms it:
+
+| Code entry | Activity bits it sets | Armed by the flow |
+| ---: | --- | --- |
+| 4 | 0 base jumps | no |
+| 5 | 1 darts | Chinese strand, after `chinese2` |
+| 6 | 2 golf | no |
+| 7 | 3 hunting | no |
+| 8 | 4 off-road races | no |
+| 9 | 5 flight school | no |
+| 12, 13 | 7 sea races, 8 street races | no |
+| 15 | 9 strip club | Franklin and Lamar strand, after `armenian1` |
+| 16 | 10 stunt planes | no |
+| 17 | 12 taxi | Franklin and Lamar strand, after `armenian1` |
+| 18 | 14 towing | no |
+| 19 | 15 and 16, trafficking | no |
+| 20 | 17 triathlon | family strand, after `family2` |
+| 21 | 18 yoga | family strand, after `family5` |
+| 22 | 2 golf and 13 tennis | no |
+| 34 | 11 shooting range | Franklin and Lamar strand, after `armenian1` |
+| 39 | 19 | no |
+
+"Armed by the flow" means a *run code ID* command for that entry sits in a strand (the entries armed with a delay of 0 run at once). The entries marked "no" are armed outside the 32 strands. The 89 scripts that carry a copy of the arming function (missions, the comms and friend scripts ...) are the candidates, and which one arms each entry is left for the third pass.
+
 ## 42.3 The shared launcher
 
 All twelve `launcher_*` scripts for activities (base jumps, darts, golf, free hunting, off-road, flight school, range, stunts, tennis, triathlon, yoga) are built from one template; only the setup function differs (**Verified**, read in `launcher_darts` and `launcher_golf`, confirmed by the same strings in the others):
@@ -76,10 +102,12 @@ All story money goes through one shared function compiled into each script: it t
 | Darts | +$10 per win | 10 × the player's win counter at the end of a match (that it counts legs is *probable*) |
 | Base jumps | +floor(30 × factor) | When the player lands within 10 m of the target or close to its line |
 | Taxi | +fare, + tip | Fare = ceil(miles × 100), so $100 a mile (distance in metres × 0.000621); tip 40% of the fare if the average speed was over 40 mph, 15% over 30 mph, else none |
-| Towing | +$500, +$50, −$25 / −$75 | $500 per job, +$50 if finished within 12 s of a check, minus damage deductions (`TOW_DMG_01`: $25 at damage 250, $25 or $75 at 500 and 900); nothing if the job failed |
+| Towing | +$500, +$50, −$25 / −$75 | $500 per job, +$50 for a quick drop-off (see below), minus damage deductions (`TOW_DMG_01`: $25 at damage 250, $25 or $75 at 500 and 900); nothing if the job failed |
 | Trafficking (ground) | +$5,000 | Per job (`DTRSHRD_MONEY`) |
 | Trafficking (air) | +$7,000 + bonuses | $7,000 plus three bonus fields from the run |
 | Hunting | +score × weapon factor | Per kill, below; paid to Trevor when the session ends |
+
+**The towing quick bonus** (*second pass*, **Verified**, `towing`). The 12-second timer starts when the tow truck enters the job's target area (an angled area of the job's node). When the job is done, the pay gets $50 more if less than 12 s have passed since then and a delivery check in the script hasn't fired. Both the bonus and the $500 apply only once `TOWING_iJobsCompleted` (in `TOWING_SAVED_STRUCT`) is 5 or more; before that the job pays nothing. Our reading is that the first jobs are Tonya's story tows.
 
 **Odd-job pay is property income.** Towing pays through a function that credits the owner of story property 0 and adds to its earnings; trafficking does the same for property 2 (**Verified**). These are the towing yard (Franklin) and the airfield hangar (Trevor) (**Known**), so the money lands with whoever owns the business, not with whoever happens to be playing.
 
@@ -110,6 +138,45 @@ All story money goes through one shared function compiled into each script: it t
 
 The mission-passed style result screen with a medal (`mission_complete` Scaleform, `SET_MEDAL`) is drawn by `minigame_stats_tracker`; no script in this build starts it by name. *Second pass (2026-10-25):* neither `minigame_stats_tracker` nor `minigame_ending_stinger` is named anywhere in the decompile, as a string or as its `joaat` hash (2,005,372,777 and 128,858,001), so nothing starts them in build 3725 (**Verified** for scripts; an engine start is not ruled out but nothing points to one). The minigames draw their own end screens.
 
+### 42.5.1 Medals and goals (second pass)
+
+**Flight school** (`pilot_school`, **Verified**). Every lesson is scored 0 to 100 and the medal follows the score: **gold at 90 or more, silver at 80, bronze at 70**; under 70 the lesson isn't passed. A lesson is judged on up to three things, and its score is the lowest of them: its time (100 under the gold time, 80 under the silver, 70 under the bronze), its landing distance from the target (the same steps by metres), and its gates (the share of gates flown through, in percent). The goals from the lesson table (`MGFS_0` to `MGFS_11`, in table order):
+
+| Lesson | Judged on | Gold / silver / bronze |
+| ---: | --- | --- |
+| 0 | time | 32 / 50 / 60 s |
+| 1 | time | 35 / 55 / 70 s |
+| 2 | time | 100 / 120 / 140 s |
+| 3 | time | 54 / 75 / 100 s |
+| 4 | time, gates | 135 / 155 / 180 s; 21 gates |
+| 5 | distance | 10 / 45 m / any |
+| 6 | time | 95 / 100 / 125 s |
+| 7 | time, gates | 160 / 195 / 225 s; 21 gates |
+| 8 | time, gates | 130 / 180 / 210 s; 16 gates |
+| 9 | distance | 3 / 10 / 20 m |
+| 10 | distance | 0 / 7 / 20 m (gold only on the target vehicle) |
+| 11 | time, gates | 170 / 195 / 220 s; 19 gates |
+
+Each lesson's best score and medal are saved per character in `PILOT_SCHOOL_SAVED_ARRAY`.
+
+**Shooting range** (`range_modern`, **Verified**). Each challenge has a points goal for bronze, silver and gold (one table function); the best medal per challenge is saved in `SHOOTING_RANGE_SAVED_ARRAY`:
+
+| Category | Challenge 1 | Challenge 2 | Challenge 3 |
+| --- | --- | --- | --- |
+| Handguns (`SHR_CAT_HG`) | 1,400 / 2,000 / 2,800 | 2,000 / 10,000 / 20,000 | 650 / 3,000 / 15,000 |
+| SMGs | 4,000 / 6,000 / 12,000 | 1,250 / 2,500 / 7,500 | 3,000 / 5,000 / 10,000 |
+| Assault rifles | 2,500 / 3,550 / 7,550 | 4,750 / 7,500 / 17,500 | 1,000 / 3,000 / 5,000 |
+| Shotguns | 22 / 32 / 46 | 290 / 590 / 700 | 14 / 18 / 23 |
+| LMGs | 4,500 / 5,500 / 7,500 | 5,500 / 12,000 / 40,000 | 7,500 / 19,000 / 32,000 |
+| Heavy | 10,000 / 25,000 / 50,000 | 15,000 / 30,000 / 45,000 | 20,000 / 40,000 / 70,000 |
+| Railgun (four challenges) | 20 / 22 / 24 | 16 / 20 / 24 | 20 / 26 / 32, and 26 / 31 / 35 |
+
+Values are bronze / silver / gold. The small shotgun and railgun numbers suggest those challenges count something other than points (hits or targets, our reading).
+
+**Triathlon** (`triathlonsp`, **Verified**) has no medals. The script saves the best place and best time per race (`TRIATHLON_SAVED_STRUCT`), and the race's completion entry is given for finishing **third or better**.
+
+**Golf** (`golf`, **Verified**). The course has nine holes with pars 5, 4, 3, 4, 4, 3, 4, 5, 4 (par 36), and the score shown is strokes against par (`GOLF_PAR_NUM`, `GOLF_BIRDIE`, `GOLF_EAGLE`, `GOLF_OVER_PAR`). For every hole the script has a set of standing spots for the four players while another plays. The save (`GOLF_SAVED_STRUCT`) keeps `GOLF_iBestRound`, `GOLF_iNumHolesPlayed`, `GOLF_iNumPuttsTotal`, `GOLF_iNumFairwayDrivesTotal`, `GOLF_fLongestDrive`, `GOLF_iNumGolfWins`, rounds played per character and the unlocked partners (`GOLF_eUnlockedBuddies`). How the AI players choose their shots is left for the third pass.
+
 **Text blocks** each activity loads (`REQUEST_ADDITIONAL_TEXT`): `SP_GOLF`, `TENNIS`, `DARTS`, `YOGA`, `SP_SPR` (off-road, stunts, triathlon), `PSCHOOL`, `S_RANGE`, `BJUMP`, `AMBHT` (hunting), `TAXI`, `DTRSHRD` plus `DTRFAIR` or `DTRFKGR` (trafficking).
 
 ## 42.6 The rampages
@@ -139,10 +206,11 @@ Each also sets its intro and outro animations, enemy vehicles, ambient speech, a
 
 | Question | Where it goes |
 | --- | --- |
-| The flight-school, range and triathlon medal thresholds | Next pass: read each script's goal tables |
-| Golf: course data, AI foursome behaviour, how the score is kept | Next pass |
-| How the flow unlocks each activity (blips appear after story missions) | Next pass, with [story flow](/docs/gameplay/missions/story-flow.md) |
-| The towing quick-bonus check (what the 12 s timer measures) | Next pass |
+| The flight-school, range and triathlon medal thresholds | Answered in [42.5.1](#4251-medals-and-goals-second-pass) |
+| Golf: course data, AI foursome behaviour, how the score is kept | Partly answered in [42.5.1](#4251-medals-and-goals-second-pass): pars, score and save; the AI players' shots are third pass |
+| How the flow unlocks each activity (blips appear after story missions) | Mostly answered in [42.2.1](#4221-how-an-activity-is-unlocked-second-pass); who arms the twelve entries the flow doesn't is third pass (GP-088) |
+| Which scripts arm the `code_controller` entries that unlock base jumps, golf, hunting, off-road, flight school, the races, stunts, towing and trafficking, since no strand does (GP-088) | Third pass |
+| The towing quick-bonus check (what the 12 s timer measures) | Answered in [42.4](#424-fees-and-pay) |
 
 ## 42.9 Test cards
 
