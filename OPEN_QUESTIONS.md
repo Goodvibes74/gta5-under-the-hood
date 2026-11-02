@@ -94,7 +94,7 @@ Test only: GP-054 (parent head counts), ON-058 (story clothes shop with a freemo
 
 | Batch | Topic | Questions | Kind | Status |
 | --- | --- | --- | --- | --- |
-| P4.1 | [Story flow](/docs/gameplay/missions/story-flow.md) (R5.1): the remaining command types, table fields, hidden missions, fails, the flow integers, the active triggerer | GP-028, GP-029, GP-030, GP-031, GP-032, CORE-020 | scripts | Open |
+| P4.1 | [Story flow](/docs/gameplay/missions/story-flow.md) (R5.1): the remaining command types, table fields, hidden missions, fails, the flow integers, the active triggerer | GP-028, GP-029, GP-030, GP-031, GP-032, CORE-020 | scripts | Mostly done, branch `research/second-pass-phase4` (GP-028, GP-030, CORE-020 answered, GP-031 mostly, GP-029 and GP-032 partly); new CORE-033 |
 | P4.2 | [Mission anatomy](/docs/gameplay/missions/mission-anatomy.md) and [replay](/docs/gameplay/missions/replay-director-and-editor.md) (R5.2, R5.8): skip flags, replay states, lead-ins, replay event types, director mode areas | GP-016, GP-017, GP-021, GP-022, GP-024, GP-025, GP-026 | scripts | Open |
 | P4.3 | [Minigames and activities](/docs/gameplay/missions/minigames-and-activities.md) (R5.5): medal thresholds, golf, activity unlocks, towing bonus | GP-010, GP-011, GP-012, GP-014 | scripts | Open |
 | P4.4 | [Strangers and freaks](/docs/gameplay/missions/strangers-and-freaks.md) (R5.4): unlock conditions, world points, brain flags | GP-034, GP-035, GP-036 | scripts, data | Open |
@@ -112,7 +112,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | Category | Guides | Questions |
 | --- | --- | --- |
 | [Getting started](#getting-started) (`GS-`) | 1 | 4 |
-| [Core engine](#core-engine) (`CORE-`) | 8 | 32 |
+| [Core engine](#core-engine) (`CORE-`) | 8 | 33 |
 | [Entities](#entities) (`ENT-`) | 9 | 39 |
 | [Physics](#physics) (`PHY-`) | 4 | 18 |
 | [AI](#ai) (`AI-`) | 13 | 50 |
@@ -125,7 +125,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [Performance](#performance) (`PERF-`) | 9 | 28 |
 | [Scripting](#scripting) (`SCR-`) | 4 | 14 |
 | [File formats](#file-formats) (`FF-`) | 2 | 6 |
-| **Total** | | **431** |
+| **Total** | | **432** |
 
 ## Getting started
 
@@ -183,9 +183,10 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | CORE-017 | Meaning of force-cleanup bits 8, 16, 32, 64 and 128 | R1.1 | Answered (16 and 32 are raised by the engine; their cause is CORE-032, third pass): [runtime scripts 1.3](/docs/core/runtime-scripts.md#every-force-cleanup-bit-second-pass) |
 | CORE-018 | What exactly the engine does to start `main`, `initial` and `startup`, and in which order | R1.2 | Partly answered: no script starts them, and the order follows from what each reads and waits for ([boot 3.3](/docs/00-getting-started/boot.md#33-inside-the-boot-scripts)); the engine call needs the executable |
 | CORE-019 | What `profiler_registration` (global block 2) is and whether anything starts it | R0.4 | Answered: empty script, block 2 never used ([runtime scripts 1.5](/docs/core/runtime-scripts.md#15-global-blocks)) |
-| CORE-020 | The story flags that pick the active mission triggerer | R5.1 | Open |
+| CORE-020 | The story flags that pick the active mission triggerer | R5.1 | Answered: no flag; `main` reads the `completed` values of `trevor1`, `fbi4` and `michael1`, behind five gates; new CORE-033 ([story flow 2.7](/docs/gameplay/missions/story-flow.md#27-the-mission-triggerers)) |
 | CORE-021 | Resolve table-driven launches (second pass of the graph) | R0.5 | Mostly answered: 502 non-literal launches, 220 followed back, ten tables read; 240 scripts nothing starts ([launch graph](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass)); `freemode`'s launches by request left |
 | CORE-032 | What the engine raises force-cleanup bits 16 and 32 for (no script raises them; [runtime scripts 1.3](/docs/core/runtime-scripts.md#every-force-cleanup-bit-second-pass)) | Third pass, in-game test logging `GET_CAUSE_OF_MOST_RECENT_FORCE_CLEANUP`, or the executable | Open |
+| CORE-033 | What the values of the current mission type (`Global_44869` in build 3725) mean, and the compatibility table in `main` that lets the triggerers run for 15, 5 and 17 | Third pass, `main` and the mission scripts that set it | Open |
 
 ### [Saves: what the story save holds and how scripts write it](/docs/core/saves.md) (R1.7)
 
@@ -554,11 +555,11 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-028 | The remaining 40-odd command types (blips, contacts, texts, unlocks, savehouses, character state) | Next pass of R5.1 | Open |
-| GP-029 | The meaning of mission-table field 12 above bit 4, and of the option flags in field 15 | Next pass of R5.1 | Open |
-| GP-030 | How `agency_heist2` and Blitz prep 3 are reached | R5.2 | Open |
-| GP-031 | The pass and fail labels of each mission command: what happens on a fail | R5.2 (the mission side is in [guide 3](/docs/gameplay/missions/mission-anatomy.md#37-failing); the flow side is still open) | Partly answered |
-| GP-032 | What the flow integers (`f_99.f_58`) hold; index 120 is read 1,434 times | R5.1, R5.3 | Open |
+| GP-028 | The remaining 40-odd command types (blips, contacts, texts, unlocks, savehouses, character state) | Next pass of R5.1 | Answered: all 69 used types named from their handlers, with use counts; 18 more hashes have no builder in build 3725 ([story flow 2.4.1](/docs/gameplay/missions/story-flow.md#241-every-command-type-second-pass)) |
+| GP-029 | The meaning of mission-table field 12 above bit 4, and of the option flags in field 15 | Next pass of R5.1 | Partly answered: field 12 bits 8, 16, 32 are characters 19, 14, 17 (Lamar, Jimmy, Amanda, our reading); field 15 bits 1, 4, 5, 7, 16, 26, 30 named; the other bits and what 13 and 20 allow moved to the third pass ([story flow 2.2.1](/docs/gameplay/missions/story-flow.md#221-the-mission-table-flags-second-pass)) |
+| GP-030 | How `agency_heist2` and Blitz prep 3 are reached | R5.2 | Answered: `agency_heist2` by a one-off mission builder in the Bureau Raid strand; strand 11 is never run, `FBI4_Prep3Amb` starts prep 3 and nothing waits for it ([story flow 2.5](/docs/gameplay/missions/story-flow.md#25-the-32-strands)) |
+| GP-031 | The pass and fail labels of each mission command: what happens on a fail | R5.2 (the mission side is in [guide 3](/docs/gameplay/missions/mission-anatomy.md#37-failing)) | Mostly answered: a fail stays on the command unless field 15 bit 1 is set, then jumps to the fail label, always earlier in the strand; what selects the third target of `finaleA` and `finaleB` moved to the third pass ([story flow 2.4.2](/docs/gameplay/missions/story-flow.md#242-what-a-fail-does-to-the-flow)) |
+| GP-032 | What the flow integers (`f_99.f_58`) hold; index 120 is read 1,434 times | R5.1, R5.3 | Partly answered: they are the 146 flag IDs (`MF_CONTROL_FLAGIDS`); 120 is the exile, ten more placed by who sets them; the rest moved to the third pass ([story flow 2.6.1](/docs/gameplay/missions/story-flow.md#261-the-flag-ids-second-pass)) |
 | GP-033 | How `mission_repeat_controller` replays a mission without moving the flow | R5.2 | Answered with GP-020 ([mission anatomy 3.9](/docs/gameplay/missions/mission-anatomy.md#39-passing)) |
 
 ### [Strangers, freaks and side content](/docs/gameplay/missions/strangers-and-freaks.md) (R5.4)

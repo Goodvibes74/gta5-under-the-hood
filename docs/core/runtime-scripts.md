@@ -53,7 +53,7 @@ From launch to control, the scripts that end are `startup`, the registration scr
 `main` doesn't start its controllers once. For each one it has a check that runs every frame: if the script should run (the player is alive, not on a mission, story mode active ...) and `GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH` is 0, it requests and starts it; if the script should not run, it marks it as no longer needed. Examples (**Verified**):
 
 - `respawn_controller` is started **only** when the player is injured or being arrested and no player switch is in progress. It isn't running the rest of the time.
-- Only **one** of `mission_triggerer_a` to `d` runs. `main` picks it from story progress: a set of story flags (still to name in R5.1) moves the game from triggerer A to B, C and D.
+- Only **one** of `mission_triggerer_a` to `d` runs. `main` picks it from story progress: the `completed` values of `trevor1`, `fbi4` and `michael1` move the game from triggerer A to B, C and D; no separate flag is involved ([story flow 2.7](/docs/gameplay/missions/story-flow.md#27-the-mission-triggerers)).
 - `director_mode` is started on the `MISSION` stack after a screen fade, with the player made invincible and frozen while it loads.
 
 `initial`, by contrast, starts its scripts once and marks them no longer needed, so those are not restarted if they end.
@@ -264,6 +264,7 @@ Answered in the second pass: the force-cleanup bits ([every force-cleanup bit](#
 | Question | Where it goes |
 | --- | --- |
 | What exactly the engine does to start `main`, `initial` and `startup`, and in which order | R1.2 |
-| The story flags that pick the active mission triggerer | R5.1 |
+| The story flags that pick the active mission triggerer | Answered in [story flow 2.7](/docs/gameplay/missions/story-flow.md#27-the-mission-triggerers): three missions' `completed` values, no flag |
 | Resolve table-driven launches (second pass of the graph) | Mostly answered in [launches by variable and by table](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass): 220 calls followed back, ten tables read; `freemode`'s launches by request left |
 | What the engine raises force-cleanup bits 16 and 32 for (no script raises them; CORE-032) | Third pass: in-game test logging `GET_CAUSE_OF_MOST_RECENT_FORCE_CLEANUP`, or the executable |
+| What the values of the current mission type (`Global_44869` in build 3725) mean, and the compatibility table in `main` that lets the triggerers run for 15, 5 and 17 (CORE-033) | Third pass, `main` and the mission scripts that set it |
