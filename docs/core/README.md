@@ -6,15 +6,15 @@ The game loop and the scripts that keep it running, memory pools and limits, str
 
 | ID | Topic | Status |
 | --- | --- | --- |
-| R0.2 | **Script cards for the runtime scripts** | **Done** (first pass): [guide](/docs/core/runtime-scripts.md) |
-| R0.4 | **Global variable map** | **Done** (first pass): [guide](/docs/core/global-map.md) |
+| R0.2 | **Script cards for the runtime scripts** | **Done** (first pass; second pass, phase 2): [guide](/docs/core/runtime-scripts.md) |
+| R0.4 | **Global variable map** | **Done** (first pass; second pass, phase 2): [guide](/docs/core/global-map.md) |
 | R1.3 | **Natives as the engine API** | **Done** (first pass): [guide](/scripting/natives-engine-api.md) |
-| R1.4 | **Memory, pools and limits** | **Done** (first pass): [guide](/docs/core/memory-and-pools.md) |
-| R1.5 | **Streaming** | **Done** (first pass): [guide](/docs/core/streaming.md) |
-| R1.6 | **Archives and the content system** | **Done** (first pass): [guide](/docs/core/archives-and-content.md) |
-| R1.7 | **Saves** | **Done** (first pass): [guide](/docs/core/saves.md) |
-| R5.3 | **Saves, completion and autosave** | **Done** (first pass): [guide](/docs/core/completion-and-autosave.md) |
-| R11.1 | **What an update breaks** | **Done** (first pass): [guide](/docs/core/surviving-updates.md) |
+| R1.4 | **Memory, pools and limits** | **Done** (first pass; second pass, phase 2): [guide](/docs/core/memory-and-pools.md) |
+| R1.5 | **Streaming** | **Done** (first pass; second pass, phase 2): [guide](/docs/core/streaming.md) |
+| R1.6 | **Archives and the content system** | **Done** (first pass; second pass, phase 2): [guide](/docs/core/archives-and-content.md) |
+| R1.7 | **Saves** | **Done** (first pass; second pass, phase 2): [guide](/docs/core/saves.md) |
+| R5.3 | **Saves, completion and autosave** | **Done** (first pass; second pass, phase 2): [guide](/docs/core/completion-and-autosave.md) |
+| R11.1 | **What an update breaks** | **Done** (first pass; second pass, phase 4 leftovers): [guide](/docs/core/surviving-updates.md) |
 | R11.2 | **An update-check tool** | **Done** (first pass): [tool](/tools/README.md), [guide](/docs/core/surviving-updates.md) |
 | R11.3 | **Protecting a working install** | **Done** (first pass): [guide](/docs/core/surviving-updates.md#83a-protecting-a-working-install-r113) |
 | R11.4 | **Update-day checklist** | **Done** (first pass): [guide](/docs/core/surviving-updates.md) |
