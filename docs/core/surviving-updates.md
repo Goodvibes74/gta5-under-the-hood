@@ -85,6 +85,19 @@ Story mode runs on an older build in offline mode; GTA Online always needs the c
 6. **Keep an asset dependency list:** every cutscene, IPL, animation dictionary, model, scaleform, text label and fixed coordinate a mod uses, in one data file. After an update, check each name against the new build (R11.2).
 7. **Pattern scans, if you must touch memory,** with a clear log line when the pattern isn't found, and the feature switched off rather than crashing.
 
+## 8.4a What changed in the natives and controls (second pass)
+
+**Natives, 3725 to 3889** (**Verified**, second pass). The decompile repository keeps, for every script, the list of native hashes it calls. The union over all scripts is 6,575 natives in 3725 and 6,603 in 3889. Native hashes are stable between these builds (nothing was renamed or rehashed), so a mod calling a native that exists in 3725 still finds it in 3889. 29 natives are used for the first time in 3889, all of them new in that build according to NativeDB, for example:
+- the Kortz Center content: `_PLAYSTATS_HEIST5_PREP`, `_HACK`, `_FINALE`
+- nominated jobs: `_UGC_SET_NOMINATED_JOB`, `_REPORT_NOMINATED_JOB` ...
+- drawing helpers: `_DRAW_CAPSULE_LIGHT`, `_DRAW_MARKER_GLOW`, the blend-state natives
+- `SET_PLAYER_STEALTH_SPEED`, `SET_PLAYER_RESET_FLAG_PREFER_REAR_SEATS`, `_BLOCK_PED_FROM_WRITHING_WHEN_INJURED`, `_GENERATE_PED_DAMAGE_EVENT`, `SET_ENTITY_DRAWABLE_LOD_THRESHOLDS`, `HAS_PED_GOT_WEAPON_MANAGER`
+- three EVC balance checks.
+
+One native hash used in 3725 (`0x0F7082C60FB479EF`, not in NativeDB) is no longer called in 3889. The 11 scripts new in 3889 are the Kortz Center ones (`fm_content_kortz_*`, `kortz_planning`), `fm_mission_controller_v3`, `fmmc_lasers`, `mp_strand_f9` and two mansion art-workshop scripts.
+
+**Control numbers, from 3717** (**Verified**): IDs from 257 up moved by +37 when Rockstar inserted 37 creator controls; see [controls and camera](/docs/gameplay/player/controls-and-camera.md#the-numbering-changed-in-build-3717-second-pass). Any mod that passes a control ID of 257 or more should be checked on 3717 and later.
+
 ## 8.5 Finding the risky code in a mod
 
 What to search a mod's source for, from highest to lowest risk (found by scanning a set of SHVDN mods, **Verified**):
@@ -120,4 +133,3 @@ It doesn't check text labels, natives or coordinates (they aren't files); for na
 
 | Question | Where it goes |
 | --- | --- |
-| Which natives changed between 3725 and 3889 | R11.1 second pass, with the native crossmap (R0.3) |

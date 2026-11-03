@@ -210,7 +210,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| CORE-030 | Which natives changed between 3725 and 3889 | R11.1 second pass, with the native crossmap (R0.3) | Open |
+| CORE-030 | Which natives changed between 3725 and 3889 | R11.1 second pass, with the native crossmap (R0.3) | Answered: hashes are stable; 29 natives new in 3889 are used, one 3725 native dropped; 11 new scripts ([surviving updates 8.4a](/docs/core/surviving-updates.md#84a-what-changed-in-the-natives-and-controls-second-pass)) |
 | CORE-031 | Which brain set the engine gives the random-ped brains added with `ADD_SCRIPT_TO_RANDOM_PED` (no script registers into sets 2 or 4) | Third pass, the executable | Open |
 
 ## Entities
@@ -733,7 +733,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-028 | Every website page and what each sells | Second pass, `appinternet` | Answered: the eight selling sites with their numbers and stock counts, and the 683-item model list ([R7.10 21.5](/docs/online/interaction-menu-phone-apps.md#215-the-internet)) |
 | ON-029 | The Facade phone's movie and the character-to-phone mapping | Second pass | Answered: `cellphone_facade` is Trevor's; the four-entry phone table ([R7.10 21.2.1](/docs/online/interaction-menu-phone-apps.md#2121-the-slots-by-mode-and-the-phone-each-character-carries-second-pass)) |
 | ON-067 | Who sets the story phone's Sniper-app flag, and what the two Online flags are that switch the phone to the Badger skin and empty slot 24 | Third pass, `cellphone_controller` callers | Answered: the Badger flags are set by the mission controllers when the player is in Franklin's (`p_franklin_02`) or Lamar's (`ig_lamardavis_02`) model; the Sniper flag (`Is_Sniper_App_Available`) is written by no script ([phone](/docs/online/interaction-menu-phone-apps.md)) |
-| ON-068 | What website items 323, 324, 357 and 402 are (hashes set at start that match no model name) | Third pass, the preview code in `appinternet` | Open |
+| ON-068 | What website items 323, 324, 357 and 402 are (hashes set at start that match no model name) | Third pass, the preview code in `appinternet` | Open, needs data: the four hashes are -994826917 (323), 886151985 (324), -1242692076 (357), -451225720 (402), set in `standard_global_init`; no string in the decompile hashes to them, so match them against every DLC `vehicles.meta` `modelName` |
 | ON-069 | Each interaction-menu page's own show and grey conditions (the top page is mapped) | Third pass, `am_pi_menu` page by page | Open |
 
 ### [The job lobby (`fmmc_launcher`)](/docs/online/job-lobby.md) (R7.5)
@@ -766,20 +766,20 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | ON-041 | How the yacht, Kosatka and other vehicles-as-properties are bought and placed | Next pass, `freemode` yacht code | Answered: websites, stats, the 36 yacht spots ([45.6a](/docs/online/properties.md#yachts-and-other-vehicles-as-properties)) |
-| ON-042 | Where garage capacities and vehicle slots are stored, and how a personal vehicle is saved per slot | Third pass (was: Next pass, with the vehicle stats) | Partly answered: spaces per slot and the 607 `MPSV_*` records ([45.6a](/docs/online/properties.md#garage-sizes-and-personal-vehicle-records)); where colours and mods are kept is ON-066 |
+| ON-042 | Where garage capacities and vehicle slots are stored, and how a personal vehicle is saved per slot | Third pass (was: Next pass, with the vehicle stats) | Answered: sizes per slot, the 607 `MPSV_*` records, and the full setup struct (ON-066) ([45.6a](/docs/online/properties.md#garage-sizes-and-personal-vehicle-records)) |
 | ON-043 | The simple-interior entrance positions and which script places the doors | Third pass (was: Next pass, `am_mp_smpl_interior_ext` tables) | Partly answered: the per-type function table, all 180 simple-interior ids named, and the entrances of the mansions and salvage yards ([45.6a](/docs/online/properties.md#simple-interior-entrances)); the other types' positions are left |
 | ON-044 | Instance numbering of `am_mp_property_int` (owner id, building, or both) | Next pass | Answered: per owner, rows 0 to 31, 32 without an owner ([45.6a](/docs/online/properties.md#interior-instances)) |
 | ON-045 | Daily property fees (utility bills) and how they are charged | Next pass, `freemode` | Answered: every 48 minutes, fees per property ([45.6a](/docs/online/properties.md#daily-property-fees-utility-bills)) |
 | ON-046 | The business side of each simple interior | [R7.7](/ROADMAP.md) | Answered in [organisations and businesses](/docs/online/organisations-and-businesses.md#464-the-business-loop) |
 | ON-065 | Which business or vehicle the garage indices 116 to 137 and ownership slots 12 to 35 are | Third pass (was: Next pass, the slot-to-stat functions in `freemode`) | Mostly answered: ownership slots 12 to 32 named from `freemode`'s slot-to-stat function (hangar, facility, nightclub, the garage floors, auto shop, Agency, Eclipse Blvd, bail office, hacker den); slots 30, 33 to 35 and indices 116 to 137 left ([45.6a](/docs/online/properties.md#garage-sizes-and-personal-vehicle-records)) |
-| ON-066 | Where a personal vehicle's colours, wheels and mods are saved | Third pass (was: Next pass, the vehicle save code in `freemode` and `carmod_shop`) | Open |
+| ON-066 | Where a personal vehicle's colours, wheels and mods are saved | Third pass (was: Next pass, the vehicle save code in `freemode` and `carmod_shop`) | Answered: the personal-vehicle struct (plate, colours, 50 mod slots, tyre smoke, tint, livery, wheels, neons, flags) ([properties 45.6a](/docs/online/properties.md#garage-sizes-and-personal-vehicle-records)) |
 
 ### [Rockstar services](/docs/online/rockstar-services.md) (R15.2)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | ON-047 | The unnamed (`unk_`) tunable readers and which service natives they are | Second pass, NativeDB hashes | Answered: `_NETWORK_GET_TUNABLES_REGISTRATION_INT`, `_FLOAT` and `_BOOL` ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
-| ON-048 | Which story-mode scripts call any service native, and why | Second pass, per script | Open |
+| ON-048 | Which story-mode scripts call any service native, and why | Second pass, per script | Answered: mostly shared guards; real use is minigame leaderboards with crew tags, presence and the returning-player checks ([services 32.1.1](/docs/online/rockstar-services.md#3211-which-story-scripts-touch-a-service-second-pass)) |
 | ON-049 | The catalogue item keys and categories | Third pass (was: R7.7) | Open |
 
 ### [Sessions and sync](/docs/online/sessions-and-sync.md) (R15.1)

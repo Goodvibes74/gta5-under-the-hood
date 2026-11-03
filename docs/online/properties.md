@@ -263,7 +263,28 @@ One function in `freemode` gives the number of vehicle spaces, either for a prop
 
 Property indices past 115 (not in the table of 45.2) get sizes by index: 116 = 35, 117 = 7, 118 = 1, 119 to 127 = 10 (122 = 9), 128 = 20, 129 = 50, 132 = 2, 133 = 10, 135 to 137 = 20. *Second pass (2026-10-30, **Verified**):* `freemode`'s slot-to-stat function names ownership slots 12 to 32 (the table above). The property indices 116 to 137 don't follow the slot numbers in a fixed offset, so which index is which property is still open (45.8).
 
-Every personal vehicle is one **record** in a per-character array of **607**, kept in stats flagged `IsVehicle` (4,412 of them): `MPSV_MODEL_n`, `MPSV_FLAGS_n` (mod flags), `MPSV_VEHICLE_BS_n` (control flags), `MPSV_LP0_n` (the plate, a 64-bit stat), `MPSV_PRICE_PAID_n`, `MPSV_PREMIUM_PAID_n` (insurance paid by whoever destroyed it), `MPSV_IMPOUND_TIME_n`, and for 133 of them `MPSV_OBTAINED_TIME_n`, plus `MPSV_VEHICLE_TIMESTAMP` and named one-offs (`MPSV_MODEL_BIKER_CLT`, `_TUNER_VEH`, `_SALVAGE_VEH`). A `freemode` function maps record numbers to stat numbers in blocks (records 0 to 9, 13 to 22, 26 to 35 ... with three unused numbers after each block of ten up to record 362, then straight runs), so a home's 13 reserved records hold up to 10 real cars. Colours, wheels and mods aren't among these stat names; where the full vehicle setup is kept is an open question.
+Every personal vehicle is one **record** in a per-character array of **607**, kept in stats flagged `IsVehicle` (4,412 of them): `MPSV_MODEL_n`, `MPSV_FLAGS_n` (mod flags), `MPSV_VEHICLE_BS_n` (control flags), `MPSV_LP0_n` (the plate, a 64-bit stat), `MPSV_PRICE_PAID_n`, `MPSV_PREMIUM_PAID_n` (insurance paid by whoever destroyed it), `MPSV_IMPOUND_TIME_n`, and for 133 of them `MPSV_OBTAINED_TIME_n`, plus `MPSV_VEHICLE_TIMESTAMP` and named one-offs (`MPSV_MODEL_BIKER_CLT`, `_TUNER_VEH`, `_SALVAGE_VEH`). A `freemode` function maps record numbers to stat numbers in blocks (records 0 to 9, 13 to 22, 26 to 35 ... with three unused numbers after each block of ten up to record 362, then straight runs), so a home's 13 reserved records hold up to 10 real cars. Colours, wheels and mods aren't among these stat names.
+
+**The full vehicle setup** (**Verified**, second pass, the `freemode` function that rebuilds a personal vehicle from its record). Each record in script memory is one struct. Field numbers below are the decompiler's offsets in build 3725:
+
+| Fields | Holds |
+| --- | --- |
+| 0 | plate style (`SET_VEHICLE_NUMBER_PLATE_TEXT_INDEX`) |
+| 1 to 4 | plate text |
+| 5, 6 | primary and secondary colour |
+| 7, 8 | pearlescent and wheel colour (`SET_VEHICLE_EXTRA_COLOURS`) |
+| 9 to 58 | one value per mod slot (50), applied by a mod helper together with field 59 (our reading: the mod variations, such as custom tyres) |
+| 62 to 64 | tyre smoke RGB |
+| 65 | window tint |
+| 66 | model |
+| 67 | livery |
+| 68, 69 | wheel settings (our reading: wheel type and a wheel value passed to the mod helper) |
+| 70 | door lock state |
+| 71 to 73 | custom colour RGB (used for primary when flag bit 13 is set, secondary for bit 12) |
+| 74 to 76 | neon RGB |
+| 77 | flags: neons on each side (bits 28 to 31), stolen (10), custom colours (12, 13), tyre smoke (15), and bits 9, 22, 23, 27 |
+
+The extras (`SET_VEHICLE_EXTRA`) are set from bits as well. So the stats hold only the identity and money of each car (`MPSV_*`); this struct is what is written back into the per-character vehicle stats when the game saves (our reading of how the two meet).
 
 ### Daily property fees (utility bills)
 
@@ -449,7 +470,7 @@ These are Online systems: read them, never mod them in Online. For a story-mode 
 | Question | Where it goes |
 | --- | --- |
 | How the yacht, Kosatka and other vehicles-as-properties are bought and placed | Answered in [45.6a](#yachts-and-other-vehicles-as-properties) (second pass) |
-| Where garage capacities and vehicle slots are stored, and how a personal vehicle is saved per slot | Partly answered in [45.6a](#garage-sizes-and-personal-vehicle-records): sizes per slot and the 607 `MPSV_*` records; where colours and mods are kept is still open |
+| Where garage capacities and vehicle slots are stored, and how a personal vehicle is saved per slot | Partly answered in [45.6a](#garage-sizes-and-personal-vehicle-records): sizes per slot, the 607 `MPSV_*` records and the full setup struct |
 | The simple-interior entrance positions and which script places the doors | Partly answered in [45.6a](#simple-interior-entrances): the mechanism, all 180 interior ids, and the entrances of the mansions and salvage yards; the other types' positions sit behind per-type function pointers |
 | Instance numbering of `am_mp_property_int` (owner id, building, or both) | Answered in [45.6a](#interior-instances): per owner, rows 0 to 31, 32 without an owner |
 | Daily property fees (utility bills) and how they are charged | Answered in [45.6a](#daily-property-fees-utility-bills) |
