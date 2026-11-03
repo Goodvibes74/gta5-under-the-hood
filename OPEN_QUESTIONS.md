@@ -123,6 +123,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | D8 | Every `.ymap`, `.ytyp`, `.ymf`, `.ynd`, `.ynv` and scenario region file, loaded with CodeWalker's library; the archive listing for `.ybn` | GP-035, ENT-001 to ENT-003, ENT-028 to ENT-031, ENT-034, ENT-035, WLD-001, WLD-004, WLD-005, WLD-007, AI-027 to AI-029, REN-025, PHY-002 | Done: WLD-004, WLD-007, ENT-001, ENT-028, ENT-034, AI-028, AI-029, REN-025, PHY-002 answered; WLD-001, ENT-003, ENT-029, ENT-031 mostly; WLD-005, ENT-002, ENT-030, ENT-035, AI-027 partly; GP-035 not found. UI-009 (interior map names), PHY-005 and the pools part of PHY-018 were not attempted |
 | D9 | Every audio `.rel` file (253, CodeWalker's library), the `.awc` listing, the dialogue text-block names in the decompile | AUD-001 to AUD-006, AUD-008 to AUD-010 | Done: AUD-001, AUD-002, AUD-003, AUD-005, AUD-006 answered; AUD-010 mostly; AUD-004, AUD-008, AUD-009 partly (the per-voice context lists need a reader for the `speech2` byte arrays). AUD-007 stays a test |
 | D10 | `entityfx.dat`, `materialfx.dat`, `wheelfx.dat`, every `.ypt` (CodeWalker), DLC `content.xml` and `setup2.xml`, `animpostfx.ymt`, the `timecycle_mods` and `w_*.xml` files, `visualsettings.dat` | REN-014 to REN-017, REN-021, REN-022, REN-024, REN-026, REN-027, GP-027, WLD-017 | Done: REN-014, REN-015, REN-016, GP-027 answered; REN-022, REN-024, REN-027 mostly; REN-017, REN-021, REN-026, WLD-017 partly. Correction: the weather files have 423 variables per region, not 380 |
+| D11 | `clip_sets.ymt` and the DLC `clip_sets.xml` files, `cameras.ymt`, the archive listing (`.ycd`, `.yed` sizes), `CREATE_CAMERA` calls in the decompile | REN-001, REN-002, REN-004, REN-005, REN-006, REN-008, REN-009 | Done: REN-004, REN-006, REN-009 answered; REN-001, REN-002, REN-005 mostly; REN-008 partly |
 
 ## By category
 
@@ -924,20 +925,20 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| REN-001 | The names behind the 22 memory groups and their budget unit | Next pass: hash the candidate names | Open |
-| REN-002 | Which clip sets the hashed entries are (resolving the 4,526 keys from script, `peds.ymt` and `weaponanimations.meta` strings) | Next pass | Open |
+| REN-001 | The names behind the 22 memory groups and their budget unit | Next pass: hash the candidate names | Mostly answered: 19 of 22 groups named (`MG_*`), budgets and the `combat` memory situation; the unit is probably KB (leftovers pass, [animation](/docs/rendering/animation.md#4381-names-archives-and-sizes-leftovers-pass)) |
+| REN-002 | Which clip sets the hashed entries are (resolving the 4,526 keys from script, `peds.ymt` and `weaponanimations.meta` strings) | Next pass | Mostly answered: 3,065 of 4,526 clip sets named, by family (leftovers pass, [animation](/docs/rendering/animation.md#4381-names-archives-and-sizes-leftovers-pass)) |
 | REN-003 | Exactly what each `TASK_PLAY_ANIM` flag bit does (262144 and 16777216 in particular) | In-game test | Open |
-| REN-004 | The clip archive layout in DLC packs and how many dictionaries each pack adds | With [R0.7](/file-formats/data-file-atlas.md) | Open |
-| REN-005 | The 12 expression dictionaries the update replaced and why | Next pass | Open |
-| REN-006 | Animation memory cost per dictionary | R18.3 (memory) | Open |
+| REN-004 | The clip archive layout in DLC packs and how many dictionaries each pack adds | With [R0.7](/file-formats/data-file-atlas.md) | Answered: 67 packs, 13,502 dictionaries, in-game and per-cutscene archives (leftovers pass, [animation](/docs/rendering/animation.md#4381-names-archives-and-sizes-leftovers-pass)) |
+| REN-005 | The 12 expression dictionaries the update replaced and why | Next pass | Mostly answered: 5 replace a base file, 7 are new; why is not in the files (leftovers pass, [animation](/docs/rendering/animation.md#4381-names-archives-and-sizes-leftovers-pass)) |
+| REN-006 | Animation memory cost per dictionary | R18.3 (memory) | Answered: median 40 KB in game, 152 KB in cutscenes, all system memory; the biggest are nightclub DJ sets (leftovers pass, [animation](/docs/rendering/animation.md#4381-names-archives-and-sizes-leftovers-pass)) |
 
 ### [Cameras](/docs/rendering/cameras.md) (R13.5)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | REN-007 | The director priorities and exactly when the cinematic director takes over | Second pass | Open |
-| REN-008 | The 50 shake names and other camera names that didn't resolve | Second pass with more name sources | Open |
-| REN-009 | Which `CREATE_CAMERA` hashes scripts use (the hashed form of `CREATE_CAM`) | Second pass: resolve the hashes in the decompile | Open |
+| REN-008 | The 50 shake names and other camera names that didn't resolve | Second pass with more name sources | Partly answered: three spline cameras named; 28 shakes named by the sources tried, the rest need another source (leftovers pass, [cameras](/docs/rendering/cameras.md#camera-names-leftovers-pass)) |
+| REN-009 | Which `CREATE_CAMERA` hashes scripts use (the hashed form of `CREATE_CAM`) | Second pass: resolve the hashes in the decompile | Answered: six camera hashes, all named (leftovers pass, [cameras](/docs/rendering/cameras.md#camera-names-leftovers-pass)) |
 | REN-010 | The view mode contexts and modes as numbers | R6.4 | Answered by GP-044 (P4.9): contexts 0 to 7 and mode 4 first person ([controls and camera](/docs/gameplay/player/controls-and-camera.md#the-view-mode-first-and-third-person)) |
 | REN-011 | How the first-person car interior camera is chosen per vehicle (`camVehicleCustomSettingsMetadata`) | R14.1 | Open |
 

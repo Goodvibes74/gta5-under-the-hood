@@ -2,7 +2,7 @@
 
 The open questions that **can't be answered from the decompiled scripts alone**, grouped by the file to extract. Use it as a shopping list for one CodeWalker session (`tools/rpf-cw.ps1`, see [research tools](/docs/00-getting-started/research-tools.md)): extract everything in a group into a scratch folder outside the repo, then answer the group's questions together. Status and full wording of each question: [`OPEN_QUESTIONS.md`](/OPEN_QUESTIONS.md). Everything else that is still open is listed in [`HANDOFF.md`](/HANDOFF.md) (executable, in-game tests, scripts only).
 
-**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, batch D2 every explosion and weapon file, batch D3 the water files, batch D4 the police and population files, batch D5 the personality and ped files, batch D6 the shop catalogues, batch D7 `gameconfig.xml` and the archive listings, batch D8 the map data, batch D9 the audio files, and batch D10 the effects and timecycle files; the rows marked *done, D1* to *D10* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
+**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, batch D2 every explosion and weapon file, batch D3 the water files, batch D4 the police and population files, batch D5 the personality and ped files, batch D6 the shop catalogues, batch D7 `gameconfig.xml` and the archive listings, batch D8 the map data, batch D9 the audio files, batch D10 the effects and timecycle files, and batch D11 the animation and camera files; the rows marked *done, D1* to *D11* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
 
 How to read the tables:
 - **Extract** gives the path as this repo's guides already use it (`common:` = `common.rpf`, `update:` = `update\update.rpf`, DLC = `update\x64\dlcpacks\<pack>\dlc.rpf` and the `dlc_patch` folders in `update.rpf`). Where no guide has given the path yet, it says *find*: list the archives with the tool and search for the file name.
@@ -120,13 +120,13 @@ How to read the tables:
 
 | ID | What to find | Extract | Scripts too? |
 | --- | --- | --- | --- |
-| REN-001 | The 22 memory group names and their budget unit | clip/anim metadata (hash candidate names) | no |
-| REN-002 | Which clip sets the 4,526 hashed keys are | clip set metadata, `peds.ymt`, `weaponanimations.meta` | the script strings |
-| REN-004 | Clip archive layout in DLC packs, dictionaries per pack | `.ycd` listings per DLC pack | no |
-| REN-005 | The 12 expression dictionaries the update replaced | `.ycd` / expression files, base vs update | no |
-| REN-006 | Animation memory cost per dictionary | `.ycd` sizes (resource headers) | no |
-| REN-008 | The 50 shake names and other camera names that didn't resolve | `update:/x64/data/metadata/cameras.ymt` | hash candidate names |
-| REN-009 | Which `CREATE_CAMERA` hashes scripts use | `cameras.ymt` names | yes (the hashes in the decompile) |
+| REN-001 (*done, D11*) | The 22 memory group names and their budget unit | clip/anim metadata (hash candidate names) | no |
+| REN-002 (*done, D11*) | Which clip sets the 4,526 hashed keys are | clip set metadata, `peds.ymt`, `weaponanimations.meta` | the script strings |
+| REN-004 (*done, D11*) | Clip archive layout in DLC packs, dictionaries per pack | `.ycd` listings per DLC pack | no |
+| REN-005 (*done, D11*) | The 12 expression dictionaries the update replaced | `.ycd` / expression files, base vs update | no |
+| REN-006 (*done, D11*) | Animation memory cost per dictionary | `.ycd` sizes (resource headers) | no |
+| REN-008 (*done, D11*) | The 50 shake names and other camera names that didn't resolve | `update:/x64/data/metadata/cameras.ymt` | hash candidate names |
+| REN-009 (*done, D11*) | Which `CREATE_CAMERA` hashes scripts use | `cameras.ymt` names | yes (the hashes in the decompile) |
 | REN-014 (*done, D10*) | `entityfx.dat`, `materialfx.dat`, `wheelfx.dat` row by row | `common:/data/effects/entityfx.dat` and the two others | no |
 | REN-015 (*done, D10*) | Which DLC particle dictionaries are mounted in story mode | DLC `.ypt` lists and the DLC setup files | no |
 | REN-016 (*done, D10*) | Effect names per particle dictionary | every `.ypt` | no |

@@ -124,6 +124,41 @@ Every engine task that animates runs a move network: a graph of states and blend
 
 Scenario peds play the clips their scenario type names ([R4.2](/docs/entities/spawning/scenarios.md)); idle clips while wandering come from `conditionalanims.meta` (**Verified** counts): 48 groups, 139 animations. The biggest: `WANDER` 38 (with props such as a clipboard, 6.5% probability), `IN_CAR_STANDARD` 19, `PLAYER_IDLES` 13, `BUDDY_AI_IDLES` 9, `IN_VAN` 8, `SHOCK_HURRY` 8. Each animation has conditions (998 condition blocks), a prop set, a probability and the time to the next idle. Scripts allow or stop these with `SET_PED_CAN_PLAY_AMBIENT_ANIMS` (493 scripts) and `SET_PED_CAN_PLAY_AMBIENT_BASE_ANIMS` (88), and start scenarios with `TASK_START_SCENARIO_IN_PLACE` (342).
 
+### 43.8.1 Names, archives and sizes (leftovers pass)
+
+**Verified**, build 1.0.3725.0 Legacy: the update's `clip_sets.ymt` converted to XML; the DLC `clip_sets.xml` files (plain text, so their names are readable); a listing of every archive with entry sizes; names matched against every string literal in the decompile, every file name in the archives and every name in the extracted ped, weapon-animation and scenario files (about 457,000 names, Jenkins hash).
+
+**The memory groups have `MG_` names.** The DLC `clip_sets.xml` files spell them out (`MG_Vehicle`, `MG_Weapons` ...), and hashing that pattern names **19 of the 22**:
+
+| Group | Budget | Dictionaries |
+| --- | ---: | ---: |
+| `MG_ScenariosStreamed` | 4,000 | 1,325 |
+| `MG_Vehicle` | 12,000 | 728 |
+| `MG_Weapons` | 8,000 | 629 |
+| `MG_Script` | 0 | 403 |
+| `MG_PlayerMovement` | 400 | 232 |
+| `MG_AmbientMovement` | 400 | 126 |
+| `MG_Cover` | 10,000 | 116 |
+| `MG_Combat` | 4,000 | 110 |
+| `MG_Creature`, `MG_Facial`, `MG_Melee` | 4,000 each | 59, 55, 49 |
+| `MG_GetUps` (the hash matched `mg_getups`; casing guessed) | 4,000 | 45 |
+| `MG_CoreMovement` | 12,000 | 34 |
+| `MG_VaultingClimbingJumping` | 6,000 | 33 |
+| `MG_Misc`, `MG_Gesture` | 400, 4,000 | 27, 15 |
+| `MG_Parachuting`, `MG_Swimming`, `MG_ScenariosBase` | 400 each | 8, 8, 1 |
+| `hash_3233A308` | 5,000 | 48 (`reaction@...`, `avoids...`, `explosions_run_a`: *probable* a reactions group) |
+| `hash_CFE5D7B8`, `hash_D33F422B` | 400 each | 0 |
+
+`MG_Script` (budget 0) holds the dictionaries only scripts request (character switch scenes, mission clips). The file also has two **memory situations**: `DEFAULT` with no changes, and `combat`, which raises `MG_Combat` by 3,000 and `MG_Cover` by 2,000 and lowers `MG_Gesture` by 1,000 and `MG_ScenariosStreamed` by 4,000. So in a fight the engine moves animation memory from ambient scenarios to combat and cover clips. The unit is not stated; the two field names are hashes. *Our reading:* kilobytes, since a typical in-game dictionary is 40 KB (below) and a 400 budget then fits about ten.
+
+**Clip set names.** Of the 4,526 clip sets, **3,065 are now named** (7 were named in the file), and so are 4,503 of the 4,524 dictionary references, 3,817 of the 4,051 dictionary entries and 1,114 of the 1,393 fallbacks. By first word: `amb` 1,171, `weapons` 766, `move` 462, `cover` 126, `anim` 121, `clipset` 94, `facials` 57, `creatures` 38, `get_up` 31, `melee` 26, `combat` 25, `drive` 24. The 1,461 left are mostly sets named in no script and no data file.
+
+**Clip archives in DLC packs.** 67 packs ship 13,502 dictionaries: 8,279 in-game ones in `x64\anim\ingame\clip_*.rpf` archives named like the base ones (`clip_anim@.rpf` 4,274, `clip_anim_casino_b@.rpf` 1,029, `clip_weapons@.rpf` 783, `clip_anim_casino_a@.rpf` 666, `clip_veh@.rpf` 541), 5,082 cutscene ones in `x64\anim\cutscene\cuts_<name>.rpf` (one archive per cutscene set: `cuts_xm25_mansion` 336, `cuts_hs4` 247, `cuts_club` 222), and 141 under `levels`. The packs with the most: `mpvinewood` 1,603 (the casino), `patchday1ng` 973, `patchday2ng` 964, `mpheist4` 829, `patchday24ng` 820, `patchday22ng` 782, `mpsecurity` 729.
+
+**Memory per dictionary.** A clip dictionary is all system memory (no graphics part). In-game dictionaries have a median of **40 KB** (90% under 192 KB, 99% under 1.3 MB); cutscene ones a median of 152 KB. In total the base dictionaries take 1.15 GB unpacked, the DLC ones 2.19 GB. The biggest are the nightclub DJ sets (`anim@scripted@nightclub@dj@kmuzk@rampa@` 29 MB, `...@adam_port@` 22 MB) and the crowd dances (11 to 14 MB).
+
+**The 12 expression files in the update.** All sit in `x64\patch\anim\expressions.rpf`. 5 replace a base file: `ambient` (280 to 288 KB), `p_m_two` (320 to 344 KB), `hc_gunman` and `ig_natalia` (same size, changed contents) and `transvestite` (same size). 7 are new, for models that had none: `a_f_m_bevhills_02`, `a_f_y_bevhills_04`, `a_f_y_business_02`, `cs_movpremf_01`, `s_f_y_shop_mid`, `s_f_y_stripper_01`, `s_f_y_stripper_02`. Why each changed is not in the files.
+
 ## 43.9 What this means for modders
 
 - **Find a dictionary by its prefix.** `amb@...` is in `clip_amb@.rpf`, `move_...` in `clip_move_.rpf`, `missfbi4` in `clip_miss.rpf`. OpenIV or CodeWalker can browse these; the decompile's string literals give working dictionary and clip pairs (465 dictionaries in `TASK_PLAY_ANIM` alone).
@@ -138,12 +173,12 @@ Scenario peds play the clips their scenario type names ([R4.2](/docs/entities/sp
 
 | Question | Where it goes |
 | --- | --- |
-| The names behind the 22 memory groups and their budget unit | Next pass: hash the candidate names |
-| Which clip sets the hashed entries are (resolving the 4,526 keys from script, `peds.ymt` and `weaponanimations.meta` strings) | Next pass |
+| The names behind the 22 memory groups and their budget unit | Mostly answered in [43.8.1](#4381-names-archives-and-sizes-leftovers-pass): 19 named; the unit is probably KB, not stated |
+| Which clip sets the hashed entries are (resolving the 4,526 keys from script, `peds.ymt` and `weaponanimations.meta` strings) | Mostly answered in [43.8.1](#4381-names-archives-and-sizes-leftovers-pass): 3,065 named |
 | Exactly what each `TASK_PLAY_ANIM` flag bit does (262144 and 16777216 in particular) | In-game test |
-| The clip archive layout in DLC packs and how many dictionaries each pack adds | With [R0.7](/file-formats/data-file-atlas.md) |
-| The 12 expression dictionaries the update replaced and why | Next pass |
-| Animation memory cost per dictionary | R18.3 (memory) |
+| The clip archive layout in DLC packs and how many dictionaries each pack adds | Answered in [43.8.1](#4381-names-archives-and-sizes-leftovers-pass) |
+| The 12 expression dictionaries the update replaced and why | Mostly answered in [43.8.1](#4381-names-archives-and-sizes-leftovers-pass): 5 replace, 7 are new; why is not in the files |
+| Animation memory cost per dictionary | Answered in [43.8.1](#4381-names-archives-and-sizes-leftovers-pass): median 40 KB in game, 152 KB in cutscenes |
 
 ## 43.11 Test cards
 

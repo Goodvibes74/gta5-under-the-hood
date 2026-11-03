@@ -98,6 +98,25 @@ The marketing director and its 5 cameras (free, orbit, mounted, sticky, A-to-B) 
 
 `IS_SCREEN_FADED_OUT` (731 scripts), `IS_SCREEN_FADED_IN` (672), `DO_SCREEN_FADE_IN` (607), `IS_SCREEN_FADING_OUT` (591), `DO_SCREEN_FADE_OUT` (558) and `SET_WIDESCREEN_BORDERS` (439, the letterbox bars) are camera natives too. Almost every mission start, cut and teleport goes through a fade.
 
+## Camera names (leftovers pass)
+
+**Verified**, the update's `cameras.ymt` and every `CREATE_CAMERA` and `CREATE_CAMERA_WITH_PARAMS` call in the decompile (build 3725), names hashed with Jenkins.
+
+**What `CREATE_CAMERA` creates.** Scripts pass 5 different hashes as numbers, and all are camera types in `cameras.ymt`:
+
+| Hash (as in the decompile) | Name | Kind | Calls |
+| --- | --- | --- | ---: |
+| 964613260 | `DEFAULT_ANIMATED_CAMERA` | animated | 2,143 |
+| 26379945 | `DEFAULT_SCRIPTED_CAMERA` | scripted | 2,331 |
+| 1665938388 | `CUSTOM_TIMED_SPLINE_CAMERA` | custom timed spline | 24 |
+| 1775630800 | `TIMED_SPLINE_CAMERA` | timed spline | 18 |
+| 180543640 | `DEFAULT_SPLINE_CAMERA` | spline | 4 |
+| -119532588 | `SMOOTHED_SPLINE_CAMERA` | smoothed spline | 1 |
+
+8 more calls pass a variable. The three spline names were not in any script string; hashing the obvious names found them, so they are now named in `cameras.ymt` too.
+
+**Shake names.** Script strings, every file name in the archives, every name in the extracted data and `<word>_SHAKE` built from every word in the scripts name 28 of the 99 shakes, including `PARACHUTING_SHAKE`, `GUNRUNNING_ENGINE_START_SHAKE` and `CLUB_DANCE_SHAKE`. The other shake, oscillator and envelope names need another source.
+
 ## What this means for modders
 
 - **A camera for a scene:** create `DEFAULT_SCRIPTED_CAMERA`, set position, rotation and FOV, `SET_CAM_ACTIVE`, `RENDER_SCRIPT_CAMS(true, false, 0, true, false, 0)`. Hand back with `RENDER_SCRIPT_CAMS(false, true, 1000, ...)` (an eased return) and `DESTROY_CAM`. Forgetting the hand-back leaves the player stuck in your camera.
@@ -113,8 +132,8 @@ The marketing director and its 5 cameras (free, orbit, mounted, sticky, A-to-B) 
 | Question | Where it goes |
 | --- | --- |
 | The director priorities and exactly when the cinematic director takes over | Second pass |
-| The 50 shake names and other camera names that didn't resolve | Second pass with more name sources |
-| Which `CREATE_CAMERA` hashes scripts use (the hashed form of `CREATE_CAM`) | Second pass: resolve the hashes in the decompile |
+| The 50 shake names and other camera names that didn't resolve | Partly answered in [camera names](#camera-names-leftovers-pass): three spline cameras named; the shakes need another name source |
+| Which `CREATE_CAMERA` hashes scripts use (the hashed form of `CREATE_CAM`) | Answered in [camera names](#camera-names-leftovers-pass) |
 | The view mode contexts and modes as numbers | R6.4 |
 | How the first-person car interior camera is chosen per vehicle (`camVehicleCustomSettingsMetadata`) | R14.1 |
 
