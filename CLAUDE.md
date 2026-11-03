@@ -2,6 +2,8 @@
 
 Instructions for Claude Code (or any AI assistant) working in this repo. Human contributors: this is also the fastest summary of how the research is done.
 
+**If [`HANDOFF.md`](/HANDOFF.md) exists, read it first:** it says where the last session stopped and what is left.
+
 ## What this repo is
 
 A public reference on how **Grand Theft Auto V (PC, Legacy edition, build 1.0.3725.0)** works underneath: the engine, physics, AI, the world, story mode, GTA Online, the UI and audio, so people can mod it. It contains only contributors' own writing and their own small tools. No mods, no game files, no game code.
