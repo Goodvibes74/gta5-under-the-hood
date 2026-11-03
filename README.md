@@ -65,6 +65,8 @@ gta5-under-the-hood/
 
 > **This is a first pass.** Every one of the 109 research topics has been worked through once, to map the ground: where each system lives, how it works, what a mod can change, and the numbers behind it. A first pass is not the last word. Some claims are still **Known** rather than **Verified**, some systems were only sampled, and few findings have been checked in game yet.
 >
+> **The second pass is under way.** Its first four phases are done: the user interface, the core engine, GTA Online and story mode (46 topics; the [roadmap](ROADMAP.md) marks each one). They answered or narrowed most of those guides' open questions from the build 1.0.3725.0 decompile, and found, among other things, that **build 3717 renumbered every control ID from 257 up** (+37), which matters to any mod that uses those controls ([controls and camera](docs/gameplay/player/controls-and-camera.md#the-numbering-changed-in-build-3717-second-pass)). What is left, and what each question needs to be answered, is in [HANDOFF.md](HANDOFF.md) and [DATA-NEEDS.md](DATA-NEEDS.md).
+>
 > **Nearly every guide ends with an "Open questions" table** (about 95 of them). Each row is a question the first pass found but couldn't settle, with where it should go next: a second pass of the same topic, another topic, or an in-game test. Taken together, those tables are the research agenda for the next passes, and they're the place to start if you want to go deeper into how the game works. Pick a row, claim it as [CONTRIBUTING.md](CONTRIBUTING.md) explains, answer it, and update the guide and its table.
 
 Alongside the 109 first-pass guides there's a [step-by-step modding path](modding/README.md) for beginners, the Online guides, the DLC inventory and the scripting guides. The [roadmap](ROADMAP.md) lists every topic, what's done, and where to begin. Highlights so far:
@@ -84,7 +86,7 @@ Alongside the 109 first-pass guides there's a [step-by-step modding path](moddin
 
 ## Large jobs (priority): pick one
 
-Every large topic now has a first pass (each took a week or more; R6.7 was added and written on 2026-10-26). They are listed in the order they were taken, easiest first, by how much of the groundwork the earlier guides covered. Second passes are welcome: each guide ends with an "Open questions" table, and all of them are collected in [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md); claim one as [CONTRIBUTING.md](CONTRIBUTING.md) explains and work on it in its own branch.
+Every large topic now has a first pass (each took a week or more; R6.7 was added and written on 2026-10-26). They are listed in the order they were taken, easiest first, by how much of the groundwork the earlier guides covered. Second passes are welcome: each guide ends with an "Open questions" table, and all of them are collected in [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md) (phases 1 to 4 of the second pass are done; the AI, entities, physics, world, audio, rendering and performance phases are next); claim one as [CONTRIBUTING.md](CONTRIBUTING.md) explains and work on it in its own branch.
 
 | # | Job | Why it's at this place |
 | ---: | --- | --- |

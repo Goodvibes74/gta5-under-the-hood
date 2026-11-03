@@ -6,19 +6,19 @@ How GTA Online is built on top of the same engine: sessions, the main script, st
 
 | ID | Topic | Status |
 | --- | --- | --- |
-| R7.1 | **`freemode` inside** | **Done** (first pass): [guide](/docs/online/07-freemode.md) |
-| R7.2 | **Transitions and sessions** | **Done** (first pass): [guide](/docs/online/transitions-and-sessions.md) |
-| R7.3 | **Stats, tunables and the server's role** | **Done** (first pass): [guide](/docs/online/stats-and-tunables.md) |
+| R7.1 | **`freemode` inside** | **Done** (first pass; second pass, phase 3): [guide](/docs/online/07-freemode.md) |
+| R7.2 | **Transitions and sessions** | **Done** (first pass; second pass, phase 3): [guide](/docs/online/transitions-and-sessions.md) |
+| R7.3 | **Stats, tunables and the server's role** | **Done** (first pass; second pass, phase 3): [guide](/docs/online/stats-and-tunables.md) |
 | R7.4 | **The UGC mission format and controllers** | **Done** (first pass): [guide](/file-formats/ugc-json.md) |
-| R7.5 | **The job lobby (`fmmc_launcher`)** | **Done** (first pass): [guide](/docs/online/job-lobby.md) |
-| R7.6 | **Properties** | **Done** (first pass): [guide](/docs/online/properties.md) |
-| R7.7 | **Organisations and businesses** | **Done** (first pass): [guide](/docs/online/organisations-and-businesses.md) |
-| R7.8 | **Heists** | **Done** (first pass): [guide](/docs/online/heists.md) |
-| R7.9 | **DLC storylines** | **Done** (first pass): [guide](/docs/online/dlc-storylines.md) |
-| R7.10 | **Interaction menu, phone and apps** | **Done** (first pass): [guide](/docs/online/interaction-menu-phone-apps.md) |
-| R7.11 | **Rockstar Creator internals** | **Done** (first pass): [guide](/docs/online/creator-internals.md) |
-| R5.7 | **Systems that clash with Online mode** | **Done** (first pass): [guide](/docs/online/story-systems-in-online-mode.md) |
-| R15.1 | **Sessions and sync** | **Done** (first pass): [guide](/docs/online/sessions-and-sync.md) |
-| R15.2 | **Rockstar services** | **Done** (first pass): [guide](/docs/online/rockstar-services.md) |
+| R7.5 | **The job lobby (`fmmc_launcher`)** | **Done** (first pass; second pass, phase 3): [guide](/docs/online/job-lobby.md) |
+| R7.6 | **Properties** | **Done** (first pass; second pass, phase 3): [guide](/docs/online/properties.md) |
+| R7.7 | **Organisations and businesses** | **Done** (first pass; second pass, phase 3): [guide](/docs/online/organisations-and-businesses.md) |
+| R7.8 | **Heists** | **Done** (first pass; second pass, phase 3): [guide](/docs/online/heists.md) |
+| R7.9 | **DLC storylines** | **Done** (first pass; second pass, phase 3): [guide](/docs/online/dlc-storylines.md) |
+| R7.10 | **Interaction menu, phone and apps** | **Done** (first pass; second pass, phase 3): [guide](/docs/online/interaction-menu-phone-apps.md) |
+| R7.11 | **Rockstar Creator internals** | **Done** (first pass; second pass, phase 3): [guide](/docs/online/creator-internals.md) |
+| R5.7 | **Systems that clash with Online mode** | **Done** (first pass; second pass, phase 3): [guide](/docs/online/story-systems-in-online-mode.md) |
+| R15.1 | **Sessions and sync** | **Done** (first pass; second pass, phase 3): [guide](/docs/online/sessions-and-sync.md) |
+| R15.2 | **Rockstar services** | **Done** (first pass; second pass, phase 4 leftovers): [guide](/docs/online/rockstar-services.md) |
 
 Pick an open topic, claim it and send a pull request: see [CONTRIBUTING.md](/CONTRIBUTING.md). Write new pages with the [entry template](/templates/entry-template.md).
