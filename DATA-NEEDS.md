@@ -2,7 +2,7 @@
 
 The open questions that **can't be answered from the decompiled scripts alone**, grouped by the file to extract. Use it as a shopping list for one CodeWalker session (`tools/rpf-cw.ps1`, see [research tools](/docs/00-getting-started/research-tools.md)): extract everything in a group into a scratch folder outside the repo, then answer the group's questions together. Status and full wording of each question: [`OPEN_QUESTIONS.md`](/OPEN_QUESTIONS.md). Everything else that is still open is listed in [`HANDOFF.md`](/HANDOFF.md) (executable, in-game tests, scripts only).
 
-**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file; the rows marked *done, D1* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
+**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, and batch D2 every explosion and weapon file; the rows marked *done, D1* or *done, D2* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
 
 How to read the tables:
 - **Extract** gives the path as this repo's guides already use it (`common:` = `common.rpf`, `update:` = `update\update.rpf`, DLC = `update\x64\dlcpacks\<pack>\dlc.rpf` and the `dlc_patch` folders in `update.rpf`). Where no guide has given the path yet, it says *find*: list the archives with the tool and search for the file name.
@@ -30,10 +30,10 @@ How to read the tables:
 
 | ID | What to find | Extract | Scripts too? |
 | --- | --- | --- | --- |
-| GP-078 | How story stats and Online rank change the ammo cap | `common:/data/ai/weapons.meta` and DLC weapon files (`AmmoMax`, `AmmoMax50`, `AmmoMax100`, `AmmoMaxMP` ...) | the cap is set by the engine; scripts only read it |
-| GP-079, PHY-009 | Damage and radius per explosion type, base and the 16 DLC files | `common:/data/explosion.meta` and every DLC explosion file | no |
-| PHY-008 | The unnamed boolean fields | `update:/x64/data/metadata/explosion.ymt` | no |
-| PHY-010 | Every DLC projectile and its explosion | DLC weapon files (`AmmoInfo` projectile entries) | no |
+| GP-078 (*done, D2*) | How story stats and Online rank change the ammo cap | `common:/data/ai/weapons.meta` and DLC weapon files (`AmmoMax`, `AmmoMax50`, `AmmoMax100`, `AmmoMaxMP` ...) | the cap is set by the engine; scripts only read it |
+| GP-079, PHY-009 (*done, D2*) | Damage and radius per explosion type, base and the 16 DLC files | `common:/data/explosion.meta` and every DLC explosion file | no |
+| PHY-008 (*done, D2*) | The unnamed boolean fields | `update:/x64/data/metadata/explosion.ymt` | no |
+| PHY-010 (*done, D2*) | Every DLC projectile and its explosion | DLC weapon files (`AmmoInfo` projectile entries) | no |
 | PHY-001 | The two unnamed columns (0.95, 0.0) | `materials.dat` (*find*) | no |
 | PHY-004 | The ragdoll and `NATURAL_MOTION` materials | `materials.dat` and the ragdoll / NM files (*find*) | no |
 | ENT-017 | Which ragdoll tuning set applies to which weapon and vehicle; three hashed set names | NM tuning files and weapon / vehicle data (*find*) | no |

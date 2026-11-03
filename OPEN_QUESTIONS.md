@@ -114,6 +114,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | Batch | Files | Questions | Status |
 | --- | --- | --- | --- |
 | D1 | Every American `.gxt2` text block (base, `update.rpf`, `update2.rpf`, DLC); every `vehicles.meta`, `handling.meta`, `carcols` and `carvariations` (base, update, DLC, `dlc_patch`) | GP-090, GP-047, GP-082, ENT-005, GP-045, GP-046, ENT-036, ENT-037, ON-068 | Done: GP-045, GP-046, ENT-005, ENT-036 answered; GP-047, GP-082, GP-090, ENT-037 mostly; ON-068 narrowed (not a vehicle) |
+| D2 | `explosion.ymt` (update), all 19 `explosion.meta` (16 packs + 3 `dlc_patch`), every `*weapon*.meta` and `*ammo*.meta` (base, update, DLC, `dlc_patch`) | GP-078, GP-079, PHY-008, PHY-009, PHY-010 | Done: GP-079, PHY-010 answered; PHY-008, PHY-009 mostly; GP-078 partly |
 
 ## By category
 
@@ -326,9 +327,9 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | PHY-006 | The exact falloff curve between centre and edge, and how armour takes explosion damage | Test card 1; R3.1 | Open |
 | PHY-007 | How far and how fast fire spreads, and its limits (number of fires at once) | Test card 2; R18 | Open |
-| PHY-008 | The meaning of the unnamed boolean fields in `explosion.ymt` (their names didn't resolve) | Second pass | Open |
-| PHY-009 | The DLC explosion types' numbers, damage and radius | Second pass: tabulate the 16 DLC files | Open |
-| PHY-010 | The full list of DLC projectiles and their explosions | R3.1 second pass | Open |
+| PHY-008 | The meaning of the unnamed boolean fields in `explosion.ymt` (their names didn't resolve) | Second pass | Mostly answered: two of the eight are `bForceNonTimedVfx` and `bIsSmokeGrenade` (named by the DLC XML, case-sensitive `joaat`); the other six are off for every type (leftovers pass, [explosions](/docs/physics/fire-explosions-projectiles.md#the-base-explosion-types)) |
+| PHY-009 | The DLC explosion types' numbers, damage and radius | Second pass: tabulate the 16 DLC files | Mostly answered: damage, radius, force and flags of all 51 DLC types (49 plus `spupgrade`'s patch-only `BLIMP2` and `RAILGUN`); the numbers follow the load order (**Known**) (leftovers pass, [explosions](/docs/physics/fire-explosions-projectiles.md#every-dlc-type-with-damage-and-radius-leftovers-pass)) |
+| PHY-010 | The full list of DLC projectiles and their explosions | R3.1 second pass | Answered: 64 DLC projectiles by pack with the explosion each makes (leftovers pass, [projectiles](/docs/physics/fire-explosions-projectiles.md#projectiles)) |
 
 ### [Vehicle physics: handling, damage and upgrades](/docs/physics/vehicle-handling.md) (R2.2)
 
@@ -681,8 +682,8 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | GP-076 | Which mod installed the weapon overhaul (and the other 93 replaced files) | Ask the user; R10.1 | Open |
 | GP-077 | The hatchet's extra condition, and whether the Gusenberg really waits for `finale_credits` | R3.1 second pass | Answered: the hatchet needs `trevor1` and the returning-player check (`NETWORK_HAS_ROS_PRIVILEGE_PLAYED_LAST_GEN` or profile setting 866 bit 0); the Gusenberg needs only `finale_credits` ([weapons](/docs/gameplay/weapons/weapons.md#49-ammu-nation-in-story-mode)) |
-| GP-078 | How story stats and Online rank change `AmmoMax` | Third pass, the engine and the `AmmoMax*` fields of `weapons.meta` (scripts only read the cap with `GET_MAX_AMMO`, 185 scripts) | Open |
-| GP-079 | Explosion damage and radius per explosive (`explosion.meta`) | R2.5: [fire, explosions and projectiles](/docs/physics/fire-explosions-projectiles.md) | Open |
+| GP-078 | How story stats and Online rank change `AmmoMax` | Third pass, the engine and the `AmmoMax*` fields of `weapons.meta` (scripts only read the cap with `GET_MAX_AMMO`, 185 scripts) | Partly answered: the six cap fields and their values (250 / 1,000 / 9,999 for ten pools, one value for the other 112); what picks the step in story mode needs the executable or a test (leftovers pass, [weapons 4.4.1](/docs/gameplay/weapons/weapons.md#441-the-six-ammo-caps-leftovers-pass)) |
+| GP-079 | Explosion damage and radius per explosive (`explosion.meta`) | R2.5: [fire, explosions and projectiles](/docs/physics/fire-explosions-projectiles.md) | Answered: the 36 base and 51 DLC types with damage and radius (leftovers pass, [explosions](/docs/physics/fire-explosions-projectiles.md#every-dlc-type-with-damage-and-radius-leftovers-pass)) |
 | GP-080 | How aim assist and lock-on work for the player versus AI | R3.2 | Open |
 
 ## GTA Online

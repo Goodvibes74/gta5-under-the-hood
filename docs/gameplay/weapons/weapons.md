@@ -86,6 +86,17 @@ Ammo types and their pool limits (`AmmoMax`, **Verified**):
 
 The Mk II special rounds (`_FMJ`, `_HOLLOWPOINT`, `_INCENDIARY`, `_ARMORPIERCING`, `_TRACER`, `_EXPLOSIVE`) have their own pools (240, 360 for tracers, 80 for sniper rounds, 40 for explosive). The pool is shared, so a pistol and a combat pistol draw from the same 250 rounds. Story stats and Online rank can raise the carried maximum (**Known**, R3.6).
 
+### 4.4.1 The six ammo caps (leftovers pass)
+
+**Verified**, from the update copy of `weapons.meta` and every DLC weapon file (122 ammo types). Each ammo type has six cap fields: `AmmoMax`, `AmmoMax50`, `AmmoMax100` and the same three with `MP`. For 112 types all six are equal (the 25 grenades, the 20 rockets, the Mk II rounds and so on). Ten types differ: the basic bullet pools, the remote sniper, the stun gun and the DLC tranquilizer (`mpheist3`):
+
+| Ammo | `AmmoMax` | `AmmoMax50` | `AmmoMax100` | `AmmoMaxMP` | `AmmoMax50MP` | `AmmoMax100MP` |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| `AMMO_PISTOL`, `SMG`, `RIFLE`, `SHOTGUN`, `SNIPER`, `SNIPER_REMOTE`, `MINIGUN`, `STUNGUN`, `TRANQUILIZER` | 250 | 1,000 | 9,999 | 250 | 1,000 | 9,999 |
+| `AMMO_MG` | 500 | 1,000 | 9,999 | 250 | 1,000 | 9,999 |
+
+So the cap grows in steps from 250 to 1,000 and then 9,999. The scripts only read the result (`GET_MAX_AMMO`) and never pick a step. **Known** (community): in GTA Online the cap rises with rank, which is what the `50` and `100` in the names refer to; the `MP` set is used there. Which value story mode uses, and what makes it step up, need the executable or a test (GP-078).
+
 ## 4.5 Components, clips and tints
 
 `weaponcomponents.meta` defines what can be attached (**Verified** counts in 4.2). A clip component sets `ClipSize` (pistol 12, extended 16; assault rifle 30, extended 60; MG 54 ...), a suppressor changes sound and range, a scope sets the zoom and camera, a flashlight adds a light, and variant models swap the weapon's look (finishes, Mk II camos). Scripts fit them with `GIVE_WEAPON_COMPONENT_TO_PED` and colour them with tint indexes.
@@ -164,6 +175,6 @@ The engine has a fixed pool for weapon definitions and components. Community plu
 | Question | Where it goes |
 | --- | --- |
 | Which mod installed the weapon overhaul (and the other 93 replaced files) | Ask the user; R10.1 |
-| How story stats and Online rank change `AmmoMax`: the scripts only read the cap (`GET_MAX_AMMO`, 185 scripts) and never compute it, so it is engine and `weapons.meta` work (GP-078) | Third pass, the engine and the `AmmoMax*` fields |
-| Explosion damage and radius per explosive (`explosion.meta`) | R2.5: [fire, explosions and projectiles](/docs/physics/fire-explosions-projectiles.md) |
+| How story stats and Online rank change `AmmoMax`: the scripts only read the cap (`GET_MAX_AMMO`, 185 scripts) and never compute it, so it is engine and `weapons.meta` work (GP-078) | Partly answered in [4.4.1](#441-the-six-ammo-caps-leftovers-pass): the six fields and their values; which stat picks the step is the executable or a test |
+| Explosion damage and radius per explosive (`explosion.meta`) | Answered in [fire, explosions and projectiles](/docs/physics/fire-explosions-projectiles.md#every-dlc-type-with-damage-and-radius-leftovers-pass): the 36 base and 51 DLC types |
 | How aim assist and lock-on work for the player versus AI | R3.2 |
