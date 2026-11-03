@@ -52,6 +52,27 @@ Two more entries, `SPMED` and `SPSMALL` (1,000 kg, roll 0.015), have the highest
 
 **AI flight tasks:** `TASK_HELI_MISSION` (287 scripts, 1,790 calls), `TASK_PLANE_TAXI` (247, 500), `TASK_PLANE_MISSION` (114, 528), `TASK_PARACHUTE_TO_TARGET` (29), `TASK_PARACHUTE` (11), `TASK_PLANE_GOTO_PRECISE_VTOL` (4), `TASK_HELI_ESCORT_HELI` (4), `TASK_PLANE_CHASE` (4), `TASK_HELI_CHASE` (3), `TASK_PLANE_LAND` (3). Rockstar mostly takes planes off with a taxi task and gives everything else as a "mission" (fly to, follow, attack, circle, land) with a mission type number.
 
+**The mission types in use** (**Verified** counts, second pass). The type is the eighth argument. Most calls pass a variable, so where it was a parameter of the calling function, every call of that function in the same script was followed (up to three levels) to the number. The counts are resolved uses, so a shared wrapper called from many places counts once per call. Names are the vehicle mission enum as NativeDB and the community document it (**Known**).
+
+| Type | Name | `TASK_HELI_MISSION` uses (scripts) | `TASK_PLANE_MISSION` uses (scripts) |
+| ---: | --- | ---: | ---: |
+| 4 | Go to | 948 (278) | 125 (104) |
+| 5 | Stop | 247 (247) | |
+| 8 | Flee | 118 (110) | 11 (5) |
+| 19 | Land | 114 (109) | |
+| 21 | Crash | 2 (2) | 102 (100) |
+| 6 | Attack | 40 (21) | 9 (5) |
+| 9 | Circle | 10 (9) | 2 (2) |
+| 7 | Follow | 7 (7) | |
+| 23 | Protect | 6 (4) | |
+| 12, 13 | Escort rear, escort front | 4, 4 | |
+| 16 | Police behaviour | 4 (1) | |
+| 20 | Land and wait | 2 (2) | |
+| 1 | Cruise | 1 | |
+| unresolved | (a variable, a struct field or a value from a table) | 283 (96) | 279 (93) |
+
+So helicopters are mostly sent somewhere (go to), held (stop: one shared helper compiled into 247 scripts, mostly Online ones), sent away (flee) or landed; planes are sent somewhere or told to crash (all 100 scripts that pass type 21 are Online ones).
+
 ## 19.4 Parachuting and skydiving
 
 - **Equipment and looks** (**Verified** counts): pack model, canopy variation and tints are set per job (`SET_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE`, `_VARIATION_OVERRIDE`, `SET_PLAYER_PARACHUTE_PACK_TINT_INDEX` 449 scripts), cleared again at cleanup (`CLEAR_PLAYER_PARACHUTE_PACK_MODEL_OVERRIDE` 442). Reserve chutes: `SET_PLAYER_HAS_RESERVE_PARACHUTE` (23). Smoke trails: `SET_PLAYER_CAN_LEAVE_PARACHUTE_SMOKE_TRAIL` (18 scripts, 188 calls).
@@ -62,7 +83,7 @@ Two more entries, `SPMED` and `SPSMALL` (1,000 kg, roll 0.015), have the highest
 
 ## 19.5 The flight school
 
-`pilot_school` (its launcher, `launcher_pilotschool`, is a world-point brain with a 100 m range, see [strangers and freaks](/docs/gameplay/missions/strangers-and-freaks.md)) runs 12 lessons (`LESSON_01` to `LESSON_12` in the script, **Verified**). Each has a time and bronze, silver and gold targets (`PS_HUDTARG_B`, `_S`, `_G`). The score bars name the manoeuvres: formation, half loop, half roll, inverted, knifing, looping, roll; checkpoints include "Inverted Checkpoint", "Knife Checkpoint" and "Moving Target". Twenty-two fail reasons cover things like "Missed the goal time", "Formation broken", "Out of bounds", "The plane went too high", "Landed in the water", "Ditched too early" and "Wanted level earned". Its save block is a single dummy value (`PILOT_SCHOOL_DUMMY_DATA`, [saves](/docs/core/saves.md)); results live in the main story save. The flying skill it raises is in [R3.6](/docs/gameplay/player/skills-and-abilities.md).
+`pilot_school` (its launcher, `launcher_pilotschool`, is a world-point brain with a 100 m range, see [strangers and freaks](/docs/gameplay/missions/strangers-and-freaks.md)) runs 12 lessons (`LESSON_01` to `LESSON_12` in the script, **Verified**). The script has one set-up function per lesson that picks the aircraft (**Verified**, second pass): six use the Mallard (`stunt`), two the Cuban 800, two the Maverick and two the Frogger. The set-ups are reached through a function table, so which lesson gets which set-up isn't readable from the decompile; the lesson names are text labels. The medal goals per lesson are in [minigames](/docs/gameplay/missions/minigames-and-activities.md), and the flying skill points per medal in [skills](/docs/gameplay/player/skills-and-abilities.md#how-skills-grow-second-pass). Each has a time and bronze, silver and gold targets (`PS_HUDTARG_B`, `_S`, `_G`). The score bars name the manoeuvres: formation, half loop, half roll, inverted, knifing, looping, roll; checkpoints include "Inverted Checkpoint", "Knife Checkpoint" and "Moving Target". Twenty-two fail reasons cover things like "Missed the goal time", "Formation broken", "Out of bounds", "The plane went too high", "Landed in the water", "Ditched too early" and "Wanted level earned". Its save block is a single dummy value (`PILOT_SCHOOL_DUMMY_DATA`, [saves](/docs/core/saves.md)); results live in the main story save. The flying skill it raises is in [R3.6](/docs/gameplay/player/skills-and-abilities.md).
 
 ## 19.6 What this means for modders
 
@@ -77,8 +98,9 @@ Two more entries, `SPMED` and `SPSMALL` (1,000 kg, roll 0.015), have the highest
 | --- | --- |
 | Flying blocks of all DLC aircraft | Second pass with every DLC `handling.meta` |
 | What `SPMED` and `SPSMALL` are | Second pass, `vehicles.meta` |
-| The 12 lessons by name, their aircraft and targets | Second pass, `pilot_school` |
-| The mission type numbers used with `TASK_HELI_MISSION` and `TASK_PLANE_MISSION`, with counts | Second pass |
+| The 12 lessons by name, and which lesson uses which aircraft (the six Mallard, two Cuban 800, two Maverick and two Frogger set-ups) | Second pass, `pilot_school` with the `PSCHOOL` text block |
+
+Answered in the second pass: the mission type numbers with counts (GP-048, [AI flight tasks](#193-what-scripts-do-with-aircraft)).
 
 ## 19.8 Test cards (story mode, a script mod)
 

@@ -134,14 +134,16 @@ The DLC hand weapons include the revolvers (`REVOLVER`, `DOUBLEACTION`, `NAVYREV
 | Bottle, hammer | `armenian2` (Repossession) |
 | SNS pistol | `armenian2`, `lamar1` or `family3` |
 | Railgun | `exile1` |
-| Hatchet, antique dagger, vintage pistol | `trevor1` (hatchet only with a condition still to read) |
+| Hatchet, antique dagger, vintage pistol | `trevor1`; the hatchet also needs the returning-player content (below) |
 | Heavy pistol | `fbi1` |
-| Gusenberg | mission 28 (`finale_credits` in the table; to check) |
+| Gusenberg | `finale_credits` (table id 28), nothing else |
 | Bullpup shotgun | `docks_heistA` or `fbi4` |
 | .50 pistol | `fbi5A` |
 | Musket, marksman pistol | `solomon1` |
 | Bullpup rifle | `finale_heist2A` or `finale_heist2B` |
 | Special carbine | `jewelry_heist` |
+
+**The hatchet's condition** (**Verified**, second pass): in story mode the hatchet is listed only if `trevor1` (table id 62) is passed **and** the returning-player check is true. The railgun uses the same check with `exile1` (table id 14). The check is true when the profile was flagged by `NETWORK_HAS_ROS_PRIVILEGE_PLAYED_LAST_GEN` (a player who owned the game on PS3 or Xbox 360, **Known**) or bit 0 of profile setting 866 is set; for a returning player it also sets bits 2, 4 and 6 of the `sp_unlock_exclus_content` stat. The Gusenberg checks only that table id 28, `finale_credits`, is passed.
 
 In Online the same script uses rank, crew and DLC tunables instead (`GSM_LOCK_RNK`, `GSM_LOCK_CREW`, `GSM_LOCK_FM`, `GSM_LOCK_SCLUB` labels). Purchases are kept in per-character stats (`sp0_weap_purch_0`, `sp0_weap_addon_purch_*`, `sp0_weap_tint_purch_*`).
 
@@ -162,7 +164,6 @@ The engine has a fixed pool for weapon definitions and components. Community plu
 | Question | Where it goes |
 | --- | --- |
 | Which mod installed the weapon overhaul (and the other 93 replaced files) | Ask the user; R10.1 |
-| The hatchet's extra condition, and whether the Gusenberg really waits for `finale_credits` | R3.1 second pass |
-| How story stats and Online rank change `AmmoMax` | R3.6 |
+| How story stats and Online rank change `AmmoMax`: the scripts only read the cap (`GET_MAX_AMMO`, 185 scripts) and never compute it, so it is engine and `weapons.meta` work (GP-078) | Third pass, the engine and the `AmmoMax*` fields |
 | Explosion damage and radius per explosive (`explosion.meta`) | R2.5: [fire, explosions and projectiles](/docs/physics/fire-explosions-projectiles.md) |
 | How aim assist and lock-on work for the player versus AI | R3.2 |

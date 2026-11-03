@@ -94,30 +94,30 @@ Test only: GP-054 (parent head counts), ON-058 (story clothes shop with a freemo
 
 | Batch | Topic | Questions | Kind | Status |
 | --- | --- | --- | --- | --- |
-| P4.1 | [Story flow](/docs/gameplay/missions/story-flow.md) (R5.1): the remaining command types, table fields, hidden missions, fails, the flow integers, the active triggerer | GP-028, GP-029, GP-030, GP-031, GP-032, CORE-020 | scripts | Open |
-| P4.2 | [Mission anatomy](/docs/gameplay/missions/mission-anatomy.md) and [replay](/docs/gameplay/missions/replay-director-and-editor.md) (R5.2, R5.8): skip flags, replay states, lead-ins, replay event types, director mode areas | GP-016, GP-017, GP-021, GP-022, GP-024, GP-025, GP-026 | scripts | Open |
-| P4.3 | [Minigames and activities](/docs/gameplay/missions/minigames-and-activities.md) (R5.5): medal thresholds, golf, activity unlocks, towing bonus | GP-010, GP-011, GP-012, GP-014 | scripts | Open |
-| P4.4 | [Strangers and freaks](/docs/gameplay/missions/strangers-and-freaks.md) (R5.4): unlock conditions, world points, brain flags | GP-034, GP-035, GP-036 | scripts, data | Open |
-| P4.5 | [Cutscenes and dialogue](/docs/gameplay/missions/cutscenes-and-dialogue.md) (R5.6): the cutscene files and `dialogue_handler`'s globals | GP-005, GP-007 | scripts, data | Open |
-| P4.6 | [Character switching](/docs/gameplay/player/character-switching.md) (R6.1): saved character state, the scene table | GP-037, GP-038 | scripts | Open |
-| P4.7 | [Respawn](/docs/gameplay/player/respawn-death-and-arrest.md) and [health](/docs/gameplay/player/health-armour-death.md) (R6.2, R3.8): the building table, free respawns, hospital packs, armour items, DLC health configs | GP-060, GP-061, GP-063, GP-065, GP-066, GP-051, GP-052 | scripts, data | Open |
-| P4.8 | [Economy and pickups](/docs/gameplay/economy/economy-and-pickups.md) (R3.9): stock prices, pickup placement, shop robbery pay | GP-001, GP-002, GP-003 | scripts | Open |
-| P4.9 | [Controls and camera](/docs/gameplay/player/controls-and-camera.md) (R6.4): control names, disable helpers, context numbers | GP-041, GP-042, GP-044 | scripts, data | Open |
-| P4.10 | [Skills](/docs/gameplay/player/skills-and-abilities.md), [flying](/docs/gameplay/player/flying.md) and [weapons](/docs/gameplay/weapons/weapons.md) (R3.6, R3.4, R3.1): skill gains, ability types, starting skills, DLC flying blocks, flight lessons, AI flight missions, weapon unlocks, ammo caps | GP-067, GP-069, GP-070, GP-045, GP-046, GP-047, GP-048, GP-077, GP-078 | scripts, data | Open |
+| P4.1 | [Story flow](/docs/gameplay/missions/story-flow.md) (R5.1): the remaining command types, table fields, hidden missions, fails, the flow integers, the active triggerer | GP-028, GP-029, GP-030, GP-031, GP-032, CORE-020 | scripts | Mostly done, branch `research/second-pass-phase4` (GP-028, GP-030, CORE-020 answered, GP-031 mostly, GP-029 and GP-032 partly); new CORE-033 |
+| P4.2 | [Mission anatomy](/docs/gameplay/missions/mission-anatomy.md) and [replay](/docs/gameplay/missions/replay-director-and-editor.md) (R5.2, R5.8): skip flags, replay states, lead-ins, replay event types, director mode areas | GP-016, GP-017, GP-021, GP-022, GP-024, GP-025, GP-026 | scripts | Mostly done, branch `research/second-pass-phase4` (GP-016, GP-017, GP-022, GP-024, GP-026 answered, GP-021 and GP-025 partly); new GP-087 |
+| P4.3 | [Minigames and activities](/docs/gameplay/missions/minigames-and-activities.md) (R5.5): medal thresholds, golf, activity unlocks, towing bonus | GP-010, GP-011, GP-012, GP-014 | scripts | Mostly done, branch `research/second-pass-phase4` (GP-010, GP-014 answered, GP-012 mostly, GP-011 partly); new GP-088 |
+| P4.4 | [Strangers and freaks](/docs/gameplay/missions/strangers-and-freaks.md) (R5.4): unlock conditions, world points, brain flags | GP-034, GP-035, GP-036 | scripts, data | Mostly done, branch `research/second-pass-phase4` (GP-036 answered, GP-034 mostly; GP-035 moved to the third pass); new GP-089 |
+| P4.5 | [Cutscenes and dialogue](/docs/gameplay/missions/cutscenes-and-dialogue.md) (R5.6): the cutscene files and `dialogue_handler`'s globals | GP-005, GP-007 | scripts, data | Done, branch `research/second-pass-phase4` (GP-005 answered, GP-007 mostly) |
+| P4.6 | [Character switching](/docs/gameplay/player/character-switching.md) (R6.1): saved character state, the scene table | GP-037, GP-038 | scripts | Done, branch `research/second-pass-phase4` (GP-037 answered, GP-038 mostly) |
+| P4.7 | [Respawn](/docs/gameplay/player/respawn-death-and-arrest.md) and [health](/docs/gameplay/player/health-armour-death.md) (R6.2, R3.8): the building table, free respawns, hospital packs, armour items, DLC health configs | GP-060, GP-061, GP-063, GP-065, GP-066, GP-051, GP-052 | scripts, data | Done, branch `research/second-pass-phase4` (all seven answered) |
+| P4.8 | [Economy and pickups](/docs/gameplay/economy/economy-and-pickups.md) (R3.9): stock prices, pickup placement, shop robbery pay | GP-001, GP-002, GP-003 | scripts | Done, branch `research/second-pass-phase4` (GP-002, GP-003 answered, GP-001 mostly); new GP-090 |
+| P4.9 | [Controls and camera](/docs/gameplay/player/controls-and-camera.md) (R6.4): control names, disable helpers, context numbers | GP-041, GP-042, GP-044 | scripts, data | Done, branch `main-km1sze` (all three answered; control IDs from 257 up shifted by 37 in build 3717); new GP-091 |
+| P4.10 | [Skills](/docs/gameplay/player/skills-and-abilities.md), [flying](/docs/gameplay/player/flying.md) and [weapons](/docs/gameplay/weapons/weapons.md) (R3.6, R3.4, R3.1): skill gains, ability types, starting skills, DLC flying blocks, flight lessons, AI flight missions, weapon unlocks, ammo caps | GP-067, GP-069, GP-070, GP-045, GP-046, GP-047, GP-048, GP-077, GP-078 | scripts, data | Done, branch `main-km1sze` (GP-067, GP-070, GP-048, GP-077 answered, GP-069 and GP-047 partly; GP-078 moved to the third pass; GP-045 and GP-046 need the data files, not available in this session); new GP-092 |
 
-Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), GP-039 (switch flags), GP-043 (two scripts disabling controls), GP-049, GP-050, GP-053 (regeneration, hurt thresholds, armour split), GP-062, GP-064 (arrest weapons, respawn point choice), GP-068 (shooting, strength, stealth), GP-071, GP-072, GP-075 (breath, drowning, swim speed). Engine: GP-023 (what NoEditorRestrictions patches). Elsewhere: GP-027 (R13.2), GP-073 (swimming stat entries), GP-074 (R2.3), GP-076 (a question for the install's owner), GP-079 (R2.5), GP-080 (R3.2).
+Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), GP-039 (switch flags), GP-043 (two scripts disabling controls), GP-091 (old control numbers on build 3717+), GP-049, GP-050, GP-053 (regeneration, hurt thresholds, armour split), GP-062, GP-064 (arrest weapons, respawn point choice), GP-068 (shooting, strength, stealth), GP-071, GP-072, GP-075 (breath, drowning, swim speed). Engine: GP-023 (what NoEditorRestrictions patches). Elsewhere: GP-027 (R13.2), GP-073 (swimming stat entries), GP-074 (R2.3), GP-076 (a question for the install's owner), GP-079 (R2.5), GP-080 (R3.2).
 
 ## By category
 
 | Category | Guides | Questions |
 | --- | --- | --- |
 | [Getting started](#getting-started) (`GS-`) | 1 | 4 |
-| [Core engine](#core-engine) (`CORE-`) | 8 | 32 |
+| [Core engine](#core-engine) (`CORE-`) | 8 | 33 |
 | [Entities](#entities) (`ENT-`) | 9 | 39 |
 | [Physics](#physics) (`PHY-`) | 4 | 18 |
 | [AI](#ai) (`AI-`) | 13 | 50 |
 | [The world](#the-world) (`WLD-`) | 4 | 19 |
-| [Gameplay](#gameplay) (`GP-`) | 17 | 86 |
+| [Gameplay](#gameplay) (`GP-`) | 17 | 92 |
 | [GTA Online](#gta-online) (`ON-`) | 13 | 77 |
 | [User interface](#user-interface) (`UI-`) | 6 | 20 |
 | [Audio](#audio) (`AUD-`) | 3 | 11 |
@@ -125,7 +125,8 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [Performance](#performance) (`PERF-`) | 9 | 28 |
 | [Scripting](#scripting) (`SCR-`) | 4 | 14 |
 | [File formats](#file-formats) (`FF-`) | 2 | 6 |
-| **Total** | | **431** |
+| [Knowledge graph](#knowledge-graph) (`KG-`) | (the graph) | 4 |
+| **Total** | | **442** |
 
 ## Getting started
 
@@ -183,9 +184,10 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | CORE-017 | Meaning of force-cleanup bits 8, 16, 32, 64 and 128 | R1.1 | Answered (16 and 32 are raised by the engine; their cause is CORE-032, third pass): [runtime scripts 1.3](/docs/core/runtime-scripts.md#every-force-cleanup-bit-second-pass) |
 | CORE-018 | What exactly the engine does to start `main`, `initial` and `startup`, and in which order | R1.2 | Partly answered: no script starts them, and the order follows from what each reads and waits for ([boot 3.3](/docs/00-getting-started/boot.md#33-inside-the-boot-scripts)); the engine call needs the executable |
 | CORE-019 | What `profiler_registration` (global block 2) is and whether anything starts it | R0.4 | Answered: empty script, block 2 never used ([runtime scripts 1.5](/docs/core/runtime-scripts.md#15-global-blocks)) |
-| CORE-020 | The story flags that pick the active mission triggerer | R5.1 | Open |
+| CORE-020 | The story flags that pick the active mission triggerer | R5.1 | Answered: no flag; `main` reads the `completed` values of `trevor1`, `fbi4` and `michael1`, behind five gates; new CORE-033 ([story flow 2.7](/docs/gameplay/missions/story-flow.md#27-the-mission-triggerers)) |
 | CORE-021 | Resolve table-driven launches (second pass of the graph) | R0.5 | Mostly answered: 502 non-literal launches, 220 followed back, ten tables read; 240 scripts nothing starts ([launch graph](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass)); `freemode`'s launches by request left |
 | CORE-032 | What the engine raises force-cleanup bits 16 and 32 for (no script raises them; [runtime scripts 1.3](/docs/core/runtime-scripts.md#every-force-cleanup-bit-second-pass)) | Third pass, in-game test logging `GET_CAUSE_OF_MOST_RECENT_FORCE_CLEANUP`, or the executable | Open |
+| CORE-033 | What the values of the current mission type (`Global_44869` in build 3725) mean, and the compatibility table in `main` that lets the triggerers run for 15, 5 and 17 | Third pass, `main` and the mission scripts that set it | Answered: 0/2/3 story missions, 4 strangers and odd jobs, 5 random events, 6/7 friend activities, 9/10 activities, 12 exile city denial, 13 animal mode, 14 Director Mode, 15 none, 17 scripted moments, 18 friend calls; plus the full may-replace table ([runtime scripts](/docs/core/runtime-scripts.md#the-current-mission-type-second-pass-core-033)) |
 
 ### [Saves: what the story save holds and how scripts write it](/docs/core/saves.md) (R1.7)
 
@@ -209,7 +211,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| CORE-030 | Which natives changed between 3725 and 3889 | R11.1 second pass, with the native crossmap (R0.3) | Open |
+| CORE-030 | Which natives changed between 3725 and 3889 | R11.1 second pass, with the native crossmap (R0.3) | Answered: hashes are stable; 29 natives new in 3889 are used, one 3725 native dropped; 11 new scripts ([surviving updates 8.4a](/docs/core/surviving-updates.md#84a-what-changed-in-the-natives-and-controls-second-pass)) |
 | CORE-031 | Which brain set the engine gives the random-ped brains added with `ADD_SCRIPT_TO_RANDOM_PED` (no script registers into sets 2 or 4) | Third pass, the executable | Open |
 
 ## Entities
@@ -502,18 +504,19 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-001 | How `stock_controller` moves prices and which story events move which company | Second pass | Open |
-| GP-002 | Where `pickup_controller` places each pickup and when they respawn | Second pass: its coordinate tables | Open |
-| GP-003 | How shop robberies pay out (the till amounts) | Second pass: `shoprobberies` | Open |
+| GP-001 | How `stock_controller` moves prices and which story events move which company | Second pass | Mostly answered: LCN random walk with caps, BAWSAQ from community stats, the story stock events; counters mapped to companies by code (GP-090); only the company names (text) are left ([economy](/docs/gameplay/economy/economy-and-pickups.md#the-stock-market-second-pass)) |
+| GP-002 | Where `pickup_controller` places each pickup and when they respawn | Second pass: its coordinate tables | Answered: 253 pickups in seven groups, 10-minute regeneration, removed during mission types 13 and 14 ([economy](/docs/gameplay/economy/economy-and-pickups.md#the-pickups-pickup_controller-places-second-pass)) |
+| GP-003 | How shop robberies pay out (the till amounts) | Second pass: `shoprobberies` | Answered: bag $220 to $786 (dropped bag $50 to $219); own till grabs $10 to $50 each ([economy](/docs/gameplay/economy/economy-and-pickups.md#what-a-shop-robbery-pays-second-pass)) |
+| GP-090 | Which company each of the 126 `sm_` stock counters feeds, and the English names of the 80 companies (`BSS_BSTR_` labels, not in the base text files) | Third pass | Partly answered: 95 counters end in one of the 39 `sm_price_<code>` company codes; 31 are general activity counters. Company names still need the text ([economy](/docs/gameplay/economy/economy-and-pickups.md)) |
 | GP-004 | The full list of `SPx_MONEY_SPENT_*` categories | R1.7 | Answered: 10 categories plus the total, and a second shop family `SPx_SP_MONEY_SPENT_*` ([economy](/docs/gameplay/economy/economy-and-pickups.md#where-story-money-is-booked-second-pass)) |
 
 ### [Cutscenes and dialogue](/docs/gameplay/missions/cutscenes-and-dialogue.md) (R5.6)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-005 | How many cutscene files ship (`.cut` in the `x64` archives and DLC packs) and how they are organised | R0.7 atlas, R13.4 animation | Open |
+| GP-005 | How many cutscene files ship (`.cut` in the `x64` archives and DLC packs) and how they are organised | R0.7 atlas, R13.4 animation | Answered: 807 `.cut` files (465 base in 82 `cuts_*.rpf`, 342 in 26 DLC packs), 729 scenes once parts are merged, 8,994 clip dictionaries ([cutscenes 6.3.1](/docs/gameplay/missions/cutscenes-and-dialogue.md#631-the-cutscene-files-second-pass)) |
 | GP-006 | Exact meanings of the `START_CUTSCENE` and `REGISTER_ENTITY_FOR_CUTSCENE` flag bits | Second pass, in-game tests | Open |
-| GP-007 | The layout of `dialogue_handler`'s request globals (speakers, root, block, flags) | R0.4 global map | Partly answered: flags, block, root and priority ([cutscenes and dialogue 6.5](/docs/gameplay/missions/cutscenes-and-dialogue.md#subtitles-and-phone-calls-second-pass)); the rest of the conversation block is R0.4 |
+| GP-007 | The layout of `dialogue_handler`'s request globals (speakers, root, block, flags) | R0.4 global map | Answered: every request field, the priority rule and all states (0 idle, 1 build, 2 wait for the phone, 3 wait for a preloaded call, 4 playing, 5 hung up, 6 ended) ([cutscenes and dialogue 6.5](/docs/gameplay/missions/cutscenes-and-dialogue.md#subtitles-and-phone-calls-second-pass)) |
 | GP-008 | How subtitles are hidden or shown (frontend setting) and how phone calls differ from face-to-face lines | Second pass | Answered: [cutscenes and dialogue 6.5](/docs/gameplay/missions/cutscenes-and-dialogue.md#subtitles-and-phone-calls-second-pass) |
 
 ### [Minigames and activities](/docs/gameplay/missions/minigames-and-activities.md) (R5.5)
@@ -521,60 +524,63 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | GP-009 | Who starts `minigame_stats_tracker` and `minigame_ending_stinger` (not started by name in this build) | Next pass: search by hash | Answered: neither is named anywhere, by string or hash ([minigames 42.5](/docs/gameplay/missions/minigames-and-activities.md#425-scoring)) |
-| GP-010 | The flight-school, range and triathlon medal thresholds | Next pass: read each script's goal tables | Open |
-| GP-011 | Golf: course data, AI foursome behaviour, how the score is kept | Next pass | Open |
-| GP-012 | How the flow unlocks each activity (blips appear after story missions) | Next pass, with [story flow](/docs/gameplay/missions/story-flow.md) | Open |
+| GP-010 | The flight-school, range and triathlon medal thresholds | Next pass: read each script's goal tables | Answered: flight school 90/80/70 per lesson with the 12 lessons' goals, the range's points goals per challenge, triathlon has no medals (top three for completion) ([minigames 42.5.1](/docs/gameplay/missions/minigames-and-activities.md#4251-medals-and-goals-second-pass)) |
+| GP-011 | Golf: course data, AI foursome behaviour, how the score is kept | Next pass | Partly answered: nine holes, par 36, strokes against par, the save fields; how the AI players choose shots moved to the third pass ([minigames 42.5.1](/docs/gameplay/missions/minigames-and-activities.md#4251-medals-and-goals-second-pass)) |
+| GP-012 | How the flow unlocks each activity (blips appear after story missions) | Next pass, with [story flow](/docs/gameplay/missions/story-flow.md) | Mostly answered: every activity's unlock source is in GP-088 except code entries 6, 12 and 18 ([minigames 42.2.1](/docs/gameplay/missions/minigames-and-activities.md#4221-how-an-activity-is-unlocked-second-pass)) |
 | GP-013 | The sea-race labels (`SNCA`, `SSC`, `SCAA`, `SCAB`) and street-race labels in English | Text files ([R8.3](/ROADMAP.md)) | Answered: [minigames 42.2](/docs/gameplay/missions/minigames-and-activities.md#422-the-activity-list) |
-| GP-014 | The towing quick-bonus check (what the 12 s timer measures) | Next pass | Open |
+| GP-014 | The towing quick-bonus check (what the 12 s timer measures) | Next pass | Answered: 12 s from entering the job's target area to the end; pay and bonus only after 5 completed jobs ([minigames 42.4](/docs/gameplay/missions/minigames-and-activities.md#424-fees-and-pay)) |
+| GP-088 | Which scripts arm the `code_controller` entries that unlock base jumps, golf, hunting, off-road, flight school, the races, stunts, towing and trafficking, since no strand does | Third pass | Mostly answered: `Extreme1` (base jumps), `Hunting2`, `Hao1` (street races), flow phone calls (off-road after `trevor1`, flight school after `trevor3`, golf and tennis after `family3`/`armenian3`), `player_controller` (stunt planes), `traffickingteleport`; entries 6, 12 (sea races) and 18 (towing) still unexplained ([minigames](/docs/gameplay/missions/minigames-and-activities.md#4221-how-an-activity-is-unlocked-second-pass)) |
 | GP-015 | What starts `minigame_stats_tracker`'s medal result screen (`mission_complete` Scaleform, `SET_MEDAL`); no script starts it by name *(from the guide's text)* | Second pass | Answered: nothing starts it in this build ([minigames 42.5](/docs/gameplay/missions/minigames-and-activities.md#425-scoring)) |
 
 ### [Anatomy of a story mission](/docs/gameplay/missions/mission-anatomy.md) (R5.2)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-016 | Where `armenian1`, `jewelry_heist` and `trevor1` set the skip flag (`Global_96580`), since they don't do it in their own code | Next pass of R5.2 or R5.8 | Open |
-| GP-017 | The exact meaning of `replay_controller` states 1 to 6 and 11 to 13 | R5.8 | Open |
+| GP-016 | Where `armenian1`, `jewelry_heist` and `trevor1` set the skip flag (`Global_96580`), since they don't do it in their own code | Next pass of R5.2 or R5.8 | Answered: `flow_controller` opens the fail screen for every mission the flow runs and sets the flag there (two fails without progress, bit 16 clear) ([mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip)) |
+| GP-017 | The exact meaning of `replay_controller` states 1 to 6 and 11 to 13 | R5.8 | Answered: states 0 to 13 named, with the replay types that pick the menu ([mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip)) |
 | GP-018 | How the snapshot in `Global_108447` is restored on retry, and what it leaves out | R5.3 | Answered: clock, weather, cash, weapons, outfits, tattoos, special ability, texts and the player ped are restored; other stats and the world aren't ([mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip)) |
-| GP-019 | How crew skill changes the heist take and the fail labels in `Local_3373` | Third pass (was: R7.8 (heists)) | Partly answered: the fail labels in `Local_3373` are a fixed table, and a dead crew member gets a fixed line by role ([mission anatomy](/docs/gameplay/missions/mission-anatomy.md)); how crew skill changes the take is left (third pass) |
+| GP-019 | How crew skill changes the heist take and the fail labels in `Local_3373` | Third pass (was: R7.8 (heists)) | Mostly answered: fail labels fixed; in the Jewel Store Job the gunman's tier scales each case (×1/0.9/0.8), the hacker's sets the alarm window (90/65/55 s), a lost bag costs a third (floor $2,741,082); the other heists' effects not read ([mission anatomy](/docs/gameplay/missions/mission-anatomy.md)) |
 | GP-020 | How `mission_repeat_controller` replays a mission without moving the flow (from guide 2) | R5.3 | Answered: the flow-started flag is cleared and the game is saved and reloaded around the replay ([mission anatomy 3.9](/docs/gameplay/missions/mission-anatomy.md#39-passing)) |
-| GP-021 | What the mission triggerers build before a mission starts (lead-in scenes, from guide 2) | R5.2 second pass | Open |
-| GP-022 | Where `armenian1`, `jewelry_heist` and `trevor1` unlock their skip (they honour `Global_96581` but don't set `Global_96580` themselves) *(from the guide's text)* | Second pass | Open |
+| GP-021 | What the mission triggerers build before a mission starts (lead-in scenes, from guide 2) | R5.2 second pass | Partly answered: what each triggerer creates and its lead-in labels; no triggerer plays a cutscene. Which scene goes with which mission, and the handover, moved to the third pass ([mission anatomy 3.3.1](/docs/gameplay/missions/mission-anatomy.md#331-before-the-script-starts-the-lead-in-second-pass)) |
+| GP-022 | Where `armenian1`, `jewelry_heist` and `trevor1` unlock their skip (they honour `Global_96581` but don't set `Global_96580` themselves) *(from the guide's text)* | Second pass | Answered with GP-016 ([mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip)) |
 
 ### [Replay, director mode and the Rockstar Editor](/docs/gameplay/missions/replay-director-and-editor.md) (R5.8)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | GP-023 | What exactly NoEditorRestrictions patches, and the vanilla limits it lifts (free camera distance, restricted areas) | Second pass with the executable; test card 3 | Open |
-| GP-024 | The meaning of `replay_controller` states 1 to 6 and 11 to 13 | Second pass (also open in mission anatomy) | Open |
-| GP-025 | The `REPLAY_START_EVENT` and `REPLAY_RECORD_BACK_FOR_TIME` type numbers | Second pass | Open |
-| GP-026 | Where director mode's restricted places (the prison and others) are defined | Second pass: the area checks in `director_mode` | Open |
+| GP-024 | The meaning of `replay_controller` states 1 to 6 and 11 to 13 | Second pass (also open in mission anatomy) | Answered with GP-017 ([mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip)) |
+| GP-025 | The `REPLAY_START_EVENT` and `REPLAY_RECORD_BACK_FOR_TIME` type numbers | Second pass | Partly answered: who passes each value (4 and 3 story missions, 1 and 0 side missions, 2 six scripts); the engine meaning is new GP-087 ([replay guide](/docs/gameplay/missions/replay-director-and-editor.md#the-clip-recorder)) |
+| GP-026 | Where director mode's restricted places (the prison and others) are defined | Second pass: the area checks in `director_mode` | Answered: a 200 m circle around the prison is the only restricted area; the other spots only move the start point ([replay guide](/docs/gameplay/missions/replay-director-and-editor.md#director-mode-director_mode)) |
 | GP-027 | The 10 post effects `startup` registers for the editor | R13.2 second pass | Open |
+| GP-087 | What the engine does with the type number of `REPLAY_RECORD_BACK_FOR_TIME` and `REPLAY_START_EVENT` (values 0 to 4) | Third pass, the executable | Open |
 
 ### [The story mission flow: how missions unlock](/docs/gameplay/missions/story-flow.md) (R5.1)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-028 | The remaining 40-odd command types (blips, contacts, texts, unlocks, savehouses, character state) | Next pass of R5.1 | Open |
-| GP-029 | The meaning of mission-table field 12 above bit 4, and of the option flags in field 15 | Next pass of R5.1 | Open |
-| GP-030 | How `agency_heist2` and Blitz prep 3 are reached | R5.2 | Open |
-| GP-031 | The pass and fail labels of each mission command: what happens on a fail | R5.2 (the mission side is in [guide 3](/docs/gameplay/missions/mission-anatomy.md#37-failing); the flow side is still open) | Partly answered |
-| GP-032 | What the flow integers (`f_99.f_58`) hold; index 120 is read 1,434 times | R5.1, R5.3 | Open |
+| GP-028 | The remaining 40-odd command types (blips, contacts, texts, unlocks, savehouses, character state) | Next pass of R5.1 | Answered: all 69 used types named from their handlers, with use counts; 18 more hashes have no builder in build 3725 ([story flow 2.4.1](/docs/gameplay/missions/story-flow.md#241-every-command-type-second-pass)) |
+| GP-029 | The meaning of mission-table field 12 above bit 4, and of the option flags in field 15 | Next pass of R5.1 | Mostly answered: field 12 answered; every field 15 bit tabulated with its missions and readers, effects read for 1, 3, 4, 5, 7, 13, 14, 16, 20, 21, 24, 25, 26, 27, 29, 30; bits 2, 6, 8 to 12, 17 to 19, 22, 23, 28 are only tested inside `flow_controller`, `mission_repeat_controller` or the triggerers ([story flow 2.2.1](/docs/gameplay/missions/story-flow.md#221-the-mission-table-flags-second-pass)) |
+| GP-030 | How `agency_heist2` and Blitz prep 3 are reached | R5.2 | Answered: `agency_heist2` by a one-off mission builder in the Bureau Raid strand; strand 11 is never run, `FBI4_Prep3Amb` starts prep 3 and nothing waits for it ([story flow 2.5](/docs/gameplay/missions/story-flow.md#25-the-32-strands)) |
+| GP-031 | The pass and fail labels of each mission command: what happens on a fail | R5.2 (the mission side is in [guide 3](/docs/gameplay/missions/mission-anatomy.md#37-failing)) | Answered: a fail jumps to the fail label only with field 15 bit 1; the third target of `finaleA`/`finaleB` is never read (endings use flags 134 to 136) ([story flow 2.4.2](/docs/gameplay/missions/story-flow.md#242-what-a-fail-does-to-the-flow)) |
+| GP-032 | What the flow integers (`f_99.f_58`) hold; index 120 is read 1,434 times | R5.1, R5.3 | Answered: every flag ID's flow setters, script setters, `code_controller` entry and reference count in one table, with readings (characters playable 115 to 117, the endings 134 to 137, heist planning flags ...) ([story flow 2.6.1](/docs/gameplay/missions/story-flow.md#261-the-flag-ids-second-pass)) |
 | GP-033 | How `mission_repeat_controller` replays a mission without moving the flow | R5.2 | Answered with GP-020 ([mission anatomy 3.9](/docs/gameplay/missions/mission-anatomy.md#39-passing)) |
 
 ### [Strangers, freaks and side content](/docs/gameplay/missions/strangers-and-freaks.md) (R5.4)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-034 | The unlock condition of each entry (flow flags, character) from the remaining table fields | Second pass | Open |
-| GP-035 | Where the world points are placed and how many there are per brain | Map data, R4.6 second pass | Open |
-| GP-036 | What the object-brain percentage and flags mean | Second pass, in-game test | Open |
+| GP-034 | The unlock condition of each entry (flow flags, character) from the remaining table fields | Second pass | Mostly answered: the conditions and every gating flag's setter (GP-089); `MrsPhilips2` and `Rampage3` releases open ([strangers 20.3.1](/docs/gameplay/missions/strangers-and-freaks.md#2031-what-makes-an-entry-available-second-pass)) |
+| GP-035 | Where the world points are placed and how many there are per brain | Map data, R4.6 second pass | Open, moved to the third pass: the placements are in the map data, not the scripts |
+| GP-036 | What the object-brain percentage and flags mean | Second pass, in-game test | Answered: the last argument is the brain-set mask (1 story, 8 Online, 9 both); percentage always 100, the fourth argument always -1 ([strangers 20.2](/docs/gameplay/missions/strangers-and-freaks.md#202-script-brains)) |
+| GP-089 | Which scripts set the flag IDs that gate stranger entries (74, 84 to 110, 133) and release `MrsPhilips2`, `Rampage3` and `TheLastOne` | Third pass | Mostly answered: every flag's setter (pass → code entry → message → code entry chains, collectibles, the Epsilon site, 100% for 133); `TheLastOne` released at 100% by `completionpercentage_controller`; `MrsPhilips2`, `Rampage3` and code entry 95 open ([strangers](/docs/gameplay/missions/strangers-and-freaks.md#2031-what-makes-an-entry-available-second-pass)) |
 
 ### [Character switching](/docs/gameplay/player/character-switching.md) (R6.1)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-037 | What each character's saved state holds (position, outfit, weapons, vehicle, money) and where in the story save | Second pass, with R1.7 saves and the [global map](/docs/core/global-map.md) | Open |
-| GP-038 | The 42-entry scene table's conditions (time, place, mission state) | Second pass | Open |
+| GP-037 | What each character's saved state holds (position, outfit, weapons, vehicle, money) and where in the story save | Second pass, with R1.7 saves and the [global map](/docs/core/global-map.md) | Answered: `PP_INFO_STRUCT` with its named arrays per character; cash is in the `SP0` to `SP2_TOTAL_CASH` stats ([switching 9.4.1](/docs/gameplay/player/character-switching.md#941-what-is-saved-for-each-character-second-pass)) |
+| GP-038 | The 42-entry scene table's conditions (time, place, mission state) | Second pass | Mostly answered: six-hour blocks, flag-switched weighted lists, a forced scene, the pull toward a waiting mission; each scene's own check and Trevor's pickers moved to the third pass ([switching 9.4.2](/docs/gameplay/player/character-switching.md#942-which-arrival-scene-is-picked-second-pass)) |
 | GP-039 | The meaning of switch flag bits 1, 2, 4, 8 | NativeDB notes plus a test card | Open |
 | GP-040 | Who starts the `family_scene_*` scripts | R0.5 second pass (launch graph) | Answered: `main`, within 100 m of five house points ([launch graph](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass)) |
 
@@ -582,19 +588,20 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-041 | The names of controls 365 to 401 | Second pass: the game's own control list (`controls.xml`, settings menu text) | Open |
-| GP-042 | Which shared helpers produce the near-identical disable counts, and what each blocks | Second pass | Open |
+| GP-041 | The names of controls 365 to 401 | Second pass: the game's own control list (`controls.xml`, settings menu text) | Answered: since build 3717 the 37 creator controls sit at 257 to 293 and the old 257 to 364 moved to 294 to 401, so 365 to 401 are the old 328 to 364 (`VEH_HYDRAULICS_*`, `VEH_MELEE_*`, `VEH_ROCKET_BOOST`, `VEH_TRANSFORM` ...) ([controls](/docs/gameplay/player/controls-and-camera.md#the-numbering-changed-in-build-3717-second-pass)) |
+| GP-042 | Which shared helpers produce the near-identical disable counts, and what each blocks | Second pass | Answered: three Online combat, weapon-select and pause helpers (247 scripts), two vehicle-control helpers (321 scripts), a story lead-in freeze (85) ([controls](/docs/gameplay/player/controls-and-camera.md#the-shared-disable-helpers-second-pass)) |
 | GP-043 | How `SET_INPUT_EXCLUSIVE` and `DISABLE_CONTROL_ACTION` interact when two scripts disagree | In-game test | Open |
-| GP-044 | The context and mode numbers, read from the scripts' own constants | Second pass | Open |
+| GP-044 | The context and mode numbers, read from the scripts' own constants | Second pass | Answered: contexts 0 on foot, 1 car, 2 bike, 3 boat, 4 plane, 5 sub, 6 heli, 7 turret; mode 4 first person, 3 and 4 treated alike by the help-text helper ([controls](/docs/gameplay/player/controls-and-camera.md#the-view-mode-first-and-third-person)) |
+| GP-091 | Whether the `PAD` natives on build 3717+ still treat an old control number (257 to 364) as the old control, so old mods keep working | In-game test (controls test card 4) | Open |
 
 ### [Flying](/docs/gameplay/player/flying.md) (R3.4)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-045 | Flying blocks of all DLC aircraft | Second pass with every DLC `handling.meta` | Open |
-| GP-046 | What `SPMED` and `SPSMALL` are | Second pass, `vehicles.meta` | Open |
-| GP-047 | The 12 lessons by name, their aircraft and targets | Second pass, `pilot_school` | Open |
-| GP-048 | The mission type numbers used with `TASK_HELI_MISSION` and `TASK_PLANE_MISSION`, with counts | Second pass | Open |
+| GP-045 | Flying blocks of all DLC aircraft | Second pass with every DLC `handling.meta` | Open (the P4.10 session had no game files; data only) |
+| GP-046 | What `SPMED` and `SPSMALL` are | Second pass, `vehicles.meta` | Open (the P4.10 session had no game files; data only) |
+| GP-047 | The 12 lessons by name, their aircraft and targets | Second pass, `pilot_school` | Partly answered: targets in [minigames](/docs/gameplay/missions/minigames-and-activities.md); the 12 set-ups use the Mallard 6 times, Cuban 800, Maverick and Frogger twice each, reached through a function table; names and lesson-to-aircraft still need the `PSCHOOL` text block ([flying](/docs/gameplay/player/flying.md#195-the-flight-school)) |
+| GP-048 | The mission type numbers used with `TASK_HELI_MISSION` and `TASK_PLANE_MISSION`, with counts | Second pass | Answered: helicopters mostly go to (4), stop (5), flee (8), land (19); planes go to (4) and crash (21, all Online) ([flying](/docs/gameplay/player/flying.md#193-what-scripts-do-with-aircraft)) |
 
 ### [Health, armour, death and arrest](/docs/gameplay/player/health-armour-death.md) (R3.8)
 
@@ -602,8 +609,8 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | --- | --- | --- | --- |
 | GP-049 | The player's regeneration rate, delay and cap in numbers | Test card 2 | Open |
 | GP-050 | What exactly changes below the fatigued and hurt thresholds | In-game test | Open |
-| GP-051 | The 5 armour item percentages, read from the shop's data | Second pass: `gunclub_shop` item table | Open |
-| GP-052 | Which personalities each DLC pack adds and their health configs | Second pass with [`tools/dlc-scan.ps1`](/tools/README.md) | Open |
+| GP-051 | The 5 armour item percentages, read from the shop's data | Second pass: `gunclub_shop` item table | Answered: 20, 40, 60, 80 and 100% (`WT_BA_0` to `4`) ([health](/docs/gameplay/player/health-armour-death.md#armour)) |
+| GP-052 | Which personalities each DLC pack adds and their health configs | Second pass with [`tools/dlc-scan.ps1`](/tools/README.md) | Answered: none; the 23 DLC personality files only add holster and movement data for 57 weapons, and no pack has its own `pedhealth.meta` ([health](/docs/gameplay/player/health-armour-death.md#where-it-lives)) |
 | GP-053 | How armour splits damage between armour and health for each damage type | R3.1 second pass, in-game test | Open |
 
 ### [The Online character creator](/docs/gameplay/player/online-character-creator.md) (R6.5)
@@ -622,32 +629,33 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | GP-081 | What each restriction tag blocks or forces, as a table (hat with hood, glasses with masks ...) | Next pass, the tag checks in `shop_controller` | Open |
-| GP-082 | The full `locate` number to menu title map, and why a few menus appear only in some store layouts | Next pass, `clothes_shop_mp` menu builder | Open |
+| GP-082 | The full `locate` number to menu title map, and why a few menus appear only in some store layouts | Next pass, `clothes_shop_mp` menu builder | Partly answered: 305 Online menu numbers map to 306 `CSHOP_TITLE<n>` labels, 37 in story mode; the English text and the layout rules still open ([cosmetics](/docs/gameplay/player/online-cosmetic-shops.md#where-the-items-come-from)) |
 | GP-083 | The base-wardrobe tables (labels and prices of the non-DLC clothes) | Next pass | Open |
-| GP-084 | Which barber items need a rank, and the ranks | Next pass, the unlock checks behind `HAIR_UNLOCK` | Open |
+| GP-084 | Which barber items need a rank, and the ranks | Next pass, the unlock checks behind `HAIR_UNLOCK` | Answered: two rank tables in `hairdo_shop_mp`, hairstyles from rank 6 to 25, overlays 0 to 26 ([cosmetics](/docs/gameplay/player/online-cosmetic-shops.md#menus)) |
 | GP-085 | The hair and make-up colour counts on this build | In-game test, `GET_NUM_PED_HAIR_TINTS` / `GET_NUM_PED_MAKEUP_TINTS` | Open |
-| GP-086 | Which hair fade goes with which hairstyle (the barber adds one when a style is bought) | Next pass, the hairstyle-to-list-slot mapping in `hairdo_shop_mp` | Open |
+| GP-086 | Which hair fade goes with which hairstyle (the barber adds one when a style is bought) | Next pass, the hairstyle-to-list-slot mapping in `hairdo_shop_mp` | Answered: hair items map to slots 93 to 114 and 123; newer DLC hair names its fade as forced component type 10 ([cosmetics](/docs/gameplay/player/online-cosmetic-shops.md#hair-fades)) |
 
 ### [Respawn, death and arrest](/docs/gameplay/player/respawn-death-and-arrest.md) (R6.2)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-060 | What the "building" table tied to each restart point drives | Second pass | Open |
-| GP-061 | Which respawn states (global values 7 and 9) and money categories (3 and 4) skip the charges | Second pass: trace the writers of those globals | Open |
+| GP-060 | What the "building" table tied to each restart point drives | Second pass | Answered: the static map-blip table; hospitals own blips 14 to 18 (sprite 61), police stations 7 to 13 (sprite 60) ([respawn](/docs/gameplay/player/respawn-death-and-arrest.md#the-restart-points)) |
+| GP-061 | Which respawn states (global values 7 and 9) and money categories (3 and 4) skip the charges | Second pass: trace the writers of those globals | Answered: 7 and 9 are `replay_controller` states (a retry relaunching); 3 and 4 are the contact-sheet account values of anyone but the three main characters ([respawn](/docs/gameplay/player/respawn-death-and-arrest.md#what-it-costs)) |
 | GP-062 | Exactly which weapons survive an arrest | Test card 2 | Open |
-| GP-063 | Which of the 10 hospital damage packs is chosen when | Second pass: read the selector in `respawn_controller` | Open |
+| GP-063 | Which of the 10 hospital damage packs is chosen when | Second pass: read the selector in `respawn_controller` | Answered: one pack at random, each 1 in 10 ([respawn](/docs/gameplay/player/respawn-death-and-arrest.md#what-every-respawn-resets)) |
 | GP-064 | Whether the engine picks the nearest enabled point or uses other rules (wanted level, water, the exile) | Test card 3 | Open |
-| GP-065 | What the "building" table that `standard_global_init` fills next to each hospital and police station drives (blips, doors, state) *(from the guide's text)* | Second pass | Open |
-| GP-066 | The two respawn states (7 and 9) that skip the death charge, and money categories 3 and 4 that skip both charges *(from the guide's text)* | Second pass | Open |
+| GP-065 | What the "building" table that `standard_global_init` fills next to each hospital and police station drives (blips, doors, state) *(from the guide's text)* | Second pass | Answered with GP-060 ([respawn](/docs/gameplay/player/respawn-death-and-arrest.md#the-restart-points)) |
+| GP-066 | The two respawn states (7 and 9) that skip the death charge, and money categories 3 and 4 that skip both charges *(from the guide's text)* | Second pass | Answered with GP-061 ([respawn](/docs/gameplay/player/respawn-death-and-arrest.md#what-it-costs)) |
 
 ### [Player skills and abilities](/docs/gameplay/player/skills-and-abilities.md) (R3.6)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-067 | How much each activity raises each skill (the `stats_controller` rules) | Second pass: read `stats_controller` | Open |
+| GP-067 | How much each activity raises each skill (the `stats_controller` rules) | Second pass: read `stats_controller` | Answered: each skill is recomputed from career stats (for example running distance ÷ 175, unarmed hits ÷ 20, seconds underwater ÷ 30) plus a starting value and bonus points, and never lowered ([skills](/docs/gameplay/player/skills-and-abilities.md#how-skills-grow-second-pass)) |
 | GP-068 | What shooting, strength and stealth change, in numbers | In-game tests | Open |
-| GP-069 | Which ability type each entry 3 to 16 is | Second pass with the ability type list | Open |
-| GP-070 | The starting skill values of each character in a new game | Second pass: `initial` / `flow_controller` | Open |
+| GP-069 | Which ability type each entry 3 to 16 is | Second pass with the ability type list | Partly answered: entries 0 to 7 follow the eight `SAT_*` types (3 `SNAPSHOT`, 4 `INSULT`, 5 `ENRAGED`, 6 `GHOST`, 7 `SPRINT_SPEED_BOOST`); 8 to 16 have no type, new GP-092 ([skills](/docs/gameplay/player/skills-and-abilities.md#the-special-abilities)) |
+| GP-092 | What selects special ability entries 8 to 16, which have no `SAT_*` type | Third pass, the engine | Open |
+| GP-070 | The starting skill values of each character in a new game | Second pass: `initial` / `flow_controller` | Answered: a table in `stats_controller` (Michael shooting 79 and stealth 81, Franklin wheelie 71, Trevor flying 82 and strength 79 ...); 100 in Director Mode ([skills](/docs/gameplay/player/skills-and-abilities.md#starting-skills)) |
 
 ### [Swimming and diving](/docs/gameplay/player/swimming-and-diving.md) (R3.5)
 
@@ -664,8 +672,8 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | GP-076 | Which mod installed the weapon overhaul (and the other 93 replaced files) | Ask the user; R10.1 | Open |
-| GP-077 | The hatchet's extra condition, and whether the Gusenberg really waits for `finale_credits` | R3.1 second pass | Open |
-| GP-078 | How story stats and Online rank change `AmmoMax` | R3.6 | Open |
+| GP-077 | The hatchet's extra condition, and whether the Gusenberg really waits for `finale_credits` | R3.1 second pass | Answered: the hatchet needs `trevor1` and the returning-player check (`NETWORK_HAS_ROS_PRIVILEGE_PLAYED_LAST_GEN` or profile setting 866 bit 0); the Gusenberg needs only `finale_credits` ([weapons](/docs/gameplay/weapons/weapons.md#49-ammu-nation-in-story-mode)) |
+| GP-078 | How story stats and Online rank change `AmmoMax` | Third pass, the engine and the `AmmoMax*` fields of `weapons.meta` (scripts only read the cap with `GET_MAX_AMMO`, 185 scripts) | Open |
 | GP-079 | Explosion damage and radius per explosive (`explosion.meta`) | R2.5: [fire, explosions and projectiles](/docs/physics/fire-explosions-projectiles.md) | Open |
 | GP-080 | How aim assist and lock-on work for the player versus AI | R3.2 | Open |
 
@@ -712,10 +720,10 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-020 | The casino target index order (gold or artwork at index 1) | Next pass: the target name function | Answered: 0 cash, 1 gold, 2 artwork, 3 diamonds ([R7.8 47.6.1](/docs/online/heists.md#4761-casino-targets-and-elite-challenges-second-pass)) |
 | ON-021 | Cayo secondary loot values (cash, weed, coke, gold, paintings) and bag capacity | Third pass (was: Next pass: hashed tunables near the primary values) | Open |
 | ON-022 | How the classic apartment board is drawn and which script owns it | Next pass, `freemode` | Answered: owned by `fmmc_launcher`, movies `heist_mp`, `heistmap_mp`, `heist_pre` drawn with `DRAW_SCALEFORM_MOVIE_3D_SOLID` ([R7.8 47.6.1](/docs/online/heists.md#4761-casino-targets-and-elite-challenges-second-pass)) |
-| ON-023 | Elite challenge rewards for each heist | Third pass (was: Next pass) | Mostly answered: Doomsday, Casino and Cayo elite values from the tunables; classic heists only have overrides ([R7.8 47.6.1](/docs/online/heists.md#4761-casino-targets-and-elite-challenges-second-pass)); new ON-076 |
+| ON-023 | Elite challenge rewards for each heist | Third pass (was: Next pass) | Mostly answered: Doomsday, Casino and Cayo elite values from the tunables; classic heists' values come from the job files (ON-076) |
 | ON-024 | The heist story arcs and their contacts | Third pass (was: [R7.9](/ROADMAP.md)) | Open |
 | ON-025 | Which script draws the apartment heist planning board for the classic heists *(from the guide's text)* | Second pass | Answered: `fmmc_launcher` ([R7.8 47.6.1](/docs/online/heists.md#4761-casino-targets-and-elite-challenges-second-pass)) |
-| ON-076 | The classic heists' elite rewards and targets as set in the mission controller (the tunables only override them) | Third pass, `fm_mission_controller` | Open |
+| ON-076 | The classic heists' elite rewards and targets as set in the mission controller (the tunables only override them) | Third pass, `fm_mission_controller` | Answered as far as scripts go: the controller uses Doomsday/Casino tunables, then the classic override, else the job's own content data; the values need the finales' job files ([heists](/docs/online/heists.md)) |
 
 ### [Interaction menu, phone and apps](/docs/online/interaction-menu-phone-apps.md) (R7.10)
 
@@ -725,8 +733,8 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-027 | The full interaction-menu tree and its conditions | Second pass, `am_pi_menu` | Answered: the top page with each item's conditions and all 144 pages by area ([R7.10 21.3.1](/docs/online/interaction-menu-phone-apps.md#2131-the-menu-tree-second-pass)); per-page conditions stay in each page's function |
 | ON-028 | Every website page and what each sells | Second pass, `appinternet` | Answered: the eight selling sites with their numbers and stock counts, and the 683-item model list ([R7.10 21.5](/docs/online/interaction-menu-phone-apps.md#215-the-internet)) |
 | ON-029 | The Facade phone's movie and the character-to-phone mapping | Second pass | Answered: `cellphone_facade` is Trevor's; the four-entry phone table ([R7.10 21.2.1](/docs/online/interaction-menu-phone-apps.md#2121-the-slots-by-mode-and-the-phone-each-character-carries-second-pass)) |
-| ON-067 | Who sets the story phone's Sniper-app flag, and what the two Online flags are that switch the phone to the Badger skin and empty slot 24 | Third pass, `cellphone_controller` callers | Open |
-| ON-068 | What website items 323, 324, 357 and 402 are (hashes set at start that match no model name) | Third pass, the preview code in `appinternet` | Open |
+| ON-067 | Who sets the story phone's Sniper-app flag, and what the two Online flags are that switch the phone to the Badger skin and empty slot 24 | Third pass, `cellphone_controller` callers | Answered: the Badger flags are set by the mission controllers when the player is in Franklin's (`p_franklin_02`) or Lamar's (`ig_lamardavis_02`) model; the Sniper flag (`Is_Sniper_App_Available`) is written by no script ([phone](/docs/online/interaction-menu-phone-apps.md)) |
+| ON-068 | What website items 323, 324, 357 and 402 are (hashes set at start that match no model name) | Third pass, the preview code in `appinternet` | Open, needs data: the four hashes are -994826917 (323), 886151985 (324), -1242692076 (357), -451225720 (402), set in `standard_global_init`; no string in the decompile hashes to them, so match them against every DLC `vehicles.meta` `modelName` |
 | ON-069 | Each interaction-menu page's own show and grey conditions (the top page is mapped) | Third pass, `am_pi_menu` page by page | Open |
 
 ### [The job lobby (`fmmc_launcher`)](/docs/online/job-lobby.md) (R7.5)
@@ -738,8 +746,8 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-032 | How the corona's settings are stored and sent to the controller | Next pass, with `Global_2685150` | Answered: host's choices in `GPBD_FM_2`, copied to the lobby state's `.f_669`; races also use `GlobalServerBD_Races` ([R7.5 13.5](/docs/online/job-lobby.md#135-from-job-type-to-running-controller)) |
 | ON-033 | How playlists and series step from job to job (`FMMC_PlayList_Controller`) | Next pass | Answered: each playlist job is a new session; the playlist hands the next content id to the launcher ([R7.5 13.7.1](/docs/online/job-lobby.md#1371-playlists-and-walk-in-markers-second-pass)) |
 | ON-034 | How a walk-in job marker in freemode hands over to the launcher | R7.1 second pass (`freemode`) | Answered: the walk-in conditions and the launcher flag `freemode` raises ([R7.5 13.7.1](/docs/online/job-lobby.md#1371-playlists-and-walk-in-markers-second-pass)) |
-| ON-070 | What the job value in start argument `.f_2` is, and what lobby flag bit 1 and `.f_880` are raised for | Third pass, the `freemode` and `maintransition` writers | Open |
-| ON-071 | What the playlist's `.f_877` position is and how the launcher uses it | Third pass, `fmmc_launcher` state 10 | Open |
+| ON-070 | What the job value in start argument `.f_2` is, and what lobby flag bit 1 and `.f_880` are raised for | Third pass, the `freemode` and `maintransition` writers | Partly answered: `.f_880` is raised only by one `freemode` routine, in a branch that checks another active player's index (our reading: joining that player's quick job); `.f_2` and lobby bit 1 still to read |
+| ON-071 | What the playlist's `.f_877` position is and how the launcher uses it | Third pass, `fmmc_launcher` state 10 | Answered: a 3D position from the next job's data, passed with its content id to the launcher's job loader ([job lobby 13.7.1](/docs/online/job-lobby.md#1371-playlists-and-walk-in-markers-second-pass)) |
 
 ### [Organisations and businesses](/docs/online/organisations-and-businesses.md) (R7.7)
 
@@ -751,7 +759,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-038 | What `gb_bosscost` and `gb_bosssetupcost` charge | Next pass, `freemode` | Answered: defaults $200,000 and $5,000, but no script reads them in this build ([R7.7 46.5.1](/docs/online/organisations-and-businesses.md#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass)); new ON-075 |
 | ON-039 | The MC challenge and VIP challenge rules (cash, RP, time) | Third pass (was: Next pass, per script) | Mostly answered: the 8 VIP and 3 MC challenges with their scripts, time limits, cash, RP and rules ([R7.7 46.5.2](/docs/online/organisations-and-businesses.md#4652-vip-and-mc-challenges-second-pass)); how the rival, solo and member percentages combine in the payout is left |
 | ON-040 | Business battles and the `fm_content_*` business missions | Third pass (was: R7.9 and a later pass) | Open |
-| ON-075 | Where registering as a boss is charged now (`gb_bosscost` and `gb_bosssetupcost` are read by no script) | Third pass, the boss registration code in `freemode` and `am_pi_menu` | Open |
+| ON-075 | Where registering as a boss is charged now (`gb_bosscost` and `gb_bosssetupcost` are read by no script) | Third pass, the boss registration code in `freemode` and `am_pi_menu` | Answered: it isn't; the menu only checks that the player could spend `gb_become_boss_threshold` (default 0) ([organisations](/docs/online/organisations-and-businesses.md)) |
 | ON-077 | How long a nightclub production step takes, and how technicians are assigned to goods types (the goods tunables are hashed; [R7.7 46.5.3](/docs/online/organisations-and-businesses.md#4653-the-nightclubs-safe-and-warehouse-second-pass)) | Third pass, the business hub code in `freemode` | Open |
 
 ### [Properties in GTA Online](/docs/online/properties.md) (R7.6)
@@ -759,20 +767,20 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | ON-041 | How the yacht, Kosatka and other vehicles-as-properties are bought and placed | Next pass, `freemode` yacht code | Answered: websites, stats, the 36 yacht spots ([45.6a](/docs/online/properties.md#yachts-and-other-vehicles-as-properties)) |
-| ON-042 | Where garage capacities and vehicle slots are stored, and how a personal vehicle is saved per slot | Third pass (was: Next pass, with the vehicle stats) | Partly answered: spaces per slot and the 607 `MPSV_*` records ([45.6a](/docs/online/properties.md#garage-sizes-and-personal-vehicle-records)); where colours and mods are kept is ON-066 |
+| ON-042 | Where garage capacities and vehicle slots are stored, and how a personal vehicle is saved per slot | Third pass (was: Next pass, with the vehicle stats) | Answered: sizes per slot, the 607 `MPSV_*` records, and the full setup struct (ON-066) ([45.6a](/docs/online/properties.md#garage-sizes-and-personal-vehicle-records)) |
 | ON-043 | The simple-interior entrance positions and which script places the doors | Third pass (was: Next pass, `am_mp_smpl_interior_ext` tables) | Partly answered: the per-type function table, all 180 simple-interior ids named, and the entrances of the mansions and salvage yards ([45.6a](/docs/online/properties.md#simple-interior-entrances)); the other types' positions are left |
 | ON-044 | Instance numbering of `am_mp_property_int` (owner id, building, or both) | Next pass | Answered: per owner, rows 0 to 31, 32 without an owner ([45.6a](/docs/online/properties.md#interior-instances)) |
 | ON-045 | Daily property fees (utility bills) and how they are charged | Next pass, `freemode` | Answered: every 48 minutes, fees per property ([45.6a](/docs/online/properties.md#daily-property-fees-utility-bills)) |
 | ON-046 | The business side of each simple interior | [R7.7](/ROADMAP.md) | Answered in [organisations and businesses](/docs/online/organisations-and-businesses.md#464-the-business-loop) |
-| ON-065 | Which business or vehicle the garage indices 116 to 137 and ownership slots 12 to 35 are | Third pass (was: Next pass, the slot-to-stat functions in `freemode`) | Mostly answered: ownership slots 12 to 32 named from `freemode`'s slot-to-stat function (hangar, facility, nightclub, the garage floors, auto shop, Agency, Eclipse Blvd, bail office, hacker den); slots 30, 33 to 35 and indices 116 to 137 left ([45.6a](/docs/online/properties.md#garage-sizes-and-personal-vehicle-records)) |
-| ON-066 | Where a personal vehicle's colours, wheels and mods are saved | Third pass (was: Next pass, the vehicle save code in `freemode` and `carmod_shop`) | Open |
+| ON-065 | Which business or vehicle the garage indices 116 to 137 and ownership slots 12 to 35 are | Third pass (was: Next pass, the slot-to-stat functions in `freemode`) | Mostly answered: slots 12 to 32 named; slots 33 to 35 map to property indices 135 to 137 and are owned through character stats 14169, 14197, 14225 (names need `mpstatscharactermappingdata.xml`, data); slot 30 and indices 119 to 134 still to tie ([45.6a](/docs/online/properties.md#garage-sizes-and-personal-vehicle-records)) |
+| ON-066 | Where a personal vehicle's colours, wheels and mods are saved | Third pass (was: Next pass, the vehicle save code in `freemode` and `carmod_shop`) | Answered: the personal-vehicle struct (plate, colours, 50 mod slots, tyre smoke, tint, livery, wheels, neons, flags) ([properties 45.6a](/docs/online/properties.md#garage-sizes-and-personal-vehicle-records)) |
 
 ### [Rockstar services](/docs/online/rockstar-services.md) (R15.2)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | ON-047 | The unnamed (`unk_`) tunable readers and which service natives they are | Second pass, NativeDB hashes | Answered: `_NETWORK_GET_TUNABLES_REGISTRATION_INT`, `_FLOAT` and `_BOOL` ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
-| ON-048 | Which story-mode scripts call any service native, and why | Second pass, per script | Open |
+| ON-048 | Which story-mode scripts call any service native, and why | Second pass, per script | Answered: mostly shared guards; real use is minigame leaderboards with crew tags, presence and the returning-player checks ([services 32.1.1](/docs/online/rockstar-services.md#3211-which-story-scripts-touch-a-service-second-pass)) |
 | ON-049 | The catalogue item keys and categories | Third pass (was: R7.7) | Open |
 
 ### [Sessions and sync](/docs/online/sessions-and-sync.md) (R15.1)
@@ -791,7 +799,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-054 | What `SaveCategory` 0 and 1 mean exactly | Second pass | Answered: 1 is the original per-character set (2,522), 0 everything since (15,411) ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
 | ON-055 | The basket flow step by step in one shop script | R7.6 or a second pass | Answered: the six steps in `clothes_shop_mp` ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
 | ON-056 | Which tunables a given offline system needs | Per mod, with the defaults list | Answered by method: per mod, read from the tunable index ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
-| ON-072 | The names behind the 7,296 tunables registered by hash only | Third pass: needs a name list; hash every candidate name | Open |
+| ON-072 | The names behind the 7,296 tunables registered by hash only | Third pass: needs a name list; hash every candidate name | Partly answered: 311 recovered by hashing candidate names (numbered playlist, vehicle-website and `enable_vehicle_*` series); the rest need a name list ([stats and tunables](/docs/online/stats-and-tunables.md)) |
 | ON-073 | Whether the two `SaveCategory` groups are saved as separate cloud files | Third pass: in-game or cloud check (read-only) | Open |
 
 ### [Story systems that clash with an Online mode](/docs/online/story-systems-in-online-mode.md) (R5.7)
@@ -801,7 +809,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-057 | The full shop table (index, position, type) from `shop_controller` | Second pass; feeds shop mods | Answered: all 65 entries by script, the cosmetic shops with name, position and interior ([R6.7](/docs/gameplay/player/online-cosmetic-shops.md#the-shop-table)) |
 | ON-058 | What exactly `clothes_shop_sp` does with a freemode ped (refuses, shows story stock, or breaks) | In-game test | Open |
 | ON-059 | What sets 2 and 4 contain (ped brains) | Second pass | Answered: no script registers into sets 2 or 4; the three `pb_prostitute` ped brains take no set ([R5.7 7.3](/docs/online/story-systems-in-online-mode.md#73-script-brains-and-brain-sets)); new CORE-031 |
-| ON-060 | How bits 16, 32 and 64 in these masks are raised (they end some systems on other occasions) | R1.2 second pass | Partly answered: 64 with 8 by `main`, `mission_repeat_controller`, `benchmark`; 16 and 32 only by the engine ([runtime scripts 1.3](/docs/core/runtime-scripts.md#every-force-cleanup-bit-second-pass)) |
+| ON-060 | How bits 16, 32 and 64 in these masks are raised (they end some systems on other occasions) | R1.2 second pass | Mostly answered: 64 (with 8) by `main`, `mission_repeat_controller`, `benchmark`; 16 and 32 only by the engine, the same question as CORE-032 (executable or in-game logging) |
 
 ### [Transitions and sessions](/docs/online/transitions-and-sessions.md) (R7.2)
 
@@ -811,7 +819,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-062 | What the four character "slots" in the retry states are (two characters plus?) and how `HUD_SLOTONE` / `HUD_SLOTTWO` relate | R7.3 stats | Answered: cloud save slots 0 (account), 1 and 2 (the two characters); "Slot 1" and "Slot 2" label the character saves ([R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) |
 | ON-063 | The order of states on the way back to story mode, step by step | Second pass | Answered: 63 then 64, step by step ([R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) |
 | ON-064 | What the testbed session is used for in release builds | Second pass | Answered: only level 5 (development) enters it; unused in release ([R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) |
-| ON-074 | Which scripts outside `maintransition` ask for the return to story mode, and what retry state 13 waits for | Third pass, the callers of the state request | Open |
+| ON-074 | Which scripts outside `maintransition` ask for the return to story mode, and what retry state 13 waits for | Third pass, the callers of the state request | Answered: only `ingamehud` (connection-problem warnings) and `selector` ask for the return; state 13 retries cloud save slot 3 and then sets `mpply_last_mp_char` to 2 ([transitions](/docs/online/transitions-and-sessions.md)) |
 
 ## User interface
 
@@ -913,7 +921,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | REN-007 | The director priorities and exactly when the cinematic director takes over | Second pass | Open |
 | REN-008 | The 50 shake names and other camera names that didn't resolve | Second pass with more name sources | Open |
 | REN-009 | Which `CREATE_CAMERA` hashes scripts use (the hashed form of `CREATE_CAM`) | Second pass: resolve the hashes in the decompile | Open |
-| REN-010 | The view mode contexts and modes as numbers | R6.4 | Open |
+| REN-010 | The view mode contexts and modes as numbers | R6.4 | Answered by GP-044 (P4.9): contexts 0 to 7 and mode 4 first person ([controls and camera](/docs/gameplay/player/controls-and-camera.md#the-view-mode-first-and-third-person)) |
 | REN-011 | How the first-person car interior camera is chosen per vehicle (`camVehicleCustomSettingsMetadata`) | R14.1 | Open |
 
 ### [Particles and decals](/docs/rendering/particles-and-decals.md) (R13.3)
@@ -1036,8 +1044,8 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| SCR-004 | What `0x8F5D1AD832AEB06C` and `0x0F7082C60FB479EF` do (not in NativeDB) | [Inbox](/ROADMAP.md#inbox); read their call sites in `freemode` and `public_mission_creator` | Open |
-| SCR-005 | Whether the 29 "build 3889" natives exist in 3725 (`IS_NATIVE...` style check from a mod, or ScriptHookV's native table) | In-game test with a small C++ check | Open |
+| SCR-004 | What `0x8F5D1AD832AEB06C` and `0x0F7082C60FB479EF` do (not in NativeDB) | [Inbox](/ROADMAP.md#inbox); read their call sites in `freemode` and `public_mission_creator` | Partly answered: `0x0F7082C60FB479EF` returns a float per model before the creator budget routine (our reading: budget cost), dropped in 3889; `0x8F5D1AD832AEB06C` left for the executable ([native usage](/scripting/native-usage.md)) |
+| SCR-005 | Whether the 29 "build 3889" natives exist in 3725 (`IS_NATIVE...` style check from a mod, or ScriptHookV's native table) | In-game test with a small C++ check | Partly answered: no 3725 script calls any of the 29; they are exactly the natives 3889's scripts add. Existence in the 3725 executable still needs the in-game check |
 | SCR-006 | A story-only vs Online-only split of every native (which natives story mode never needs) | R0.8 namespace coverage map, using the script groups from R0.1 and the Online catalog | Open |
 | SCR-007 | What the table order is (not first use; maybe first use in compiled code order) | Second pass, compare with a YSC dump | Open |
 
@@ -1075,6 +1083,17 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | FF-004 | Meaning of each content section key (`me`, `sro`, `amb`, `gt`, `ta`, `tot`, `mvdr` ...), from the `fm_content_*` helper that reads them | Second pass, with one `re_` file and its script | Open |
 | FF-005 | The `gen` keys (8,472 paths): which ones `fm_mission_controller` actually reads | Second pass | Open |
 | FF-006 | How the controller picks rules per team and stage | R7.5 (job lobby) and a second pass | Open |
+
+## Knowledge graph
+
+Questions raised by the [graph report](/graphify-out/GRAPH_REPORT.md) after the 2026-11-03 refresh (2,408 nodes, 5,240 edges, 137 communities). They are about the docs themselves, not the game: where facts aren't tied together, and where the same fact lives in two places.
+
+| ID | Question | Where it goes | Status |
+| --- | --- | --- | --- |
+| KG-001 | Tie in the 722 weakly connected nodes (one link or none; 4 fully isolated). The docs with the most: `docs/core/global-map.md` (27), `docs/ui/server-backed-screens.md` (19), `docs/00-getting-started/boot.md` (13), `docs/online/properties.md` (11), `docs/gameplay/economy/economy-and-pickups.md` (11), `docs/core/runtime-scripts.md` (9), `docs/00-getting-started/glossary.md` (9), `scripting/native-usage/WEAPON.md` (9). Typical cases are data files named once (`material_override_pairs.dat`, `procedural.meta`, the shape-test flags) with no link to the system that uses them | Each guide's next pass: add the missing cross-links, then re-run `/graphify . --update` and compare the count | Open |
+| KG-002 | Pick one owner page for each of the 72 facts that two docs describe separately (the graph links them as `semantically_similar_to` across files), and link to it from the other, so numbers can't drift. Examples: `flow_controller` (launch graph and runtime scripts), the 270-entry activity table (launch graph and job lobby; their counts agree, 266 scripts), the script brains (launch graph and strangers and freaks) | A docs pass over the 72 pairs listed by the graph | Open |
+| KG-003 | Should the loosest clusters be split or given clearer sections? Cohesion scores: "Repo Overview and Guides" 0.04, "Story Flow and Strangers" 0.05, "Performance and Measuring" 0.05, "Vehicle and World Physics" 0.05 (1.0 = every node linked to every other). Low cohesion here mostly comes from index pages that link to everything | Maintainer decision: split the hub pages, or accept them as indexes | Open |
+| KG-004 | Should non-doc files be left out of the graph? `.github/workflows/file-rules.yml` alone adds 14 weakly connected nodes, and the example mods add 19 external C# types with no source file (`Vector3`, `KeyEventArgs` ...) | Maintainer decision; if yes, add the paths to graphify's exclude list | Open |
 
 ## Already answered
 

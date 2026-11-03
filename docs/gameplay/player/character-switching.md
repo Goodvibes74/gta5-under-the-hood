@@ -54,6 +54,36 @@ From `player_controller_b` (function numbers are build-3725 decompiler names):
 
 `START_PLAYER_SWITCH` in 291 scripts is the shared mission library (missions switch characters mid-mission, and Online uses the same swoop for joining: `SWITCH_TO_MULTI_FIRSTPART` and `SWITCH_TO_MULTI_SECONDPART` in 88 and 290 scripts). `CHANGE_PLAYER_PED` is called once by each of about 50 missions plus `main`, `flow_controller`, `replay_controller`, `mission_repeat_controller`, `maintransition`, `selector`, `player_controller_b`, `animal_controller` and `director_mode`.
 
+### 9.4.1 What is saved for each character (second pass)
+
+Everything the game keeps about the three characters between switches sits in one section of the story save, `PP_INFO_STRUCT` (`Global_114904.f_2909`, 4,324 values; [saves 15.4](/docs/core/saves.md#154-whats-in-the-story-save)). Most of its arrays have four slots: one per character, Michael 0, Franklin 1, Trevor 2, and a fourth slot. **Verified** names and sizes from `standard_global_reg`:
+
+| What | Saved values (Rockstar's names) |
+| --- | --- |
+| Position when last played | `LAST_KNOWN_XCOORD` (x, y, z), `LAST_KNOWN_HEADING`, `LAST_KNOWN_ROOM_KEY` (the interior room), `LAST_KNOWN_VELOCITY`, `LAST_TIME_ACTIVE` |
+| Look | `VARIATIONS` (196: the components of each character), `TRACKED_COMPS` (49) and `TRACKED_PROPS` (37), `PED_COMPS`, `WARDROBE` (499: the owned clothes), the golf outfit (`GOLF_TOPS`, `GOLF_PANTS`), the change flags `CHANGED_CLOTHES`, `CHANGED_HAIR`, `CHANGED_TATTS`, `CHANGE_ON_MISS`, and the Blitz Play masks and suits (`FBI4MASKSNAME`, `FBI4MASKSTYPE`, `FBI4SUITS`) |
+| Weapons | `WEAPONS` (1,432: every weapon, its ammo and attachments), `WEAPON_TO_SHOW`, `EQUIPPED_WEAPON_SLOT`, `SNAP_WEAP` |
+| Health and the law | `HEALTH_PERCENTAGE`, `ARMOUR`, `LAST_KNOWN_WANTED` |
+| Special ability | `SPECIAL_ABILITY`, `SPEC_AB_UNLOCK` |
+| Vehicles | `STORED_VEH_DATA` (1,181), `NPC_VEH_DATA` (198), `VEH_POS`, `VEH_HEAD`, `CARMODS`, `CLOUD_VEH` |
+| Stats kept per character | `STAT_UPDATES`, `STAT_OFFSET_1` to `_7` |
+| Switching | `AVAILABLE` (can the character be picked; set by the flow's *set character available* command), `PP_CURRENT_PED`, `PP_PREVIOUS_PED`, `PP_LAST_KNOWN_PED` |
+| Small timers | `WH_TIMER`, `WH_UPDATE`, `WH_TIME`, `GRAB_TIME` |
+
+**Money is not in this section:** each character's cash is a stat, `SP0_TOTAL_CASH`, `SP1_TOTAL_CASH` and `SP2_TOTAL_CASH` (read or written in 135 scripts, about 315 references each, **Verified**). Where a switched-to character is found, and doing what, is kept in a second section, `PLAYER_SCENE_SAVED_DATA` (`f_18540`): the last scene per character and the priority-switch flags per time block (9.4.2).
+
+### 9.4.2 Which arrival scene is picked (second pass)
+
+**Verified** in `player_controller_b`. Arrival scenes are numbered from 0 to 317; 318 means "none". Each scene has a fixed position and heading (one table function). How a scene is chosen when you switch to a character:
+
+1. **The hour picks a block.** The day is split into four blocks of six hours (03:00 to 08:59, 09:00 to 14:59, 15:00 to 20:59, 21:00 to 02:59), and each character has a picker function per block.
+2. **Story state picks the list.** Inside a block, flag IDs choose between candidate lists. Franklin's lists change on flag 126 (our reading: whether he has moved to his Vinewood house) and on flags 118 and 63. Michael's change on flags 58 and 59.
+3. **A forced scene comes first.** Each list can start with one scene that wins whenever it is valid (for Franklin in the first block: scene 196 before flag 126, 197 after).
+4. **Otherwise a weighted draw.** The rest of the list is pairs of scene id and weight, for example Franklin's first block before flag 126: 175 (30), 179, 181, 182, 225 and 221 (10 each). Scenes whose checks fail are dropped and the draw runs over what is left. If a story mission is waiting for that character, scenes near the mission's blip are preferred. If nothing in a block is valid, the picker falls through to the next block's function.
+5. **The scene plays.** For 42 scene ids (9.1), `player_controller_b` starts a special `player_scene_*` script; every other scene is played by `player_timetable_scene`. After the switch, the scene id is saved as that character's last scene (unless it is one of the scenes 1 to 7, which aren't remembered).
+
+The flow can also force a scene for the next switch with its *set character scene* command ([story flow 2.4.1](/docs/gameplay/missions/story-flow.md#241-every-command-type-second-pass)), which writes the same `PLAYER_SCENE_SAVED_DATA` slot. Some scenes depend on the hour in their own way too (scene 222 becomes 194 between 21:00 and 09:00 and 193 otherwise). The full per-scene validity checks, and the pickers for Trevor, are left for the third pass.
+
 ## 9.5 What this means for modders
 
 - **Check before acting:** don't spawn, teleport or start scenes while `IS_PLAYER_SWITCH_IN_PROGRESS()` or while `player_timetable_scene` is running (`GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("player_timetable_scene"))`), as 231 game scripts do.
@@ -65,8 +95,8 @@ From `player_controller_b` (function numbers are build-3725 decompiler names):
 
 | Question | Where it goes |
 | --- | --- |
-| What each character's saved state holds (position, outfit, weapons, vehicle, money) and where in the story save | Second pass, with R1.7 saves and the [global map](/docs/core/global-map.md) |
-| The 42-entry scene table's conditions (time, place, mission state) | Second pass |
+| What each character's saved state holds (position, outfit, weapons, vehicle, money) and where in the story save | Answered in [9.4.1](#941-what-is-saved-for-each-character-second-pass) |
+| The 42-entry scene table's conditions (time, place, mission state) | Mostly answered in [9.4.2](#942-which-arrival-scene-is-picked-second-pass): the time blocks, the flag-switched lists, the weights and the mission pull; each scene's own validity check and Trevor's pickers are third pass |
 | The meaning of switch flag bits 1, 2, 4, 8 | NativeDB notes plus a test card |
 | Who starts the `family_scene_*` scripts | Answered: `main`, within 100 m of five house points ([launch graph](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass)) |
 

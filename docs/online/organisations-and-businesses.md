@@ -123,7 +123,7 @@ Each business has a desk app started by the property's interior script ([R7.6](/
 | Medium | 42 | 7, 10 to 15, 21 |
 | Large | 111 | 6, 8, 16 to 20, 22 |
 
-**`gb_bosscost` and `gb_bosssetupcost`.** `tuneables_processing` registers them with defaults of **$200,000** and **$5,000**, but no script in this build reads either field. They no longer charge anything directly, and where registering as a boss is charged now is a third-pass question (ON-075).
+**`gb_bosscost` and `gb_bosssetupcost`.** `tuneables_processing` registers them with defaults of **$200,000** and **$5,000**, but no script in this build reads either field. They no longer charge anything directly. **Registering is free in this build** (**Verified**, second pass, `am_pi_menu`): the "register as a VIP/CEO" entry of the interaction menu is only greyed out when `NETWORK_CAN_SPEND_MONEY` fails for the tunable `gb_become_boss_threshold` (default **0**). That check is skipped entirely when a player-state check returns true (which picks the `PIM_MAGM0AC` label, our reading: the CEO variant for an office owner). Three other checks can also grey it out; they were not read further. No money changes hands; `gb_become_boss_cooldown` (default 43,200) spaces registrations.
 
 **Transactions per business app.** The count of distinct `NET_GAMESERVER_*` natives in each app, and the spend and earn natives it calls:
 

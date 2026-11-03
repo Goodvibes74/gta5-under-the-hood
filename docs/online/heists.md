@@ -123,6 +123,14 @@ Cooldowns: `h4_cooldown_time` 2,880, `h4_cooldown_hard_time` 5,760 and `h4_solo_
 | Heist | What the tunables hold |
 | --- | --- |
 | Classic heists (Fleeca, Prison Break, Humane Labs, Series A, Pacific Standard) | Only overrides, all defaulting to -1 ("use the script's value"): a cash reward per heist (`cash_reward_override_elite_objectives_*`) and a target per objective (time, vehicle damage, ped damage, enemy kills, health damage, and extraction for the Prison Break). The real values are in the mission controller (third pass, ON-076) |
+
+**Where the classic heists' own elite values live** (**Verified**, second pass, `fm_mission_controller`). The function that returns the elite cash reward checks, in order:
+
+1. the Doomsday per-act tunables (by approach)
+2. the Casino tunables (by approach, times a hard-mode multiplier)
+3. the classic heist's override (by heist id: 2 Fleeca, 7 Prison Break, 14 Humane Labs, 20 Series A, and Pacific Standard).
+
+If none of these is above 0, it returns a value from the loaded job's content data (`Global_4718592.f_186036` in build 3725). So the classic heists' real elite rewards and targets are not in the scripts at all: they come with each finale's job file from Rockstar's cloud content.
 | Doomsday Act I to III | Time limits of 330,000 ms (5.5 minutes, the IAA job), 900,000 ms (15 minutes, the sub job) and 1,800,000 ms (30 minutes, the silo); targets of 78 kills (IAA job), 5 Avenger damage (sub job) and 150 headshots (silo) |
 | Diamond Casino | A 900,000 ms (15-minute) time limit for each approach: stealth, subterfuge and direct |
 | Cayo Perico | The "Elite Thief" award pays `ih_award_elite_thief_cash` $200,000; a separate `cash_reward_elite_thief` has a default of $350,000 |
@@ -156,5 +164,5 @@ These are Online systems: read them, never mod them in Online. For a story-mode 
 | Cayo secondary loot values (cash, weed, coke, gold, paintings) and bag capacity | Next pass: hashed tunables near the primary values |
 | How the classic apartment board is drawn and which script owns it | Answered in [47.6.1](#4761-casino-targets-and-elite-challenges-second-pass): `fmmc_launcher`, with `heist_mp`, `heistmap_mp` and `heist_pre` drawn in 3D |
 | Elite challenge rewards for each heist | Mostly answered in [47.6.1](#4761-casino-targets-and-elite-challenges-second-pass): the tunable values; the classic heists' real values are in the mission controller |
-| The classic heists' elite rewards and targets as set in the mission controller (ON-076) | Third pass, `fm_mission_controller` |
+| The classic heists' elite rewards and targets: they come from each finale's job file, not the scripts (ON-076) | Needs the job files (UGC JSON of the five finales) |
 | The heist story arcs and their contacts | [R7.9](/ROADMAP.md) |

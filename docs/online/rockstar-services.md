@@ -25,6 +25,23 @@ Which of Rockstar's online services the game scripts talk to, through which nati
 - **The transaction server is the most spread-out dependency:** 550 scripts ask whether server transactions are in use, 480 check catalogue items (`NET_GAMESERVER_CATALOG_ITEM_IS_VALID`, 1,718 calls), 473 read the session state.
 - **Story mode uses almost none of this:** the families are concentrated in Online scripts; story scripts touch Social Club only for features such as photo uploads and the profanity check on custom text (**Known**).
 
+### 32.1.1 Which story scripts touch a service (second pass)
+
+**Verified** (second pass): every story script of the [script catalog](/docs/gameplay/missions/story-script-catalog.md) (312 scripts: missions, strangers, random events, minigames, odd jobs, collectibles) searched for the natives of each family above.
+
+| Family | Story scripts | What for |
+| --- | ---: | --- |
+| Sign-in, privileges, cloud time, transaction-session checks | 166 to 251 | Shared guard and helper code compiled into most scripts: the returning-player and special-edition checks (`NETWORK_HAS_ROS_PRIVILEGE_PLAYED_LAST_GEN` 200 scripts, `_SPECIAL_EDITION_CONTENT` 80) that unlock bonus content, `GET_CLOUD_TIME_AS_INT` for real-time timers, and `NET_GAMESERVER_USE_SERVER_TRANSACTIONS` (false in story, **Known**) |
+| Presence | 151 | `PRESENCE_EVENT_UPDATESTAT_INT` and rich presence: the Social Club feed of story progress |
+| Leaderboards | 19 | The story minigames write and read Social Club result boards: `golf`, `tennis`, `darts`, `bj`, `pilot_school`, `range_modern`, `offroad_races`, `stunt_plane_races`, `triathlonsp`, `mission_race`, `hunting_ambient`, `stripclub`, `stripperhome`, `pb_prostitute` (plus their `_mp` twins) |
+| Crews | 40 | The same minigames plus the five assassinations, five rampages, `lester1`, `lamar1`, trafficking and `friendactivity`: crew tags and emblems shown on those boards |
+| Cloud stat slots | 80 | `STAT_SLOT_IS_LOADED` in the story missions (shared stat code) |
+| Money (`MONEY`) | 19 | Story-side activities with shared Online code (`act_cinema`, `carwash1`/`2`, `cablecar`, `fairgroundhub`, the casino games, strip club): balance and spend checks that only matter in Online |
+| UGC, Social Club | 6, 5 | `finale_endgame` (UGC) and the `_mp` minigame twins |
+| Tunables | 0 | none |
+
+So a story mod that never signs in loses only the leaderboards, presence and the returning-player bonus; nothing a story mission needs depends on a service.
+
 ## 32.2 The services
 
 **Sign-in, credentials and privileges.** Rockstar Online Services (ROS) issues credentials when the player signs in; scripts check `NETWORK_HAS_VALID_ROS_CREDENTIALS` and refresh state (`NETWORK_IS_REFRESHING_ROS_CREDENTIALS`, 35 scripts). Privileges (multiplayer, user content, communication) gate whole features (`NETWORK_HAVE_ONLINE_PRIVILEGES` 106 scripts, user-content checks in the creators, [R7.11](/docs/online/creator-internals.md)).
@@ -69,7 +86,6 @@ Which of Rockstar's online services the game scripts talk to, through which nati
 | Question | Where it goes |
 | --- | --- |
 | The unnamed (`unk_`) tunable readers and which service natives they are | Answered in [R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass): the tunable registration natives for int, float and bool |
-| Which story-mode scripts call any service native, and why | Second pass, per script |
 | The catalogue item keys and categories | R7.7 |
 
 ## 32.6 Test cards

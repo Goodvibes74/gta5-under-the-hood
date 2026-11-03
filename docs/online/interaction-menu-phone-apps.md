@@ -65,7 +65,9 @@ Other `app*` scripts are started from properties and vehicles rather than from t
 | 2 | Trevor | `cellphone_facade` | `PHONE_GENERIC_RING_03` |
 | 3 | any other model | `cellphone_ifruit` | `PHONE_GENERIC_RING_01` |
 
-So the Facade phone is Trevor's, and its movie is `cellphone_facade`. Each entry also stores three theme numbers (1, 2 and 3 for the iFruit, Badger and Facade). `cellphone_flashhand` loads the entry's movie in story mode, `cellphone_prologue` during the prologue, and in Online `cellphone_ifruit`, or `cellphone_badger` while either of two Online flags is set (the same flags that empty slot 24).
+So the Facade phone is Trevor's, and its movie is `cellphone_facade`. Each entry also stores three theme numbers (1, 2 and 3 for the iFruit, Badger and Facade). `cellphone_flashhand` loads the entry's movie in story mode, `cellphone_prologue` during the prologue, and in Online `cellphone_ifruit`, or `cellphone_badger` while either of two Online flags is set (the same flags that empty slot 24). **The two flags** (**Verified**, second pass) are set by `fm_mission_controller`, `fm_mission_controller_2020` and `public_mission_controller` when the player's ped model is `p_franklin_02` (first flag) or `ig_lamardavis_02` (second): when the job puts the player in Franklin's or Lamar's body (our reading: the Short Trips missions), the phone becomes Franklin's Badger.
+
+**The Sniper app flag** (**Verified**, second pass) is a field of the story save registered as `Is_Sniper_App_Available`. It is read in 55 places across the scripts, but no script in this build writes it, so on build 3725 the app stays hidden unless something outside the scripts (a debug tool, a mod) sets the field.
 
 ## 21.3 The interaction menu
 
@@ -192,7 +194,6 @@ Each slot holds an item number from one shared vehicle item list; the list is be
 | The full interaction-menu tree and its conditions | Answered in [21.3.1](#2131-the-menu-tree-second-pass): the top page with its conditions, and every page by area; per-page conditions stay in each page's function |
 | Every website page and what each sells | Answered in [21.5](#215-the-internet): the eight selling sites, their stock counts and the 683-item model list |
 | The Facade phone's movie and the character-to-phone mapping | Answered in [21.2.1](#2121-the-slots-by-mode-and-the-phone-each-character-carries-second-pass): `cellphone_facade`, Trevor's |
-| Who sets the story phone's Sniper-app flag, and what the two Online flags are that switch the phone to the Badger skin and empty slot 24 | Third pass, `cellphone_controller` callers |
 | What website items 323, 324, 357 and 402 are (hashes set at start that match no model name) | Third pass, the preview code in `appinternet` |
 | Each interaction-menu page's own show and grey conditions (the top page is mapped) | Third pass, `am_pi_menu` page by page |
 

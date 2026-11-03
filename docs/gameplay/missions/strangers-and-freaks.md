@@ -32,6 +32,15 @@ How story mode's side content appears in the world: the "script brains" that sta
 
 *Known*: a world-point brain is tied to world points placed in the map data with the script's name; the brain starts its script when the player is within the range of one of them and the script ends itself when the player leaves. Scripts check `IS_WORLD_POINT_WITHIN_BRAIN_ACTIVATION_RANGE` (80 scripts) to know when to quit. Whole groups can be switched off with `DISABLE_SCRIPT_BRAIN_SET` / `ENABLE_SCRIPT_BRAIN_SET` (4 and 5 scripts), which missions do to keep side content away.
 
+**The registration fields** (*second pass*, **Verified**, `standard_global_init`). The last argument of both register natives is the **brain set** the brain belongs to, as a bit mask: 1 is the story set, 8 an Online set, 9 both. `main_persistent` and `maintransition` switch sets 1 and 4 off and 2 and 8 on when the game goes Online, and the reverse when it comes back, so a brain only runs in the mode its set allows:
+
+| Brain kind | Set 1 (story) | Set 8 (Online) | Sets 1 and 8 |
+| --- | ---: | ---: | ---: |
+| World point | 93 | 5 | 1 |
+| Object | 19 | 13 | 15 |
+
+The object brains in both sets work in either mode: seven ATM models, three telescopes, two laptops, the cash register and the vending machines. The Online-only ones are the apartment beds and showers (`ob_mp_bed_high`, `ob_mp_shower_med`, some on yacht and arena models), three laptops, one ATM, one telescope and two vending machines. The object brain's percentage is 100 for all 47 and its fourth argument is always -1, so neither changes anything in this build. NativeDB's own example (`ob_telescope`, 100, 4.0, -1, 9) matches. Our reading is that the percentage is the chance that a brain attaches to a matching object.
+
 ## 20.3 The strangers-and-freaks table
 
 The same table-filling function is compiled into many scripts (every story mission, `randomchar_controller`, the ambient scripts), so all of them agree on each entry. Per strand (**Verified**):
@@ -59,6 +68,72 @@ The same table-filling function is compiled into many scripts (every story missi
 
 **The blips** (**Verified** sprite numbers): the first meeting of each strand uses sprite 66 (the "?" marker); later ones use the strand's own icon (206 Epsilon, 381 Barry, 149 Nigel, 389 Paparazzo, 84 Rampage, 388 Tonya, 382 Extreme, 385 Josh, 405 Fanatic, 386 Minute, 387 Omega, 384 Hunting).
 
+### 20.3.1 What makes an entry available (second pass)
+
+`randomchar_controller` reads more table fields than the first pass named (**Verified**, the controller's per-entry update). An entry is offered (its blip shown and its launcher allowed) when **all** of these hold:
+
+1. **It has been unlocked:** bit 0 of its entry in `SAVED_RANDOM_CHARACTERS`. The table has a *next entry* field for each one (for example `Epsilon1` to `Epsilon2`); our reading is that a pass unlocks that next entry.
+2. **The flow has released it**, when the table says it waits for the flow (bit 1). The flow's *activate stranger mission* command sets this bit ([story flow 2.4.1](/docs/gameplay/missions/story-flow.md#241-every-command-type-second-pass)); entries that don't wait get bit 1 at once.
+3. **A flag ID is set**, when the entry names one (for example 74 for `Barry1` and `Fanatic1`, 84 for both Barry stash hunts, 100 for the four Nigel item hunts). None of these is set by a strand command; who sets each one is in the table below.
+4. **Enough game time has passed** since it was unlocked: a delay in game hours (8, 10, 16, 36 or 48; `Tonya2` and `Tonya5` wait 48). `TheLastOne` waits 1 hour plus a random 90 to 300.
+5. **The player has no wanted level.**
+6. **Not during the exile**, for the entries marked so (flag ID 130 set and 131 not, [story flow 2.6.1](/docs/gameplay/missions/story-flow.md#261-the-flag-ids-second-pass)): most of Michael's and Trevor's, since they are out of the city.
+7. **Inside the time window** (`Barry4` 08:00 to 20:00, `Fanatic1` to `3` and `Nigel1B` to `1D` 07:00 to 20:00, `Hao1` 20:00 to 05:00).
+8. **No clashing story mission is running:** `Tonya1`, `Tonya2` and `Tonya5` wait while `franklin0`, `franklin1`, `lamar1` or `michael2` runs, and `Hao1` waits while `franklin1` runs.
+
+**Who sets the gating flags** (**Verified**, second pass: every write of the flag-ID array, followed through `code_controller`). Most follow one chain: passing a stranger mission arms a `code_controller` entry named in that mission's table row (field 22); that entry sends a text or email that carries the next entry; when the message has been delivered, the next entry sets the flag that opens the next mission.
+
+| Flag | Opens | Set by |
+| ---: | --- | --- |
+| 74 | `Barry1`, `Fanatic1` | code entry 24, armed when `Tonya1` is passed |
+| 84 | `Barry3A`, `Barry3C` | `Barry3` passed → entry 164 → message → entry 165 |
+| 85 | `Barry4` | `Barry3A`/`3C` passed → 166 → message → 167 |
+| 86 to 89 | `Epsilon1`, `Epsilon2`, `Epsilon3`, `Epsilon5` | the Epsilon website in `appinternet` (`epsilon2` and `launcher_epsilon` also set 86) |
+| 91 | (no entry reads it) | `appinternet` |
+| 90 | `Epsilon4` | `epscars` (the cars to collect) |
+| 92, 93 | `Epsilon6` (reads 93) | `epsrobes` → message → entry 173 |
+| 94 | `Epsilon8` | `epsdesert` (the desert walk) |
+| 95 | (no entry reads it) | `epsilontract` |
+| 96 | `Extreme2` | `Extreme1` passed → entry 4 (which also unlocks base jumps) → message → entry 170 |
+| 97 | `Extreme3` | `Extreme2` passed → 171 → message → 172 |
+| 98 | `Extreme4` | `bj` (a base jump completed) |
+| 99 | `Hunting2` | `Hunting1` passed → 174 → message → 175 |
+| 100 | `Nigel1A` to `1D` | `Nigel1` passed → 177 → message → 178 |
+| 101 | (no entry reads it) | `nigel3`, `postrc_nigel3` |
+| 102 | `Paparazzo3A`, `3B` | `Paparazzo3` passed → 183 → message → 184 |
+| 103, 104 | (no entry reads them) | `Tonya2` passed → 185 → 186; `Tonya3` passed → 187 → 188 |
+| 105 | `Josh2` | `forsalesigns` (the For Sale signs) → message → entry 176 |
+| 106 | `Dreyfuss1` | entry 168, armed by `letterscraps` (the letter scraps), also from `ambient_diving`, `ambient_sonar`, `spaceshipparts` |
+| 107 | `Omega2` | `spaceshipparts` → message → entry 179 |
+| 108 | (no entry reads it) | each `rampage1` to `5` |
+| 109 | `Abigail1` | entry 95 (who arms it isn't found) |
+| 110 | `Abigail2` | `ambient_diving` → message → entry 163 |
+| 133 | `TheLastOne` | `completionpercentage_controller`, when completion reaches 100% |
+
+**The three entries no strand releases.** `TheLastOne` is released directly by `completionpercentage_controller` (it sets the entry's "released" bit itself) at 100%. `MrsPhilips2` and `Rampage3` wait for the flow (table field 23) but no script sets their bit by number; they are probably released through a shared command pool whose numbers can't be told apart from other commands' (GP-089's remainder).
+
+The character field is a bit per player (1 Michael, 2 Franklin, 4 Trevor). The flow releases the first entry of each chain after these missions (**Verified**, the *activate stranger mission* commands):
+
+| Released after | Entries |
+| --- | --- |
+| A strand's start | `Hao1`, `Paparazzo1`, `Tonya1` |
+| `armenian3` | `Barry1`, `Epsilon1`, `Fanatic1` |
+| `trevor1` | `Maude1` |
+| `chinese1` | `Rampage1` |
+| `trevor2` | `Hunting1` |
+| `trevor3` | `Nigel1`, `Rampage4` |
+| `martin1` | `Minute1` |
+| `trevor4` | `Josh1` |
+| `fbi2` | `Barry2`, `Barry3`, `Paparazzo3`, `Paparazzo4` |
+| `fbi4` | `Abigail1` |
+| `family4` | `Omega1` |
+| `family6` | `Fanatic2` |
+| `exile1` | `Extreme1` |
+| `exile2` | `Fanatic3` |
+| `finale_credits` | `MrsPhilips1` |
+
+`MrsPhilips2`, `Rampage3` and `TheLastOne` wait for the flow, but no strand command releases them; a script outside the strands does (third pass, with the flags in point 3).
+
 ## 20.4 The controller
 
 `randomchar_controller` (**Verified**, entry function):
@@ -80,9 +155,10 @@ The missions themselves are started by the launchers, not by the controller (no 
 
 | Question | Where it goes |
 | --- | --- |
-| The unlock condition of each entry (flow flags, character) from the remaining table fields | Second pass |
-| Where the world points are placed and how many there are per brain | Map data, R4.6 second pass |
-| What the object-brain percentage and flags mean | Second pass, in-game test |
+| The unlock condition of each entry (flow flags, character) from the remaining table fields | Mostly answered in [20.3.1](#2031-what-makes-an-entry-available-second-pass); the flag setters are answered; `MrsPhilips2` and `Rampage3` releases are third pass (GP-089) |
+| What releases `MrsPhilips2` and `Rampage3`, and what arms code entry 95 (flag 109, `Abigail1`) (GP-089) | Third pass, in-game: watch the entries' bit 1 |
+| Where the world points are placed and how many there are per brain | Third pass, map data (the launcher receives its point's position as its script argument; the placements aren't in the scripts) |
+| What the object-brain percentage and flags mean | Answered in [20.2](#202-script-brains): the last argument is the brain set; the percentage (always 100) and the fourth argument (always -1) change nothing in this build |
 
 ## 20.7 Test cards
 

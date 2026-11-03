@@ -53,7 +53,7 @@ From launch to control, the scripts that end are `startup`, the registration scr
 `main` doesn't start its controllers once. For each one it has a check that runs every frame: if the script should run (the player is alive, not on a mission, story mode active ...) and `GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH` is 0, it requests and starts it; if the script should not run, it marks it as no longer needed. Examples (**Verified**):
 
 - `respawn_controller` is started **only** when the player is injured or being arrested and no player switch is in progress. It isn't running the rest of the time.
-- Only **one** of `mission_triggerer_a` to `d` runs. `main` picks it from story progress: a set of story flags (still to name in R5.1) moves the game from triggerer A to B, C and D.
+- Only **one** of `mission_triggerer_a` to `d` runs. `main` picks it from story progress: the `completed` values of `trevor1`, `fbi4` and `michael1` move the game from triggerer A to B, C and D; no separate flag is involved ([story flow 2.7](/docs/gameplay/missions/story-flow.md#27-the-mission-triggerers)).
 - `director_mode` is started on the `MISSION` stack after a screen fade, with the player made invincible and frozen while it loads.
 
 `initial`, by contrast, starts its scripts once and marks them no longer needed, so those are not restarted if they end.
@@ -83,6 +83,45 @@ From launch to control, the scripts that end are `startup`, the registration scr
 | 128 | `director_mode` | Entering director mode, once the player is ready | Masks such as 146 and 210 |
 
 Bits 16 and 32 are never raised by a script, so the engine raises them; what for is open (an in-game test can watch `GET_CAUSE_OF_MOST_RECENT_FORCE_CLEANUP` in a small script). Of the 1,000-odd `HAS_FORCE_CLEANUP_OCCURRED` tests, the commonest masks are 3 (bits 1 and 2, 138 tests), 19 (1, 2, 16; 92), 11 (1, 2, 8; 43), 83 (1, 2, 16, 64; 42) and 2 (32). For a mod: test the same mask as the story scripts you live next to; mask 3 ends with them on the way to Online and into the editor.
+
+### The current mission type (second pass, CORE-033)
+
+**Verified** (build 3725 decompile). Story mode allows one "mission" at a time, and every story script that wants to run one (a mission, a stranger, a random event, an activity) asks through one shared routine compiled into each of them. The routine stores the running type in one global (`Global_44869` in build 3725). It starts at 15 (nothing running); scripts write 15 back when they finish, 172 times across the decompile. Before a new mission takes over, the routine raises force-cleanup bit 8 so ambient scripts tidy up, except when the new type is 5.
+
+Which scripts ask for which type (all call sites, with the value or the variable traced back to its literal):
+
+| Type | Asked for by | Our reading |
+| ---: | --- | --- |
+| 0 | `flow_controller`, the five `heist_ctrl_*` scripts, `mission_repeat_controller`, `comms_controller`, `sh_intro_f_hills`, `sh_intro_m_home` | Story mission started by the flow, or replayed |
+| 2, 3, 0 | `mission_triggerer_a` to `_d` | Story mission started at its blip: 2 if the mission's flow data has bit 15 set, 3 for 61 listed table ids (all heist setups and finales and most of the big missions), otherwise 0 |
+| 4 | the 16 stranger and freak launchers (`launcher_abigail` to `launcher_tonya`), `ambient_mrsphilips`, `ambient_tonya`, `bailbond_launcher`, `controller_towing`, `launcher_rampage`, `launcher_hunting`, `replay_controller` | Strangers and freaks, odd jobs |
+| 5 | the 34 `re_*` random events, `altruist_cult`, `finale_heist_prepeamb` | Random event: almost any other type may replace it (table below) |
+| 6, 7 | `friendactivity` (7 while an activity inside the hang-out is running) | Friend activity |
+| 9 or 10 | the 12 activity launchers (10 when a flag in the launcher's set-up is on, otherwise 9); 9 also `controller_taxi`, `controller_trafficking`, `country_race_controller`, `launcher_racing`, `carwash2`, `main`; 10 also `stripclub`, `bootycallhandler` | Minigame or activity |
+| 12 | `exile_city_denial` | The exile period's "stay out of the city" event |
+| 13 | `animal_controller` | Peyote animal mode |
+| 14 | `director_mode` | Director Mode (also makes `stats_controller` treat every skill as 100) |
+| 15 | (reset value) | Nothing running |
+| 17 | `family6`, `martin1`, `mrsphilips2`, `finale_endgame`, `player_controller_b`, `startup_positioning` | Scripted moments that let a story mission start on top of them |
+| 18 | `friends_controller` | Friend calls and meetings |
+
+No script asks for 1, 8, 11 or 16; 8, 11 and 16 still appear in the table below.
+
+**Which type may start while another runs.** The same routine checks the new type against the running one (rows: the type asking; columns: running types it may replace). Anything may start when nothing runs (15), and 15 is never "started".
+
+| New type | May replace |
+| ---: | --- |
+| 0 (story mission) | 5, 17 |
+| 2, 3 | 5, 6, 8, 17 |
+| 4 | 17 |
+| 5, 6, 8, 9, 11, 13, 14 | 5 |
+| 7 | 6 |
+| 10 | 5, 6, 17 |
+| 12, 18 | 5, 6, 8 |
+| 16 | anything except 7, 9, 10, 13, 14 |
+| 17 | 5, 12, 17 |
+
+This is the table the triggerers rely on (story missions start when the type is 15, 5 or 17, see [story flow](/docs/gameplay/missions/story-flow.md)). For a mod that runs its own mission: ask for type 4 or 0 through the same idea (wait until the global is 15) and put 15 back when done, or random events and activities will start on top of it.
 
 ### Stacks come from fixed pools
 
@@ -264,6 +303,6 @@ Answered in the second pass: the force-cleanup bits ([every force-cleanup bit](#
 | Question | Where it goes |
 | --- | --- |
 | What exactly the engine does to start `main`, `initial` and `startup`, and in which order | R1.2 |
-| The story flags that pick the active mission triggerer | R5.1 |
+| The story flags that pick the active mission triggerer | Answered in [story flow 2.7](/docs/gameplay/missions/story-flow.md#27-the-mission-triggerers): three missions' `completed` values, no flag |
 | Resolve table-driven launches (second pass of the graph) | Mostly answered in [launches by variable and by table](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass): 220 calls followed back, ten tables read; `freemode`'s launches by request left |
 | What the engine raises force-cleanup bits 16 and 32 for (no script raises them; CORE-032) | Third pass: in-game test logging `GET_CAUSE_OF_MOST_RECENT_FORCE_CLEANUP`, or the executable |

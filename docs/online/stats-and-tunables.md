@@ -93,6 +93,7 @@ Read line by line, the script gives a complete index of field, type, name and de
 - **34,987 assignments** in all.
 - 29,100 go to plain fields (`Global_262145.f_<n>`) and 5,887 to array elements.
 - 27,691 pass the name as `joaat("...")`, so the name can be read directly. The other 7,296 pass only a number, the hash of a name that isn't in the scripts.
+  - *Second pass:* hashing candidate names recovered **311** of the hashed tunables (counted over the three tunable getters, which together register 7,442 hashed entries). The candidates were every string literal in the decompile, every named tunable with its numbers replaced (0 to 300) or a number appended, and every word combined with the 40 commonest tunable beginnings and endings. Most recovered names are numbered series: `fm_corona_playlist_root_content_id_N_professional_N` (122, the professional playlists), `optout_vehiclewebsite_saleN` (50), the other `fm_corona_playlist_professional_*` fields, and `enable_vehicle_<model>N`. The rest need a real name list.
 
 A few lines of script can rebuild the index from the decompile for any build. The fields move between builds, but the names stay.
 
@@ -153,7 +154,7 @@ Single services skip the basket and use `NET_GAMESERVER_BEGIN_SERVICE` then `_CH
 | What `SaveCategory` 0 and 1 mean exactly | Answered in [10.5.1](#1051-the-tunable-index-save-categories-and-the-basket-second-pass): 1 is the original per-character set, 0 everything since |
 | The basket flow step by step in one shop script | Answered in [10.5.1](#1051-the-tunable-index-save-categories-and-the-basket-second-pass) |
 | Which tunables a given offline system needs | Per mod; the index in [10.5.1](#1051-the-tunable-index-save-categories-and-the-basket-second-pass) gives each field's name and default |
-| The names behind the 7,296 tunables registered by hash only | Third pass: needs a name list; hash every candidate name |
+| The names behind the 7,296 tunables registered by hash only (311 recovered by hashing candidates, ON-072) | Third pass: needs a name list |
 | Whether the two `SaveCategory` groups are saved as separate cloud files | Third pass: in-game or cloud check (read-only) |
 
 ## 10.8 Test cards
