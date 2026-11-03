@@ -56,6 +56,16 @@ How a vehicle is defined across its data files: `vehicles.meta` (model, type, cl
 | `FLAG_EXTRAS_STRONG`, `FLAG_EXTRAS_REQUIRE`, `FLAG_HAS_INTERIOR_EXTRAS` | 305, 173, 303 | How extras (roof racks, light bars) behave and are chosen |
 | `FLAG_NO_BOOT`, `FLAG_IS_BULKY`, `FLAG_IS_OFFROAD_VEHICLE` | 268, 183, 145 | Boot, size and off-road AI rules |
 
+### How many models, counted three ways (leftovers pass)
+
+**Verified** by reading all 76 `vehicles.meta` files: the base and update copies, 37 DLC packs and **38 `dlc_patch` copies in `update.rpf`**. The union is **921 models** (696 cars, 58 bikes, 43 planes, 32 helicopters, 29 trailers, 22 boats, 11 trains, 9 bicycles, 8 quad bikes, 4 submarines, 3 blimps, 3 amphibious cars, 2 submarine cars and 1 amphibious quad).
+
+- 298 models come from the base game (and its update copy), 517 from a DLC pack that a `dlc_patch` file also carries, and 64 from a pack alone.
+- **42 models appear only in a `dlc_patch` file**, the vehicles of the early packs (13 in `spupgrade`, 7 in `mphipster`, 4 each in `mpbeach`, `mpbusiness`, `mpbusiness2` and `mppilot`, 3 in `mplts`, 2 in `mpindependence`, 1 in `mpvalentines`: `zentorno`, `turismor`, `massacro`, `dodo`, `blimp2` ...).
+- Leaving those 42 out gives exactly **879**, the count in [text and names](/docs/entities/objects/text-and-names.md), which read the base and 37 pack files but no `dlc_patch` copy. The 901 above came from a different selection of copies that isn't recorded, so it can't be rebuilt exactly; 921 is the full number.
+
+**The rare flags** (**Verified**, the same files, each model's last copy). 191 different flags are used; 26 of them by one model only and 79 by five or fewer. The names say what each does, and the one model that uses it shows where it matters: `FLAG_HAS_GLIDER` (`oppressor`), `FLAG_HAS_PARACHUTE` (`ruiner2`), `FLAG_HAS_VERTICAL_ROCKET_BOOST` and `FLAG_HAS_HELI_STRAFE_MODE` (`thruster`), `FLAG_HAS_OUTRIGGER_LEGS` and `FLAG_HEADLIGHTS_ON_TAP_ONLY` (`chernobog`), `FLAG_LATCH_ALL_JOINTS`, `FLAG_REJECT_ENTRY_TO_VEHICLE_WHEN_STOOD_ON` and `FLAG_USE_LENGTH_OF_VEHICLE_BOUNDS_FOR_PLAYER_LOCKON_POS` (the `kosatka` submarine), `FLAG_CANNOT_BE_DRIVEN_BY_PLAYER` (`metrotrain`), `FLAG_CANNOT_BE_MODDED` (`crusader`), `FLAG_EXTRAS_TAXI` (`taxi`), `FLAG_TWO_DOORS_ONE_SEAT` (`bulldozer`), `FLAG_SECOND_TURRET_MOD` (`bombushka`) and `FLAG_THIRD_TURRET_MOD` (`pounder2`), `FLAG_EQUIP_UNARMED_ON_ENTER` (`microlight`), `FLAG_IS_QUADBIKE_USING_BIKE_ANIMATIONS` (`stryder`), `FLAG_SET_WANTED_FOR_ATTACHED_VEH` (`trailersmall2`). Pairs: `FLAG_IS_FORMULA_VEHICLE` (`openwheel1`, `openwheel2`), `FLAG_HAS_LOWRIDER_DONK_HYDRAULICS` (`faction3`, `slamtruck`), `FLAG_SPRAY_PETROL_BEFORE_EXPLOSION` (`tanker`, `tanker2`), `FLAG_ALLOW_RAPPEL_AI_ONLY` (`buzzard`, `buzzard2`), `FLAG_TALL_SHIP` (`marquis`, `tug`). One entry looks like a typo: `bodhi2` lists `ALLOW_OBJECT_LOW_LOD_COLLISION` without the `FLAG_` prefix that every other flag has (`kosatka` has the prefixed form), so our reading is that the engine ignores it. What each rare flag does in detail is a test for each model.
+
 ## How scripts use vehicles
 
 | Native | Scripts | Calls | Use |
@@ -96,8 +106,8 @@ Replacing a vanilla car instead means replacing its `.yft`/`.ytd` with the same 
 
 | Question | Where it goes |
 | --- | --- |
-| The difference between the 901 models here and the 879 counted in R14.4 (how entries were split) | Second pass |
-| The meaning of the less common flags | Second pass: compare models that set them |
+| The difference between the 901 models here and the 879 counted in R14.4 (how entries were split) | Answered in [how many models](#how-many-models-counted-three-ways-leftovers-pass): 921 in all; 879 leaves out the 42 models only in `dlc_patch` files |
+| The meaning of the less common flags | Mostly answered in [the rare flags](#how-many-models-counted-three-ways-leftovers-pass): which model uses each; the detailed effect is a test per model |
 | Light and siren setting id ranges used by DLC packs | Second pass |
 | Which `carcols` mod parts each kit really links (the per-type counts include repeats) | Second pass |
 

@@ -35,6 +35,28 @@ Where GTA V's water is (the ocean, lakes, rivers and pools as rectangles in `wat
 
 Pools in back gardens are mostly not in `water.xml`; they are drawn and simulated as part of their buildings (**Known**).
 
+*Leftovers pass* (**Verified**): `water.xml` has **no pool at all**. Every one of its 504 water quads sits at one of the four heights above, and no quad is marked invisible or limited-depth. The 27 smallest quads (under 400 m²) are slivers of the sea, the Alamo Sea and the reservoir edges, not pools. So swimming pools must come from the map data (their models and collision), which is the map-data batch's job.
+
+### The five quad types (leftovers pass)
+
+**Verified** counts from `water.xml`:
+
+| Type | Quads | Area if full rectangles | Median size | Heights |
+| ---: | ---: | ---: | ---: | --- |
+| 0 | 342 | 53.55 km² | 10,200 m² | 270 at 0 m, 51 at 30 m, 13 at 196.4 m, 8 at 160.3 m |
+| 1 | 33 | 0.69 km² | 9,360 m² | 28 at 0 m, 4 at 30 m, 1 at 196.4 m |
+| 2 | 40 | 1.59 km² | 3,840 m² | 33 at 0 m, 7 at 30 m |
+| 3 | 48 | 0.30 km² | 2,880 m² | 38 at 0 m, 7 at 30 m, 3 at 196.4 m |
+| 4 | 41 | 1.52 km² | 3,808 m² | 33 at 0 m, 8 at 30 m |
+
+Type 0 is the plain rectangle and covers almost all the water. Types 1 to 4 are about evenly split, much smaller, and sit where a straight rectangle edge would not follow the shore. **Known** (CodeWalker reads the field this way): types 1 to 4 are right triangles, one per corner of the rectangle, used to cut diagonal shorelines. Every quad has the same flags (visible, no limited depth, stencil on), and almost all use the corner alpha 26 (12 use 80, on the reservoirs and a few inland pieces).
+
+**Cayo Perico has its own water file** (*leftovers pass*, **Verified**): `update:/common/data/levels/gta5/water_heistisland.xml`, with its own `watertune_heistisland.xml`. It holds 62 water quads (55 of type 0, 15.1 km², all at sea level), 252 calming quads and 140 wave quads around the island. Our reading is that the game swaps it in when the island is loaded, as it does the island's other map data.
+
+### The `waterheight.dat` file (leftovers pass)
+
+**Verified** (60,788 bytes, header read as big-endian): it starts with the magic `WMAP`, a version (100) and the size of its body (59,360 bytes). Then comes a grid: origin x = −4,050, y = 8,400, cells of 50 × 50 m, 183 columns and 249 rows. That covers x from −4,050 to 5,100 and, our reading, y from 8,400 down to −4,050, the whole map. Two counts follow (10,668 and 11,796). The body that holds the per-cell water heights isn't decoded yet; our reading is that it stores only the cells that have water, which is why it is small for 45,567 cells. `common:/data/water.dat` is a different file: a short plain-text list of water rectangles, each as four corner points of seven numbers and two more values (**Verified** for the layout; which system reads it is open, and the XML is the main water definition, **Known**).
+
 ### Boats
 
 `CBoatHandlingData` fields (**Verified** names): `fBoxFrontMult`, `fBoxRearMult`, `fBoxSideMult` (hull shape for buoyancy), `fSampleTop`, `fSampleBottom` (where the hull samples the water), `fKeelSphereSize`, `fDinghySphereBuoyConst` (inflatables), `fRudderForce`, `fRudderOffsetForce`, `fRudderOffsetSubmerge`, `fImpellerForceMult`, `fImpellerOffset`, `fPropRadius`, `fProwRaiseMult` (how the bow lifts at speed), `fAquaplaneForce` and its push-water values, `fDragCoefficient`, `fLowLodAngOffset`, `fLowLodDraughtOffset` (cheap floating far from the player), `fWaveAudioMult`.
@@ -66,10 +88,10 @@ Pools in back gardens are mostly not in `water.xml`; they are drawn and simulate
 
 | Question | Where it goes |
 | --- | --- |
-| What the 5 water quad types mean | Second pass: compare where each type is |
-| The format of `waterheight.dat` | Second pass |
+| What the 5 water quad types mean | Answered in [the five quad types](#the-five-quad-types-leftovers-pass): 0 rectangles; 1 to 4 the corner triangles (**Known** reading) |
+| The format of `waterheight.dat` | Partly answered in [`waterheight.dat`](#the-waterheightdat-file-leftovers-pass): the header and grid; the body is third pass |
 | How wave quads differ from calming quads in effect | In-game test |
-| Where swimming pools are defined | R4.6 second pass |
+| Where swimming pools are defined | Partly answered in [water heights](#water-heights): not in `water.xml`; which map data holds them is the map-data batch |
 
 ## Test cards
 

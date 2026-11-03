@@ -160,6 +160,8 @@ There is no single counter menu. Each store has browse spots, each a position, a
 2. **DLC items** are read from the catalogue with `SETUP_SHOP_PED_APPAREL_QUERY_TU(character, 11, locate, props, -1, component type)` and `GET_SHOP_PED_QUERY_COMPONENT` / `_PROP` (12 query calls, 805 `GET_SHOP_PED_COMPONENT` calls). The item's `locate` number puts it on a menu.
 
 **Menu titles** (**Verified**, second pass). One function in `clothes_shop_mp` names every Online menu: 305 menu numbers (0 to 312) map to 306 different title labels `CSHOP_TITLE<n>` (with a matching `CSHOP_ITEM<n>` for the item line). Menu 0 is titled by what the store sells (`CSHOP_TITLE41` when the menu holds masks, `CSHOP_TITLE159` for gear, otherwise `CSHOP_TITLE0`). Fourteen menus have a second title used when another player's current property is of type 14 (our reading of the condition). Story-mode stores use a separate, shorter table of 37 menus. The English titles are in the shop text blocks, not read in this session.
+
+*Leftovers pass* (**Verified**, the American text blocks of every archive (base `x64b.rpf`, `update.rpf`, `update2.rpf` and the DLC packs, 645,160 entries) dumped with the CodeWalker library and searched by the `joaat` hash of each label). Every one of the 322 `CSHOP_TITLE<n>` labels the two clothes-shop scripts name (`clothes_shop_mp` and `clothes_shop_sp` name the same 322) has English text, in the `CLO_MNU` block (`clo_mnu.gxt2`, base and `update2.rpf` copies). The block holds 326 titles numbered 0 to 356. The low numbers are the story-mode wardrobe's plain categories (0 ITEMS, 1 CLOTHING, 2 JACKETS, 3 T-SHIRTS ... 41 MASKS, 42 GLASSES), the 150s to 190s the heist outfits (159 HEIST GEAR, 173 OUTFITS: HEIST to 191 OUTFITS: HEIST RIDER), and every later number one update's line, up to 356 OUTFITS: SPONSORED. Three labels have a different text in a later copy (86 AVIATOR GLASSES / AVIATORS, 164 OUTFITS: FLIGHT SUITS / OUTFITS: SA FLIGHT SCHOOL, 168 TEAM TOPS / UTILITY TOPS).
 3. **Price:** in Online the item's `textLabel` is hashed and looked up in 38 price functions (17,411 cases, each a tunable such as `Global_262145.f_16119`), then multiplied by the sale tunable of the update that added it (`CU_VAL_CLOTHES`, `CU_INDI_CLOTHES`, `CU_LOW_CLOTHES` ... with separate multipliers per slot), and doubled in one special case. Outside Online the `cost` field is used. Outfits are cheaper by what the player already owns (`CSHOP_OUTFIT_DI`).
 
 ### The catalogue in numbers
@@ -185,6 +187,14 @@ By slot (both models): tops `JBIB` 9,686, undershirts `ACCS` 4,428, hats `ANCHOR
 The tag names are plain text in the catalogue (`<tagNameHash>HAT</tagNameHash>`), so no hash guessing is needed: 510 distinct names. The busiest: `LONG_SLEEVE` 11,522, `OUTFIT_CHECKS` 11,294, `JACKET` 8,119, `BLOCK_SCARFS` 7,628, `BLOCK_CHAINS` 6,768, `UNDER_JACKET` 6,704, `HEIST_GEAR` 4,929, `HAT` 4,581, `GLOVES` 4,341. Head-related: `SHRINK_HEAD` 3,958, `HOODED_JACKET` 3,278, `FITTED_HOOD` 3,102, `HELMET` 2,336, `HOOD_UP` 1,414, `HOOD_HAT` 1,408, `BACKWARDS_HAT` 1,148, `BLOCK_GLASSES` 792, `ALT_HELMET` 764, `SKI_MASK` 336, `SHRINK_HAIR` 208, `BIG_MASK` 104, `GAS_MASK` 20 (**Verified** counts).
 
 The shop and wardrobe scripts ask `DOES_SHOP_PED_APPAREL_HAVE_RESTRICTION_TAG` (4,222 calls in `clothes_shop_mp`, 1,776 in `hairdo_shop_mp`) and `DOES_CURRENT_PED_COMPONENT_HAVE_RESTRICTION_TAG` before showing or combining an item. Examples read in `shop_controller` (**Verified** reading): masks from drawable 26 up that are tagged `hat` or `hair_shrink` are excluded from a check other masks pass; putting on a hat takes off a worn mask tagged `hair_shrink` unless the hat is tagged `shrink_hair`; hats from drawable 26 up are tested for `shrink_head`. What each tag blocks in detail is spread over hundreds of checks (open question below).
+
+**Which tags the scripts test** (*leftovers pass*, **Verified**). Every literal tag in a `DOES_SHOP_PED_APPAREL_HAVE_RESTRICTION_TAG` call was collected from the decompile (`joaat("...")` arguments), and every tag in the 164 freemode catalogue files read in this pass. The scripts test **387 different tags**, and 383 of them exist in the catalogue. That leaves:
+
+- **118 catalogue tags no script tests by name**, so they change nothing through the scripts (the engine may still read some, **Known**). Among them are `BACKWARDS_HAT`, `CAR_MEET_ITEM`, `MUSIC_STUDIO_ITEM`, `DUFFEL_BAG`, `GOGGLES_HELMET`, `BLOCK_PARACHUTE`, `MORPH_SUIT_NO_HEAD`, the parachute variants `PARA_ALT03` to `PARA_ALT11`, the crew-logo tags (`CREW_LOGO_FIXER_*`, `CREW_LOGO_X22_*`) and several pack tags (`X22_CLOTH`, `X22_DRAW_3`, `FX_DRAW_2`, `FX_DRAW_3`). Both spellings `BLOCK_SCARFS` and `BLOCK_SCARVES` are in the catalogue, but only `BLOCK_SCARFS` is tested.
+- **4 tested tags no catalogue item carries:** `arena_draw_14`, `biker_skull`, `fake_hat` and `fitted_cap`. These checks can never be true for a catalogue item in this build.
+- **The pack drawable tags** (245 of the 501 catalogue tags end in `_DRAW_<n>`: `BIKER_DRAW_*` 29, `APART_DRAW_*` 23, `HEIST_DRAW_*` 18, `GUN_DRAW_*` 16 ...) mark single drawables that need special handling. They are the most tested tags of all, because each wardrobe and shop script carries a long list of such exceptions (`silk_robe`, `morph_suit`, `gorka_suit` and the `biker_draw_*` and `stunt_draw_*` tags are each tested thousands of times across the shared code).
+
+What every one of the 387 checks blocks or forces needs each check read in its script; the names and the examples above cover the common ones.
 
 ### Saved outfits
 
@@ -235,8 +245,8 @@ The shop scripts write through `STAT_SET_INT` on the stat for the current charac
 
 | Question | Where it goes |
 | --- | --- |
-| What each restriction tag blocks or forces, as a table (hat with hood, glasses with masks ...) | Next pass, the tag checks in `shop_controller` |
-| The English text of the 306 `CSHOP_TITLE` labels, and why a few menus appear only in some store layouts (GP-082) | Third pass, the shop text block and the store-layout checks |
+| What each restriction tag blocks or forces, as a table (hat with hood, glasses with masks ...) | Partly answered in [wearing rules](#wearing-rules-restriction-tags): which of the 501 tags the scripts test (387), which never (118); a per-check table is third pass |
+| The English text of the 306 `CSHOP_TITLE` labels, and why a few menus appear only in some store layouts (GP-082) | Text answered (all 322 labels in `CLO_MNU`, see the menu titles above); the store-layout rule is third pass |
 | The base-wardrobe tables (labels and prices of the non-DLC clothes) | Next pass |
 | The hair and make-up colour counts on this build | In-game test, `GET_NUM_PED_HAIR_TINTS` / `GET_NUM_PED_MAKEUP_TINTS` |
 

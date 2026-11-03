@@ -79,9 +79,9 @@ A ped's entry (Franklin, `Player_One`, as the example) names:
 
 | Question | Where it goes |
 | --- | --- |
-| The 23 personality hashes and relationship groups that didn't resolve | Second pass |
+| The 23 personality hashes and relationship groups that didn't resolve | Mostly answered (leftovers pass, **Verified**): the 24 relationship-group hashes all match groups in `relationships.dat` (`COP`, `ARMY`, `SECURITY_GUARD`, `PRIVATE_SECURITY`, `MEDIC`, `FIREMAN`, `PRISONER`, the eleven `AMBIENT_GANG_*` groups, and the animal groups `WILD_ANIMAL`, `DOMESTIC_ANIMAL`, `GUARD_DOG`, `CAT`, `HEN`, `DEER`, `SHARK`, `COUGAR`). Every hashed personality in the ped files matches an entry in `pedpersonality.ymt`, and 69 of its 96 entries are now named ([decisions](/docs/ai/decisions-and-personalities.md#names-of-the-hashed-types-leftovers-pass)); 27 are still hashes |
 | What each `SET_PED_CONFIG_FLAG` number does (the ones Rockstar sets most) | Second pass: count flag numbers in the decompile |
-| The component `.ymt` format (slots, drawables, restrictions) | R6.3, R14.2 second pass |
+| The component `.ymt` format (slots, drawables, restrictions) | Answered in [appearance 10.2.1](/docs/entities/peds/appearance-and-clothing.md#1021-the-component-ymt-file-leftovers-pass) |
 
 ## Test cards
 

@@ -41,6 +41,26 @@ Global values (**Verified**): parole after losing the stars 9,000 ms; detection 
 
 Vehicle sets name the models (police cars and bikes, SWAT jeep, two police helicopters, ambulance, fire truck, three road-block kinds including spike strips, gangs, police boat, army, biker, assassins).
 
+*Leftovers pass* (**Verified**, the update copy of `dispatch.meta`; the base copy has the same 13 sets without `BIKER` and `ASSASSINS`). The 15 sets, with the zone type that changes the model (`VEHICLE_RESPONSE_ARMY_BASE`, `_COUNTRYSIDE`; `zonebind.ymt` gives each zone its type):
+
+| Set | Models by zone type (peds) |
+| --- | --- |
+| `POLICE_CAR` | army base: `crusader` (`S_M_M_Marine_01`); countryside: `sheriff` (`S_M_Y_Sheriff_01`); elsewhere: `police3` (`S_M_Y_Cop_01`) |
+| `POLICE_MOTORCYCLE` | `policeb` (`S_M_Y_Cop_01`) |
+| `SWAT_JEEP` | army base: `crusader` (`S_M_M_Marine_01`); countryside: `sheriff2` (`S_M_Y_Swat_01`); elsewhere: `fbi2` (`S_M_Y_Swat_01`) |
+| `POLICE_HELI_1`, `POLICE_HELI_2` | `polmav` and `annihilator` (`S_M_Y_Swat_01`); none over the army base |
+| `AMBULANCE`, `FIRE_TRUCK` | `ambulance` (`S_M_M_Paramedic_01`), `firetruk` (`S_M_Y_Fireman_01`) |
+| `POLICE_ROAD_BLOCK_CARS` | countryside: `sheriff`; elsewhere: `police3`; with `prop_roadcone01a`; none at the army base |
+| `POLICE_ROAD_BLOCK_RIOT` | `riot` with cones |
+| `POLICE_ROAD_BLOCK_SPIKE_STRIP` | `policet` with the stinger `p_ld_stinger_s` |
+| `GANGS` | `cavalcade` (`G_M_Y_PoloGoon_01`) |
+| `POLICE_BOAT` | `predator` (`S_M_Y_Cop_01`) |
+| `ARMY` | `mesa3` (`S_M_Y_BlackOps_01`) |
+| `BIKER` | `gburrito2` (`S_M_Y_XMech_02_MP`), added by the update copy |
+| `ASSASSINS` | `cog55`, `cog552` (`S_M_M_HighSec_01`), added by the update copy |
+
+So city police drive `police3` in this build (the base `police` and `police2` aren't in any set), and county zones get the sheriff. Inside Fort Zancudo the police car is a `crusader` with marines, and no helicopter or road block is sent.
+
 ## 35.3 Search and spawning (`dispatchtuning.ymt`)
 
 | Helper | Search time (s) | Radius (m) | Notes |
@@ -54,6 +74,16 @@ Vehicle sets name the models (police cars and bikes, SWAT jeep, two police helic
 **Assassins** (dispatch type used by some missions): accuracy 20, 20, 30; shoot rate 30, 60, 100; health ×1, ×1.2, ×1.5 at levels 1 to 3.
 
 `wantedtuning.ymt` holds the crime list (9 crime-info entries, under hashed names) and the rules for how the wanted level rises with time evading and distance (**Verified** values; meaning is R3.7).
+
+*Leftovers pass* (**Verified**): the 9 entries are keyed by crime names, found by hashing every `CRIME_` name with `joaat` (eight come from `crimeinformation.meta`, one is a crime that file doesn't list). They sit in two lists: the first holds only `CRIME_NONE`, and the second holds the eight below. Of their five fields, two have names (`Lifetime` 2,000 ms and `ReportDelay` 1,000 ms for all eight) and three don't. One is 0 everywhere. One is **5 for `CRIME_KILL_COP` and 1 for the other seven**, and our reading is that it is a weight or a star count. One is true for `CRIME_KILL_COP` and `CRIME_KILL_PED` only.
+
+| Crimes with an entry | Unnamed number | Unnamed flag |
+| --- | ---: | --- |
+| `CRIME_KILL_COP` | 5 | true |
+| `CRIME_KILL_PED` | 1 | true |
+| `CRIME_STEAL_CAR`, `CRIME_STEAL_VEHICLE`, `CRIME_HASSLE`, `CRIME_SHOOT_COP`, `CRIME_RECKLESS_DRIVING`, `CRIME_VEHICLE_EXPLOSION` | 1 | false |
+
+No data file gives crime points per crime. `crimeinformation.meta` only sets the witness rules, `dispatch.meta` only the points per star, and these 9 entries have no points field, so the points each crime adds are set in the engine.
 
 ## 35.4 What scripts do
 
@@ -93,9 +123,9 @@ All are data-file replacements in the mods folder ([archives and content](/docs/
 
 | Question | Where it goes |
 | --- | --- |
-| The names and values of the 9 crime-info entries | R3.7 |
-| How crime points are added per crime | R3.7 |
-| The full vehicle sets with model names | Second pass, `dispatch.meta` |
+| The names and values of the 9 crime-info entries | Mostly answered in [search and spawning](#353-search-and-spawning-dispatchtuningymt): all 9 named; three of the five fields are still unnamed |
+| How crime points are added per crime | Partly answered: no data file holds them, so it is the engine (executable or a test) |
+| The full vehicle sets with model names | Answered in [the vehicle sets](#352-dispatchmeta) |
 
 ## 35.7 Test cards (story mode)
 

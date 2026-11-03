@@ -56,6 +56,18 @@ Their combat profiles (`MICHAEL`, `FRANKLIN`, `TREVOR` in `combatbehaviour.meta`
 
 **Known:** the takedown probability is how likely a stealth or melee takedown is to succeed against that ped (lower means harder: SWAT 0.3).
 
+### Names of the hashed types (leftovers pass)
+
+**Verified.** The XML converted from `pedpersonality.ymt` shows most names as hashes. Hashing candidate names with `joaat` (the names in the ped files and the docs, and patterns built from words such as `Timid`, `Bold` or `Law_Abiding`) now names all of them except some personalities:
+
+- **All 18 bravery types:** `DEFAULT`, `Default_Female`, `AVERAGE`, `Average_Female`, `Bold`, `Bold_Female`, `Timid`, `Timid_Female`, `MISSION`, `Security`, `gang`, `cult`, `SWAT`, `ARMY`, `animal`, `ROTTWEILER`, `Dogaggressive` and `Dogtimid`. So the five unnamed civilian types are the male and female versions of `Bold` and `Timid`, plus `Average_Female` (and `Default_Female`). Personalities use `animal` 19 times, `gang` 14, `AVERAGE` 11, `Timid_Female` 10, `Bold` 9, `Average_Female` 7, `Timid` 5, `Bold_Female` 4 and `DEFAULT` 4.
+- **Criminality, three types.** `Law_Abiding` is used by 60 personalities: the animals, the rich and old civilians, army, mission and bouncer personalities. Two hashes didn't resolve. `hash_958D8BA5` (27) covers the street gangs (`BALLAS`, `FAMILY`, `VAGOS`, `MARABUNTE`, `WEICHENG`), the poor and young civilians and `DEFAULT`. `hash_95242239` (9) covers `BIKER`, `HILLBILLY`, `CriminalMale` and `CriminalFemale`. Our reading is that they are a middle and a high criminality.
+- **Personalities:** 69 of the 96 have a name now (the players, the gangs, the animals, the service and civilian groups such as `YOUNGAVERAGETOUGHMAN`, `OLDRICHMAN`, `SaltonFemale`); 27 are still only hashes.
+
+**Motivation** (**Verified** values). Every personality has `MotivationMin` 0. `MotivationMax` is 10 for 79 personalities and 0 for 17: the five street gangs, `BIKER`, `ARMY`, `SWAT`, `Security`, `merryweather` and six unnamed ones. The 0 group is the peds who fight by role rather than mood, so our reading is that motivation is a 0 to 10 scale drawn per ped that only ordinary civilians get. No native reads or sets motivation (none in NativeDB has it in its name), so how the engine uses it is a test.
+
+**Driving ranges.** The ranges in the short version are the only driving numbers in the file. Scripts override them per ped with `SET_DRIVER_ABILITY` (105 scripts, 121 calls), `SET_DRIVER_AGGRESSIVENESS` (118, 128) and `SET_DRIVER_RACING_MODIFIER` (113, 126), which take values from 0 to 1 (**Known**). How the personality's 0 to 10 range becomes that value, and how the value feeds the driving tasks (speed, overtaking, rule breaking), is engine behaviour, for the executable or a test ([driving AI](/docs/ai/driving-ai.md)).
+
 ## How it fits together
 
 1. A ped model (`peds.ymt`) names a **personality**, a **combat info**, a **decision maker** and a **relationship group**.
@@ -76,10 +88,10 @@ Their combat profiles (`MICHAEL`, `FRANKLIN`, `TREVOR` in `combatbehaviour.meta`
 
 | Question | Where it goes |
 | --- | --- |
-| The names of the 5 unnamed civilian bravery types and the criminality types | Second pass with more name sources |
+| The names of the 5 unnamed civilian bravery types and the criminality types | Mostly answered in [names of the hashed types](#names-of-the-hashed-types-leftovers-pass): all 18 bravery types and `Law_Abiding`; two criminality hashes are still unnamed |
 | What `IsWeird` changes for Trevor | In-game test; second pass |
-| How motivation (`MotivationMin/Max`) is used | Second pass |
-| How the driving ranges map onto the driving tasks (R3.3, R17.6) | R3.3 |
+| How motivation (`MotivationMin/Max`) is used | Partly answered in [names of the hashed types](#names-of-the-hashed-types-leftovers-pass): the values per personality; the engine use is a test |
+| How the driving ranges map onto the driving tasks (R3.3, R17.6) | Third pass: scripts override the values (`SET_DRIVER_ABILITY` and two more), but the range-to-task link is the executable or a test |
 
 ## Test cards
 

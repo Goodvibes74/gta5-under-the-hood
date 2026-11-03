@@ -107,6 +107,19 @@ Test only: GP-054 (parent head counts), ON-058 (story clothes shop with a freemo
 
 Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), GP-039 (switch flags), GP-043 (two scripts disabling controls), GP-091 (old control numbers on build 3717+), GP-049, GP-050, GP-053 (regeneration, hurt thresholds, armour split), GP-062, GP-064 (arrest weapons, respawn point choice), GP-068 (shooting, strength, stealth), GP-071, GP-072, GP-075 (breath, drowning, swim speed). Engine: GP-023 (what NoEditorRestrictions patches). Elsewhere: GP-027 (R13.2), GP-073 (swimming stat entries), GP-074 (R2.3), GP-076 (a question for the install's owner), GP-079 (R2.5), GP-080 (R3.2).
 
+### Leftovers: the data-file batches ([DATA-NEEDS](/DATA-NEEDS.md))
+
+Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch extracts one group of game files into a scratch folder outside the repo and answers the questions that need them.
+
+| Batch | Files | Questions | Status |
+| --- | --- | --- | --- |
+| D1 | Every American `.gxt2` text block (base, `update.rpf`, `update2.rpf`, DLC); every `vehicles.meta`, `handling.meta`, `carcols` and `carvariations` (base, update, DLC, `dlc_patch`) | GP-090, GP-047, GP-082, ENT-005, GP-045, GP-046, ENT-036, ENT-037, ON-068 | Done: GP-045, GP-046, ENT-005, ENT-036 answered; GP-047, GP-082, GP-090, ENT-037 mostly; ON-068 narrowed (not a vehicle) |
+| D2 | `explosion.ymt` (update), all 19 `explosion.meta` (16 packs + 3 `dlc_patch`), every `*weapon*.meta` and `*ammo*.meta` (base, update, DLC, `dlc_patch`) | GP-078, GP-079, PHY-008, PHY-009, PHY-010 | Done: GP-079, PHY-010 answered; PHY-008, PHY-009 mostly; GP-078 partly |
+| D3 | `water.xml`, `water_heistisland.xml`, `waterheight.dat`, `water.dat`, `watertune*.xml` | PHY-015, PHY-016, PHY-018, PHY-005 | Done: PHY-015 answered; PHY-016, PHY-018 partly; PHY-005 waits for the collision files (map-data batch); new: Cayo Perico's own water file |
+| D4 | `dispatch.meta`, `crimeinformation.meta`, `wantedtuning.ymt`, `playerinfo.ymt`, `zonebind.ymt`, `popcycle.dat`, `popzone.ipl`, `popgroups.ymt`, `pedpersonality.ymt` (extracted) | AI-034, AI-035, AI-036, ENT-021, ENT-024, GP-073 | Done: AI-036, ENT-021 answered; AI-034 mostly; AI-035, ENT-024, GP-073 partly. The personality questions (AI-011, AI-016, AI-017, AI-019, AI-020, ENT-013) are the next batch |
+| D5 | `pedpersonality.ymt`, every `peds.ymt` / `peds.meta`, `relationships.dat` | AI-011, AI-016, AI-017, AI-019, AI-020, ENT-013 | Done: AI-011, AI-016 answered; AI-017, ENT-013 mostly; AI-019 partly; AI-020 needs the executable |
+| D6 | The 164 freemode shop catalogue files, 22 DLC component `.ymt` files, `shop_vehicle`, `shop_weapon` and `shop_tattoo` files | GP-081, ENT-015, ON-049, GP-055, GP-057, ENT-010 | Done: ENT-015 answered, GP-081 partly. ON-049 is about the server's transaction catalogue, which no game file holds; GP-055, GP-057 and ENT-010 need the creator scripts more than these files, so they stay open |
+
 ## By category
 
 | Category | Guides | Questions |
@@ -229,7 +242,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | ENT-004 | The `NULL` fallback and the "CARNOTFOUND" return, confirmed in game | Test card 1 | Open |
-| ENT-005 | Which 13 maker labels have no text and whether anything shows them | Second pass | Open |
+| ENT-005 | Which 13 maker labels have no text and whether anything shows them | Second pass | Answered: 13 makers have text only in a DLC or update global table; only `KRAKEN` (`avisa`) has none anywhere; what the game shows for it is a test (leftovers pass, [text and names](/docs/entities/objects/text-and-names.md#short-version)) |
 | ENT-006 | How mod-part and livery labels are named and registered | R14.1 | Open |
 | ENT-007 | Load order when two packs define the same label | R8.3 second pass, in-game test | Open |
 
@@ -247,9 +260,9 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ENT-013 | The 23 personality hashes and relationship groups that didn't resolve | Second pass | Open |
+| ENT-013 | The 23 personality hashes and relationship groups that didn't resolve | Second pass | Mostly answered: all 24 relationship-group hashes resolved from `relationships.dat`; every personality hash matches an entry, 69 of 96 named (leftovers pass, [peds](/docs/entities/peds/peds.md)) |
 | ENT-014 | What each `SET_PED_CONFIG_FLAG` number does (the ones Rockstar sets most) | Second pass: count flag numbers in the decompile | Open |
-| ENT-015 | The component `.ymt` format (slots, drawables, restrictions) | R6.3, R14.2 second pass | Open |
+| ENT-015 | The component `.ymt` format (slots, drawables, restrictions) | R6.3, R14.2 second pass | Answered: the `CPedVariationInfo` layout part by part (leftovers pass, [appearance 10.2.1](/docs/entities/peds/appearance-and-clothing.md#1021-the-component-ymt-file-leftovers-pass)) |
 
 ### [Ped physics and ragdoll](/docs/entities/peds/ragdoll.md) (R2.3)
 
@@ -265,10 +278,10 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ENT-021 | The 5 story-mode schedule hashes that don't match a `popcycle.dat` name | Second pass | Open |
+| ENT-021 | The 5 story-mode schedule hashes that don't match a `popcycle.dat` name | Second pass | Answered: one hash (`7D143EDB`) matches no schedule; six Online-only zones use it in story mode, so they get no ambient population (our reading) (leftovers pass, [population](/docs/entities/spawning/population.md#schedules-that-dont-exist-leftovers-pass)) |
 | ENT-022 | How the caps, `CityDensity` and the budgets combine into the real spawn count | Test card 1; R17.9 | Open |
 | ENT-023 | What `scumminessLevel` changes in code and in scripts | Second pass: `GET_ZONE_SCUMMINESS` callers | Open |
-| ENT-024 | The unnamed zone fields (`hash_7111AC8A`, three flags) | Second pass | Open |
+| ENT-024 | The unnamed zone fields (`hash_7111AC8A`, three flags) | Second pass | Partly answered: `hash_7111AC8A` (7) and `hash_3CBB62E0` (−1) are the same in every zone; the two flags are true on the west-coast beach zones, effect untested (leftovers pass, [population](/docs/entities/spawning/population.md#schedules-that-dont-exist-leftovers-pass)) |
 | ENT-025 | How birds and fish groups spawn (they fill many slots) | R17.8 | Open |
 
 ### [Scenarios and ambient life](/docs/entities/spawning/scenarios.md) (R4.2)
@@ -295,8 +308,8 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ENT-036 | The difference between the 901 models here and the 879 counted in R14.4 (how entries were split) | Second pass | Open |
-| ENT-037 | The meaning of the less common flags | Second pass: compare models that set them | Open |
+| ENT-036 | The difference between the 901 models here and the 879 counted in R14.4 (how entries were split) | Second pass | Answered: 921 models in all 76 files; the 879 count left out the 42 models found only in `dlc_patch` copies (leftovers pass, [vehicles](/docs/entities/vehicles/vehicles.md#how-many-models-counted-three-ways-leftovers-pass)) |
+| ENT-037 | The meaning of the less common flags | Second pass: compare models that set them | Mostly answered: which model uses each of the 79 rarest flags, and one unprefixed flag on `bodhi2`; the detailed effect is a test per model (leftovers pass, [vehicles](/docs/entities/vehicles/vehicles.md#how-many-models-counted-three-ways-leftovers-pass)) |
 | ENT-038 | Light and siren setting id ranges used by DLC packs | Second pass | Open |
 | ENT-039 | Which `carcols` mod parts each kit really links (the per-type counts include repeats) | Second pass | Open |
 
@@ -318,9 +331,9 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | --- | --- | --- | --- |
 | PHY-006 | The exact falloff curve between centre and edge, and how armour takes explosion damage | Test card 1; R3.1 | Open |
 | PHY-007 | How far and how fast fire spreads, and its limits (number of fires at once) | Test card 2; R18 | Open |
-| PHY-008 | The meaning of the unnamed boolean fields in `explosion.ymt` (their names didn't resolve) | Second pass | Open |
-| PHY-009 | The DLC explosion types' numbers, damage and radius | Second pass: tabulate the 16 DLC files | Open |
-| PHY-010 | The full list of DLC projectiles and their explosions | R3.1 second pass | Open |
+| PHY-008 | The meaning of the unnamed boolean fields in `explosion.ymt` (their names didn't resolve) | Second pass | Mostly answered: two of the eight are `bForceNonTimedVfx` and `bIsSmokeGrenade` (named by the DLC XML, case-sensitive `joaat`); the other six are off for every type (leftovers pass, [explosions](/docs/physics/fire-explosions-projectiles.md#the-base-explosion-types)) |
+| PHY-009 | The DLC explosion types' numbers, damage and radius | Second pass: tabulate the 16 DLC files | Mostly answered: damage, radius, force and flags of all 51 DLC types (49 plus `spupgrade`'s patch-only `BLIMP2` and `RAILGUN`); the numbers follow the load order (**Known**) (leftovers pass, [explosions](/docs/physics/fire-explosions-projectiles.md#every-dlc-type-with-damage-and-radius-leftovers-pass)) |
+| PHY-010 | The full list of DLC projectiles and their explosions | R3.1 second pass | Answered: 64 DLC projectiles by pack with the explosion each makes (leftovers pass, [projectiles](/docs/physics/fire-explosions-projectiles.md#projectiles)) |
 
 ### [Vehicle physics: handling, damage and upgrades](/docs/physics/vehicle-handling.md) (R2.2)
 
@@ -335,10 +348,10 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| PHY-015 | What the 5 water quad types mean | Second pass: compare where each type is | Open |
-| PHY-016 | The format of `waterheight.dat` | Second pass | Open |
+| PHY-015 | What the 5 water quad types mean | Second pass: compare where each type is | Answered: type 0 rectangles (342 quads, 53.6 km²), types 1 to 4 the corner triangles along diagonal shores (**Known** reading of the field); counts and heights per type (leftovers pass, [water](/docs/physics/water-and-buoyancy.md#the-five-quad-types-leftovers-pass)) |
+| PHY-016 | The format of `waterheight.dat` | Second pass | Partly answered: `WMAP` header, version 100, a 183 × 249 grid of 50 m cells from (−4,050, 8,400); the 59,360-byte body is still undecoded (leftovers pass, [water](/docs/physics/water-and-buoyancy.md#the-waterheightdat-file-leftovers-pass)) |
 | PHY-017 | How wave quads differ from calming quads in effect | In-game test | Open |
-| PHY-018 | Where swimming pools are defined | R4.6 second pass | Open |
+| PHY-018 | Where swimming pools are defined | R4.6 second pass | Partly answered: no pool is in `water.xml` (all 504 quads at the four sea, lake and reservoir heights); the map data that holds them is left for the map-data batch (leftovers pass, [water](/docs/physics/water-and-buoyancy.md#water-heights)) |
 
 ## AI
 
@@ -371,21 +384,21 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | AI-010 | Names of the common combat attributes (50, 17, 53, 52, 46) and config flags (427, 36, 398, 34), checked in game | R3.2 second pass | Open |
-| AI-011 | Decode `pedpersonality.ymt` (binary PSO): personalities, bravery, driving ability | R17.3 | Open |
+| AI-011 | Decode `pedpersonality.ymt` (binary PSO): personalities, bravery, driving ability | R17.3 | Answered: decoded in [decisions and personalities](/docs/ai/decisions-and-personalities.md) (R17.3); the leftovers pass named all 18 bravery types and 69 of 96 personalities |
 | AI-012 | Cover: how cover points are found and scored, `TASK_SEEK_COVER_*` | R17 | Open |
 | AI-013 | How aim assist and lock-on work for the player | R3.2 second pass | Open |
 | AI-014 | The full meaning of `taskdata.meta` and `scriptedguntasks.meta` | R17.1 | Open |
 | AI-015 | Whether the modded `events.meta` really drops gunfight reactions, in game | Test card | Open |
-| AI-016 | Decode `pedpersonality.ymt` (binary PSO; not decoded in the first pass) *(from the guide's text)* | R17.3 | Open |
+| AI-016 | Decode `pedpersonality.ymt` (binary PSO; not decoded in the first pass) *(from the guide's text)* | R17.3 | Answered with AI-011 ([decisions and personalities](/docs/ai/decisions-and-personalities.md)) |
 
 ### [Decisions and personalities](/docs/ai/decisions-and-personalities.md) (R17.3)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| AI-017 | The names of the 5 unnamed civilian bravery types and the criminality types | Second pass with more name sources | Open |
+| AI-017 | The names of the 5 unnamed civilian bravery types and the criminality types | Second pass with more name sources | Mostly answered: the five are `Bold`, `Bold_Female`, `Timid`, `Timid_Female` and `Average_Female` (with `Default_Female`); criminality `Law_Abiding` named, two hashes left (leftovers pass, [decisions](/docs/ai/decisions-and-personalities.md#names-of-the-hashed-types-leftovers-pass)) |
 | AI-018 | What `IsWeird` changes for Trevor | In-game test; second pass | Open |
-| AI-019 | How motivation (`MotivationMin/Max`) is used | Second pass | Open |
-| AI-020 | How the driving ranges map onto the driving tasks (R3.3, R17.6) | R3.3 | Open |
+| AI-019 | How motivation (`MotivationMin/Max`) is used | Second pass | Partly answered: max 10 for 79 personalities, 0 for the 17 gang, army, SWAT and security ones; engine use is a test (leftovers pass, [decisions](/docs/ai/decisions-and-personalities.md#names-of-the-hashed-types-leftovers-pass)) |
+| AI-020 | How the driving ranges map onto the driving tasks (R3.3, R17.6) | R3.3 | Open: scripts override the values with `SET_DRIVER_ABILITY` / `_AGGRESSIVENESS` / `_RACING_MODIFIER` (105 to 118 scripts), but how the personality range becomes the task behaviour is the executable or a test (leftovers pass) |
 
 ### [Driving AI: missions, chases, aircraft and boats](/docs/ai/driving-ai.md) (R17.6)
 
@@ -424,9 +437,9 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| AI-034 | The names and values of the 9 crime-info entries | R3.7 | Open |
-| AI-035 | How crime points are added per crime | R3.7 | Open |
-| AI-036 | The full vehicle sets with model names | Second pass, `dispatch.meta` | Open |
+| AI-034 | The names and values of the 9 crime-info entries | R3.7 | Mostly answered: the 9 keys are `CRIME_NONE`, `KILL_COP`, `KILL_PED`, `STEAL_CAR`, `STEAL_VEHICLE`, `HASSLE`, `SHOOT_COP`, `RECKLESS_DRIVING` and `VEHICLE_EXPLOSION`, with their values; three field names are still unknown (leftovers pass, [police](/docs/ai/police-and-services.md#353-search-and-spawning-dispatchtuningymt)) |
+| AI-035 | How crime points are added per crime | R3.7 | Partly answered: no data file holds points per crime (crime info has witness rules, dispatch only the points per star), so it is the engine (leftovers pass) |
+| AI-036 | The full vehicle sets with model names | Second pass, `dispatch.meta` | Answered: all 15 sets with models, peds and the army-base and countryside variants (leftovers pass, [police](/docs/ai/police-and-services.md#352-dispatchmeta)) |
 
 ### [Relationships and groups](/docs/ai/relationships-and-groups.md) (R17.4)
 
@@ -507,7 +520,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | GP-001 | How `stock_controller` moves prices and which story events move which company | Second pass | Mostly answered: LCN random walk with caps, BAWSAQ from community stats, the story stock events; counters mapped to companies by code (GP-090); only the company names (text) are left ([economy](/docs/gameplay/economy/economy-and-pickups.md#the-stock-market-second-pass)) |
 | GP-002 | Where `pickup_controller` places each pickup and when they respawn | Second pass: its coordinate tables | Answered: 253 pickups in seven groups, 10-minute regeneration, removed during mission types 13 and 14 ([economy](/docs/gameplay/economy/economy-and-pickups.md#the-pickups-pickup_controller-places-second-pass)) |
 | GP-003 | How shop robberies pay out (the till amounts) | Second pass: `shoprobberies` | Answered: bag $220 to $786 (dropped bag $50 to $219); own till grabs $10 to $50 each ([economy](/docs/gameplay/economy/economy-and-pickups.md#what-a-shop-robbery-pays-second-pass)) |
-| GP-090 | Which company each of the 126 `sm_` stock counters feeds, and the English names of the 80 companies (`BSS_BSTR_` labels, not in the base text files) | Third pass | Partly answered: 95 counters end in one of the 39 `sm_price_<code>` company codes; 31 are general activity counters. Company names still need the text ([economy](/docs/gameplay/economy/economy-and-pickups.md)) |
+| GP-090 | Which company each of the 126 `sm_` stock counters feeds, and the English names of the 80 companies (`BSS_BSTR_` labels, not in the base text files) | Third pass | Mostly answered: 95 counters map to company codes, and all 80 company names are in `global.gxt2` (`BSS_BSTR_<2n>` name, `<2n+1>` ticker; leftovers pass); how the 31 counters without a code are used is still open ([economy](/docs/gameplay/economy/economy-and-pickups.md#the-stock-market-second-pass)) |
 | GP-004 | The full list of `SPx_MONEY_SPENT_*` categories | R1.7 | Answered: 10 categories plus the total, and a second shop family `SPx_SP_MONEY_SPENT_*` ([economy](/docs/gameplay/economy/economy-and-pickups.md#where-story-money-is-booked-second-pass)) |
 
 ### [Cutscenes and dialogue](/docs/gameplay/missions/cutscenes-and-dialogue.md) (R5.6)
@@ -598,9 +611,9 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-045 | Flying blocks of all DLC aircraft | Second pass with every DLC `handling.meta` | Open (the P4.10 session had no game files; data only) |
-| GP-046 | What `SPMED` and `SPSMALL` are | Second pass, `vehicles.meta` | Open (the P4.10 session had no game files; data only) |
-| GP-047 | The 12 lessons by name, their aircraft and targets | Second pass, `pilot_school` | Partly answered: targets in [minigames](/docs/gameplay/missions/minigames-and-activities.md); the 12 set-ups use the Mallard 6 times, Cuban 800, Maverick and Frogger twice each, reached through a function table; names and lesson-to-aircraft still need the `PSCHOOL` text block ([flying](/docs/gameplay/player/flying.md#195-the-flight-school)) |
+| GP-045 | Flying blocks of all DLC aircraft | Second pass with every DLC `handling.meta` | Answered: 63 flying blocks, 41 from 12 DLC packs, with their ranges and the top thrust values (leftovers pass, [flying 19.2.1](/docs/gameplay/player/flying.md#1921-the-dlc-aircraft-leftovers-pass)) |
+| GP-046 | What `SPMED` and `SPSMALL` are | Second pass, `vehicles.meta` | Answered: no `vehicles.meta` uses them; left-over flying entries with a weapon block (leftovers pass, [flying 19.2](/docs/gameplay/player/flying.md#192-the-flying-handling-block)) |
+| GP-047 | The 12 lessons by name, their aircraft and targets | Second pass, `pilot_school` | Mostly answered: the 12 lesson names (`MGFS_0` to `11`, leftovers pass), the two Maverick set-ups are Skydiving and Drop Zone and the two Frogger set-ups the helicopter lessons; which two fixed-wing lessons use the Cuban 800 is still open ([flying 19.5](/docs/gameplay/player/flying.md#195-the-flight-school)) |
 | GP-048 | The mission type numbers used with `TASK_HELI_MISSION` and `TASK_PLANE_MISSION`, with counts | Second pass | Answered: helicopters mostly go to (4), stop (5), flee (8), land (19); planes go to (4) and crash (21, all Online) ([flying](/docs/gameplay/player/flying.md#193-what-scripts-do-with-aircraft)) |
 
 ### [Health, armour, death and arrest](/docs/gameplay/player/health-armour-death.md) (R3.8)
@@ -628,8 +641,8 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-081 | What each restriction tag blocks or forces, as a table (hat with hood, glasses with masks ...) | Next pass, the tag checks in `shop_controller` | Open |
-| GP-082 | The full `locate` number to menu title map, and why a few menus appear only in some store layouts | Next pass, `clothes_shop_mp` menu builder | Partly answered: 305 Online menu numbers map to 306 `CSHOP_TITLE<n>` labels, 37 in story mode; the English text and the layout rules still open ([cosmetics](/docs/gameplay/player/online-cosmetic-shops.md#where-the-items-come-from)) |
+| GP-081 | What each restriction tag blocks or forces, as a table (hat with hood, glasses with masks ...) | Next pass, the tag checks in `shop_controller` | Partly answered: scripts test 387 tags, 383 in the catalogue; 118 catalogue tags are never tested and 4 tested tags exist in no item; a full per-check table is third pass (leftovers pass, [cosmetic shops](/docs/gameplay/player/online-cosmetic-shops.md#wearing-rules-restriction-tags)) |
+| GP-082 | The full `locate` number to menu title map, and why a few menus appear only in some store layouts | Next pass, `clothes_shop_mp` menu builder | Mostly answered: all 322 `CSHOP_TITLE` labels have English text in `CLO_MNU` (leftovers pass); why some menus appear only in some store layouts is still open ([cosmetic shops](/docs/gameplay/player/online-cosmetic-shops.md)) |
 | GP-083 | The base-wardrobe tables (labels and prices of the non-DLC clothes) | Next pass | Open |
 | GP-084 | Which barber items need a rank, and the ranks | Next pass, the unlock checks behind `HAIR_UNLOCK` | Answered: two rank tables in `hairdo_shop_mp`, hairstyles from rank 6 to 25, overlays 0 to 26 ([cosmetics](/docs/gameplay/player/online-cosmetic-shops.md#menus)) |
 | GP-085 | The hair and make-up colour counts on this build | In-game test, `GET_NUM_PED_HAIR_TINTS` / `GET_NUM_PED_MAKEUP_TINTS` | Open |
@@ -663,7 +676,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | --- | --- | --- | --- |
 | GP-071 | The exact curve from the lung capacity stat to seconds of breath (`DiveRampPow` may be part of it) | Test card 1; R3.6 | Open |
 | GP-072 | How fast drowning drains health | Test card 2 | Open |
-| GP-073 | What the 5 non-story entries in `PlayerStatInfos` are (their names didn't resolve) | Second pass | Open |
+| GP-073 | What the 5 non-story entries in `PlayerStatInfos` are (their names didn't resolve) | Second pass | Partly answered: the three story entries are `PLAYER_0` to `PLAYER_2`; the five others are identical, start with full plane control, and their names didn't hash from any candidate tried (leftovers pass, [swimming](/docs/gameplay/player/swimming-and-diving.md)) |
 | GP-074 | How the fall heights combine with ragdoll and fall damage | R2.3 | Open |
 | GP-075 | Swim speed from the stamina and lung stats | R3.6 | Open |
 
@@ -673,8 +686,8 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | --- | --- | --- | --- |
 | GP-076 | Which mod installed the weapon overhaul (and the other 93 replaced files) | Ask the user; R10.1 | Open |
 | GP-077 | The hatchet's extra condition, and whether the Gusenberg really waits for `finale_credits` | R3.1 second pass | Answered: the hatchet needs `trevor1` and the returning-player check (`NETWORK_HAS_ROS_PRIVILEGE_PLAYED_LAST_GEN` or profile setting 866 bit 0); the Gusenberg needs only `finale_credits` ([weapons](/docs/gameplay/weapons/weapons.md#49-ammu-nation-in-story-mode)) |
-| GP-078 | How story stats and Online rank change `AmmoMax` | Third pass, the engine and the `AmmoMax*` fields of `weapons.meta` (scripts only read the cap with `GET_MAX_AMMO`, 185 scripts) | Open |
-| GP-079 | Explosion damage and radius per explosive (`explosion.meta`) | R2.5: [fire, explosions and projectiles](/docs/physics/fire-explosions-projectiles.md) | Open |
+| GP-078 | How story stats and Online rank change `AmmoMax` | Third pass, the engine and the `AmmoMax*` fields of `weapons.meta` (scripts only read the cap with `GET_MAX_AMMO`, 185 scripts) | Partly answered: the six cap fields and their values (250 / 1,000 / 9,999 for ten pools, one value for the other 112); what picks the step in story mode needs the executable or a test (leftovers pass, [weapons 4.4.1](/docs/gameplay/weapons/weapons.md#441-the-six-ammo-caps-leftovers-pass)) |
+| GP-079 | Explosion damage and radius per explosive (`explosion.meta`) | R2.5: [fire, explosions and projectiles](/docs/physics/fire-explosions-projectiles.md) | Answered: the 36 base and 51 DLC types with damage and radius (leftovers pass, [explosions](/docs/physics/fire-explosions-projectiles.md#every-dlc-type-with-damage-and-radius-leftovers-pass)) |
 | GP-080 | How aim assist and lock-on work for the player versus AI | R3.2 | Open |
 
 ## GTA Online
@@ -734,7 +747,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-028 | Every website page and what each sells | Second pass, `appinternet` | Answered: the eight selling sites with their numbers and stock counts, and the 683-item model list ([R7.10 21.5](/docs/online/interaction-menu-phone-apps.md#215-the-internet)) |
 | ON-029 | The Facade phone's movie and the character-to-phone mapping | Second pass | Answered: `cellphone_facade` is Trevor's; the four-entry phone table ([R7.10 21.2.1](/docs/online/interaction-menu-phone-apps.md#2121-the-slots-by-mode-and-the-phone-each-character-carries-second-pass)) |
 | ON-067 | Who sets the story phone's Sniper-app flag, and what the two Online flags are that switch the phone to the Badger skin and empty slot 24 | Third pass, `cellphone_controller` callers | Answered: the Badger flags are set by the mission controllers when the player is in Franklin's (`p_franklin_02`) or Lamar's (`ig_lamardavis_02`) model; the Sniper flag (`Is_Sniper_App_Available`) is written by no script ([phone](/docs/online/interaction-menu-phone-apps.md)) |
-| ON-068 | What website items 323, 324, 357 and 402 are (hashes set at start that match no model name) | Third pass, the preview code in `appinternet` | Open, needs data: the four hashes are -994826917 (323), 886151985 (324), -1242692076 (357), -451225720 (402), set in `standard_global_init`; no string in the decompile hashes to them, so match them against every DLC `vehicles.meta` `modelName` |
+| ON-068 | What website items 323, 324, 357 and 402 are (hashes set at start that match no model name) | Third pass, the preview code in `appinternet` | Open: the leftovers pass ruled out vehicles; the four hashes match nothing in any `vehicles.meta`, `handling.meta`, `carcols` or `carvariations` file, so the answer is in `appinternet`'s preview code ([phone and apps](/docs/online/interaction-menu-phone-apps.md)) |
 | ON-069 | Each interaction-menu page's own show and grey conditions (the top page is mapped) | Third pass, `am_pi_menu` page by page | Open |
 
 ### [The job lobby (`fmmc_launcher`)](/docs/online/job-lobby.md) (R7.5)

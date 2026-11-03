@@ -4,10 +4,9 @@ Short state file for the next AI session or contributor, so the work can resume 
 
 ## Where things are
 
-- **All work is on branch `main-km1sze`** (pushed). It holds phase 4 (P4.1 to P4.10) and the "second-pass leftovers" commits. `research/second-pass-phase4` stops at P4.8; don't use it. Locally: `git fetch origin main-km1sze && git checkout main-km1sze`.
-- **Not done yet:**
-  - The knowledge-graph refresh (`/graphify . --update`, then commit `graphify-out/`), deferred since P4.1.
-  - The pull request (open it only when the contributor asks).
+- **Phases 1 to 4 and the first leftovers are on `main`** (merged as #126 and #127, with a graph refresh). `main-km1sze` and `research/second-pass-phase4` are superseded; don't use them.
+- **The leftovers plan is under way** (step 2 of "Next steps" below) on branch `research/second-pass-leftovers-data`. Batches D1 (text blocks and vehicle files), D2 (explosion and weapon files), D3 (water files), D4 (police and population files), D5 (personality and ped files) and D6 (shop catalogues) are done; its row is in `OPEN_QUESTIONS.md` under "Leftovers: the data-file batches", and [`DATA-NEEDS.md`](/DATA-NEEDS.md) marks its questions done.
+- **Not done yet:** the other DATA-NEEDS groups, the graph refresh for the leftovers branch (once, when the branch is finished), and its pull request.
 - **Tracker:** `OPEN_QUESTIONS.md`, 438 questions. Every status changed in this work links to its doc section.
 
 ## Resources to have ready locally (checklist)

@@ -6,10 +6,10 @@ How explosions are defined (damage at the centre and the edge, radius, push, cam
 
 ## Short version
 
-- **85 explosion types.** 36 in the base game's `explosion.ymt` (`EXP_TAG_GRENADE` to `EXP_TAG_BIRD_CRAP`) and 49 added by 16 DLC packs (`EXP_TAG_ORBITAL_CANNON`, `EXP_TAG_RAILGUNXM3`, the vehicle mines, the bombs ...). The position in the list is the number scripts pass to `ADD_EXPLOSION` (**Known**: the order matches NativeDB's explosion tag list).
+- **87 explosion types.** 36 in the base game's `explosion.ymt` (`EXP_TAG_GRENADE` to `EXP_TAG_BIRD_CRAP`) and 51 added by 16 DLC packs and one `dlc_patch` file (leftovers pass; the first pass counted 49) (`EXP_TAG_ORBITAL_CANNON`, `EXP_TAG_RAILGUNXM3`, the vehicle mines, the bombs ...). The position in the list is the number scripts pass to `ADD_EXPLOSION` (**Known**: the order matches NativeDB's explosion tag list).
 - **Each type sets damage, radius and push:** a grenade does 500 at the centre and 75 at its 5 m edge with a force factor of 60; a tank shell 3,000 and 300; a molotov 30 and 4 over 3 m (the fire does the rest); bullets from explosive weapons 200 and 50 over 2 m.
 - **Fire depends on the surface.** `firefx.dat` lists 69 material groups; 22 can burn. Paper, leaves, hay and grass catch fully (flammability 1.0) and burn 3.25 to 3.5 s per patch; wood 0.8 for 5 s; plastic, carpet and meat 0.4 to 0.6 for 10 to 12 s; rubber 0.2 for 15 s. Tarmac, stone, glass, metal and all liquids don't burn (0.0).
-- **80 projectile ammo types:** 17 in the base `weapons.meta` (3 fired grenades and shells, 6 rockets, 8 thrown) and 63 in DLC packs (34 fired, 24 rockets, 5 thrown). Each names the explosion it makes.
+- **81 projectile ammo types:** 17 in the base `weapons.meta` (3 fired grenades and shells, 6 rockets, 8 thrown) and 64 in DLC packs (34 fired, 25 rockets, 5 thrown; the first pass counted 63). Each names the explosion it makes.
 - **Scripts mostly react to fire and explosions rather than make them.** `IS_ENTITY_ON_FIRE` is in 540 scripts and `STOP_FIRE_IN_RANGE` in 442, but `START_SCRIPT_FIRE` in only 7 and `ADD_EXPLOSION` in 146. The type scripts set off most is the grenade (63 literal calls).
 - **Vehicles have their own rules:** `SET_VEHICLE_EXPLODES_ON_HIGH_EXPLOSION_DAMAGE` (323 scripts), `SET_DISABLE_VEHICLE_PETROL_TANK_FIRES` (32), `SET_DISABLE_VEHICLE_ENGINE_FIRES` (21), `EXPLODE_VEHICLE` (39).
 
@@ -54,6 +54,8 @@ From `explosion.ymt`. Damage is in health points (a player has 100 usable, R3.8)
 | `SMOKEGRENADE`, `BZGAS` | 0.15 | 0.075 | 3 | 0 | 0 | 0 | no |
 | `SMOKEGRENADELAUNCHER`, `FLARE`, `EXTINGUISHER`, `BIRD_CRAP` | 0 | 0 | 1 to 6 | 0 to 4 | 0 or 1 | 0 | no |
 
+**The unnamed fields** (*leftovers pass*, **Verified**). `explosion.ymt` has eight true-or-false fields whose names CodeWalker can't show. The DLC `explosion.meta` files are plain XML and name two more fields, and their names hash (case-sensitive `joaat`) to two of the eight: `hash_512F3F0A` is **`bForceNonTimedVfx`** (set only by the slick and tar mines, both DLC) and `hash_C2CF286B` is **`bIsSmokeGrenade`** (set for `SMOKEGRENADE`, `SMOKEGRENADELAUNCHER`, `BZGAS` and the patched `BOMB_GAS`). The other six (`hash_209E8965`, `AFCA2883`, `EAE3465B`, `CAE234C3`, `C25AFD9B`, `7BA679E0`) are false for all 36 base types, and no DLC file sets them, so they change nothing in this build. A word-list search for their names found nothing.
+
 `DIR_*` types are directed (a jet, not a ball). `bAppliesContinuousDamage` is on for steam, smoke, tear gas and the flare: they keep hurting while you stand in them.
 
 **Known (engine):** damage falls from `damageAtCentre` to `damageAtEdge` across `endRadius` (with an optional `midRadius` / `damageAtMid` step, unused by the base types: −1), and is scaled by `networkPlayerModifier` and `networkPedModifier` in Online. `fragDamage` breaks breakable objects and vehicle parts. `forceFactor` and `fRagdollForceModifier` push objects and peds.
@@ -80,6 +82,68 @@ From `explosion.ymt`. Damage is in health points (a player has 100 usable, R3.8)
 | `mpchristmas3` | `RAILGUNXM3` |
 
 The vehicle-mine types use the fields the base types leave off: `bApplyVehicleEMP`, `bApplyVehicleSlick`, `bApplyVehicleSlowdown`, `bApplyVehicleTyrePop`.
+
+### Every DLC type, with damage and radius (leftovers pass)
+
+**Verified**, from all 19 `explosion.meta` files: the 16 packs above, plus three `dlc_patch` copies in `update.rpf` for `mpchristmas2018`, `mpsmuggler` and `spupgrade`. A patch copy replaces the pack's file. There are **51 DLC types, not 49**: the `spupgrade` copy, which exists only in `update.rpf`, adds `BLIMP2` and `RAILGUN`, so the base and DLC total is 87. Two patches change values. The `mpchristmas2018` copy widens two vehicle mines (EMP to 4 m, spike to 3 m), and the `mpsmuggler` copy marks the gas bomb as a smoke-grenade type. Damage is in health points and radius in metres, as in the base table; "Flags set" lists the true flags that matter (fire, vehicle effects, underwater, crime):
+
+| Type | Pack | Centre | Edge | Radius | Force | Flags set |
+| --- | --- | ---: | ---: | ---: | ---: | --- |
+| `BALANCED_CANNONS` | mp2023_01 | 500 | 75 | 5 | 60 | `bCanSetPedOnFire` |
+| `UNDERWATER_BOMB` | mp2024_02 | 100 | 20 | 5 | 80 | `bCanSetPedOnFire`, `bAllowUnderwaterExplosion` |
+| `MFH_GAS_CANISTER` | mp2024_02 | 500 | 50 | 10 | 30 |  |
+| `MFH_MILITARY_EXPLOSIVE` | mp2024_02 | 500 | 50 | 10 | 30 |  |
+| `SCARAB_KINETIC` | mp2024_02 | 20 | 20 | 10 | 400 | `bCanSetPedOnFire`, `bSuppressCrime` |
+| `TITAN2_25MM_CANNON` | mp2024_02 | 250 | 50 | 2 | 30 |  |
+| `TITAN2_40MM_CANNON` | mp2024_02 | 450 | 80 | 2.5 | 60 | `bCanSetPedOnFire` |
+| `TITAN2_105MM_CANNON` | mp2024_02 | 1000 | 100 | 20 | 100 |  |
+| `AIR_DEFENCE` | mpapartment | 0 | 0 | 5 | 0 |  |
+| `OPPRESSOR2_CANNON` | mpbattle | 150 | 150 | 1.5 | 10 |  |
+| `PIPEBOMB` | mpbiker | 500 | 50 | 4 | 60 | `bCanSetPedOnFire` |
+| `TORPEDO` | mpchristmas2017 | 500 | 50 | 5 | 80 | `bCanSetPedOnFire` |
+| `TORPEDO_UNDERWATER` | mpchristmas2017 | 500 | 50 | 5 | 80 | `bCanSetPedOnFire`, `bAllowUnderwaterExplosion` |
+| `MINE_UNDERWATER` | mpchristmas2017 | 500 | 50 | 5 | 80 | `bCanSetPedOnFire`, `bAllowUnderwaterExplosion` |
+| `ORBITAL_CANNON` | mpchristmas2017 | 3000 | 75 | 20 | 100 | `bForceVehicleExplosion` |
+| `BOMB_STANDARD_WIDE` | mpchristmas2017 | 500 | 500 | 12 | 60 | `bCanSetPedOnFire` |
+| `EXPLOSIVEAMMO_SHOTGUN` | mpchristmas2017 | 200 | 200 | 1 | 400 |  |
+| `MORTAR_KINETIC` | mpchristmas2018 (`dlc_patch` copy) | 40 | 20 | 5 | 80 |  |
+| `VEHICLEMINE_KINETIC` | mpchristmas2018 (`dlc_patch` copy) | 20 | 20 | 10 | 200 | `bCanSetPedOnFire`, `bSuppressCrime` |
+| `VEHICLEMINE_EMP` | mpchristmas2018 (`dlc_patch` copy) | 20 | 20 | 4 | 1 | `bApplyVehicleEMP`, `bSuppressCrime` |
+| `VEHICLEMINE_SPIKE` | mpchristmas2018 (`dlc_patch` copy) | 20 | 20 | 3 | 2.5 | `bApplyVehicleTyrePop`, `bSuppressCrime` |
+| `VEHICLEMINE_SLICK` | mpchristmas2018 (`dlc_patch` copy) | 0 | 0 | 3 | 0 | `bApplyVehicleSlick`, `bAppliesContinuousDamage`, `bForceNonTimedVfx`, `bSuppressCrime` |
+| `VEHICLEMINE_TAR` | mpchristmas2018 (`dlc_patch` copy) | 0 | 0 | 2.5 | 0 | `bApplyVehicleSlowdown`, `bAppliesContinuousDamage`, `bForceNonTimedVfx`, `bSuppressCrime` |
+| `SCRIPT_DRONE` | mpchristmas2018 (`dlc_patch` copy) | 450 | 450 | 5 | 60 | `bSuppressCrime` |
+| `SCRIPT_MISSILE` | mpchristmas2018 (`dlc_patch` copy) | 1000 | 1000 | 4 | 60 | `bForceVehicleExplosion`, `bSuppressCrime` |
+| `RAYGUN` | mpchristmas2018 (`dlc_patch` copy) | 50 | 50 | 2.5 | 750 | `bSuppressCrime` |
+| `BURIEDMINE` | mpchristmas2018 (`dlc_patch` copy) | 60 | 60 | 3.2 | 300 | `bCanSetPedOnFire`, `bForcePetrolTankDamage` |
+| `PROXMINE` | mpchristmas2 | 500 | 200 | 4.5 | 80 | `bCanSetPedOnFire` |
+| `SNOWBALL` | mpchristmas2 | 0 | 0 | 0.05 | 0 | `bSuppressCrime` |
+| `RAILGUNXM3` | mpchristmas3 | 225 | 225 | 1 | 400 |  |
+| `VEHICLEMINE` | mpgunrunning | 500 | 500 | 5 | 80 | `bCanSetPedOnFire` |
+| `EXPLOSIVEAMMO` | mpgunrunning | 200 | 200 | 1 | 400 |  |
+| `APCSHELL` | mpgunrunning | 1000 | 1000 | 3 | 100 |  |
+| `RCTANK_ROCKET` | mpheist3 | 200 | 100 | 1 | 50 |  |
+| `SCRIPT_MISSILE_LARGE` | mpheist4 | 1000 | 1000 | 12 | 60 | `bSuppressCrime` |
+| `SUBMARINE_BIG` | mpheist4 | 500 | 50 | 8 | 8 |  |
+| `VALKYRIE_CANNON` | mpheist | 200 | 200 | 2.5 | 60 | `bCanSetPedOnFire` |
+| `EMPLAUNCHER_EMP` | mpsecurity | 20 | 20 | 3 | 1 | `bApplyVehicleEMP`, `bSuppressCrime` |
+| `BOMB_CLUSTER` | mpsmuggler (`dlc_patch` copy) | 500 | 500 | 2.5 | 3 |  |
+| `BOMB_CLUSTER_SECONDARY` | mpsmuggler (`dlc_patch` copy) | 500 | 500 | 1.5 | 400 |  |
+| `BOMB_GAS` | mpsmuggler (`dlc_patch` copy) | 1 | 0.25 | 6.5 | 0 | `bAppliesContinuousDamage`, `bIsSmokeGrenade`, `bOnlyAffectsLivePeds` |
+| `BOMB_INCENDIARY` | mpsmuggler (`dlc_patch` copy) | 500 | 50 | 5 | 20 | `bCanSetPedOnFire` |
+| `BOMB_STANDARD` | mpsmuggler (`dlc_patch` copy) | 500 | 500 | 6 | 60 | `bCanSetPedOnFire` |
+| `BOMBUSHKA_CANNON` | mpsmuggler (`dlc_patch` copy) | 400 | 400 | 2.5 | 60 | `bCanSetPedOnFire` |
+| `HUNTER_BARRAGE` | mpsmuggler (`dlc_patch` copy) | 500 | 50 | 3 | 80 |  |
+| `HUNTER_CANNON` | mpsmuggler (`dlc_patch` copy) | 250 | 250 | 2.5 | 60 | `bCanSetPedOnFire` |
+| `ROGUE_CANNON` | mpsmuggler (`dlc_patch` copy) | 250 | 50 | 2 | 30 |  |
+| `BOMB_WATER` | mpsum | 1 | 0.25 | 5 | 1 |  |
+| `BOMB_WATER_SECONDARY` | mpsum | 0.5 | 0.25 | 1.5 | 1 |  |
+| `BLIMP2` | spupgrade | 500 | 50 | 8 | 8 |  |
+| `RAILGUN` | spupgrade | 500 | 50 | 1.5 | 400 |  |
+
+A few patterns stand out. The kinetic and EMP types do almost no damage (20) but push hard (the Scarab's 400, the kinetic mine's 200) or apply a vehicle effect. Most Online weapon types turn off the crime report (`bSuppressCrime`). The orbital cannon (3,000 at the centre, 20 m) and the Titan's 105 mm cannon (1,000, 20 m) have the largest blasts. The water bombs do almost nothing to peds (1 at the centre).
+
+**Explosion numbers:** the base and DLC tags in this order give the numbers NativeDB lists (**Known**). The engine numbers the DLC types in the order the packs load, so the numbers aren't in the files themselves.
 
 ## Fire
 
@@ -118,7 +182,29 @@ The vehicle-mine types use the fields the base types leave off: `bApplyVehicleEM
 | Thrown | `AMMO_FLARE` | 62.5 | 25 | `FLARE` |
 | Thrown | `AMMO_BIRD_CRAP` | 4 | 1 | `BIRD_CRAP` |
 
-DLC packs add 63 more (34 fired, such as cannons and launchers; 24 rockets, such as homing and vehicle missiles; 5 thrown, such as the pipe bomb and the proximity mine). The full weapon side is in [weapons](/docs/gameplay/weapons/weapons.md).
+DLC packs add 64 more (34 fired, 25 rockets, 5 thrown; *leftovers pass*, **Verified** from every `*weapon*.meta` and `*ammo*.meta` file of the packs, including the `vehicleweapons_*` files). With the explosion each one makes:
+
+| Pack | Projectiles (kind, explosion) |
+| --- | --- |
+| `mpheist` | `FLAREGUN` (fired, none) |
+| `mpindependence` | `FIREWORK` (rocket, `FIREWORK`) |
+| `mpchristmas2` | `HOMINGLAUNCHER` (rocket, `ROCKET`), `PROXMINE` and `SNOWBALL` (thrown, their own types) |
+| `mpbiker` | `PIPEBOMB` (thrown, `PIPEBOMB`) |
+| `mpgunrunning` | `APC_CANNON` (`APCSHELL`), `DUNE_GRENADELAUNCHER` and `TAMPA_MORTAR` (`GRENADELAUNCHER`), `TRAILER_AA` (`TANKSHELL`), `VEHICLEMINE`; rockets `APC_MISSILE`, `OPPRESSOR_MISSILE`, `TRAILER_MISSILE` (`PLANE_ROCKET`) and `MOBILEOPS_CANNON` (`GRENADE`) |
+| `mpsmuggler` | the bombs `VEHICLEBOMB`, `_CLUSTER`, `_GAS`, `_INCENDIARY` (their `BOMB_*` types); rockets `HUNTER_BARRAGE` (`HUNTER_BARRAGE`), `HUNTER_MISSILE`, `ROGUE_MISSILE`, `VIGILANTE_MISSILE` (`PLANE_ROCKET`) |
+| `mpchristmas2017` | `BARRAGE_GL`, `KHANJALI_GL` (`GRENADELAUNCHER`), `KHANJALI_CANNON_HEAVY` (`TANKSHELL`), `VEHICLEBOMB_WIDE` (`BOMB_STANDARD_WIDE`); rockets `CHERNO_MISSILE`, `SUBCAR_MISSILE`, `THRUSTER_MISSILE` (`PLANE_ROCKET`), `SUBCAR_TORPEDO` (`TORPEDO`), `AVENGER_CANNON` (`GRENADE`) |
+| `mpbattle` | `MULE4_GL`, `POUNDER2_GL` (`GRENADELAUNCHER`); rockets `OPPRESSOR2_MISSILE`, `POUNDER2_MISSILE`, `SCRAMJET_MISSILE`, `STRIKEFORCE_MISSILE` (`PLANE_ROCKET`), `STRIKEFORCE_BARRAGE` (`HUNTER_BARRAGE`), `HACKER_MISSILE` (`GRENADE`) |
+| `mpchristmas2018` | `MORTAR_EXPLOSIVE` (`GRENADELAUNCHER`), `MORTAR_KINETIC` and `MONSTER3_KINETIC` (`MORTAR_KINETIC`), `RAYPISTOL` (`RAYGUN`), the five vehicle mines and their five `_RC` versions (`VEHICLEMINE_EMP`, `_KINETIC`, `_SLICK`, `_SPIKE`, `_TAR`); rocket `ARENA_HOMING_MISSILE` (`GRENADE`) |
+| `mpsum` | `VEHICLEBOMB_WATER` (`BOMB_WATER`) |
+| `mpheist3` | `RCTANK_ROCKET` (fired, `RCTANK_ROCKET`) |
+| `mpheist4` | rockets `KOSATKA_TORPEDO` (`TORPEDO`) and `SUBMARINE_MISSILE` (`GRENADE`) |
+| `mpsecurity` | `EMPLAUNCHER` (`EMPLAUNCHER_EMP`) |
+| `mpchristmas3` | `ACIDPACKAGE` (thrown, none) |
+| `mp2023_02` | `SNOWLAUNCHER` (fired, `SNOWBALL`) |
+| `mp2024_02` | `TITAN2_105` (rocket, `TITAN2_105MM_CANNON`) |
+| `mp2025_02` | `NEWSPAPER` (thrown, none) |
+
+Most vehicle missiles reuse the base `PLANE_ROCKET` explosion, and several DLC cannons reuse `GRENADE` or `GRENADELAUNCHER`; "none" is the tag `DONTCARE`. The full weapon side is in [weapons](/docs/gameplay/weapons/weapons.md).
 
 ## How scripts use it
 
@@ -159,9 +245,9 @@ Map objects that blow up or collapse in story missions are rayfire objects, pre-
 | --- | --- |
 | The exact falloff curve between centre and edge, and how armour takes explosion damage | Test card 1; R3.1 |
 | How far and how fast fire spreads, and its limits (number of fires at once) | Test card 2; R18 |
-| The meaning of the unnamed boolean fields in `explosion.ymt` (their names didn't resolve) | Second pass |
-| The DLC explosion types' numbers, damage and radius | Second pass: tabulate the 16 DLC files |
-| The full list of DLC projectiles and their explosions | R3.1 second pass |
+| The meaning of the unnamed boolean fields in `explosion.ymt` (their names didn't resolve) | Mostly answered in [the base explosion types](#the-base-explosion-types): two named from the DLC files, the other six are off for every type |
+| The DLC explosion types' numbers, damage and radius | Mostly answered in [every DLC type](#every-dlc-type-with-damage-and-radius-leftovers-pass): damage and radius of all 51; the numbers come from the load order (**Known**, NativeDB) |
+| The full list of DLC projectiles and their explosions | Answered in [projectiles](#projectiles) |
 
 ## Test cards
 
