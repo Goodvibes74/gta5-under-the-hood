@@ -103,6 +103,8 @@ The first two rows are the trap: the decompile's `NETWORK_CAN_COMMUNICATE_WITH_G
 
 Two imported hashes are not in NativeDB at all: `0x8F5D1AD832AEB06C` (185 scripts, the gamer-communication check above) and `0x0F7082C60FB479EF` (1 script, `public_mission_creator`).
 
+*Second pass:* `0x0F7082C60FB479EF` is called 7 times in `public_mission_creator`, right after `INIT_CREATOR_BUDGET`. Each call loops over one kind of placed item (props, vehicles and so on), passes the item's model and, when the native returns a non-zero float, hands the model to the creator's budget routine. Our reading: it returns a model's cost against the creator's memory budget. Build 3889 no longer calls it (it is the only native 3725 uses that 3889 doesn't). The 29 "build 3889" natives below are exactly the natives that build 3889's scripts use for the first time; no 3725 script calls any of them ([surviving updates 8.4a](/docs/core/surviving-updates.md#84a-what-changed-in-the-natives-and-controls-second-pass)).
+
 ## 9.6 Natives no script uses
 
 128 NativeDB natives appear in no native table:
@@ -144,8 +146,8 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\native-usage.ps1 -Nati
 
 | Question | Where it goes |
 | --- | --- |
-| What `0x8F5D1AD832AEB06C` and `0x0F7082C60FB479EF` do (not in NativeDB) | [Inbox](/ROADMAP.md#inbox); read their call sites in `freemode` and `public_mission_creator` |
-| Whether the 29 "build 3889" natives exist in 3725 (`IS_NATIVE...` style check from a mod, or ScriptHookV's native table) | In-game test with a small C++ check |
+| What `0x8F5D1AD832AEB06C` does, and confirm `0x0F7082C60FB479EF` returns a creator budget cost (SCR-004) | In-game test or the executable |
+| Whether the 29 "build 3889" natives exist in the 3725 executable (no 3725 script calls them) (SCR-005) | In-game test with a small C++ check |
 | A story-only vs Online-only split of every native (which natives story mode never needs) | R0.8 namespace coverage map, using the script groups from R0.1 and the Online catalog |
 | What the table order is (not first use; maybe first use in compiled code order) | Second pass, compare with a YSC dump |
 

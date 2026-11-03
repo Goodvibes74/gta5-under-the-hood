@@ -525,7 +525,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | GP-009 | Who starts `minigame_stats_tracker` and `minigame_ending_stinger` (not started by name in this build) | Next pass: search by hash | Answered: neither is named anywhere, by string or hash ([minigames 42.5](/docs/gameplay/missions/minigames-and-activities.md#425-scoring)) |
 | GP-010 | The flight-school, range and triathlon medal thresholds | Next pass: read each script's goal tables | Answered: flight school 90/80/70 per lesson with the 12 lessons' goals, the range's points goals per challenge, triathlon has no medals (top three for completion) ([minigames 42.5.1](/docs/gameplay/missions/minigames-and-activities.md#4251-medals-and-goals-second-pass)) |
 | GP-011 | Golf: course data, AI foursome behaviour, how the score is kept | Next pass | Partly answered: nine holes, par 36, strokes against par, the save fields; how the AI players choose shots moved to the third pass ([minigames 42.5.1](/docs/gameplay/missions/minigames-and-activities.md#4251-medals-and-goals-second-pass)) |
-| GP-012 | How the flow unlocks each activity (blips appear after story missions) | Next pass, with [story flow](/docs/gameplay/missions/story-flow.md) | Mostly answered: one bit per activity in flow bitset ID 0, set by `code_controller` entries; six are armed by strands. Who arms the other twelve is new GP-088 ([minigames 42.2.1](/docs/gameplay/missions/minigames-and-activities.md#4221-how-an-activity-is-unlocked-second-pass)) |
+| GP-012 | How the flow unlocks each activity (blips appear after story missions) | Next pass, with [story flow](/docs/gameplay/missions/story-flow.md) | Mostly answered: every activity's unlock source is in GP-088 except code entries 6, 12 and 18 ([minigames 42.2.1](/docs/gameplay/missions/minigames-and-activities.md#4221-how-an-activity-is-unlocked-second-pass)) |
 | GP-013 | The sea-race labels (`SNCA`, `SSC`, `SCAA`, `SCAB`) and street-race labels in English | Text files ([R8.3](/ROADMAP.md)) | Answered: [minigames 42.2](/docs/gameplay/missions/minigames-and-activities.md#422-the-activity-list) |
 | GP-014 | The towing quick-bonus check (what the 12 s timer measures) | Next pass | Answered: 12 s from entering the job's target area to the end; pay and bonus only after 5 completed jobs ([minigames 42.4](/docs/gameplay/missions/minigames-and-activities.md#424-fees-and-pay)) |
 | GP-088 | Which scripts arm the `code_controller` entries that unlock base jumps, golf, hunting, off-road, flight school, the races, stunts, towing and trafficking, since no strand does | Third pass | Mostly answered: `Extreme1` (base jumps), `Hunting2`, `Hao1` (street races), flow phone calls (off-road after `trevor1`, flight school after `trevor3`, golf and tennis after `family3`/`armenian3`), `player_controller` (stunt planes), `traffickingteleport`; entries 6, 12 (sea races) and 18 (towing) still unexplained ([minigames](/docs/gameplay/missions/minigames-and-activities.md#4221-how-an-activity-is-unlocked-second-pass)) |
@@ -569,7 +569,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-034 | The unlock condition of each entry (flow flags, character) from the remaining table fields | Second pass | Mostly answered: the eight conditions per entry and which mission releases each chain; who sets the entry flag IDs and releases three entries is new GP-089 ([strangers 20.3.1](/docs/gameplay/missions/strangers-and-freaks.md#2031-what-makes-an-entry-available-second-pass)) |
+| GP-034 | The unlock condition of each entry (flow flags, character) from the remaining table fields | Second pass | Mostly answered: the conditions and every gating flag's setter (GP-089); `MrsPhilips2` and `Rampage3` releases open ([strangers 20.3.1](/docs/gameplay/missions/strangers-and-freaks.md#2031-what-makes-an-entry-available-second-pass)) |
 | GP-035 | Where the world points are placed and how many there are per brain | Map data, R4.6 second pass | Open, moved to the third pass: the placements are in the map data, not the scripts |
 | GP-036 | What the object-brain percentage and flags mean | Second pass, in-game test | Answered: the last argument is the brain-set mask (1 story, 8 Online, 9 both); percentage always 100, the fourth argument always -1 ([strangers 20.2](/docs/gameplay/missions/strangers-and-freaks.md#202-script-brains)) |
 | GP-089 | Which scripts set the flag IDs that gate stranger entries (74, 84 to 110, 133) and release `MrsPhilips2`, `Rampage3` and `TheLastOne` | Third pass | Mostly answered: every flag's setter (pass → code entry → message → code entry chains, collectibles, the Epsilon site, 100% for 133); `TheLastOne` released at 100% by `completionpercentage_controller`; `MrsPhilips2`, `Rampage3` and code entry 95 open ([strangers](/docs/gameplay/missions/strangers-and-freaks.md#2031-what-makes-an-entry-available-second-pass)) |
@@ -808,7 +808,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-057 | The full shop table (index, position, type) from `shop_controller` | Second pass; feeds shop mods | Answered: all 65 entries by script, the cosmetic shops with name, position and interior ([R6.7](/docs/gameplay/player/online-cosmetic-shops.md#the-shop-table)) |
 | ON-058 | What exactly `clothes_shop_sp` does with a freemode ped (refuses, shows story stock, or breaks) | In-game test | Open |
 | ON-059 | What sets 2 and 4 contain (ped brains) | Second pass | Answered: no script registers into sets 2 or 4; the three `pb_prostitute` ped brains take no set ([R5.7 7.3](/docs/online/story-systems-in-online-mode.md#73-script-brains-and-brain-sets)); new CORE-031 |
-| ON-060 | How bits 16, 32 and 64 in these masks are raised (they end some systems on other occasions) | R1.2 second pass | Partly answered: 64 with 8 by `main`, `mission_repeat_controller`, `benchmark`; 16 and 32 only by the engine ([runtime scripts 1.3](/docs/core/runtime-scripts.md#every-force-cleanup-bit-second-pass)) |
+| ON-060 | How bits 16, 32 and 64 in these masks are raised (they end some systems on other occasions) | R1.2 second pass | Mostly answered: 64 (with 8) by `main`, `mission_repeat_controller`, `benchmark`; 16 and 32 only by the engine, the same question as CORE-032 (executable or in-game logging) |
 
 ### [Transitions and sessions](/docs/online/transitions-and-sessions.md) (R7.2)
 
@@ -920,7 +920,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | REN-007 | The director priorities and exactly when the cinematic director takes over | Second pass | Open |
 | REN-008 | The 50 shake names and other camera names that didn't resolve | Second pass with more name sources | Open |
 | REN-009 | Which `CREATE_CAMERA` hashes scripts use (the hashed form of `CREATE_CAM`) | Second pass: resolve the hashes in the decompile | Open |
-| REN-010 | The view mode contexts and modes as numbers | R6.4 | Open |
+| REN-010 | The view mode contexts and modes as numbers | R6.4 | Answered by GP-044 (P4.9): contexts 0 to 7 and mode 4 first person ([controls and camera](/docs/gameplay/player/controls-and-camera.md#the-view-mode-first-and-third-person)) |
 | REN-011 | How the first-person car interior camera is chosen per vehicle (`camVehicleCustomSettingsMetadata`) | R14.1 | Open |
 
 ### [Particles and decals](/docs/rendering/particles-and-decals.md) (R13.3)
@@ -1043,8 +1043,8 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| SCR-004 | What `0x8F5D1AD832AEB06C` and `0x0F7082C60FB479EF` do (not in NativeDB) | [Inbox](/ROADMAP.md#inbox); read their call sites in `freemode` and `public_mission_creator` | Open |
-| SCR-005 | Whether the 29 "build 3889" natives exist in 3725 (`IS_NATIVE...` style check from a mod, or ScriptHookV's native table) | In-game test with a small C++ check | Open |
+| SCR-004 | What `0x8F5D1AD832AEB06C` and `0x0F7082C60FB479EF` do (not in NativeDB) | [Inbox](/ROADMAP.md#inbox); read their call sites in `freemode` and `public_mission_creator` | Partly answered: `0x0F7082C60FB479EF` returns a float per model before the creator budget routine (our reading: budget cost), dropped in 3889; `0x8F5D1AD832AEB06C` left for the executable ([native usage](/scripting/native-usage.md)) |
+| SCR-005 | Whether the 29 "build 3889" natives exist in 3725 (`IS_NATIVE...` style check from a mod, or ScriptHookV's native table) | In-game test with a small C++ check | Partly answered: no 3725 script calls any of the 29; they are exactly the natives 3889's scripts add. Existence in the 3725 executable still needs the in-game check |
 | SCR-006 | A story-only vs Online-only split of every native (which natives story mode never needs) | R0.8 namespace coverage map, using the script groups from R0.1 and the Online catalog | Open |
 | SCR-007 | What the table order is (not first use; maybe first use in compiled code order) | Second pass, compare with a YSC dump | Open |
 
