@@ -91,7 +91,22 @@ A second, smaller family is written directly by three shops, outside the helper:
 | 197 | `Assassin_Construction` | 49 |
 | 198 | not armed by a strand | 33 |
 
-**What the 204 "sm_" stats are.** `stock_controller` also keeps a table of 204 stats. 126 of them are event counters that 141 other scripts add to when something happens in the world (`sm_brvecdesbfa` and the other `sm_brvecdes...` counters count destroyed vehicles of each brand; shops, vending machines, races and car mods add their own). The rest mirror ordinary game stats. The controller reads them on every update and records how much each has changed, but no price in the LCN code uses those changes. Our reading is that they are the inputs Rockstar's servers use for the BAWSAQ community prices. Which company each counter feeds, and the English names of the companies (their labels aren't in the base game's text files), are left for the third pass.
+**What the 204 "sm_" stats are.** `stock_controller` also keeps a table of 204 stats. 126 of them are event counters that 141 other scripts add to when something happens in the world (`sm_brvecdesbfa` and the other `sm_brvecdes...` counters count destroyed vehicles of each brand; shops, vending machines, races and car mods add their own). The rest mirror ordinary game stats. The controller reads them on every update and records how much each has changed, but no price in the LCN code uses those changes. Our reading is that they are the inputs Rockstar's servers use for the BAWSAQ community prices. Which company each counter feeds is in its name (below); the English names of the companies (their labels aren't in the base game's text files) are left for the third pass.
+
+**Counter to company** (**Verified**, second pass). The counter table in `stock_controller` holds only the stat name, no company number. But 39 stats in the same table are named `sm_price_<code>`, one per company code, and 95 of the 126 counters end in one of those codes. The verb in front says what is counted (`brvecdes` destroyed, `vecbuy` bought, `vecstol` stolen, `vecdmg` damaged, `disdriv` distance driven in, `kilw` kills with, `kilciv`/`kilcop`/`kilcrim` civilians, police or criminals killed with, `wepbuy`/`weptake` weapons bought or picked up, `phoncal`/`phontxt` calls and texts on, `chtick`/`calcan` ticks and cancelled calls, `rad`/`radcha` radio listened to or changed, `tvtick` TV watched, `clobof` clothes bought from):
+
+| Code | Counters |
+| --- | --- |
+| `bfa`, `bru`, `mai`, `sht`, `uma`, `vap`, `hvy` (vehicle makers) | destroyed, bought, driven, stolen, damaged and kills-with counters for each (`mai`, `sht`, `uma` also civilians killed); `lst` destroyed, driven, stolen; `lsc` destroyed and `vecmodlsc` (car mods); `ltd`, `ron` destroyed only |
+| `vom`, `shr`, `hal` (weapon makers) | weapons bought or taken, kills of police, criminals and civilians with them (`vom` also `kilwvom`) |
+| `bdg`, `tnk`, `wiz` (phone networks) | calls, texts, ticks and cancelled calls |
+| `cnt`, `wzl`, `zit` (radio and media) | radio listening and changes; `zitpopzit` |
+| `wap`, `wiw` | TV watched |
+| `bin`, `pkw`, `pon` | clothes bought |
+| `spu` | `venusespu` (vending machines) |
+| `shk` | `monupshk` |
+
+The codes with a price stat but no counter are `amu`, `btr`, `ble`, `cre`, `dgp`, `fac`, `frt`, `pis`, `mol`, `pmp`, `got` and `eye`. The 31 counters without a code are general activity: `yoga`, `tri`, `gym`, `strip`, `pubclub`, `tdrnk`, `drnkcrm`, `hangovr`, `taxdest`, `storob` (shop robberies), `drugkil`, `killspr`, `totinj`, `para`, `carapp` and others; our reading is that the server spreads them over several companies.
 
 ### The pickups `pickup_controller` places (second pass)
 
@@ -128,8 +143,8 @@ For a returning player the same check also sets the `sp_unlock_exclus_content` s
 
 | Question | Where it goes |
 | --- | --- |
-| How `stock_controller` moves prices and which story events move which company | Mostly answered in [the stock market](#the-stock-market-second-pass): the LCN model, BAWSAQ from community stats, the story events per mission; which company each `sm_` counter feeds and the company names are third pass (GP-090) |
-| Which company each of the 126 `sm_` stock counters feeds, and the English names of the 80 companies (`BSS_BSTR_` labels, not in the base text files) (GP-090) | Third pass |
+| How `stock_controller` moves prices and which story events move which company | Mostly answered in [the stock market](#the-stock-market-second-pass): the LCN model, BAWSAQ from community stats, the story events per mission; which company each `sm_` counter feeds is answered; the company names are third pass (GP-090) |
+| The English names of the 80 companies (`BSS_BSTR_` labels, not in the base text files), and how the 31 counters without a company code are used (GP-090) | Third pass: a DLC or update text block, or the server |
 | Where `pickup_controller` places each pickup and when they respawn | Answered in [the pickups](#the-pickups-pickup_controller-places-second-pass): 253 pickups in seven groups, 10-minute regeneration |
 | How shop robberies pay out (the till amounts) | Answered in [what a shop robbery pays](#what-a-shop-robbery-pays-second-pass) |
 | The full list of `SPx_MONEY_SPENT_*` categories | Answered in [where story money is booked](#where-story-money-is-booked-second-pass) |

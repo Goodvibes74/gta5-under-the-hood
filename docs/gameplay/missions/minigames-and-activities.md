@@ -51,27 +51,28 @@ The ids below are the game's own (they index the completion list, the launchers'
 
 **The gate is one bit per activity** (**Verified**). Every activity launcher writes its activity id into a local at set-up and, before it does anything, tests that bit of the flow's **bitset ID 0** (`MF_CONTROL_BITSETIDS[0]`, [story flow 2.3](/docs/gameplay/missions/story-flow.md#23-where-the-flow-lives-in-the-save)). If the bit is clear, the launcher ends. Tennis passes `-1` and so has no gate. The bits are set by `code_controller`, one code entry per activity, and a code entry runs once its flow *run code ID* command (or another script) arms it:
 
-| Code entry | Activity bits it sets | Armed by the flow |
+| Code entry | Activity bits it sets | Armed by |
 | ---: | --- | --- |
-| 4 | 0 base jumps | no |
-| 5 | 1 darts | Chinese strand, after `chinese2` |
-| 6 | 2 golf | no |
-| 7 | 3 hunting | no |
-| 8 | 4 off-road races | no |
-| 9 | 5 flight school | no |
-| 12, 13 | 7 sea races, 8 street races | no |
-| 15 | 9 strip club | Franklin and Lamar strand, after `armenian1` |
-| 16 | 10 stunt planes | no |
-| 17 | 12 taxi | Franklin and Lamar strand, after `armenian1` |
-| 18 | 14 towing | no |
-| 19 | 15 and 16, trafficking | no |
-| 20 | 17 triathlon | family strand, after `family2` |
-| 21 | 18 yoga | family strand, after `family5` |
-| 22 | 2 golf and 13 tennis | no |
-| 34 | 11 shooting range | Franklin and Lamar strand, after `armenian1` |
-| 39 | 19 | no |
+| 4 | 0 base jumps | passing `Extreme1` (Dom's first mission) |
+| 5 | 1 darts | Chinese strand *run code ID*, after `chinese2` |
+| 6 | 2 golf | nothing found (golf also comes with entry 22) |
+| 7 | 3 hunting | passing `Hunting2` |
+| 8 | 4 off-road races | a flow phone call in Trevor's strand after `trevor1` |
+| 9 | 5 flight school | a flow phone call in Trevor's strand after `trevor3` |
+| 12 | 7 sea races | nothing found |
+| 13 | 8 street races | passing `Hao1` (`hao1` also sets the bit itself) |
+| 15 | 9 strip club | Franklin and Lamar strand *run code ID*, after `armenian1` |
+| 16 | 10 stunt planes | `player_controller`, in its content checks (our reading: the special and collector's edition content) |
+| 17 | 12 taxi | Franklin and Lamar strand *run code ID*, after `armenian1` |
+| 18 | 14 towing | nothing found |
+| 19 | 15 and 16, trafficking | `traffickingteleport` |
+| 20 | 17 triathlon | family strand *run code ID*, after `family2` |
+| 21 | 18 yoga | family strand *run code ID*, after `family5` |
+| 22 | 2 golf and 13 tennis | a flow phone call after `family3` (family strand) or after `armenian3` (Franklin and Lamar strand), whichever comes first; also `player_timetable_scene` |
+| 34 | 11 shooting range | Franklin and Lamar strand *run code ID*, after `armenian1` |
+| 39 | 19 | `main` (after `trevor1` is passed) |
 
-"Armed by the flow" means a *run code ID* command for that entry sits in a strand (the entries armed with a delay of 0 run at once). The entries marked "no" are armed outside the 32 strands. The 89 scripts that carry a copy of the arming function (missions, the comms and friend scripts ...) are the candidates, and which one arms each entry is left for the third pass.
+**How the arming was traced** (**Verified**, second pass). A code entry is armed in four ways, and each was followed through every script: a flow *run code ID* command (data pool 2 in `initial`, only the builder with that command's hash); a flow phone call, text or email whose data carries a code ID, armed when the message has been delivered (the eighth argument of the comms builders in `initial`); field 22 of a stranger mission's data, armed when that mission is passed (`Barry3` 164, `Barry3A`/`3C` 166, `Extreme1` 4, `Extreme2` 171, `Hao1` 13, `Hunting1` 174, `Hunting2` 7, `Nigel1` 177, `Paparazzo3` 183, `Tonya1` 24, `Tonya2` 185, `Tonya3` 187); and direct calls of the arming function. Other builders in `initial` share data pool 2 but are different commands, which is why counting the pool alone looks as if the prologue arms hunting. Entries 6, 12 and 18 are armed by none of these; what does it is GP-088's remainder.
 
 ## 42.3 The shared launcher
 
@@ -208,8 +209,8 @@ Each also sets its intro and outro animations, enemy vehicles, ambient speech, a
 | --- | --- |
 | The flight-school, range and triathlon medal thresholds | Answered in [42.5.1](#4251-medals-and-goals-second-pass) |
 | Golf: course data, AI foursome behaviour, how the score is kept | Partly answered in [42.5.1](#4251-medals-and-goals-second-pass): pars, score and save; the AI players' shots are third pass |
-| How the flow unlocks each activity (blips appear after story missions) | Mostly answered in [42.2.1](#4221-how-an-activity-is-unlocked-second-pass); who arms the twelve entries the flow doesn't is third pass (GP-088) |
-| Which scripts arm the `code_controller` entries that unlock base jumps, golf, hunting, off-road, flight school, the races, stunts, towing and trafficking, since no strand does (GP-088) | Third pass |
+| How the flow unlocks each activity (blips appear after story missions) | Answered in [42.2.1](#4221-how-an-activity-is-unlocked-second-pass), except entries 6, 12 and 18 (GP-088) |
+| What arms code entries 6 (golf alone), 12 (sea races) and 18 (towing); no script calls the arming function with them (GP-088) | Third pass, in-game: watch `Global_114904.f_8620[6/12/18]` |
 | The towing quick-bonus check (what the 12 s timer measures) | Answered in [42.4](#424-fees-and-pay) |
 
 ## 42.9 Test cards

@@ -74,12 +74,43 @@ The same table-filling function is compiled into many scripts (every story missi
 
 1. **It has been unlocked:** bit 0 of its entry in `SAVED_RANDOM_CHARACTERS`. The table has a *next entry* field for each one (for example `Epsilon1` to `Epsilon2`); our reading is that a pass unlocks that next entry.
 2. **The flow has released it**, when the table says it waits for the flow (bit 1). The flow's *activate stranger mission* command sets this bit ([story flow 2.4.1](/docs/gameplay/missions/story-flow.md#241-every-command-type-second-pass)); entries that don't wait get bit 1 at once.
-3. **A flag ID is set**, when the entry names one (for example 74 for `Barry1` and `Fanatic1`, 84 for both Barry stash hunts, 100 for the four Nigel item hunts). None of these is set by a strand command, so mission or ambient scripts set them; which one is left for the third pass.
+3. **A flag ID is set**, when the entry names one (for example 74 for `Barry1` and `Fanatic1`, 84 for both Barry stash hunts, 100 for the four Nigel item hunts). None of these is set by a strand command; who sets each one is in the table below.
 4. **Enough game time has passed** since it was unlocked: a delay in game hours (8, 10, 16, 36 or 48; `Tonya2` and `Tonya5` wait 48). `TheLastOne` waits 1 hour plus a random 90 to 300.
 5. **The player has no wanted level.**
 6. **Not during the exile**, for the entries marked so (flag ID 130 set and 131 not, [story flow 2.6.1](/docs/gameplay/missions/story-flow.md#261-the-flag-ids-second-pass)): most of Michael's and Trevor's, since they are out of the city.
 7. **Inside the time window** (`Barry4` 08:00 to 20:00, `Fanatic1` to `3` and `Nigel1B` to `1D` 07:00 to 20:00, `Hao1` 20:00 to 05:00).
 8. **No clashing story mission is running:** `Tonya1`, `Tonya2` and `Tonya5` wait while `franklin0`, `franklin1`, `lamar1` or `michael2` runs, and `Hao1` waits while `franklin1` runs.
+
+**Who sets the gating flags** (**Verified**, second pass: every write of the flag-ID array, followed through `code_controller`). Most follow one chain: passing a stranger mission arms a `code_controller` entry named in that mission's table row (field 22); that entry sends a text or email that carries the next entry; when the message has been delivered, the next entry sets the flag that opens the next mission.
+
+| Flag | Opens | Set by |
+| ---: | --- | --- |
+| 74 | `Barry1`, `Fanatic1` | code entry 24, armed when `Tonya1` is passed |
+| 84 | `Barry3A`, `Barry3C` | `Barry3` passed → entry 164 → message → entry 165 |
+| 85 | `Barry4` | `Barry3A`/`3C` passed → 166 → message → 167 |
+| 86 to 89 | `Epsilon1`, `Epsilon2`, `Epsilon3`, `Epsilon5` | the Epsilon website in `appinternet` (`epsilon2` and `launcher_epsilon` also set 86) |
+| 91 | (no entry reads it) | `appinternet` |
+| 90 | `Epsilon4` | `epscars` (the cars to collect) |
+| 92, 93 | `Epsilon6` (reads 93) | `epsrobes` → message → entry 173 |
+| 94 | `Epsilon8` | `epsdesert` (the desert walk) |
+| 95 | (no entry reads it) | `epsilontract` |
+| 96 | `Extreme2` | `Extreme1` passed → entry 4 (which also unlocks base jumps) → message → entry 170 |
+| 97 | `Extreme3` | `Extreme2` passed → 171 → message → 172 |
+| 98 | `Extreme4` | `bj` (a base jump completed) |
+| 99 | `Hunting2` | `Hunting1` passed → 174 → message → 175 |
+| 100 | `Nigel1A` to `1D` | `Nigel1` passed → 177 → message → 178 |
+| 101 | (no entry reads it) | `nigel3`, `postrc_nigel3` |
+| 102 | `Paparazzo3A`, `3B` | `Paparazzo3` passed → 183 → message → 184 |
+| 103, 104 | (no entry reads them) | `Tonya2` passed → 185 → 186; `Tonya3` passed → 187 → 188 |
+| 105 | `Josh2` | `forsalesigns` (the For Sale signs) → message → entry 176 |
+| 106 | `Dreyfuss1` | entry 168, armed by `letterscraps` (the letter scraps), also from `ambient_diving`, `ambient_sonar`, `spaceshipparts` |
+| 107 | `Omega2` | `spaceshipparts` → message → entry 179 |
+| 108 | (no entry reads it) | each `rampage1` to `5` |
+| 109 | `Abigail1` | entry 95 (who arms it isn't found) |
+| 110 | `Abigail2` | `ambient_diving` → message → entry 163 |
+| 133 | `TheLastOne` | `completionpercentage_controller`, when completion reaches 100% |
+
+**The three entries no strand releases.** `TheLastOne` is released directly by `completionpercentage_controller` (it sets the entry's "released" bit itself) at 100%. `MrsPhilips2` and `Rampage3` wait for the flow (table field 23) but no script sets their bit by number; they are probably released through a shared command pool whose numbers can't be told apart from other commands' (GP-089's remainder).
 
 The character field is a bit per player (1 Michael, 2 Franklin, 4 Trevor). The flow releases the first entry of each chain after these missions (**Verified**, the *activate stranger mission* commands):
 
@@ -124,8 +155,8 @@ The missions themselves are started by the launchers, not by the controller (no 
 
 | Question | Where it goes |
 | --- | --- |
-| The unlock condition of each entry (flow flags, character) from the remaining table fields | Mostly answered in [20.3.1](#2031-what-makes-an-entry-available-second-pass); which scripts set the entry flag IDs and release the three entries no strand releases is third pass (GP-089) |
-| Which scripts set the flag IDs that gate stranger entries (74, 84 to 110, 133) and release `MrsPhilips2`, `Rampage3` and `TheLastOne` (GP-089) | Third pass |
+| The unlock condition of each entry (flow flags, character) from the remaining table fields | Mostly answered in [20.3.1](#2031-what-makes-an-entry-available-second-pass); the flag setters are answered; `MrsPhilips2` and `Rampage3` releases are third pass (GP-089) |
+| What releases `MrsPhilips2` and `Rampage3`, and what arms code entry 95 (flag 109, `Abigail1`) (GP-089) | Third pass, in-game: watch the entries' bit 1 |
 | Where the world points are placed and how many there are per brain | Third pass, map data (the launcher receives its point's position as its script argument; the placements aren't in the scripts) |
 | What the object-brain percentage and flags mean | Answered in [20.2](#202-script-brains): the last argument is the brain set; the percentage (always 100) and the fourth argument (always -1) change nothing in this build |
 
