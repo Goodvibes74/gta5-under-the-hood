@@ -259,7 +259,7 @@ One function in `freemode` gives the number of vehicle spaces, either for a prop
 | 29 | Eclipse Blvd garage (`MULTSTOREY_GAR_OWNED`) | 50 |
 | 31 | bail office (`PROP_BAIL_OFFICE`) | 2 |
 | 32 | hacker den (`PROP_HACKER_DEN`) | 10 |
-| 30, 33, 34, 35 | not in the slot-to-stat function; 33 to 35 have 20 spaces each | |
+| 30, 33, 34, 35 | not in the slot-to-stat function; 33 to 35 are three properties of one kind (20 spaces each), owned when character stats 14169, 14197 and 14225 are non-zero, and map to property indices 135, 136 and 137 (second pass, the `freemode` slot-to-index function) | |
 
 Property indices past 115 (not in the table of 45.2) get sizes by index: 116 = 35, 117 = 7, 118 = 1, 119 to 127 = 10 (122 = 9), 128 = 20, 129 = 50, 132 = 2, 133 = 10, 135 to 137 = 20. *Second pass (2026-10-30, **Verified**):* `freemode`'s slot-to-stat function names ownership slots 12 to 32 (the table above). The property indices 116 to 137 don't follow the slot numbers in a fixed offset, so which index is which property is still open (45.8).
 
