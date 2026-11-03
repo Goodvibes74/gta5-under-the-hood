@@ -140,11 +140,11 @@ How to read the tables:
 | ID | What to find | Extract | Scripts too? |
 | --- | --- | --- | --- |
 | SCR-014 (*done, D7*) | Which duplicated pool entry in `gameconfig.xml` applies to PC | `common:/data/gameconfig.xml` (base vs update) | no |
-| PERF-025 (*done, D7*) | Whether raised physics pools change anything on a low-end PC | vanilla vs modded `gameconfig.xml`, then a test | no |
+| PERF-025 (*partly, D7: test card 5 still to run*) | Whether raised physics pools change anything on a low-end PC | vanilla vs modded `gameconfig.xml`, then a test | no |
 | FF-001 (*done, D7*) | Reliable sizes per type (audio sizes read as zero) | resource headers of every file | no |
 | FF-002 (*done, D7*) | A per-pack breakdown of all 89 DLC packs | every DLC `dlc.rpf` listing | no |
 | FF-003 (*done, D7*) | How update copies override base ones, type by type | `common.rpf` vs `update.rpf` listings | no |
-| FF-004 (*done, D7*) | Each content section key (`me`, `sro`, `amb` ...) | one Online content (`re_`) file | yes (the `fm_content_*` helper) |
+| FF-004 (*mostly, D7: read from one `fm_content_*` script, not a `re_` file*) | Each content section key (`me`, `sro`, `amb` ...) | one Online content (`re_`) file | yes (the `fm_content_*` helper) |
 | FF-005 | Which of the 8,472 `gen` keys `fm_mission_controller` reads | a job's UGC JSON | yes |
 | PERF-005, PERF-022 | The menu label for each value of every quality key | the player's settings file (outside the archives), compared with the menu | in-game |
 | PERF-006 | What rewrites the settings file without the player asking | the settings file before and after a driver update | no |
