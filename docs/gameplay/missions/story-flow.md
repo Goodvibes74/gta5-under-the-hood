@@ -36,7 +36,7 @@ The 94 missions include the assassinations (`Assassin_Valet` and others), the th
 
 **Field 12** (**Verified**). `flow_controller` tests it for a character id: ids 0 to 2 use bits 1, 2 and 4 like field 11, and three more ids have their own bit: character **19** is bit 8, **14** is bit 16 and **17** is bit 32. The flow uses field 12 to write the "last mission" stat for each player character (`sp_last_mission_name`, then `sp0_`, `sp1_` or `sp2_last_mission_name` for each player bit), and the family scenes, `player_timetable_scene`, `appcontacts` and `comms_controller` use it to ask whether a mission involves a given character. Which person each id is comes from the flow's contact commands: Franklin is given contact 19 when the prologue strand opens, and Michael is given 14 and 17 after `armenian3`. Together with the missions that carry the bits, our reading is that **19 is Lamar** (bit 8 is on `armenian1`, `armenian2`, `franklin0`, `franklin1`, `franklin2`, `lamar1`, `carsteal4`), **14 is Jimmy** (bit 16 is on `me_jimmy1`, `michael4`, `family1`, `family2`, `family4` to `family6`, `armenian3`) and **17 is Amanda** (bit 32 is on `me_amanda1`, `family1`, `family3` to `family6`, `michael4`, `armenian3`).
 
-**Field 15**, the bits whose effect we could read (**Verified** from the code that tests them; the other bits are read only inside `flow_controller`, `mission_repeat_controller` or the triggerers, and are left open):
+**Field 15**, the bits whose effect we could read (**Verified** from the code that tests them; every other bit follows in the second table):
 
 | Bit | Tested by | Effect |
 | --- | --- | --- |
@@ -48,6 +48,33 @@ The 94 missions include the assassinations (`Assassin_Valet` and others), the th
 | 16 | 72 mission scripts (shared replay code) | Never offer to skip the mission: without it, a skip is offered from the second failure (`missionFailsNoProgress` of 2 or more) |
 | 26 | `savegame_bed` | No saving in a bed while this mission is in progress |
 | 30 | `flow_controller` | Ignore the time window in fields 13 and 14 |
+
+**Every other bit of field 15** (**Verified**, second pass): which missions carry it (from the mission table in `standard_global_init`) and which scripts test it, with the effect where the test is clear.
+
+| Bit | Missions that set it | Tested by | Effect (where read) |
+| ---: | --- | --- | --- |
+| 0 | 9: `finale_intro`, `finaleA`, `finaleB`, `finaleC1`, `finaleC2`, `finale_credits`, `finale_heist2_intro`, `michael4`, `prologue1` | `flow_controller`, `mission_repeat_controller` | skip one routine at the start of the mission |
+| 2 | 7: `finale_credits`, `finale_heist2_intro`, `drf1`, `drf2`, `drf3`, `drf4`, `drf5` | `flow_controller`, `mission_repeat_controller` |  |
+| 3 | 7: `agency_heist2`, `finale_intro`, `finaleC2`, `finale_credits`, `prologue1`, `drf3`, `drf4` | `flow_controller`, `mission_repeat_controller` | skip a step after the mission name is shown |
+| 6 | 16: `agency_prep1`, `docks_prep2B`, `finale_intro`, `finaleC1`, `finale_credits`, `fbi4_intro`, `fbi4_prep3`, `jewelry_prep2A`, `me_amanda1` +7 | `flow_controller`, `mission_repeat_controller`, `social_controller`, `standard_global_reg` |  |
+| 8 | 2: `agency_heist3A`, `jewelry_setup1` | `taxiservice`, the four triggerers |  |
+| 9 | 0: none | `taxiservice`, the four triggerers |  |
+| 10 | 0: none | `taxiservice`, the four triggerers |  |
+| 11 | 2: `agency_prep1`, `finale_heist_prepC` | the four triggerers |  |
+| 12 | 5: `drf1`, `drf2`, `drf3`, `drf4`, `drf5` | `player_controller` |  |
+| 14 | 8: `agency_heist3A`, `agency_heist3B`, `docks_heistA`, `docks_heistB`, `finale_heist2A`, `finale_heist2B`, `jewelry_heist`, `rural_bank_heist` | `flow_controller`, `mission_repeat_controller` | heist finales: `flow_controller` runs the heist data step (crew and take) for them |
+| 15 | 16: `agency_prep1`, `docks_prep1`, `docks_prep2B`, `finale_heist_prepA`, `finale_heist_prepB`, `finale_heist_prepC`, `finale_heist_prepD`, `fbi4_prep1`, `fbi4_prep2` +7 | `appcontacts`, `flow_controller`, `friendactivity`, `mission_repeat_controller`, the four triggerers | heist preps and similar: read by the triggerers, `appcontacts` and `friendactivity` |
+| 17 | 4: `armenian1`, `jewelry_heist`, `prologue1`, `trevor1` | `flow_controller`, `mission_repeat_controller` |  |
+| 18 | 5: `armenian1`, `finaleC2`, `finale_credits`, `jewelry_heist`, `prologue1` | `flow_controller`, `mission_repeat_controller` |  |
+| 19 | 7: `armenian1`, `finaleC2`, `finale_credits`, `jewelry_heist`, `prologue1`, `drf3`, `drf4` | `flow_controller`, `mission_repeat_controller` |  |
+| 21 | 6: `fbi3`, `me_amanda1`, `me_jimmy1`, `me_tracey1`, `drf3`, `drf4` | `flow_controller`, `mission_repeat_controller` | keep the wanted level at the start (without it or bit 15 the flow clears it) |
+| 22 | 1: `martin1` | the four triggerers |  |
+| 23 | 1: `armenian3` | the four triggerers |  |
+| 24 | 3: `carsteal4`, `family4`, `michael3` | `flow_controller`, the four triggerers | the player may stay in the vehicle at the start (otherwise told to leave it) |
+| 25 | 1: `michael3` | `flow_controller`, the four triggerers | skip the start-of-mission vehicle check (on all wheels) |
+| 27 | 3: `agency_heist3A`, `agency_heist3B`, `rural_bank_heist` | `flow_controller` | skip one call the flow makes when the mission is queued |
+| 28 | 4: `family3`, `michael1`, `solomon1`, `solomon3` | the four triggerers |  |
+| 29 | 1: `chinese2` | `flow_controller` | stream the mission's SRL with prestream mode 3 instead of 1 |
 
 ## 2.3 Where the flow lives in the save
 
@@ -155,7 +182,7 @@ The other 18 hashes in the dispatcher have no builder in `initial` in this build
 
 ### 2.4.2 What a fail does to the flow
 
-A mission command keeps three targets: where to go on a pass (`-2` = the next command), a label for the fail, and a third value the builder copies from the pass target when it isn't given (**Verified**, `initial`). Only `finaleA` and `finaleB` give the third value, and it points at the label of the next ending; what selects it is left open. When the mission script ends, the handler in `flow_controller` checks whether it passed:
+A mission command keeps three targets: where to go on a pass (`-2` = the next command), a label for the fail, and a third value the builder copies from the pass target when it isn't given (**Verified**, `initial`). Only `finaleA` and `finaleB` give the third value, and it points at the label of the next ending. **Nothing reads it in build 3725** (**Verified**, second pass): the mission handler returns the pass target (field 1) when the script ends with a pass and the fail label (field 2) on a fail, and no other script or handler reads field 3 of a mission command. The ending that follows is chosen through the flag IDs 134 to 136 and *if flag ID* commands instead (table in [2.6.1](#261-the-flag-ids-second-pass)). When the mission script ends, the handler in `flow_controller` checks whether it passed:
 
 - **Pass:** it records the pass and returns the pass target.
 - **Fail:** unless field 15 bit 1 is set, it restores the three characters' saved ped data (`PP_INFO_STRUCT`), resets the mission's launch state, opens the fail screen itself (replay state 0, with the skip check, [mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip)) and **stays on the same command** (`-1`). The save counts the fail (`missionFailsNoProgress`, `missionFailsTotal`). A retry or skip relaunches the mission under the same command. If the player chooses **Exit**, `replay_controller` ends in state 11, and on its next run the command returns its fail label (second pass, **Verified**).
@@ -277,7 +304,118 @@ The array the first pass called "flow integers" is Rockstar's `MF_CONTROL_FLAGID
 | 121, 122, 123 | 184, 184, 150 | 123: the family strand after `family2`; 121: 75 scripts and 122: 97 scripts, mostly missions and the player scripts | `player_controller` dresses character 0 in a set outfit while 120 is set and 122 isn't, and then sets 121; scripts set 122 once 121 is set |
 | 65, 66 | 236, 118 | 66: the prologue strand (set), the Franklin and Lamar strand after `armenian1` (cleared), the Solomon strand after `solomon2` (set); 65: mission scripts | Read per character: 65 for characters 0 and 2, 66 for character 1 |
 
-What the remaining flags mean is left open; each one is named only by where it is set.
+**Every other flag ID** (**Verified**, second pass). Each row below was built from the decompile:
+- the flow's *set flag ID* commands, with their strand and the mission they follow
+- every script that writes the flag, directly or through its setter function (`mission_repeat_controller`, which rewrites flags when a mission is replayed, is left out)
+- the `code_controller` entry that sets it
+- references counted in all scripts (script count in brackets).
+
+The stranger flags (74, 84 to 110, 133) are in [strangers and freaks](/docs/gameplay/missions/strangers-and-freaks.md#2031-what-makes-an-entry-available-second-pass). Flags not listed have no reference. Meanings are our reading from where a flag is set; an empty cell means no reading yet.
+
+| Flag | Flow sets or clears it | Scripts that set it | References (scripts) | Our reading |
+| ---: | --- | --- | --- | --- |
+| 0 | — | `flow_controller`, `heist_ctrl_agency`, `heist_ctrl_docks`, `heist_ctrl_finale` +2 | 7 (7) |  |
+| 1 | Docks heist after `docks_heistB` (set) | — | 3 (3) | Docks heist finished (set at the end of its strand) |
+| 2 | Bureau Raid after `agency_heist3B` (set) | — | 1 (1) | Bureau Raid finished (end of its strand) |
+| 3 | Big Score after `finale_heist_prepB` (set) | — | 1 (1) | set in the Big Score strand after prep B |
+| 5 | Paleto Score after `rural_bank_heist` (set) | — | 1 (1) | Paleto Score finished |
+| 6 | Bureau Raid after `agency_heist1` (clear); Bureau Raid after `agency_heist1` (set) | `agency_heist2`, `heist_ctrl_agency` | 1 (1) | heist planning stage flags (set and cleared around the setup mission by the heist controller) |
+| 7 | Bureau Raid after `agency_heist1` (clear); Bureau Raid after `agency_heist1` (set) | `heist_ctrl_agency` | 3 (1) | heist planning stage flags (set and cleared around the setup mission by the heist controller) |
+| 8 | Bureau Raid after `agency_heist1` (clear) | `heist_ctrl_agency` | 7 (6) | heist planning stage flags (set and cleared around the setup mission by the heist controller) |
+| 9 | — | `code_controller` entry 43 | 0 (0) |  |
+| 10 | — | `code_controller` entry ? | 0 (0) |  |
+| 11 | Bureau Raid after `agency_heist1` (clear) | `code_controller` entry 86 | 1 (1) |  |
+| 12 | — | `agency_prep2amb`, `fbi4_prep3amb`, `finale_heist_prepeamb` | 36 (32) | set by the prep ambient scripts; read by 32 scripts |
+| 13 | — | `agency_prep1` | 1 (1) |  |
+| 14 | — | `code_controller` entry 53 | 0 (0) |  |
+| 15 | — | `code_controller` entry 117, 118 | 0 (0) |  |
+| 16 | Jewel Store after `jewelry_setup1` (clear); Jewel Store after `jewelry_setup1` (set); Jewel Store start (clear) | `docks_setup`, `heist_ctrl_jewel`, `jewelry_setup1` | 1 (1) | heist planning stage flags (set and cleared around the setup mission by the heist controller) |
+| 17 | Jewel Store after `jewelry_setup1` (clear); Jewel Store after `jewelry_setup1` (set); Jewel Store start (clear) | `heist_ctrl_jewel` | 3 (1) | heist planning stage flags (set and cleared around the setup mission by the heist controller) |
+| 18 | Jewel Store after `jewelry_setup1` (clear) | `heist_ctrl_jewel` | 7 (6) | heist planning stage flags (set and cleared around the setup mission by the heist controller) |
+| 20 | Docks heist after `docks_setup` (clear); Docks heist after `docks_setup` (set); Docks heist start (clear) | `docks_setup`, `heist_ctrl_docks` | 1 (1) | heist planning stage flags (set and cleared around the setup mission by the heist controller) |
+| 21 | Docks heist after `docks_setup` (clear); Docks heist after `docks_setup` (set); Docks heist start (clear) | `heist_ctrl_docks` | 3 (1) | heist planning stage flags (set and cleared around the setup mission by the heist controller) |
+| 22 | Docks heist after `docks_setup` (clear) | `heist_ctrl_docks` | 7 (6) | heist planning stage flags (set and cleared around the setup mission by the heist controller) |
+| 23 | — | `code_controller` entry 54 | 0 (0) |  |
+| 24 | Big Score after `finale_heist1` (clear); Big Score after `finale_heist2_intro` (clear); Big Score after `finale_heist2_intro` (set) | `finale_heist2_intro`, `heist_ctrl_finale` | 1 (1) | heist planning stage flags (set and cleared around the setup mission by the heist controller) |
+| 25 | Big Score after `finale_heist1` (clear); Big Score after `finale_heist2_intro` (clear); Big Score after `finale_heist2_intro` (set) | `heist_ctrl_finale` | 3 (1) | heist planning stage flags (set and cleared around the setup mission by the heist controller) |
+| 26 | Big Score after `finale_heist2_intro` (clear) | `heist_ctrl_finale` | 7 (6) | heist planning stage flags (set and cleared around the setup mission by the heist controller) |
+| 27 | — | `finale_heist_prepa`, `finale_heist_prepb` | 0 (0) |  |
+| 28 | — | `code_controller` entry 109 | 2 (1) |  |
+| 29 | — | `code_controller` entry 112 | 2 (1) |  |
+| 30 | Big Score prep C start (clear) | `code_controller` entry 103 | 1 (1) |  |
+| 31 | — | `mission_triggerer_d` | 0 (0) |  |
+| 32 | — | `mission_triggerer_d` | 0 (0) |  |
+| 33 | — | `mission_triggerer_d` | 0 (0) |  |
+| 34 | — | `agency_prep2amb`, `fbi4_prep3amb`, `finale_heist_prepeamb` | 38 (32) | set by the prep ambient scripts; read by 32 scripts |
+| 35 | — | `finale_heist_prepeamb` | 15 (5) |  |
+| 36 | — | `code_controller` entry 109, 112, 113 | 0 (0) |  |
+| 37 | Paleto Score after `rural_bank_setup` (clear); Paleto Score start (clear) | `heist_ctrl_rural`, `rural_bank_setup` | 11 (2) | heist planning stage flags (set and cleared around the setup mission by the heist controller) |
+| 38 | Paleto Score after `rural_bank_setup` (clear); Paleto Score after `rural_bank_setup` (set); Paleto Score start (clear) | `heist_ctrl_rural`, `rural_bank_setup` | 10 (2) | heist planning stage flags (set and cleared around the setup mission by the heist controller) |
+| 39 | Paleto Score after `rural_bank_setup` (clear); Paleto Score after `rural_bank_setup` (set); Paleto Score start (clear) | `heist_ctrl_rural` | 3 (1) | heist planning stage flags (set and cleared around the setup mission by the heist controller) |
+| 40 | Paleto Score after `rural_bank_setup` (clear) | `heist_ctrl_rural` | 7 (6) | heist planning stage flags (set and cleared around the setup mission by the heist controller) |
+| 41 | — | `code_controller` entry 89 | 0 (0) |  |
+| 42 | — | `code_controller` entry 124 | 1 (1) |  |
+| 43 | — | `franklin1` | 4 (3) |  |
+| 44 | FIB after `fbi2` (clear) | `code_controller` entry 48 | 1 (1) |  |
+| 45 | — | `agency_prep2amb`, `fbi4_prep3amb`, `finale_heist_prepeamb` | 39 (35) | set by the prep ambient scripts; read by 35 scripts |
+| 46 | — | `agency_prep2amb`, `fbi4_prep1`, `fbi4_prep2`, `fbi4_prep3amb` +3 | 0 (0) |  |
+| 47 | FIB after `fbi4_prep1` (clear) | `code_controller` entry 49 | 0 (0) |  |
+| 48 | — | `code_controller` entry 51, 52 | 2 (1) |  |
+| 49 | Assassinations after `Assassin_Construction` (set) | — | 0 (0) |  |
+| 50 | — | `code_controller` entry 56 | 0 (0) |  |
+| 51 | — | `code_controller` entry 142 | 0 (0) |  |
+| 53 | prologue start (set) | `code_controller` entry 1 | 2 (2) | set at the prologue strand start |
+| 54 | prologue start (set) | — | 0 (0) | set at the prologue strand start |
+| 55 | prologue start (set) | — | 0 (0) | set at the prologue strand start |
+| 56 | — | `code_controller` entry 17 | 1 (1) |  |
+| 57 | Franklin start (clear); Franklin start (set); Solomon after `solomon3` (clear); Solomon after `solomon3` (set); family after `family3` (clear); family after `family3` (set) | — | 1 (1) | set after `solomon3` (cleared after) and at the Franklin strand start |
+| 58 | Trevor after `trevor1` (set); Trevor after `trevor3` (clear); family after `family3` (set) | — | 9 (3) | set after `trevor1` and `family3`, cleared after `trevor3` |
+| 59 | Martin after `martin1` (clear); Trevor after `trevor3` (set) | — | 9 (3) | set after `trevor3`, cleared after `martin1` |
+| 60 | — | `code_controller` entry 114 | 0 (0) |  |
+| 61 | — | `armenian1` | 0 (0) |  |
+| 62 | — | `code_controller` entry 41 | 0 (0) |  |
+| 63 | — | `code_controller` entry 45, 55 | 13 (6) |  |
+| 67 | — | `code_controller` entry 70 | 62 (61) |  |
+| 68 | — | `exile3`; `code_controller` entry 71 | 61 (61) |  |
+| 69 | — | `code_controller` entry 8 | 0 (0) |  |
+| 70 | Bureau Raid after `agency_heist1` (clear); Bureau Raid after `agency_heist1` (set) | — | 1 (1) | heist planning stage flags (set and cleared around the setup mission by the heist controller) |
+| 71 | — | `pilot_school` | 4 (2) |  |
+| 72 | Franklin and Lamar after `armenian3` (set); Jewel Store after `jewelry_heist` (clear) | `player_timetable_scene` | 3 (1) | set after `armenian3`, cleared after `jewelry_heist` |
+| 73 | — | `code_controller` entry 5 | 1 (1) |  |
+| 75 | — | `code_controller` entry 123 | 2 (1) |  |
+| 76 | — | `carsteal2` | 7 (4) |  |
+| 77 | — | `friendactivity` | 4 (2) |  |
+| 79 | — | `code_controller` entry 145 | 0 (0) |  |
+| 80 | — | `drf1`, `drf2`, `drf5` | 6 (6) |  |
+| 81 | Trevor after `trevor3` (clear) | `code_controller` entry ? | 0 (0) |  |
+| 82 | — | `range_modern` | 0 (0) |  |
+| 83 | — | `code_controller` entry 182 | 2 (2) |  |
+| 111 | — | `appinternet` | 1 (1) |  |
+| 112 | — | `appinternet` | 1 (1) |  |
+| 113 | — | `appinternet` | 2 (2) |  |
+| 114 | — | `randomchar_controller` | 1 (1) |  |
+| 115 | Franklin and Lamar after `armenian3` (set); prologue after `prologue1` (clear); prologue start (set) | `armenian3`, `fbi2`, `finale_heist_prepd` | 43 (43) | Michael playable (set for the prologue, cleared after it, set again after `armenian3`) |
+| 116 | prologue after `prologue1` (set) | `fbi2`, `finale_heist_prepd` | 43 (43) | Franklin playable (set after `prologue1`) |
+| 117 | Trevor after `trevor1` (set); prologue after `prologue1` (clear); prologue start (set) | `fbi2`, `finale_heist_prepd`, `trevor1` | 43 (43) | Trevor playable (set for the prologue, cleared after it, set after `trevor1`) |
+| 124 | prologue after `prologue1` (set) | `prologue1` | 30 (30) | set after `prologue1`; read by 30 scripts |
+| 125 | prologue after `prologue1` (set) | `prologue1` | 30 (30) | set after `prologue1`; read by 30 scripts |
+| 126 | — | `code_controller` entry 45 | 152 (78) |  |
+| 127 | family after `family3` (set) | — | 0 (0) |  |
+| 129 | Michael after `michael1` (set); ending after `finaleC2` (clear) | — | 3 (3) | set after `michael1`, cleared after `finaleC2` |
+| 130 | Exile start (set) | — | 59 (27) | the exile has started (set when the Exile strand opens, with 120) |
+| 132 | — | `trevor1` | 13 (1) |  |
+| 134 | ending after `finaleA` (set); ending after `finaleB` (set); ending after `finale_intro` (set); ending start (clear) | `finale_choice` | 1 (1) | the ending choice has been made (`finale_choice`) |
+| 135 | ending after `finaleB` (set) | — | 15 (8) | ending B played (`finaleB`: Michael killed) |
+| 136 | ending after `finaleA` (set) | — | 17 (8) | ending A played (`finaleA`: Trevor killed) |
+| 137 | — | `finale_endgame` | 85 (7) | `finale_endgame` has run; read 85 times in 7 scripts |
+| 138 | — | `armenian1`, `armenian2`, `main`, `prologue1` | 8 (4) | set by `main`, the prologue and the first Franklin missions |
+| 139 | — | `main` | 1 (1) |  |
+| 140 | — | `main` | 1 (1) |  |
+| 141 | — | `main` | 1 (1) |  |
+| 142 | — | `main` | 1 (1) |  |
+| 143 | — | `main` | 1 (1) |  |
+| 144 | — | `main` | 1 (1) |  |
+| 145 | — | `main` | 1 (1) |  |
 
 ## 2.7 The mission triggerers
 
@@ -308,7 +446,7 @@ Each triggerer covers the missions of its part of the story: it places the blip,
 | The remaining 40-odd command types (blips, contacts, texts, unlocks, savehouses, character state) | Answered in [2.4.1](#241-every-command-type-second-pass) |
 | The meaning of mission-table field 12 above bit 4, and of the option flags in field 15 | Partly answered in [2.2.1](#221-the-mission-table-flags-second-pass): field 12 answered; field 15 bits 1, 4, 5, 7, 16, 26 and 30 named, the rest third pass |
 | How `agency_heist2` and Blitz prep 3 are reached | Answered in [2.5](#25-the-32-strands) |
-| The pass and fail labels of each mission command: what happens on a fail | Mostly answered in [2.4.2](#242-what-a-fail-does-to-the-flow); what selects the third target of `finaleA` and `finaleB` is third pass |
+| The pass and fail labels of each mission command: what happens on a fail | Answered in [2.4.2](#242-what-a-fail-does-to-the-flow); the third target is never read |
 | What the flow integers (`f_99.f_58`) hold; index 120 is read 1,434 times | Partly answered in [2.6.1](#261-the-flag-ids-second-pass): they are 146 flag IDs; flag 120 is the exile, ten more are placed; the rest third pass |
 | The story flags that pick the active mission triggerer (CORE-020) | Answered in [2.7](#27-the-mission-triggerers): none, only three missions' `completed` values |
 | How `mission_repeat_controller` replays a mission without moving the flow | Answered in [mission anatomy 3.9](/docs/gameplay/missions/mission-anatomy.md#39-passing) |
