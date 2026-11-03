@@ -140,7 +140,7 @@ The launcher doesn't draw the end of a job. The like/dislike rating (`ES_HELP_TU
 **Playlists.** `FMMC_PlayList_Controller` registers two host blocks (218 values of playlist state, and 1,345 values: 42 a player for 32 players, the running scores) and one player block (9 values a player plus one). Each player moves through its own states (0 start, 3 and 4 between jobs, 5 waiting, 6 leaving). Between jobs the host checks that everyone has reached the waiting state, then marks the next job ready. Each player then does four things:
 
 1. Raises the launcher's playlist flag (`Global_2685150.f_870`).
-2. Copies the next job's content id (24 characters) into `.f_871`, and a position from the next job's data into `.f_877`.
+2. Copies the next job's content id (24 characters) into `.f_871`, and a position from the next job's data into `.f_877`. *Second pass:* `.f_877` is a 3D position. `fmmc_launcher` reads it together with the content id and passes both to its job-loading routine when it starts the next playlist job, so the next job is loaded for that location (our reading: the job's start point). The launcher clears it to (0, 0, 0) when it resets.
 3. Stops the leaderboard and celebration audio scenes.
 4. Calls `NETWORK_DO_TRANSITION_TO_NEW_GAME` (32 players).
 
@@ -171,7 +171,6 @@ Then `freemode` copies the entry into the transition data (`Global_2686090`) and
 | How playlists and series step from job to job (`FMMC_PlayList_Controller`) | Answered in [13.7.1](#1371-playlists-and-walk-in-markers-second-pass) |
 | How a walk-in job marker in freemode hands over to the launcher | Answered in [13.7.1](#1371-playlists-and-walk-in-markers-second-pass) |
 | What the job value in start argument `.f_2` is, and what lobby flag bit 1 and `.f_880` are raised for | Third pass, the `freemode` and `maintransition` writers |
-| What the playlist's `.f_877` position is and how the launcher uses it | Third pass, `fmmc_launcher` state 10 |
 
 ## 13.10 Test cards
 

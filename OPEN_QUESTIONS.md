@@ -745,8 +745,8 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-032 | How the corona's settings are stored and sent to the controller | Next pass, with `Global_2685150` | Answered: host's choices in `GPBD_FM_2`, copied to the lobby state's `.f_669`; races also use `GlobalServerBD_Races` ([R7.5 13.5](/docs/online/job-lobby.md#135-from-job-type-to-running-controller)) |
 | ON-033 | How playlists and series step from job to job (`FMMC_PlayList_Controller`) | Next pass | Answered: each playlist job is a new session; the playlist hands the next content id to the launcher ([R7.5 13.7.1](/docs/online/job-lobby.md#1371-playlists-and-walk-in-markers-second-pass)) |
 | ON-034 | How a walk-in job marker in freemode hands over to the launcher | R7.1 second pass (`freemode`) | Answered: the walk-in conditions and the launcher flag `freemode` raises ([R7.5 13.7.1](/docs/online/job-lobby.md#1371-playlists-and-walk-in-markers-second-pass)) |
-| ON-070 | What the job value in start argument `.f_2` is, and what lobby flag bit 1 and `.f_880` are raised for | Third pass, the `freemode` and `maintransition` writers | Open |
-| ON-071 | What the playlist's `.f_877` position is and how the launcher uses it | Third pass, `fmmc_launcher` state 10 | Open |
+| ON-070 | What the job value in start argument `.f_2` is, and what lobby flag bit 1 and `.f_880` are raised for | Third pass, the `freemode` and `maintransition` writers | Partly answered: `.f_880` is raised only by one `freemode` routine, in a branch that checks another active player's index (our reading: joining that player's quick job); `.f_2` and lobby bit 1 still to read |
+| ON-071 | What the playlist's `.f_877` position is and how the launcher uses it | Third pass, `fmmc_launcher` state 10 | Answered: a 3D position from the next job's data, passed with its content id to the launcher's job loader ([job lobby 13.7.1](/docs/online/job-lobby.md#1371-playlists-and-walk-in-markers-second-pass)) |
 
 ### [Organisations and businesses](/docs/online/organisations-and-businesses.md) (R7.7)
 
@@ -818,7 +818,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-062 | What the four character "slots" in the retry states are (two characters plus?) and how `HUD_SLOTONE` / `HUD_SLOTTWO` relate | R7.3 stats | Answered: cloud save slots 0 (account), 1 and 2 (the two characters); "Slot 1" and "Slot 2" label the character saves ([R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) |
 | ON-063 | The order of states on the way back to story mode, step by step | Second pass | Answered: 63 then 64, step by step ([R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) |
 | ON-064 | What the testbed session is used for in release builds | Second pass | Answered: only level 5 (development) enters it; unused in release ([R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) |
-| ON-074 | Which scripts outside `maintransition` ask for the return to story mode, and what retry state 13 waits for | Third pass, the callers of the state request | Partly answered: only `ingamehud` (on accepting a connection-problem warning) and `selector` (the character wheel); retry state 13 still open ([transitions](/docs/online/transitions-and-sessions.md)) |
+| ON-074 | Which scripts outside `maintransition` ask for the return to story mode, and what retry state 13 waits for | Third pass, the callers of the state request | Answered: only `ingamehud` (connection-problem warnings) and `selector` ask for the return; state 13 retries cloud save slot 3 and then sets `mpply_last_mp_char` to 2 ([transitions](/docs/online/transitions-and-sessions.md)) |
 
 ## User interface
 

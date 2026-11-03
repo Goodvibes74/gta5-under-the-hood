@@ -60,7 +60,8 @@ Before the state machine runs (**Verified**, entry function): marks itself netwo
 | 10 `RETRY_LOADING` | Cloud save slot 0 (the account-wide `mpply_` stats) |
 | 11 `RETRY_LOADING_SLOT_1` | Cloud save slot 1 (the first character) |
 | 12 `RETRY_LOADING_SLOT_2` | Cloud save slot 2 (the second character) |
-| 13, 14 | Wait on any stat load still pending (14 shows `MP_SPINLOADING` and falls back if the cloud is unavailable) |
+| 13 | Cloud save slot 3 (*second pass*): shows `MP_SPINLOADING`, waits until no stat load is pending (100 s timer), falls back to 5 if the cloud is unavailable; when slot 3 has loaded it writes `mpply_last_mp_char` = 2 and returns to 4. It is entered from the same retry routine as 11 and 12, with slot 3 |
+| 14 | Waits on any stat load still pending, with the same spinner and fallback |
 
 Each one goes back to the HUD checks (4) when the load finishes, or to the waiting state (5) on failure. `HUD_SLOTONE` and `HUD_SLOTTWO` are the text "Slot 1" and "Slot 2". They label the two character saves in the warning screen shown when one or both failed to load. So there are two characters, plus the account-wide save.
 
@@ -94,7 +95,6 @@ The other exit, 7 `SP_SWOOP_DOWN`, can't be taken: the check that picks between 
 | What the four character "slots" in the retry states are (two characters plus?) and how `HUD_SLOTONE` / `HUD_SLOTTWO` relate | Answered in [9.4.1](#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass) |
 | The order of states on the way back to story mode, step by step | Answered in [9.4.1](#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass) |
 | What the testbed session is used for in release builds | Answered in [9.4.1](#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass): unused; only level 5 enters it |
-| What retry state 13 waits for (ON-074; the scripts that ask for the return to story mode are answered in [9.4.1](#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) | Third pass, `maintransition` state 13 |
 
 ## 9.7 Test cards
 
