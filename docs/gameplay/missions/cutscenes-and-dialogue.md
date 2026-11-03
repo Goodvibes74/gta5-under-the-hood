@@ -109,7 +109,10 @@ The names follow the mission codes (`armenian_1_int`, `fbi_...`, `family_...`, `
 | Phone call or face to face | `Global_22990` | `Global_22989` | Picks the phone path in `dialogue_handler` |
 | Priority | passed as an argument | `Global_22985` | Values 8 to 11 become 7 |
 
-**Who wins.** `dialogue_handler`'s state (`Global_22983`) is 0 when it is idle. A new request is accepted when the handler is idle, or when it is busy and the new request has a higher priority. In that case a face-to-face request stops the current conversation and takes over, while a phone request gives up. A request is also refused while any scripted conversation is still playing. Once a request is accepted, the state goes to 1 (build the conversation: load the text block and the lines, along the phone or the face-to-face path), to 4 while the conversation plays and to 6 while it ends. States 2, 3 and 5 are short steps in between, and their exact roles are left open.
+**Who wins.** `dialogue_handler`'s state (`Global_22983`) is 0 when it is idle. A new request is accepted when the handler is idle, or when it is busy and the new request has a higher priority. In that case a face-to-face request stops the current conversation and takes over, while a phone request gives up. A request is also refused while any scripted conversation is still playing. Once a request is accepted, the state goes to 1 (build the conversation: load the text block and the lines, along the phone or the face-to-face path), to 4 while the conversation plays and to 6 while it ends. The three in-between states (**Verified**, second pass, `dialogue_handler`'s state switch and the functions that set them):
+- **2** is phone calls only. The phone path in state 1 moves to 2 once the call isn't being held back. State 2 waits until the phone's Scaleform movie has loaded (timed with the game or network clock), then sets 4.
+- **3** is a preloaded phone conversation. State 1 calls `PRELOAD_SCRIPT_PHONE_CONVERSATION` and moves to 3. State 3 waits for `GET_IS_PRELOADED_CONVERSATION_READY`, then starts the call; if the player is no longer playing or loses control, it gives up and moves to 6.
+- **5** is a hang-up. When a call is cut off (the player hangs up, or the handler stops an ongoing mobile call with `STOP_SCRIPTED_CONVERSATION`), the stop routine sets 5. State 5 then runs the same reset as state 6 (clear the active conversation's globals), so 5 is "ended by hanging up" and 6 is "ended normally".
 
 ## 6.6 What this means for modders
 
@@ -126,6 +129,6 @@ The names follow the mission codes (`armenian_1_int`, `fbi_...`, `family_...`, `
 | --- | --- |
 | How many cutscene files ship (`.cut` in the `x64` archives and DLC packs) and how they are organised | Answered in [6.3.1](#631-the-cutscene-files-second-pass) |
 | Exact meanings of the `START_CUTSCENE` and `REGISTER_ENTITY_FOR_CUTSCENE` flag bits | Second pass, in-game tests |
-| The layout of `dialogue_handler`'s request globals (speakers, root, block, flags) | Mostly answered in [6.5](#subtitles-and-phone-calls-second-pass): every request field and its active copy; the in-between handler states 2, 3 and 5 are third pass |
+| The layout of `dialogue_handler`'s request globals (speakers, root, block, flags) | Answered in [6.5](#subtitles-and-phone-calls-second-pass), with all seven handler states |
 
 Answered in the second pass: how subtitles are hidden or shown, and how phone calls differ from face-to-face lines ([6.5](#subtitles-and-phone-calls-second-pass)).

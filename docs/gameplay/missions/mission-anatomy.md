@@ -41,6 +41,13 @@ Every one of the three does the same things in the same order before its loop (*
 
 `jewelry_heist` adds the heist parts before its loop: it reads which approach the player chose (3.8) and the chosen crew, and puts the take counter on screen.
 
+**How the crew changes the take** (**Verified**, second pass, `jewelry_heist`). Every crew member has a skill tier of 0, 1 or 2 in the story save; the heist reads the tier of the member in each role:
+- **Gunman** (the slot depends on the approach): each display case smashed adds its value times 1.0 (tier 2), 0.9 (tier 1) or 0.8 (tier 0).
+- **Hacker:** sets how long the alarm window lasts before the police arrive, 90 s (tier 2), 65 s (tier 1) or 55 s (tier 0). That limits how many cases the player can smash.
+- **Losing a bag:** when a crew member falls off his bike in the getaway, the bag he carried takes away a third of the take, but never so much that the take drops below **$2,741,082** (the loss becomes the take minus $2,741,082 instead).
+
+The final take is what is left after these. The board's crew cuts (in `heist_ctrl_jewel`, label `H_CRW_CUT`) then come off it (our reading of the split; the cut percentages are in [R17.10](/docs/ai/script-ai-patterns.md#447-heist-crews)). The other heists use the same tier field; their own effects weren't read.
+
 ### 3.3.1 Before the script starts: the lead-in (second pass)
 
 The few seconds before a mission, with characters already waiting at the blip, belong to the mission triggerer, not the mission (**Verified** counts, the four build-3725 triggerers):
@@ -206,6 +213,6 @@ When the step is 4 (a restart is setting up), the same cleanup runs but clears t
 | Where `armenian1`, `jewelry_heist` and `trevor1` set the skip flag (`Global_96580`), since they don't do it in their own code | Answered in [3.6](#36-checkpoints-retry-and-skip): `flow_controller` sets it for every mission the flow runs |
 | The exact meaning of `replay_controller` states 1 to 6 and 11 to 13 | Answered in [3.6](#36-checkpoints-retry-and-skip) |
 | How the snapshot in `Global_108447` is restored on retry, and what it leaves out | Answered in [3.6](#36-checkpoints-retry-and-skip) |
-| How crew skill changes the heist take and the fail labels in `Local_3373` | Partly answered (second pass): the fail labels are fixed, not chosen by crew; how crew skill changes the take is left for the third pass |
+| How crew skill changes the heist take and the fail labels in `Local_3373` | Answered for the Jewel Store Job (second pass): gunman tier scales each case, hacker tier sets the alarm window, a lost bag costs a third with a floor; other heists not read |
 | How `mission_repeat_controller` replays a mission without moving the flow (from guide 2) | Answered in [3.9](#39-passing) |
 | What the mission triggerers build before a mission starts (lead-in scenes, from guide 2) | Partly answered in [3.3.1](#331-before-the-script-starts-the-lead-in-second-pass): what each triggerer creates and its lead-in labels; which scene goes with which mission, and the handover, are third pass |
