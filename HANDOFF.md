@@ -80,19 +80,35 @@ GS-004, GP-025 and GP-087 (replay type numbers), GP-069 and GP-092 (ability entr
 
 ### 5. Scripts only (the decompile at commit `6c18d3e8`; no other input)
 
-These can be done at any time. Most are long reads; pointers are in each row of `OPEN_QUESTIONS.md`.
+**Phase 1 to 4 leftovers still open** (the cloud sessions answered GP-007, GP-019 (Jewel Store), GP-029 (mostly), GP-031, GP-032, ON-071, ON-074, ON-076 and the others listed above). Each has a starting point:
 
-- **Core:** CORE-009 (single-bit names), CORE-021 (`freemode` launches by request).
-- **Story:** GP-001 (rest), GP-007 (handler states 2, 3, 5), GP-011 (golf AI), GP-019 (crew skill and the take), GP-021, GP-029, GP-031 (`finaleA`/`B` third target), GP-032 (the other flag IDs), GP-038 (per-scene checks).
-- **Online:** ON-001, ON-005, ON-006 (job types 4 and 31), ON-010, ON-011, ON-012, ON-013, ON-014, ON-017, ON-023/ON-076 (classic heist elite), ON-024, ON-037, ON-039, ON-040, ON-043, ON-065, ON-069 (`am_pi_menu` pages), ON-070, ON-071, ON-074 (retry state 13). ON-002 has no names in the scripts at all, so it needs the executable or community names.
+| ID | Where to start |
+| --- | --- |
+| GP-021 | The four `mission_triggerer_*` scripts number their cases locally (not by mission id): map each local case to its mission through the triggerer's mission-id list first, then read the scene set-up per case |
+| GP-038 | `player_controller_b` / `selector`: the 42-entry scene table's per-scene check function and Trevor's pickers |
+| GP-011 | `golf`: the AI shot-choice routine (club and power by distance and lie) |
+| GP-083 | `clothes_shop_mp`: the non-DLC item tables (label, price); English labels need the text files |
+| CORE-009 | Single-bit names of `Global_1845250` / `Global_2658291` bitfields (writers are grouped already) |
+| CORE-021 | `freemode`'s launches by request (the request queue and who fills it) |
+| UI-002 | The `listId` draw lists and depths (`SET_SCRIPT_GFX_DRAW_ORDER` and the callers) |
+| ON-006 | Job types 4 and 31: the 23 checks that pair them with missions and Survival; find a writer that sets the type |
+| ON-069 | `am_pi_menu`, page by page: each page's show and grey rules |
+| ON-070 | `.f_2` of the 21-value start arguments and lobby bit 1 (writers in `freemode`, `maintransition`) |
+| ON-065 | Slot 30 and property indices 119 to 134 (the `freemode` slot-to-index function); slot 33 to 35 names need `mpstatscharactermappingdata.xml` |
+| ON-001, ON-005 | `freemode`'s 183 running-state functions; the host-state counter |
+| ON-010 to ON-014, ON-017 | Creator prop writers (`func_189` sparse vs full), race checkpoint fields (`chs`, `cpbs*`), dynamic props in the DM and mission controllers, the other creators' placement, the flow stats, the After Hours / Doomsday / 2015 flows |
+| ON-024, ON-040 | Heist story arcs and contacts; business battles and `fm_content_*` business missions |
+| ON-035, ON-077, ON-021 | Nightclub and Cayo values are hashed tunables: needs a name list (see ON-072 method) |
+| ON-037, ON-039, ON-043 | Production while offline (stats), how challenge percentages combine, simple-interior entrances per type |
+
+**Other categories (next phases, not started):**
+- **Core:** none beyond the rows above.
 - **World:** WLD-002, WLD-006, WLD-008, WLD-009, WLD-010, WLD-011, WLD-015.
 - **Entities and AI:**
   - ENT-014, AI-010, AI-032 (config flag numbers; names from NativeDB or community)
   - ENT-023, ENT-026, AI-008, AI-012, AI-013, AI-022, AI-023, AI-026, AI-031 (hash guesses), AI-038, AI-040, AI-041, AI-042, AI-043, AI-045, AI-046, AI-048, AI-050
-- **Shops:** GP-083 (base-wardrobe tables in `clothes_shop_mp`; the labels' English text needs group 2).
-- **Online creator rules:** FF-006 (how `fm_mission_controller` picks rules per team and stage).
-- **Performance, scripting and UI:** PERF-012, PERF-013, SCR-001, SCR-002, SCR-003, SCR-006, SCR-013, UI-002.
-- **Hashed tunable names** (ON-021, ON-035, ON-077, ON-072): a real name list is needed first. 311 names were recovered by hashing candidates; see the method below.
+- **Online creator rules:** FF-006.
+- **Performance and scripting:** PERF-012, PERF-013, SCR-001, SCR-002, SCR-003, SCR-006, SCR-013.
 
 ### 6. Ask the contributor or the community
 
