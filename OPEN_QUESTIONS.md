@@ -125,7 +125,8 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [Performance](#performance) (`PERF-`) | 9 | 28 |
 | [Scripting](#scripting) (`SCR-`) | 4 | 14 |
 | [File formats](#file-formats) (`FF-`) | 2 | 6 |
-| **Total** | | **438** |
+| [Knowledge graph](#knowledge-graph) (`KG-`) | (the graph) | 4 |
+| **Total** | | **442** |
 
 ## Getting started
 
@@ -1082,6 +1083,17 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | FF-004 | Meaning of each content section key (`me`, `sro`, `amb`, `gt`, `ta`, `tot`, `mvdr` ...), from the `fm_content_*` helper that reads them | Second pass, with one `re_` file and its script | Open |
 | FF-005 | The `gen` keys (8,472 paths): which ones `fm_mission_controller` actually reads | Second pass | Open |
 | FF-006 | How the controller picks rules per team and stage | R7.5 (job lobby) and a second pass | Open |
+
+## Knowledge graph
+
+Questions raised by the [graph report](/graphify-out/GRAPH_REPORT.md) after the 2026-11-03 refresh (2,408 nodes, 5,240 edges, 137 communities). They are about the docs themselves, not the game: where facts aren't tied together, and where the same fact lives in two places.
+
+| ID | Question | Where it goes | Status |
+| --- | --- | --- | --- |
+| KG-001 | Tie in the 722 weakly connected nodes (one link or none; 4 fully isolated). The docs with the most: `docs/core/global-map.md` (27), `docs/ui/server-backed-screens.md` (19), `docs/00-getting-started/boot.md` (13), `docs/online/properties.md` (11), `docs/gameplay/economy/economy-and-pickups.md` (11), `docs/core/runtime-scripts.md` (9), `docs/00-getting-started/glossary.md` (9), `scripting/native-usage/WEAPON.md` (9). Typical cases are data files named once (`material_override_pairs.dat`, `procedural.meta`, the shape-test flags) with no link to the system that uses them | Each guide's next pass: add the missing cross-links, then re-run `/graphify . --update` and compare the count | Open |
+| KG-002 | Pick one owner page for each of the 72 facts that two docs describe separately (the graph links them as `semantically_similar_to` across files), and link to it from the other, so numbers can't drift. Examples: `flow_controller` (launch graph and runtime scripts), the 270-entry activity table (launch graph and job lobby; their counts agree, 266 scripts), the script brains (launch graph and strangers and freaks) | A docs pass over the 72 pairs listed by the graph | Open |
+| KG-003 | Should the loosest clusters be split or given clearer sections? Cohesion scores: "Repo Overview and Guides" 0.04, "Story Flow and Strangers" 0.05, "Performance and Measuring" 0.05, "Vehicle and World Physics" 0.05 (1.0 = every node linked to every other). Low cohesion here mostly comes from index pages that link to everything | Maintainer decision: split the hub pages, or accept them as indexes | Open |
+| KG-004 | Should non-doc files be left out of the graph? `.github/workflows/file-rules.yml` alone adds 14 weakly connected nodes, and the example mods add 19 external C# types with no source file (`Vector3`, `KeyEventArgs` ...) | Maintainer decision; if yes, add the paths to graphify's exclude list | Open |
 
 ## Already answered
 

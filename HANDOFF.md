@@ -124,6 +124,10 @@ GS-004, GP-025 and GP-087 (replay type numbers), GP-069 and GP-092 (ability entr
 - **Online creator rules:** FF-006.
 - **Performance and scripting:** PERF-012, PERF-013, SCR-001, SCR-002, SCR-003, SCR-006, SCR-013.
 
+### 5b. Docs housekeeping from the knowledge graph
+
+KG-001 to KG-004 in `OPEN_QUESTIONS.md`: tie in 722 weakly connected nodes (most in the global map, server-backed screens, boot, properties and economy guides), give the 72 facts described in two docs a single owner page, decide whether to split the loosest hub clusters, and whether to keep workflow YAML and example-mod types out of the graph. Needs only the repo and `/graphify`.
+
 ### 6. Ask the contributor or the community
 
 GP-076 (which mod replaced the weapon files), REN-019 (each overhaul's own release notes), ON-053 (a tool idea; needs the maintainer, since tools live in `tools/`).
