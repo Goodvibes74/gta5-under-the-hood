@@ -80,7 +80,7 @@ The breath and stamina ranges are the same for everyone; only the stats differ. 
 | --- | --- |
 | The exact curve from the lung capacity stat to seconds of breath (`DiveRampPow` may be part of it) | Test card 1; R3.6 |
 | How fast drowning drains health | Test card 2 |
-| What the 5 non-story entries in `PlayerStatInfos` are (their names didn't resolve) | Second pass |
+| What the 5 non-story entries in `PlayerStatInfos` are (their names didn't resolve) | Partly answered (leftovers pass, **Verified**): the three story entries hash to `PLAYER_0` to `PLAYER_2`; the other five are identical to each other, differ from the story ones only in starting with full plane control (min 100, against 0) and a wheelie minimum of 80, and match no `PLAYER_`, `MP_` or model name tried. Our reading is that they are the Online characters |
 | How the fall heights combine with ragdoll and fall damage | R2.3 |
 | Swim speed from the stamina and lung stats | R3.6 |
 

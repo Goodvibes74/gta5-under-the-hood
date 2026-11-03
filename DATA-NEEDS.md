@@ -2,7 +2,7 @@
 
 The open questions that **can't be answered from the decompiled scripts alone**, grouped by the file to extract. Use it as a shopping list for one CodeWalker session (`tools/rpf-cw.ps1`, see [research tools](/docs/00-getting-started/research-tools.md)): extract everything in a group into a scratch folder outside the repo, then answer the group's questions together. Status and full wording of each question: [`OPEN_QUESTIONS.md`](/OPEN_QUESTIONS.md). Everything else that is still open is listed in [`HANDOFF.md`](/HANDOFF.md) (executable, in-game tests, scripts only).
 
-**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, batch D2 every explosion and weapon file, and batch D3 the water files; the rows marked *done, D1*, *D2* or *D3* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
+**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, batch D2 every explosion and weapon file, batch D3 the water files, and batch D4 the police and population files; the rows marked *done, D1* to *D4* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
 
 How to read the tables:
 - **Extract** gives the path as this repo's guides already use it (`common:` = `common.rpf`, `update:` = `update\update.rpf`, DLC = `update\x64\dlcpacks\<pack>\dlc.rpf` and the `dlc_patch` folders in `update.rpf`). Where no guide has given the path yet, it says *find*: list the archives with the tool and search for the file name.
@@ -83,13 +83,13 @@ How to read the tables:
 | ENT-013 | 23 personality hashes and relationship groups that didn't resolve | `pedpersonality.ymt`, the peds and relationship files | hash the script strings |
 | AI-014 | The full meaning of `taskdata.meta` and `scriptedguntasks.meta` | both files (*find*) | no |
 | AI-033 | How decision makers map each event to a response | `common:/data/events.meta` and the decision-maker files | no |
-| AI-034, AI-035 | The 9 crime-info entries; crime points per crime | `common:/data/ai/crimeinformation.meta` | in-game test for points |
-| AI-036 | The police vehicle sets with model names | `common:/data/dispatch.meta` | no |
+| AI-034, AI-035 (*done, D4*) | The 9 crime-info entries; crime points per crime | `common:/data/ai/crimeinformation.meta` | in-game test for points |
+| AI-036 (*done, D4*) | The police vehicle sets with model names | `common:/data/dispatch.meta` | no |
 | AI-009 | Animal models by kind and where each spawns | scenario types and the peds file | no |
-| ENT-021 | The 5 story schedule hashes that don't match a `popcycle.dat` name | `common:/data/levels/gta5/popcycle.dat` | the hashes come from the scripts |
-| ENT-024 | The unnamed zone fields (`hash_7111AC8A`, three flags) | `common:/data/levels/gta5/popzone.ipl` and the zone data | no |
+| ENT-021 (*done, D4*) | The 5 story schedule hashes that don't match a `popcycle.dat` name | `common:/data/levels/gta5/popcycle.dat` | the hashes come from the scripts |
+| ENT-024 (*done, D4*) | The unnamed zone fields (`hash_7111AC8A`, three flags) | `common:/data/levels/gta5/popzone.ipl` and the zone data | no |
 | ENT-025 | How bird and fish groups spawn | `popcycle.dat`, population groups | no |
-| GP-073 | The 5 non-story entries in `PlayerStatInfos` | `update:/x64/data/tune/playerinfo.ymt` (hash candidate names) | no |
+| GP-073 (*done, D4*) | The 5 non-story entries in `PlayerStatInfos` | `update:/x64/data/tune/playerinfo.ymt` (hash candidate names) | no |
 
 ## Character appearance and shops
 

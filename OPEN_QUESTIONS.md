@@ -116,6 +116,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | D1 | Every American `.gxt2` text block (base, `update.rpf`, `update2.rpf`, DLC); every `vehicles.meta`, `handling.meta`, `carcols` and `carvariations` (base, update, DLC, `dlc_patch`) | GP-090, GP-047, GP-082, ENT-005, GP-045, GP-046, ENT-036, ENT-037, ON-068 | Done: GP-045, GP-046, ENT-005, ENT-036 answered; GP-047, GP-082, GP-090, ENT-037 mostly; ON-068 narrowed (not a vehicle) |
 | D2 | `explosion.ymt` (update), all 19 `explosion.meta` (16 packs + 3 `dlc_patch`), every `*weapon*.meta` and `*ammo*.meta` (base, update, DLC, `dlc_patch`) | GP-078, GP-079, PHY-008, PHY-009, PHY-010 | Done: GP-079, PHY-010 answered; PHY-008, PHY-009 mostly; GP-078 partly |
 | D3 | `water.xml`, `water_heistisland.xml`, `waterheight.dat`, `water.dat`, `watertune*.xml` | PHY-015, PHY-016, PHY-018, PHY-005 | Done: PHY-015 answered; PHY-016, PHY-018 partly; PHY-005 waits for the collision files (map-data batch); new: Cayo Perico's own water file |
+| D4 | `dispatch.meta`, `crimeinformation.meta`, `wantedtuning.ymt`, `playerinfo.ymt`, `zonebind.ymt`, `popcycle.dat`, `popzone.ipl`, `popgroups.ymt`, `pedpersonality.ymt` (extracted) | AI-034, AI-035, AI-036, ENT-021, ENT-024, GP-073 | Done: AI-036, ENT-021 answered; AI-034 mostly; AI-035, ENT-024, GP-073 partly. The personality questions (AI-011, AI-016, AI-017, AI-019, AI-020, ENT-013) are the next batch |
 
 ## By category
 
@@ -275,10 +276,10 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ENT-021 | The 5 story-mode schedule hashes that don't match a `popcycle.dat` name | Second pass | Open |
+| ENT-021 | The 5 story-mode schedule hashes that don't match a `popcycle.dat` name | Second pass | Answered: one hash (`7D143EDB`) matches no schedule; six Online-only zones use it in story mode, so they get no ambient population (our reading) (leftovers pass, [population](/docs/entities/spawning/population.md#schedules-that-dont-exist-leftovers-pass)) |
 | ENT-022 | How the caps, `CityDensity` and the budgets combine into the real spawn count | Test card 1; R17.9 | Open |
 | ENT-023 | What `scumminessLevel` changes in code and in scripts | Second pass: `GET_ZONE_SCUMMINESS` callers | Open |
-| ENT-024 | The unnamed zone fields (`hash_7111AC8A`, three flags) | Second pass | Open |
+| ENT-024 | The unnamed zone fields (`hash_7111AC8A`, three flags) | Second pass | Partly answered: `hash_7111AC8A` (7) and `hash_3CBB62E0` (−1) are the same in every zone; the two flags are true on the west-coast beach zones, effect untested (leftovers pass, [population](/docs/entities/spawning/population.md#schedules-that-dont-exist-leftovers-pass)) |
 | ENT-025 | How birds and fish groups spawn (they fill many slots) | R17.8 | Open |
 
 ### [Scenarios and ambient life](/docs/entities/spawning/scenarios.md) (R4.2)
@@ -434,9 +435,9 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| AI-034 | The names and values of the 9 crime-info entries | R3.7 | Open |
-| AI-035 | How crime points are added per crime | R3.7 | Open |
-| AI-036 | The full vehicle sets with model names | Second pass, `dispatch.meta` | Open |
+| AI-034 | The names and values of the 9 crime-info entries | R3.7 | Mostly answered: the 9 keys are `CRIME_NONE`, `KILL_COP`, `KILL_PED`, `STEAL_CAR`, `STEAL_VEHICLE`, `HASSLE`, `SHOOT_COP`, `RECKLESS_DRIVING` and `VEHICLE_EXPLOSION`, with their values; three field names are still unknown (leftovers pass, [police](/docs/ai/police-and-services.md#353-search-and-spawning-dispatchtuningymt)) |
+| AI-035 | How crime points are added per crime | R3.7 | Partly answered: no data file holds points per crime (crime info has witness rules, dispatch only the points per star), so it is the engine (leftovers pass) |
+| AI-036 | The full vehicle sets with model names | Second pass, `dispatch.meta` | Answered: all 15 sets with models, peds and the army-base and countryside variants (leftovers pass, [police](/docs/ai/police-and-services.md#352-dispatchmeta)) |
 
 ### [Relationships and groups](/docs/ai/relationships-and-groups.md) (R17.4)
 
@@ -673,7 +674,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | GP-071 | The exact curve from the lung capacity stat to seconds of breath (`DiveRampPow` may be part of it) | Test card 1; R3.6 | Open |
 | GP-072 | How fast drowning drains health | Test card 2 | Open |
-| GP-073 | What the 5 non-story entries in `PlayerStatInfos` are (their names didn't resolve) | Second pass | Open |
+| GP-073 | What the 5 non-story entries in `PlayerStatInfos` are (their names didn't resolve) | Second pass | Partly answered: the three story entries are `PLAYER_0` to `PLAYER_2`; the five others are identical, start with full plane control, and their names didn't hash from any candidate tried (leftovers pass, [swimming](/docs/gameplay/player/swimming-and-diving.md)) |
 | GP-074 | How the fall heights combine with ragdoll and fall damage | R2.3 | Open |
 | GP-075 | Swim speed from the stamina and lung stats | R3.6 | Open |
 

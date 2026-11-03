@@ -71,6 +71,12 @@ So the map is mostly fed by scenarios rather than free walkers: a typical slot a
 | `GET_NAME_OF_ZONE` | 93 | 164 | The zone's area label (shown as the area name) |
 | `SET_AMBIENT_ZONE_STATE` and friends | 247 to 268 | | Ambient **sound** zones (R9.1), not population |
 
+### Schedules that don't exist (leftovers pass)
+
+**Verified**, the update copies of `zonebind.ymt` and `popcycle.dat` (116 schedules, every name hashed with `joaat`). Of the 63 story-mode schedule hashes in `zonebind.ymt`, 62 match a schedule in `popcycle.dat`. Only one, `hash_7D143EDB`, matches no schedule in any `popcycle.dat`. Six zones use it for story mode: `PrLog` (its Online schedule is the same missing hash), the two gang zones `G_FAM` and `G_VAGOS` (Online: `NET_PUERTO_DEL_SOL`), the Lost MC compound zones `LstMC1` and `LstMC2` (Online: `NET_LOST_GANG`) and the Cayo Perico zone `IsHeist` (Online: `NET_ISLAND_HEIST`). These are zones that only Online missions fill, so our reading is that story mode is meant to find no schedule there and spawn no ambient population of its own; a word-list search for the hash's name found nothing.
+
+**The unnamed zone fields.** `hash_7111AC8A` is 7 in all 1,310 zones and `hash_3CBB62E0` is −1 in all, so neither tells zones apart in this build. The two flags `hash_AEBEFEED` (true in 233 zones) and `hash_008ED931` (true in 249; both true in 225) are set mostly along the west coast: Vespucci Beach and its promenade, Del Perro and its beach, Pacific Bluffs, the canals, plus parts of the Vinewood Hills and the countryside. What they switch is a test.
+
 ## What this means for modders
 
 - **Thin or fill the streets from a script:** `SET_PED_DENSITY_MULTIPLIER_THIS_FRAME(x)` and `SET_SCENARIO_PED_DENSITY_MULTIPLIER_THIS_FRAME(x, x)` every frame (with the vehicle versions from R4.3). Values above 1.0 don't raise the caps in `popcycle.dat` (**Known**).
@@ -84,10 +90,10 @@ So the map is mostly fed by scenarios rather than free walkers: a typical slot a
 
 | Question | Where it goes |
 | --- | --- |
-| The 5 story-mode schedule hashes that don't match a `popcycle.dat` name | Second pass |
+| The 5 story-mode schedule hashes that don't match a `popcycle.dat` name | Answered in [schedules that don't exist](#schedules-that-dont-exist-leftovers-pass): one hash, six zones |
 | How the caps, `CityDensity` and the budgets combine into the real spawn count | Test card 1; R17.9 |
 | What `scumminessLevel` changes in code and in scripts | Second pass: `GET_ZONE_SCUMMINESS` callers |
-| The unnamed zone fields (`hash_7111AC8A`, three flags) | Second pass |
+| The unnamed zone fields (`hash_7111AC8A`, three flags) | Partly answered in [schedules that don't exist](#schedules-that-dont-exist-leftovers-pass): two are the same value everywhere; what the two flags on the west-coast zones do is a test |
 | How birds and fish groups spawn (they fill many slots) | R17.8 |
 
 ## Test cards
