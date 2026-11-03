@@ -628,11 +628,11 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | GP-081 | What each restriction tag blocks or forces, as a table (hat with hood, glasses with masks ...) | Next pass, the tag checks in `shop_controller` | Open |
-| GP-082 | The full `locate` number to menu title map, and why a few menus appear only in some store layouts | Next pass, `clothes_shop_mp` menu builder | Open |
+| GP-082 | The full `locate` number to menu title map, and why a few menus appear only in some store layouts | Next pass, `clothes_shop_mp` menu builder | Partly answered: 305 Online menu numbers map to 306 `CSHOP_TITLE<n>` labels, 37 in story mode; the English text and the layout rules still open ([cosmetics](/docs/gameplay/player/online-cosmetic-shops.md#where-the-items-come-from)) |
 | GP-083 | The base-wardrobe tables (labels and prices of the non-DLC clothes) | Next pass | Open |
-| GP-084 | Which barber items need a rank, and the ranks | Next pass, the unlock checks behind `HAIR_UNLOCK` | Open |
+| GP-084 | Which barber items need a rank, and the ranks | Next pass, the unlock checks behind `HAIR_UNLOCK` | Answered: two rank tables in `hairdo_shop_mp`, hairstyles from rank 6 to 25, overlays 0 to 26 ([cosmetics](/docs/gameplay/player/online-cosmetic-shops.md#menus)) |
 | GP-085 | The hair and make-up colour counts on this build | In-game test, `GET_NUM_PED_HAIR_TINTS` / `GET_NUM_PED_MAKEUP_TINTS` | Open |
-| GP-086 | Which hair fade goes with which hairstyle (the barber adds one when a style is bought) | Next pass, the hairstyle-to-list-slot mapping in `hairdo_shop_mp` | Open |
+| GP-086 | Which hair fade goes with which hairstyle (the barber adds one when a style is bought) | Next pass, the hairstyle-to-list-slot mapping in `hairdo_shop_mp` | Answered: hair items map to slots 93 to 114 and 123; newer DLC hair names its fade as forced component type 10 ([cosmetics](/docs/gameplay/player/online-cosmetic-shops.md#hair-fades)) |
 
 ### [Respawn, death and arrest](/docs/gameplay/player/respawn-death-and-arrest.md) (R6.2)
 

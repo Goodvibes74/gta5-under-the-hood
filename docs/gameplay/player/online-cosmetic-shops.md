@@ -73,6 +73,24 @@ The top page (`HAIR_NG_T0` "CATEGORIES") lists seven entries in this order; Make
 
 An entry shows as new (a star) when an unseen item in it has unlocked, and greyed when nothing in it can be bought. Inside a page the item rows show the price; colour pages add a palette row with `FACE_COLOUR` "Color (n of n)", `FACE_COLHILI` "Highlights" (hair) and `FACE_OPAC` "Opacity" (overlays). The number of colours comes from the game, not the script: `GET_NUM_PED_HAIR_TINTS` (hair, beards, eyebrows, chest) and `GET_NUM_PED_MAKEUP_TINTS` (blusher, lipstick) (**Verified** calls; the counts themselves are **Known**: 64 each).
 
+**Rank locks** (**Verified**, second pass). The rank shown with `HAIR_UNLOCK` comes from two tables in `hairdo_shop_mp`. Hairstyles (menu 1) are numbered by the barber's hair items, five items to a style:
+
+| Rank | Male hair items | Female hair items |
+| ---: | --- | --- |
+| 6 | 85 to 89 | 41 to 45 |
+| 8 | 26 to 30 | 79 to 83 |
+| 10 | | 18 to 22 |
+| 12 | 13 to 17 | 67 to 71 |
+| 14 | 50 to 54 | 53 to 57 |
+| 16 | 57 to 61 | 47 to 51 |
+| 18 | 32 to 36 | 30 to 34 |
+| 20 | 80 to 84 | 73 to 77 |
+| 22 | 69 to 73 | |
+| 24 | 63 to 67 | |
+| 25 | | 0 |
+
+Every other listed hair item is rank 1. Beards, make-up and the other overlay menus (menus 2 and 3) use a second table over items 28 to 171: 82 items are rank 1, 4 are rank 0, and the rest are spread one or two per rank from 4 to 26.
+
 Messages: `HAIR_AFF_1` to `_9` ("Sorry - you cannot afford this beard / hairstyle / makeup / item"), `HAIR_CUR_*` (already owned), `HAIR_UNLOCK` ("This item will unlock when you reach Rank ~1~"), `HAIR_LOCK` (unavailable), `HAIR_SALE` (a sale is on).
 
 ### What each item is
@@ -103,6 +121,29 @@ Each hairstyle comes with a scalp decoration so short styles show a fade line. T
 - `mpBeach_overlays` / `FM_Hair_Fuzz` (list slot 123): stubble for a shaved head, added unless the head zone already has one.
 - Later packs list theirs in `shop_tattoo.meta` with `updateGroup` `hairOverlay` (92 items in all packs).
 
+**Which fade goes with which hairstyle** (**Verified**, second pass: one function in `hairdo_shop_mp` takes the model and the barber's hair item number and returns the list slot). Slot 93 is `NG_x_Hair_001`, 94 `_002` and so on to 107 (`_015`); 108 to 114 are the `NGBea_`, `NGBus_`, `NGHip_` and `NGInd_` fades in that order; 123 is `FM_Hair_Fuzz`.
+
+| Hair items (male) | Slot | Hair items (female) | Slot |
+| --- | ---: | --- | ---: |
+| 0 (shaved) | 123 | 0 | 123 |
+| 1 to 6 | 93 | 1 to 6 | 93 |
+| 7 to 12 | 94 | 7 to 12 | 94 |
+| 13 to 18 | 95 | 13 to 17 | 95 |
+| 19 to 25 | 96 | 18 to 23 | 96 |
+| 26 to 31 | 97 | 24 to 29 | 97 |
+| 32 to 37 | 98 | 30 to 34 | 98 |
+| 38 to 44 | 99 | 35 to 40 | 99 |
+| 45 to 49 | 100 | 41 to 46 | 100 |
+| 50 to 56 | 101 | 47 to 52 | 101 |
+| 57 to 62 | 102 | 53 to 59 | 102 |
+| 63 to 68 | 103 | 60 to 66 | 103 |
+| 69 to 73 | 104 | 67 to 72 | 104 |
+| 74 to 79 | 105 | 73 to 78 | 105 |
+| 80 to 84 | 106 | 79 to 84 | `MP_Hair_014_Fix` (a replacement decoration) |
+| 85 to 90 | 107 | 85 to 91 | 107 |
+
+Items from 91 (male) or 92 (female) up are DLC hairstyles, looked up by the catalogue item's name: the Beach styles `dlc_mp_beach_x_hair00` to `04` get slot 108 and `05` to `09` slot 109 (the Gunrunning `dlc_mp_gr_m_hair_15_0` and `_16_0` reuse them), Business `hair0_*` 110 and `hair1_*` 111, Hipster `hair0_*` 112 and `hair1_*` 113, and five Independence items 114. Every newer DLC hairstyle names its own fade as the catalogue item's forced component of type 10, and the barber adds that.
+
 ### The chair
 
 The barber is `s_m_m_hairdress_01` (`s_f_m_fembarber` at Bob Mulét's); the player sits through `misshair_shop@barbers` or `misshair_shop@hair_dressers` (`player_enterchair`, `keeper_hair_cut_a` / `_b`, `player_exitchair`), the penthouse spa uses `anim@amb@luxury_suite@spa@barbers`. A scripted camera follows the animation's phase, and the menu lets the player move the camera and zoom (`ITEM_MOV_CAM`, `ITEM_ZOOM`). A barber who sees a weapon or is shot at cowers (`react_cowering`) and the shop closes (`SHOP_CLOSED`) (**Verified** names).
@@ -117,6 +158,8 @@ There is no single counter menu. Each store has browse spots, each a position, a
 
 1. **Base items** (the launch wardrobe): for each model and slot the script knows how many drawables are base ones (a fixed table, **Verified**); their labels and prices are in script tables not read in this pass.
 2. **DLC items** are read from the catalogue with `SETUP_SHOP_PED_APPAREL_QUERY_TU(character, 11, locate, props, -1, component type)` and `GET_SHOP_PED_QUERY_COMPONENT` / `_PROP` (12 query calls, 805 `GET_SHOP_PED_COMPONENT` calls). The item's `locate` number puts it on a menu.
+
+**Menu titles** (**Verified**, second pass). One function in `clothes_shop_mp` names every Online menu: 305 menu numbers (0 to 312) map to 306 different title labels `CSHOP_TITLE<n>` (with a matching `CSHOP_ITEM<n>` for the item line). Menu 0 is titled by what the store sells (`CSHOP_TITLE41` when the menu holds masks, `CSHOP_TITLE159` for gear, otherwise `CSHOP_TITLE0`). Fourteen menus have a second title used when another player's current property is of type 14 (our reading of the condition). Story-mode stores use a separate, shorter table of 37 menus. The English titles are in the shop text blocks, not read in this session.
 3. **Price:** in Online the item's `textLabel` is hashed and looked up in 38 price functions (17,411 cases, each a tunable such as `Global_262145.f_16119`), then multiplied by the sale tunable of the update that added it (`CU_VAL_CLOTHES`, `CU_INDI_CLOTHES`, `CU_LOW_CLOTHES` ... with separate multipliers per slot), and doubled in one special case. Outside Online the `cost` field is used. Outfits are cheaper by what the player already owns (`CSHOP_OUTFIT_DI`).
 
 ### The catalogue in numbers
@@ -193,13 +236,11 @@ The shop scripts write through `STAT_SET_INT` on the stat for the current charac
 | Question | Where it goes |
 | --- | --- |
 | What each restriction tag blocks or forces, as a table (hat with hood, glasses with masks ...) | Next pass, the tag checks in `shop_controller` |
-| The full `locate` number to menu title map, and why a few menus appear only in some store layouts | Next pass, `clothes_shop_mp` menu builder |
+| The English text of the 306 `CSHOP_TITLE` labels, and why a few menus appear only in some store layouts (GP-082) | Third pass, the shop text block and the store-layout checks |
 | The base-wardrobe tables (labels and prices of the non-DLC clothes) | Next pass |
-| Which barber items need a rank, and the ranks | Next pass, the unlock checks behind `HAIR_UNLOCK` |
 | The hair and make-up colour counts on this build | In-game test, `GET_NUM_PED_HAIR_TINTS` / `GET_NUM_PED_MAKEUP_TINTS` |
-| Which hair fade goes with which hairstyle (the barber adds one when a style is bought) | Next pass, the hairstyle-to-list-slot mapping in `hairdo_shop_mp` |
 
 ## Test cards
 
 1. **Barber pages per gender (story mode, a freemode ped, single player only).** With a mod menu, read `GET_NUM_PED_HAIR_TINTS` and `GET_NUM_PED_MAKEUP_TINTS`; then set overlay 1 (beard) on `mp_f_freemode_01`: nothing should show, which is why the shop hides Beards for women.
-2. **Hair fade.** On `mp_m_freemode_01` with a short hairstyle, add `multiplayer_overlays` / `NG_M_Hair_001`: a fade line should appear on the scalp; `CLEAR_PED_DECORATIONS` removes it together with any tattoo. Which fade belongs to which hairstyle is an open question.
+2. **Hair fade.** On `mp_m_freemode_01` with a short hairstyle, add `multiplayer_overlays` / `NG_M_Hair_001`: a fade line should appear on the scalp; `CLEAR_PED_DECORATIONS` removes it together with any tattoo. Which fade belongs to which hairstyle is in [hair fades](#hair-fades).
