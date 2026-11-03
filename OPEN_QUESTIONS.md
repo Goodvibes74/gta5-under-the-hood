@@ -103,7 +103,7 @@ Test only: GP-054 (parent head counts), ON-058 (story clothes shop with a freemo
 | P4.7 | [Respawn](/docs/gameplay/player/respawn-death-and-arrest.md) and [health](/docs/gameplay/player/health-armour-death.md) (R6.2, R3.8): the building table, free respawns, hospital packs, armour items, DLC health configs | GP-060, GP-061, GP-063, GP-065, GP-066, GP-051, GP-052 | scripts, data | Done, branch `research/second-pass-phase4` (all seven answered) |
 | P4.8 | [Economy and pickups](/docs/gameplay/economy/economy-and-pickups.md) (R3.9): stock prices, pickup placement, shop robbery pay | GP-001, GP-002, GP-003 | scripts | Done, branch `research/second-pass-phase4` (GP-002, GP-003 answered, GP-001 mostly); new GP-090 |
 | P4.9 | [Controls and camera](/docs/gameplay/player/controls-and-camera.md) (R6.4): control names, disable helpers, context numbers | GP-041, GP-042, GP-044 | scripts, data | Done, branch `main-km1sze` (all three answered; control IDs from 257 up shifted by 37 in build 3717); new GP-091 |
-| P4.10 | [Skills](/docs/gameplay/player/skills-and-abilities.md), [flying](/docs/gameplay/player/flying.md) and [weapons](/docs/gameplay/weapons/weapons.md) (R3.6, R3.4, R3.1): skill gains, ability types, starting skills, DLC flying blocks, flight lessons, AI flight missions, weapon unlocks, ammo caps | GP-067, GP-069, GP-070, GP-045, GP-046, GP-047, GP-048, GP-077, GP-078 | scripts, data | Open |
+| P4.10 | [Skills](/docs/gameplay/player/skills-and-abilities.md), [flying](/docs/gameplay/player/flying.md) and [weapons](/docs/gameplay/weapons/weapons.md) (R3.6, R3.4, R3.1): skill gains, ability types, starting skills, DLC flying blocks, flight lessons, AI flight missions, weapon unlocks, ammo caps | GP-067, GP-069, GP-070, GP-045, GP-046, GP-047, GP-048, GP-077, GP-078 | scripts, data | Done, branch `main-km1sze` (GP-067, GP-070, GP-048, GP-077 answered, GP-069 and GP-047 partly; GP-078 moved to the third pass; GP-045 and GP-046 need the data files, not available in this session); new GP-092 |
 
 Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), GP-039 (switch flags), GP-043 (two scripts disabling controls), GP-091 (old control numbers on build 3717+), GP-049, GP-050, GP-053 (regeneration, hurt thresholds, armour split), GP-062, GP-064 (arrest weapons, respawn point choice), GP-068 (shooting, strength, stealth), GP-071, GP-072, GP-075 (breath, drowning, swim speed). Engine: GP-023 (what NoEditorRestrictions patches). Elsewhere: GP-027 (R13.2), GP-073 (swimming stat entries), GP-074 (R2.3), GP-076 (a question for the install's owner), GP-079 (R2.5), GP-080 (R3.2).
 
@@ -117,7 +117,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [Physics](#physics) (`PHY-`) | 4 | 18 |
 | [AI](#ai) (`AI-`) | 13 | 50 |
 | [The world](#the-world) (`WLD-`) | 4 | 19 |
-| [Gameplay](#gameplay) (`GP-`) | 17 | 91 |
+| [Gameplay](#gameplay) (`GP-`) | 17 | 92 |
 | [GTA Online](#gta-online) (`ON-`) | 13 | 77 |
 | [User interface](#user-interface) (`UI-`) | 6 | 20 |
 | [Audio](#audio) (`AUD-`) | 3 | 11 |
@@ -125,7 +125,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | [Performance](#performance) (`PERF-`) | 9 | 28 |
 | [Scripting](#scripting) (`SCR-`) | 4 | 14 |
 | [File formats](#file-formats) (`FF-`) | 2 | 6 |
-| **Total** | | **437** |
+| **Total** | | **438** |
 
 ## Getting started
 
@@ -597,10 +597,10 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-045 | Flying blocks of all DLC aircraft | Second pass with every DLC `handling.meta` | Open |
-| GP-046 | What `SPMED` and `SPSMALL` are | Second pass, `vehicles.meta` | Open |
-| GP-047 | The 12 lessons by name, their aircraft and targets | Second pass, `pilot_school` | Open |
-| GP-048 | The mission type numbers used with `TASK_HELI_MISSION` and `TASK_PLANE_MISSION`, with counts | Second pass | Open |
+| GP-045 | Flying blocks of all DLC aircraft | Second pass with every DLC `handling.meta` | Open (the P4.10 session had no game files; data only) |
+| GP-046 | What `SPMED` and `SPSMALL` are | Second pass, `vehicles.meta` | Open (the P4.10 session had no game files; data only) |
+| GP-047 | The 12 lessons by name, their aircraft and targets | Second pass, `pilot_school` | Partly answered: targets in [minigames](/docs/gameplay/missions/minigames-and-activities.md); the 12 set-ups use the Mallard 6 times, Cuban 800, Maverick and Frogger twice each, reached through a function table; names and lesson-to-aircraft still need the `PSCHOOL` text block ([flying](/docs/gameplay/player/flying.md#195-the-flight-school)) |
+| GP-048 | The mission type numbers used with `TASK_HELI_MISSION` and `TASK_PLANE_MISSION`, with counts | Second pass | Answered: helicopters mostly go to (4), stop (5), flee (8), land (19); planes go to (4) and crash (21, all Online) ([flying](/docs/gameplay/player/flying.md#193-what-scripts-do-with-aircraft)) |
 
 ### [Health, armour, death and arrest](/docs/gameplay/player/health-armour-death.md) (R3.8)
 
@@ -650,10 +650,11 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-067 | How much each activity raises each skill (the `stats_controller` rules) | Second pass: read `stats_controller` | Open |
+| GP-067 | How much each activity raises each skill (the `stats_controller` rules) | Second pass: read `stats_controller` | Answered: each skill is recomputed from career stats (for example running distance ÷ 175, unarmed hits ÷ 20, seconds underwater ÷ 30) plus a starting value and bonus points, and never lowered ([skills](/docs/gameplay/player/skills-and-abilities.md#how-skills-grow-second-pass)) |
 | GP-068 | What shooting, strength and stealth change, in numbers | In-game tests | Open |
-| GP-069 | Which ability type each entry 3 to 16 is | Second pass with the ability type list | Open |
-| GP-070 | The starting skill values of each character in a new game | Second pass: `initial` / `flow_controller` | Open |
+| GP-069 | Which ability type each entry 3 to 16 is | Second pass with the ability type list | Partly answered: entries 0 to 7 follow the eight `SAT_*` types (3 `SNAPSHOT`, 4 `INSULT`, 5 `ENRAGED`, 6 `GHOST`, 7 `SPRINT_SPEED_BOOST`); 8 to 16 have no type, new GP-092 ([skills](/docs/gameplay/player/skills-and-abilities.md#the-special-abilities)) |
+| GP-092 | What selects special ability entries 8 to 16, which have no `SAT_*` type | Third pass, the engine | Open |
+| GP-070 | The starting skill values of each character in a new game | Second pass: `initial` / `flow_controller` | Answered: a table in `stats_controller` (Michael shooting 79 and stealth 81, Franklin wheelie 71, Trevor flying 82 and strength 79 ...); 100 in Director Mode ([skills](/docs/gameplay/player/skills-and-abilities.md#starting-skills)) |
 
 ### [Swimming and diving](/docs/gameplay/player/swimming-and-diving.md) (R3.5)
 
@@ -670,8 +671,8 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | GP-076 | Which mod installed the weapon overhaul (and the other 93 replaced files) | Ask the user; R10.1 | Open |
-| GP-077 | The hatchet's extra condition, and whether the Gusenberg really waits for `finale_credits` | R3.1 second pass | Open |
-| GP-078 | How story stats and Online rank change `AmmoMax` | R3.6 | Open |
+| GP-077 | The hatchet's extra condition, and whether the Gusenberg really waits for `finale_credits` | R3.1 second pass | Answered: the hatchet needs `trevor1` and the returning-player check (`NETWORK_HAS_ROS_PRIVILEGE_PLAYED_LAST_GEN` or profile setting 866 bit 0); the Gusenberg needs only `finale_credits` ([weapons](/docs/gameplay/weapons/weapons.md#49-ammu-nation-in-story-mode)) |
+| GP-078 | How story stats and Online rank change `AmmoMax` | Third pass, the engine and the `AmmoMax*` fields of `weapons.meta` (scripts only read the cap with `GET_MAX_AMMO`, 185 scripts) | Open |
 | GP-079 | Explosion damage and radius per explosive (`explosion.meta`) | R2.5: [fire, explosions and projectiles](/docs/physics/fire-explosions-projectiles.md) | Open |
 | GP-080 | How aim assist and lock-on work for the player versus AI | R3.2 | Open |
 
