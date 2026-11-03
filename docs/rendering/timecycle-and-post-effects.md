@@ -108,7 +108,7 @@ The modifiers scripts set most by literal name (117 distinct): `CAMERA_secuirity
 | What `userFlags` 1, 2, 4, 8 and 16 do | Second pass: compare the modifiers in each group |
 | The game hours of the 13 keyframes | Second pass: test card 2 |
 | What the 39 unnamed post effects are, and whether anything plays them | Second pass: hash lists from other sources |
-| How many timecycle boxes and interior room modifiers the map has | R4.6 (map data) |
+| How many timecycle boxes and interior room modifiers the map has | Answered (leftovers pass, **Verified**): **6,263 timecycle boxes** in 527 ymaps (3,685 DLC, 2,122 `dlc_patch`, 456 base; none in a script-loaded ymap), using 100 modifiers, 99 of them named from the `timecycle_mods` files: `NoAmbientmult` 4,544, `WATER_shore` 277, `NOdirectLight` 170, `MP_Heist4_Artificial_Amb_Mul` 169, `overwater` 139, `NO_streetAmbient` 131, `NO_weather` 86. Interiors: **1,269 of 1,658 rooms** in the 386 interiors name a timecycle modifier (333 different ones, 39 rooms a second one), and 147 interiors add 939 modifier boxes of their own |
 | `GroupId` and `EventType` on post effects | Second pass |
 
 ## Test cards

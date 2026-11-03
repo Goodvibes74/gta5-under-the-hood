@@ -120,6 +120,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | D5 | `pedpersonality.ymt`, every `peds.ymt` / `peds.meta`, `relationships.dat` | AI-011, AI-016, AI-017, AI-019, AI-020, ENT-013 | Done: AI-011, AI-016 answered; AI-017, ENT-013 mostly; AI-019 partly; AI-020 needs the executable |
 | D6 | The 164 freemode shop catalogue files, 22 DLC component `.ymt` files, `shop_vehicle`, `shop_weapon` and `shop_tattoo` files | GP-081, ENT-015, ON-049, GP-055, GP-057, ENT-010 | Done: ENT-015 answered, GP-081 partly. ON-049 is about the server's transaction catalogue, which no game file holds; GP-055, GP-057 and ENT-010 need the creator scripts more than these files, so they stay open |
 | D7 | `gameconfig.xml` (base and update), a listing of every archive with entry sizes, one `fm_content_*` script for the content keys | SCR-014, PERF-025, FF-001, FF-002, FF-003, FF-004, FF-005 | Done: SCR-014, FF-001, FF-002, FF-003 answered (and AI-006 with SCR-014); FF-004 mostly; PERF-025 partly (a test). FF-005 needs `fm_mission_controller` read key by key, a scripts job, so it stays open |
+| D8 | Every `.ymap`, `.ytyp`, `.ymf`, `.ynd`, `.ynv` and scenario region file, loaded with CodeWalker's library; the archive listing for `.ybn` | GP-035, ENT-001 to ENT-003, ENT-028 to ENT-031, ENT-034, ENT-035, WLD-001, WLD-004, WLD-005, WLD-007, AI-027 to AI-029, REN-025, PHY-002 | Done: WLD-004, WLD-007, ENT-001, ENT-028, ENT-034, AI-028, AI-029, REN-025, PHY-002 answered; WLD-001, ENT-003, ENT-029, ENT-031 mostly; WLD-005, ENT-002, ENT-030, ENT-035, AI-027 partly; GP-035 not found. UI-009 (interior map names), PHY-005 and the pools part of PHY-018 were not attempted |
 
 ## By category
 
@@ -234,9 +235,9 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ENT-001 | Archetype flag bits counted across all `.ytyp` files | Second pass, with an XML export of the ytyps | Open |
-| ENT-002 | Which map props are fragments (`.yft`) and how many break | Second pass with R4.6's model counts | Open |
-| ENT-003 | Every rayfire object placed in the map, not only those named in scripts | Second pass, ymap entity extensions | Open |
+| ENT-001 | Archetype flag bits counted across all `.ytyp` files | Second pass, with an XML export of the ytyps | Answered: bit counts over 158,104 archetypes (leftovers pass, [props](/docs/entities/objects/props-and-doors.md#3041-archetypes-fragments-and-rayfire-objects-leftovers-pass)) |
+| ENT-002 | Which map props are fragments (`.yft`) and how many break | Second pass with R4.6's model counts | Partly answered: 4,426 fragment archetypes by source and folder; how many break needs the `.yft` files (leftovers pass, [props](/docs/entities/objects/props-and-doors.md#3041-archetypes-fragments-and-rayfire-objects-leftovers-pass)) |
+| ENT-003 | Every rayfire object placed in the map, not only those named in scripts | Second pass, ymap entity extensions | Mostly answered: 49 rayfire objects defined, 17 placed in outdoor ymaps (5 of them in script-loaded ones); the other 32 are not in any ymap, probably interior entity lists (leftovers pass, [props](/docs/entities/objects/props-and-doors.md#3041-archetypes-fragments-and-rayfire-objects-leftovers-pass)) |
 
 ### [Text and names in content](/docs/entities/objects/text-and-names.md) (R14.4)
 
@@ -291,19 +292,19 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | ENT-026 | The 44 scenario groups scripts toggle and what each controls | Second pass | Open |
 | ENT-027 | How the time window and probability combine with the `#Scenario` cap | Test card 1; R17.8 | Open |
-| ENT-028 | How many of the 111,898 points are Online-only | Second pass: the availability field | Open |
-| ENT-029 | The chaining graph format and how vehicles follow it | R17.6 | Open |
+| ENT-028 | How many of the 111,898 points are Online-only | Second pass: the availability field | Answered: 1,088 Online-only, 50,331 story-only (mostly animals), 57,779 both (leftovers pass, [scenarios](/docs/entities/spawning/scenarios.md#availability-chains-and-aircraft-leftovers-pass)) |
+| ENT-029 | The chaining graph format and how vehicles follow it | R17.6 | Mostly answered: 45,372 nodes, 40,907 edges, 4,697 chains with their fields; the 16 speed values are unnamed (leftovers pass, [scenarios](/docs/entities/spawning/scenarios.md#availability-chains-and-aircraft-leftovers-pass)) |
 
 ### [Vehicle generators and traffic](/docs/entities/spawning/vehicle-generators-and-traffic.md) (R4.3)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ENT-030 | What the car generator flag bits mean (3,680, 3,936 ...) | Second pass: compare generators in known places | Open |
-| ENT-031 | Which DLC ymaps with generators load in story mode | R4.6 (map data), R4.5 (IPLs) | Open |
+| ENT-030 | What the car generator flag bits mean (3,680, 3,936 ...) | Second pass: compare generators in known places | Partly answered: five default bits (3,680), bit 8 on roadside generators, bits 0 and 1 with fixed models, bits 28 to 31 with groups; exact meanings are a test (leftovers pass, [car generators](/docs/entities/spawning/vehicle-generators-and-traffic.md#flag-bits-and-dlc-generators-leftovers-pass)) |
+| ENT-031 | Which DLC ymaps with generators load in story mode | R4.6 (map data), R4.5 (IPLs) | Mostly answered: 20,177 DLC generators are in always-on copies of base road sections (`hei_`, `lr_`, `bkr_`, `apa_`) (leftovers pass, [car generators](/docs/entities/spawning/vehicle-generators-and-traffic.md#flag-bits-and-dlc-generators-leftovers-pass)) |
 | ENT-032 | How the schedule caps, the budget and the `CityDensity` setting combine | R4.1, test card 1 | Open |
 | ENT-033 | What the ten unused train tracks are and whether they work | Test card 3 | Open |
-| ENT-034 | Where ambient planes, helicopters and boats on routes come from | R4.2 (vehicle scenarios) | Open |
-| ENT-035 | Meaning of the bits in the vehicle generator flags field (3,680, 3,936, 3,616, 1,632), and the unresolved population group hash on 455 generators *(from the guide's text)* | Second pass | Open |
+| ENT-034 | Where ambient planes, helicopters and boats on routes come from | R4.2 (vehicle scenarios) | Answered: vehicle scenario points with plane, helicopter and boat model sets on chains, the planes in four `ng_planes` files (leftovers pass, [scenarios](/docs/entities/spawning/scenarios.md#availability-chains-and-aircraft-leftovers-pass)) |
+| ENT-035 | Meaning of the bits in the vehicle generator flags field (3,680, 3,936, 3,616, 1,632), and the unresolved population group hash on 455 generators *(from the guide's text)* | Second pass | Partly answered: the bits as ENT-030; the group `F85943A6` is only in South Los Santos road sections and still unnamed (leftovers pass, [car generators](/docs/entities/spawning/vehicle-generators-and-traffic.md#flag-bits-and-dlc-generators-leftovers-pass)) |
 
 ### [Vehicles](/docs/entities/vehicles/vehicles.md) (R14.1)
 
@@ -321,7 +322,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | PHY-001 | The two unnamed columns (0.95 and 0.0 in every row) | R2.1 second pass | Open |
-| PHY-002 | How many `.ybn` files the map has and how they are grouped | R4.1 (map) | Open |
+| PHY-002 | How many `.ybn` files the map has and how they are grouped | R4.1 (map) | Answered: 15,124, by area, pack and name prefix (leftovers pass, [collision](/docs/physics/collision-and-materials.md#57-open-questions)) |
 | PHY-003 | The exact shape test flag bits, checked in game | R2.1 second pass | Open |
 | PHY-004 | The ragdoll and `NATURAL_MOTION` materials | R2.3 | Open |
 | PHY-005 | How water collision differs from water simulation | R2.4 | Open |
@@ -416,14 +417,14 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | AI-024 | AI profiles of every DLC vehicle (all `handling.meta` files) | Second pass, with the DLC scan | Open |
 | AI-025 | How `SET_DRIVER_ABILITY` and `_AGGRESSIVENESS` change the curve or braking | In-game test | Open |
 | AI-026 | What `TASK_VEHICLE_TEMP_ACTION`'s action numbers mean, with Rockstar's counts | Second pass | Open |
-| AI-027 | Road nodes and how routes are planned | R17.5 (navigation) | Open |
+| AI-027 | Road nodes and how routes are planned | R17.5 (navigation) | Partly answered: node, link and junction counts; route planning is engine code (leftovers pass, [navigation](/docs/ai/navigation.md#3441-navmesh-and-road-node-counts-leftovers-pass)) |
 
 ### [Navigation and pathfinding](/docs/ai/navigation.md) (R17.5)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| AI-028 | Polygon, link and cover-point counts per tile | Second pass, a `.ynv` reader | Open |
-| AI-029 | Node and link counts in the `.ynd` files, and what the update changed | Second pass | Open |
+| AI-028 | Polygon, link and cover-point counts per tile | Second pass, a `.ynv` reader | Answered: polygons, vertices, portals and cover points, base and DLC (leftovers pass, [navigation](/docs/ai/navigation.md#3441-navmesh-and-road-node-counts-leftovers-pass)) |
+| AI-029 | Node and link counts in the `.ynd` files, and what the update changed | Second pass | Answered: 79,788 nodes and 166,544 links; the update adds 15 files and changes 23 (leftovers pass, [navigation](/docs/ai/navigation.md#3441-navmesh-and-road-node-counts-leftovers-pass)) |
 | AI-030 | How far around the player navmeshes stream by default | In-game test with `GET_NUM_NAVMESHES_EXISTING_IN_AREA` | Open |
 
 ### [Perception and events](/docs/ai/perception-and-events.md) (R17.2)
@@ -477,7 +478,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| WLD-001 | A list of IPL names with the interior or building each one controls | Second pass: match IPL names to the ymaps they load | Open |
+| WLD-001 | A list of IPL names with the interior or building each one controls | Second pass: match IPL names to the ymaps they load | Mostly answered: all 410 literal IPL names are script-loaded ymaps, 134 with an interior; by prefix family; a place-by-place list is third pass (leftovers pass, [interiors and IPLs](/docs/world/interiors-and-ipls.md)) |
 | WLD-002 | What `building_controller` swaps, building by building | Second pass | Open |
 | WLD-003 | Which Online interiors work offline with IPLs alone | Test card 2; second pass | Open |
 
@@ -485,10 +486,10 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| WLD-004 | The exact meaning of the ymap `flags` values 1, 2, 3 | Second pass: compare with the IPL names scripts request | Open |
-| WLD-005 | How many entities the story-mode map loads (only ymaps active outside Online) | Second pass: filter by IPL state | Open |
+| WLD-004 | The exact meaning of the ymap `flags` values 1, 2, 3 | Second pass: compare with the IPL names scripts request | Answered: bit 1 script-loaded (all 410 requested IPL ymaps have it), bit 2 LOD (leftovers pass, [map data](/docs/world/map-data.md#flags-story-mode-entities-and-manifests-leftovers-pass)) |
+| WLD-005 | How many entities the story-mode map loads (only ymaps active outside Online) | Second pass: filter by IPL state | Partly answered: about 715,000 entities once script-loaded maps and replaced DLC copies are left out; which pack change sets apply in story mode is open (leftovers pass, [map data](/docs/world/map-data.md#flags-story-mode-entities-and-manifests-leftovers-pass)) |
 | WLD-006 | How `re_lossantosintl` and `re_yetarian` enforce their areas | Second pass | Open |
-| WLD-007 | How the LOD manifests (`.ymf`) tie ymaps together | R4.5, second pass | Open |
+| WLD-007 | How the LOD manifests (`.ymf`) tie ymaps together | R4.5, second pass | Answered: ytyp dependencies, HD texture bindings, 938 named IPL groups (47 by hour, 44 by weather) and interiors (leftovers pass, [map data](/docs/world/map-data.md#flags-story-mode-entities-and-manifests-leftovers-pass)) |
 
 ### [Random events](/docs/world/random-events.md) (R4.4)
 
@@ -585,7 +586,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | GP-034 | The unlock condition of each entry (flow flags, character) from the remaining table fields | Second pass | Mostly answered: the conditions and every gating flag's setter (GP-089); `MrsPhilips2` and `Rampage3` releases open ([strangers 20.3.1](/docs/gameplay/missions/strangers-and-freaks.md#2031-what-makes-an-entry-available-second-pass)) |
-| GP-035 | Where the world points are placed and how many there are per brain | Map data, R4.6 second pass | Open, moved to the third pass: the placements are in the map data, not the scripts |
+| GP-035 | Where the world points are placed and how many there are per brain | Map data, R4.6 second pass | Open, moved to the third pass: the placements are in the map data, not the scripts. The leftovers pass checked ymap extensions, archetype effects, scenario types and chaining nodes: none holds the brain names |
 | GP-036 | What the object-brain percentage and flags mean | Second pass, in-game test | Answered: the last argument is the brain-set mask (1 story, 8 Online, 9 both); percentage always 100, the fourth argument always -1 ([strangers 20.2](/docs/gameplay/missions/strangers-and-freaks.md#202-script-brains)) |
 | GP-089 | Which scripts set the flag IDs that gate stranger entries (74, 84 to 110, 133) and release `MrsPhilips2`, `Rampage3` and `TheLastOne` | Third pass | Mostly answered: every flag's setter (pass → code entry → message → code entry chains, collectibles, the Epsilon site, 100% for 133); `TheLastOne` released at 100% by `completionpercentage_controller`; `MrsPhilips2`, `Rampage3` and code entry 95 open ([strangers](/docs/gameplay/missions/strangers-and-freaks.md#2031-what-makes-an-entry-available-second-pass)) |
 
@@ -965,7 +966,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | REN-022 | What `userFlags` 1, 2, 4, 8 and 16 do | Second pass: compare the modifiers in each group | Open |
 | REN-023 | The game hours of the 13 keyframes | Second pass: test card 2 | Open |
 | REN-024 | What the 39 unnamed post effects are, and whether anything plays them | Second pass: hash lists from other sources | Open |
-| REN-025 | How many timecycle boxes and interior room modifiers the map has | R4.6 (map data) | Open |
+| REN-025 | How many timecycle boxes and interior room modifiers the map has | R4.6 (map data) | Answered: 6,263 timecycle boxes in 527 ymaps; 1,269 of 1,658 interior rooms name a modifier, plus 939 interior boxes (leftovers pass, [timecycle](/docs/rendering/timecycle-and-post-effects.md#open-questions)) |
 | REN-026 | `GroupId` and `EventType` on post effects | Second pass | Open |
 | REN-027 | Meaning of the timecycle modifier `userFlags` values (0, 2, 1, 16, 4, 8) *(from the guide's text)* | Second pass | Open |
 

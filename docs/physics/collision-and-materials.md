@@ -140,7 +140,7 @@ The pattern used by missions after a warp (seen in `armenian1`'s restart code, [
 | Question | Where it goes |
 | --- | --- |
 | The two unnamed columns (0.95 and 0.0 in every row) | R2.1 second pass |
-| How many `.ybn` files the map has and how they are grouped | R4.1 (map) |
+| How many `.ybn` files the map has and how they are grouped | Answered (leftovers pass, **Verified** from the archive listing): 15,124: 8,709 in the base archives (`_hills` 6,206, `_citye` 1,092, `_cityw` 987, `interiors` 277, `_prologue` 147, in 626 map-section archives, median 4 and at most 166 per archive), 5,363 in DLC packs (`mpheist` 2,006, `mpheist4` 1,872 ...) and 1,052 in the update's `dlc_patch` folders. By name, 4,848 start with `hi@` and 1,025 with `ma@` (separate collision sets for the same section; *Known*: `hi@` is the high-detail set vehicles use) |
 | The exact shape test flag bits, checked in game | R2.1 second pass |
 | The ragdoll and `NATURAL_MOTION` materials | R2.3 |
 | How water collision differs from water simulation | R2.4 |

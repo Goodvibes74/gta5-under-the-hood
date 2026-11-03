@@ -76,7 +76,7 @@ Interiors that depend on Online scripts for furniture, lighting or audio look em
 
 | Question | Where it goes |
 | --- | --- |
-| A list of IPL names with the interior or building each one controls | Second pass: match IPL names to the ymaps they load |
+| A list of IPL names with the interior or building each one controls | Mostly answered (leftovers pass, **Verified**): every one of the 410 IPL names scripts pass by literal is a ymap with the script-loaded flag; 134 of them place an interior (MLO) instance and they hold 12,353 entities in all. By prefix: `hei_` 67, `apa_` 42, `ex_` 36, `m25_` 26, `m24_` 23, `h4_` 22, `imp_` 16, `m23_` 15, `sf_` 12, and story ones such as `prologue*`, `des_*`, `tankerexp*`, `bnkheist*`, `cs1_*`. A building-by-building list would need each ymap's position matched to a place name ([map data](/docs/world/map-data.md#flags-story-mode-entities-and-manifests-leftovers-pass)) |
 | What `building_controller` swaps, building by building | Second pass |
 | Which Online interiors work offline with IPLs alone | Test card 2; second pass |
 

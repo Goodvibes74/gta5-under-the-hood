@@ -2,7 +2,7 @@
 
 The open questions that **can't be answered from the decompiled scripts alone**, grouped by the file to extract. Use it as a shopping list for one CodeWalker session (`tools/rpf-cw.ps1`, see [research tools](/docs/00-getting-started/research-tools.md)): extract everything in a group into a scratch folder outside the repo, then answer the group's questions together. Status and full wording of each question: [`OPEN_QUESTIONS.md`](/OPEN_QUESTIONS.md). Everything else that is still open is listed in [`HANDOFF.md`](/HANDOFF.md) (executable, in-game tests, scripts only).
 
-**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, batch D2 every explosion and weapon file, batch D3 the water files, batch D4 the police and population files, batch D5 the personality and ped files, batch D6 the shop catalogues, and batch D7 `gameconfig.xml` and the archive listings; the rows marked *done, D1* to *D7* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
+**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, batch D2 every explosion and weapon file, batch D3 the water files, batch D4 the police and population files, batch D5 the personality and ped files, batch D6 the shop catalogues, batch D7 `gameconfig.xml` and the archive listings, and batch D8 the map data; the rows marked *done, D1* to *D8* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
 
 How to read the tables:
 - **Extract** gives the path as this repo's guides already use it (`common:` = `common.rpf`, `update:` = `update\update.rpf`, DLC = `update\x64\dlcpacks\<pack>\dlc.rpf` and the `dlc_patch` folders in `update.rpf`). Where no guide has given the path yet, it says *find*: list the archives with the tool and search for the file name.
@@ -53,23 +53,23 @@ How to read the tables:
 
 | ID | What to find | Extract | Scripts too? |
 | --- | --- | --- | --- |
-| GP-035 | Where the world points (script brains) are placed, and how many per brain | ymap / scenario data for world-point brains | brain names from the scripts (done) |
-| ENT-034 | Where ambient aircraft and boats on routes come from | vehicle scenarios, `common:/data/ai/scenarios.meta` and the scenario point files | no |
-| ENT-028 | How many of the 111,898 scenario points are Online-only | scenario point files (availability field) | no |
-| ENT-029 | The scenario chaining graph format | scenario point files | no |
-| ENT-030, ENT-035 | Car generator flag bits (3,680, 3,936, 3,616, 1,632) and the unresolved population groups | every `.ymap` with car generators | no |
-| ENT-031 | Which DLC ymaps with generators load in story mode | DLC ymaps plus the IPL state | the IPL requests in the scripts |
-| PHY-002 | How many `.ybn` files and how they're grouped | archive listing of `.ybn` | no |
-| ENT-001 | Archetype flag bits across all `.ytyp` | every `.ytyp` exported to XML | no |
-| ENT-002 | Which map props are fragments (`.yft`) and how many break | `.ytyp` archetypes and the `.yft` list | no |
-| ENT-003 | Every rayfire object placed in the map | ymap entity extensions | no |
-| WLD-001 | Each IPL name and the building it controls | every `.ymap` (match names to IPLs) | the IPL names from the scripts |
-| WLD-004 | Ymap `flags` values 1, 2, 3 | every `.ymap` | the IPL requests |
-| WLD-005 | How many entities the story map loads | every `.ymap`, filtered by IPL state | yes |
-| WLD-007 | How `.ymf` LOD manifests tie ymaps together | the `.ymf` files (*find*) | no |
-| AI-027, AI-029 | Road nodes, routes; node and link counts, update vs base | `.ynd` files | no |
-| AI-028 | Polygons, links and cover points per navmesh tile | `.ynv` files | no |
-| REN-025 | Timecycle boxes and interior room modifiers in the map | ymap timecycle modifiers and interior (`.ytyp` MLO) rooms | no |
+| GP-035 (*D8: not found*) | Where the world points (script brains) are placed, and how many per brain | ymap / scenario data for world-point brains | brain names from the scripts (done) |
+| ENT-034 (*done, D8*) | Where ambient aircraft and boats on routes come from | vehicle scenarios, `common:/data/ai/scenarios.meta` and the scenario point files | no |
+| ENT-028 (*done, D8*) | How many of the 111,898 scenario points are Online-only | scenario point files (availability field) | no |
+| ENT-029 (*done, D8*) | The scenario chaining graph format | scenario point files | no |
+| ENT-030, ENT-035 (*done, D8*) | Car generator flag bits (3,680, 3,936, 3,616, 1,632) and the unresolved population groups | every `.ymap` with car generators | no |
+| ENT-031 (*done, D8*) | Which DLC ymaps with generators load in story mode | DLC ymaps plus the IPL state | the IPL requests in the scripts |
+| PHY-002 (*done, D8*) | How many `.ybn` files and how they're grouped | archive listing of `.ybn` | no |
+| ENT-001 (*done, D8*) | Archetype flag bits across all `.ytyp` | every `.ytyp` exported to XML | no |
+| ENT-002 (*done, D8*) | Which map props are fragments (`.yft`) and how many break | `.ytyp` archetypes and the `.yft` list | no |
+| ENT-003 (*done, D8*) | Every rayfire object placed in the map | ymap entity extensions | no |
+| WLD-001 (*done, D8*) | Each IPL name and the building it controls | every `.ymap` (match names to IPLs) | the IPL names from the scripts |
+| WLD-004 (*done, D8*) | Ymap `flags` values 1, 2, 3 | every `.ymap` | the IPL requests |
+| WLD-005 (*done, D8*) | How many entities the story map loads | every `.ymap`, filtered by IPL state | yes |
+| WLD-007 (*done, D8*) | How `.ymf` LOD manifests tie ymaps together | the `.ymf` files (*find*) | no |
+| AI-027, AI-029 (*done, D8*) | Road nodes, routes; node and link counts, update vs base | `.ynd` files | no |
+| AI-028 (*done, D8*) | Polygons, links and cover points per navmesh tile | `.ynv` files | no |
+| REN-025 (*done, D8*) | Timecycle boxes and interior room modifiers in the map | ymap timecycle modifiers and interior (`.ytyp` MLO) rooms | no |
 | UI-009 | Which `int<number>` interior map belongs to which interior | interior `.ytyp` / ymaps, with the text labels | yes (the map names) |
 
 ## Peds, population, AI behaviour

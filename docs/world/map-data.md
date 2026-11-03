@@ -43,6 +43,26 @@ How the GTA V map is stored: `.ymap` placement files and `.ytyp` archetype files
 
 **Verified:** `re_armybase` sets a 4-star wanted level (`SET_PLAYER_WANTED_LEVEL(PLAYER_ID(), 4, false)` followed by `SET_PLAYER_WANTED_LEVEL_NOW`), three times in the script. `re_prison` sets 1, 2, 3 and 4 stars at different points (closer to the inner yard means more stars, **Known**). `re_lossantosintl` (700 lines) and `re_yetarian` (8,730 lines) set no wanted level in their own code. None of the four has a world brain point in `ambient.ipl`.
 
+## Flags, story-mode entities and manifests (leftovers pass)
+
+**Verified** (Every `.ymap`, `.ytyp`, `.ymf`, `.ynd`, `.ynv` and scenario `.ymt` in the vanilla archives loaded with CodeWalker's library by a read-only scan, build 1.0.3725.0 Legacy; one copy per file name, the update's winning over DLC over base; IPL names are every literal passed to `REQUEST_IPL`, `REMOVE_IPL` or `IS_IPL_ACTIVE` in the decompile, 410 names).
+
+**The `flags` field is two bits.** Bit 1 (value 1) is **script-loaded**: all 410 names scripts pass to the IPL natives are ymaps with bit 1 set (395 with flags 1, 15 with 3), and none has it clear. 1,344 ymaps have bit 1, so about 930 more are switched on some other way (names built at run time, or children of a requested map, such as the prologue's `_lod` files). Bit 2 (value 2) marks a ymap that holds **LOD** entities: 395 of the 400 `_lod` ymaps and all 20 `_distantlights` ones have it, and no `_strm_`, `_long_` or `_critical` ymap does. So 3 is a script-loaded LOD map (**Verified** by these counts; CodeWalker names the two bits the same way, **Known**).
+
+**What the story map loads.** The 9,721 ymaps without bit 1 hold 1.61 million entities, but that is too many, because three DLC packs ship renamed copies of base map sections: `hei_` (mpheist, 3,510 sections), `apa_` (mpapartment, 584), `lr_` (mplowrider, 592) and `bkr_` (mpbiker, 145), each a later version of a base section with the same rest of the name. Keeping only the newest copy of each section leaves **about 715,000 entities in 4,908 ymaps**: 443,803 from the update's `dlc_patch` files, 251,531 from DLC packs and 19,984 from base files no pack replaces. *Our reading:* the copies replace the originals (a pack's `content.xml` disables the old file, **Known**), and whether each pack's map change set is applied in story mode decides the last part ([change-set groups](/docs/core/archives-and-content.md#861-the-change-set-groups-second-pass)). So the figure is an estimate, not a count of what the engine loads.
+
+**How the `.ymf` manifests tie maps together.** The 1,778 manifests (833 base, 882 DLC, 63 `dlc_patch`) hold five kinds of entry (counts **Verified**; what each does is **Known**, CodeWalker's reading):
+
+| Entry | Entries | In manifests | What it does |
+| --- | ---: | ---: | --- |
+| `imapDependencies_2` | 15,005 | 185 | For each ymap, the `.ytyp` files its entities come from, so the archetypes load first |
+| `HDTxdAssetBindings` | 27,804 | 1,480 | Which high-detail texture dictionary replaces which normal one up close |
+| `MapDataGroups` | 938 | 163 | Named groups of ymaps switched together: the IPL names. 367 of the 938 group names are names scripts request |
+| `Interiors` | 406 | 245 | Interior archetypes and the bounds files they need |
+| `itypDependencies_2` and `imapDependencies` | 367 and 1,331 | 258 and 106 | `.ytyp` files that need other `.ytyp` files, and older ymap-to-ytyp links |
+
+**Some groups switch by time and weather.** 47 of the 938 groups have hours set (`HoursOnOff`, a 24-bit mask, one bit per hour) and 44 a weather list. All but two are base-game groups, mostly Vespucci beach ones (the other two are in `patchday1ng`): `vb_29_day` and `vb_29_night`, `vb_34_morning` (bits 6 to 9, 06:00 to 10:00), `vb_34_evening`, `hut05_open` and `hut05_closed`, `ap1_04_rain`. So beach props, shutters and huts change with the clock and the rain without any script. Manifests don't name a LOD parent: that link is on each entity (`parentIndex`) and each ymap (`parent`) (**Known**).
+
 ## What this means for modders
 
 - **Add, don't replace:** put new ymaps and ytyps in your own DLC pack with `DLC_ITYP_REQUEST` and `RPF_FILE` entries (515 `DLC_ITYP_REQUEST` entries exist across the vanilla packs).
@@ -55,10 +75,10 @@ How the GTA V map is stored: `.ymap` placement files and `.ytyp` archetype files
 
 | Question | Where it goes |
 | --- | --- |
-| The exact meaning of the ymap `flags` values 1, 2, 3 | Second pass: compare with the IPL names scripts request |
-| How many entities the story-mode map loads (only ymaps active outside Online) | Second pass: filter by IPL state |
+| The exact meaning of the ymap `flags` values 1, 2, 3 | Answered in [flags, story-mode entities and manifests](#flags-story-mode-entities-and-manifests-leftovers-pass): bit 1 script-loaded, bit 2 LOD |
+| How many entities the story-mode map loads (only ymaps active outside Online) | Partly answered in [flags, story-mode entities and manifests](#flags-story-mode-entities-and-manifests-leftovers-pass): about 715,000 once script-loaded maps and replaced copies are left out; which pack change sets apply in story mode is still open |
 | How `re_lossantosintl` and `re_yetarian` enforce their areas | Second pass |
-| How the LOD manifests (`.ymf`) tie ymaps together | R4.5, second pass |
+| How the LOD manifests (`.ymf`) tie ymaps together | Answered in [flags, story-mode entities and manifests](#flags-story-mode-entities-and-manifests-leftovers-pass): ytyp dependencies, HD texture bindings, named IPL groups (some by hour and weather) and interiors |
 
 ## Test cards
 
