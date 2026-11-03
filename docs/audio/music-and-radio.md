@@ -79,6 +79,16 @@ Other `RADIO_*` names in scripts are club and interior mixes (`RADIO_26_DLC_BATT
 - **Self Radio** (`RADIO_19_USER`) plays the player's own music files from the game's user music folder with no modding at all.
 - **Script control** works without any of that: a mod can switch stations, lock the radio, or play a mission-style score with existing music events.
 
+## Stations, music events and track markers (leftovers pass)
+
+**Verified** (every audio `.rel` file in the vanilla archives (`x64\audio\audio_rel.rpf`, `update.rpf`, the old packs in the base archives and every DLC pack, 253 files) loaded with CodeWalker's library by a read-only scan, build 1.0.3725.0 Legacy; one copy per file name, the update's winning; names matched against every string literal in the decompile; music event names are every literal passed to `TRIGGER_MUSIC_EVENT` or `PREPARE_MUSIC_EVENT`, 1,566 names).
+
+**Every station object names itself.** The 135 distinct station objects all carry a `RadioName` field (103 of the object hashes are simply the hash of that name), so every object that "didn't resolve" is named by its own field: **46 hidden stations** (`HIDDEN_RADIO_01_CLASS_ROCK` and the other station copies used in interiors and shops, `HIDDEN_RADIO_AMBIENT_TV`, `_STRIP_CLUB`, `_CASINO`, the arcade, biker clubhouse, Agency studio, car meet and Music Locker mixes), the player stations and club mixes (`RADIO_01` to `RADIO_37`, `DLC_BATTLE_MIX1_CLUB_PRIV` ...), and 23 `REPL_*` stations (`REPL_SCORE_01_ELECTRO`, `REPL_SFX_STATION_SFX_EXPLOSIONS` ...), mostly in the Rockstar Editor pack `mpreplay`. Each also has a genre number, a wheel position (1,000 per slot: `RADIO_09_HIPHOP_OLD` is 9,000) and its track lists.
+
+**A music event is the name of one action object.** 1,561 of the 1,566 event names are objects in the game data, each of one kind: **start a track** (464: a track and a mood, with fade times), **set the mood** (400: switch to another mood with a fade in and out), a list kind CodeWalker calls `PlayerAction` (360, not fully decoded), **stop the track** (280), start or stop a one-shot sound (24), fade the radio in or out (25) and force a radio track (6). A **mood** is a list of 1 to 6 **stem mixes** (most moods have one), each with three numbers that *our reading* takes as the intensity range it covers; a stem mix sets the volume of each of 8 stems (−10,000 is off). So step by step: the script triggers `AH1_RESTART`; that start-track action starts its track with its mood; the mood picks a stem mix, which sets which of the 8 stems play; a later event such as a set-mood action moves to another mood, and a stop-track action ends it. Bars and beats (`MusicBar`, `MusicBeat`) let an action wait for the next bar or beat.
+
+**Radio track markers.** 1,806 distinct track event lists hold 16,187 markers, each a time in milliseconds and a flag value. The flags are powers of two (16 on 6,649 markers, 32 on 3,092, 64, 128, 8, 4 ...), so *our reading* is that each bit is one kind of marker (beat, the window where a DJ may talk, the track's start and end). The track's length is not in the game data; it is in the `.awc` file.
+
 ## What this means for modders
 
 - Tune with `SET_RADIO_TO_STATION_NAME("RADIO_02_POP")` or `SET_VEH_RADIO_STATION(vehicle, name)`; turn off with `"RADIO_OFF"`.
@@ -91,10 +101,10 @@ Other `RADIO_*` names in scripts are club and interior mixes (`RADIO_26_DLC_BATT
 
 | Question | Where it goes |
 | --- | --- |
-| The 10 base and many DLC station objects whose names didn't resolve | Second pass with more name sources |
-| How a music event maps to moods and tracks, step by step | R9.1, second pass |
+| The 10 base and many DLC station objects whose names didn't resolve | Answered in [stations, music events and track markers](#stations-music-events-and-track-markers-leftovers-pass): each object's `RadioName` field names it |
+| How a music event maps to moods and tracks, step by step | Answered in [stations, music events and track markers](#stations-music-events-and-track-markers-leftovers-pass); the `PlayerAction` list kind and the mood's three numbers are not decoded |
 | Which DLC stations are available in story mode in build 3725 | Test card 1 |
-| The format of a radio track's data (length, markers for the DJ) | R9.1 |
+| The format of a radio track's data (length, markers for the DJ) | Partly answered in [stations, music events and track markers](#stations-music-events-and-track-markers-leftovers-pass): markers are a time and a flag; what each flag bit means is a test, the length is in the `.awc` |
 
 ## Test cards
 

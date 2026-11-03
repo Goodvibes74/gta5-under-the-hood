@@ -60,6 +60,14 @@ Each block name in `SS_*` matches the conversation block a mission loads by text
 
 The ambient call takes a ped, a **context** (a group of lines such as `GENERIC_HI`) and speech parameters (forced, shouted, interrupt ...); the engine picks a line from the ped's voice for that context. The `_WITH_VOICE` variant names the voice too, so any ped can speak any voice's lines. Of 1,200 literal calls, 742 are `BOUNCER_EJECT_GENERIC` (the club bouncers in Online); the rest spread over 201 contexts.
 
+### 28.5.1 Voices and blocks (leftovers pass)
+
+**Verified** (every audio `.rel` file in the vanilla archives (`x64\audio\audio_rel.rpf`, `update.rpf`, the old packs in the base archives and every DLC pack, 253 files) loaded with CodeWalker's library by a read-only scan, build 1.0.3725.0 Legacy; one copy per file name, the update's winning; names matched against every string literal in the decompile; block names are every literal ending in `AU` or `AUD` in the decompile).
+
+**Voices.** The game data has **794 ped voice groups**, each listing its full and mini voices (the `S_FULL_*` and `S_MINI_*` archives), 1,373 speech contexts (374 named in scripts) and 40 speech parameter sets. `speech2.dat4.rel` in the update has **89,096 entries**: 87,354 byte arrays, 1,444 container entries and 298 hash entries. 875 byte-array names are voice names (`MAID`, `rocco`, `JIMMYBOSTON`, `G_M_Y_Lost_01_White_MINI_01` ...). CodeWalker does not decode the byte arrays, so the list of contexts per voice is still not read; that needs a reader for this format.
+
+**Which block is which mission.** A story conversation's text block is the container name plus `AUD` (`FAM1AUD` for the `fam1` container, used 82 times in `family1`). Matching the 331 containers that way ties **194 to a script**: 103 to a single script and 91 to a mission plus helpers (`launcher_barry`, `comms_controller`, `mission_triggerer_*`). By family: `comms_controller` (phone calls) 26, Barry, bail bonds, Epsilon, Family, Nigel and the paparazzo 5 or 6 each, then the car steals, Extreme, FBI, Josh, Rampage and the random events. Most of the 137 left are 4-letter codes built at run time, such as the friend activity sets `fafj`, `fcfl`, `fpmt` ..., plus a few cutscene and Online blocks.
+
 ## 28.5 What this means for modders
 
 - **Make a ped greet, curse or react** with `PLAY_PED_AMBIENT_SPEECH_NATIVE` and a context from 28.4; it uses the ped's own voice and works in story mode.
@@ -71,8 +79,8 @@ The ambient call takes a ped, a **context** (a group of lines such as `GENERIC_H
 
 | Question | Where it goes |
 | --- | --- |
-| The list of contexts each voice has, from `speech2.dat4.rel` | Second pass with a `.rel` reader |
-| Which block name maps to which mission, for all 331 containers | Second pass, with R5.1's mission table |
+| The list of contexts each voice has, from `speech2.dat4.rel` | Partly answered in [28.5.1](#2851-voices-and-blocks-leftovers-pass): the entries are counted and 875 voice names found; the byte arrays that hold the contexts are not decoded |
+| Which block name maps to which mission, for all 331 containers | Mostly answered in [28.5.1](#2851-voices-and-blocks-leftovers-pass): 194 matched to scripts; 137 are codes built at run time |
 | The speech parameter names and what each does | Second pass, in-game test |
 
 ## 28.7 Test cards (story mode, a script mod)

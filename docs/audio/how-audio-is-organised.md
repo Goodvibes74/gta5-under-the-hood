@@ -49,6 +49,16 @@ DLC packs add their own audio archives and config files, registered in `content.
 
 The number after `.dat` is the file's type and version. The engine looks sounds up by the hash of their name; scripts pass the names.
 
+### 27.3.1 What the config files hold (leftovers pass)
+
+**Verified** (every audio `.rel` file in the vanilla archives (`x64\audio\audio_rel.rpf`, `update.rpf`, the old packs in the base archives and every DLC pack, 253 files) loaded with CodeWalker's library by a read-only scan, build 1.0.3725.0 Legacy; one copy per file name, the update's winning; names matched against every string literal in the decompile).
+
+**Sounds and sound sets.** The winning `.dat54` files hold **136,786 objects: 135,128 sounds and 1,658 sound sets**. The update's `sounds.dat54.rel` has 56,651 of them, `sp_sounds` 4,013, `dlc_gtao_sounds` 2,698, the DLC packs 72,215 and the old packs in the base archives 1,207. By kind: simple sounds (one wave) 48,302, wrappers 24,906, multitrack 16,032, randomised lists 9,115, envelopes 8,320, modular synths 5,588, streaming sounds 3,449, then parameter transforms, variable blocks and rarer kinds. The 1,658 sound sets name **11,187 sounds** between them (median 4 per set, the largest 376); 878 set names match a script literal.
+
+**Audio scenes.** The winning `.dat15` files hold **2,244 scenes and 2,231 patches**; 1,431 scene names match a script literal. A scene is a list of patches (1 patch for 1,398 scenes, 2 for 466, 3 for 259, up to 10), and a patch is a set of changes to sound **categories**, applied with a fade (median 250 ms in, 500 ms out). The patches make **6,922 category changes** on 176 of the 233 categories: 963 mute a category (volume −10,000), 2,502 lower it, 1,595 raise it and 1,862 leave the volume and change only the filters (low-pass and high-pass cut-off) or pitch. The most-changed named categories are `Ambience`, `Weapons`, `WATER`, `fire`, `Speech` and `radio`; most category names are not in the scripts, so they stay hashes. So "what each scene changes" is in the data, scene by scene, as a list of category, volume, filters and pitch.
+
+**Sound containers per archive.** **7,706 `.awc` files**: 4,292 in the 54 `x64\audio\sfx` archives (from `SCRIPT` with 521 small ones and `CUTSCENE_MASTERED_ONLY` 408, to `RADIO_07_DANCE_01` and `RADIO_08_MEXICAN` with 1 each, a single long mix), 3,380 in 40 DLC packs (25.2 GB; `mpheist4` 267 files and 4.7 GB, `mpbattle` 161 and 3.8 GB, `mpsecurity` 340 and 2.0 GB, `mptuner` 146 and 1.9 GB), and 34 in the base and update archives outside `x64udio` (mostly the old packs inside `x64w.rpf`).
+
 ## 27.4 What scripts do
 
 | Native | Scripts | Calls |
@@ -84,10 +94,10 @@ The `AUDIO` namespace has 281 natives used by scripts, called 119,558 times in a
 
 | Question | Where it goes |
 | --- | --- |
-| The number of sounds and sound sets in `sounds.dat54` | Second pass with a `.rel` reader |
-| What each audio scene changes | Second pass, `dynamix.dat15` |
-| `.awc` counts per archive | Second pass, list every archive |
-| Speech archives and voices | R9.2 |
+| The number of sounds and sound sets in `sounds.dat54` | Answered in [27.3.1](#2731-what-the-config-files-hold-leftovers-pass) |
+| What each audio scene changes | Answered in [27.3.1](#2731-what-the-config-files-hold-leftovers-pass): the category, volume, filter and pitch changes per patch; most category names are still hashes |
+| `.awc` counts per archive | Answered in [27.3.1](#2731-what-the-config-files-hold-leftovers-pass) |
+| Speech archives and voices | Partly answered: the archives in [speech and dialogue](/docs/audio/speech-and-dialogue.md); 794 ped voice groups and 89,096 `speech2` entries ([28.5.1](/docs/audio/speech-and-dialogue.md#2851-voices-and-blocks-leftovers-pass)) |
 
 ## 27.7 Test cards (story mode, a script mod)
 

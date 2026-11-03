@@ -2,7 +2,7 @@
 
 The open questions that **can't be answered from the decompiled scripts alone**, grouped by the file to extract. Use it as a shopping list for one CodeWalker session (`tools/rpf-cw.ps1`, see [research tools](/docs/00-getting-started/research-tools.md)): extract everything in a group into a scratch folder outside the repo, then answer the group's questions together. Status and full wording of each question: [`OPEN_QUESTIONS.md`](/OPEN_QUESTIONS.md). Everything else that is still open is listed in [`HANDOFF.md`](/HANDOFF.md) (executable, in-game tests, scripts only).
 
-**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, batch D2 every explosion and weapon file, batch D3 the water files, batch D4 the police and population files, batch D5 the personality and ped files, batch D6 the shop catalogues, batch D7 `gameconfig.xml` and the archive listings, and batch D8 the map data; the rows marked *done, D1* to *D8* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
+**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, batch D2 every explosion and weapon file, batch D3 the water files, batch D4 the police and population files, batch D5 the personality and ped files, batch D6 the shop catalogues, batch D7 `gameconfig.xml` and the archive listings, batch D8 the map data, and batch D9 the audio files; the rows marked *done, D1* to *D9* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
 
 How to read the tables:
 - **Extract** gives the path as this repo's guides already use it (`common:` = `common.rpf`, `update:` = `update\update.rpf`, DLC = `update\x64\dlcpacks\<pack>\dlc.rpf` and the `dlc_patch` folders in `update.rpf`). Where no guide has given the path yet, it says *find*: list the archives with the tool and search for the file name.
@@ -107,14 +107,14 @@ How to read the tables:
 
 | ID | What to find | Extract | Scripts too? |
 | --- | --- | --- | --- |
-| AUD-001 | Number of sounds and sound sets | `sounds.dat54.rel` (*find*, under `update:/x64/audio/config/`) | no |
-| AUD-002 | What each audio scene changes | `dynamix.dat15.rel` (*find*, same folder) | no |
-| AUD-003 | `.awc` counts per archive | archive listing of every `.awc` | no |
-| AUD-004, AUD-009 | Speech archives, voices, the contexts each voice has | `speech2.dat4.rel` (*find*) and the speech `.awc` archives | no |
-| AUD-005 | The radio station objects whose names didn't resolve | `update:/x64/audio/config/game.dat151.rel` and DLC `*_game.dat151.rel` | hash candidate names |
-| AUD-006 | Music event → mood → track, step by step | the music `.rel` files (*find*) | the music events triggered by scripts |
-| AUD-008 | Radio track data (length, DJ markers) | the radio `.awc` and `.rel` entries | no |
-| AUD-010 | Which dialogue block belongs to which mission (331 containers) | the dialogue/speech containers | yes (the mission table) |
+| AUD-001 (*done, D9*) | Number of sounds and sound sets | `sounds.dat54.rel` (*find*, under `update:/x64/audio/config/`) | no |
+| AUD-002 (*done, D9*) | What each audio scene changes | `dynamix.dat15.rel` (*find*, same folder) | no |
+| AUD-003 (*done, D9*) | `.awc` counts per archive | archive listing of every `.awc` | no |
+| AUD-004, AUD-009 (*done, D9*) | Speech archives, voices, the contexts each voice has | `speech2.dat4.rel` (*find*) and the speech `.awc` archives | no |
+| AUD-005 (*done, D9*) | The radio station objects whose names didn't resolve | `update:/x64/audio/config/game.dat151.rel` and DLC `*_game.dat151.rel` | hash candidate names |
+| AUD-006 (*done, D9*) | Music event → mood → track, step by step | the music `.rel` files (*find*) | the music events triggered by scripts |
+| AUD-008 (*done, D9*) | Radio track data (length, DJ markers) | the radio `.awc` and `.rel` entries | no |
+| AUD-010 (*done, D9*) | Which dialogue block belongs to which mission (331 containers) | the dialogue/speech containers | yes (the mission table) |
 
 ## Animation, cameras, effects, timecycle
 

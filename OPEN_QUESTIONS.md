@@ -121,6 +121,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | D6 | The 164 freemode shop catalogue files, 22 DLC component `.ymt` files, `shop_vehicle`, `shop_weapon` and `shop_tattoo` files | GP-081, ENT-015, ON-049, GP-055, GP-057, ENT-010 | Done: ENT-015 answered, GP-081 partly. ON-049 is about the server's transaction catalogue, which no game file holds; GP-055, GP-057 and ENT-010 need the creator scripts more than these files, so they stay open |
 | D7 | `gameconfig.xml` (base and update), a listing of every archive with entry sizes, one `fm_content_*` script for the content keys | SCR-014, PERF-025, FF-001, FF-002, FF-003, FF-004, FF-005 | Done: SCR-014, FF-001, FF-002, FF-003 answered (and AI-006 with SCR-014); FF-004 mostly; PERF-025 partly (a test). FF-005 needs `fm_mission_controller` read key by key, a scripts job, so it stays open |
 | D8 | Every `.ymap`, `.ytyp`, `.ymf`, `.ynd`, `.ynv` and scenario region file, loaded with CodeWalker's library; the archive listing for `.ybn` | GP-035, ENT-001 to ENT-003, ENT-028 to ENT-031, ENT-034, ENT-035, WLD-001, WLD-004, WLD-005, WLD-007, AI-027 to AI-029, REN-025, PHY-002 | Done: WLD-004, WLD-007, ENT-001, ENT-028, ENT-034, AI-028, AI-029, REN-025, PHY-002 answered; WLD-001, ENT-003, ENT-029, ENT-031 mostly; WLD-005, ENT-002, ENT-030, ENT-035, AI-027 partly; GP-035 not found. UI-009 (interior map names), PHY-005 and the pools part of PHY-018 were not attempted |
+| D9 | Every audio `.rel` file (253, CodeWalker's library), the `.awc` listing, the dialogue text-block names in the decompile | AUD-001 to AUD-006, AUD-008 to AUD-010 | Done: AUD-001, AUD-002, AUD-003, AUD-005, AUD-006 answered; AUD-010 mostly; AUD-004, AUD-008, AUD-009 partly (the per-voice context lists need a reader for the `speech2` byte arrays). AUD-007 stays a test |
 
 ## By category
 
@@ -894,26 +895,26 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| AUD-001 | The number of sounds and sound sets in `sounds.dat54` | Second pass with a `.rel` reader | Open |
-| AUD-002 | What each audio scene changes | Second pass, `dynamix.dat15` | Open |
-| AUD-003 | `.awc` counts per archive | Second pass, list every archive | Open |
-| AUD-004 | Speech archives and voices | R9.2 | Open |
+| AUD-001 | The number of sounds and sound sets in `sounds.dat54` | Second pass with a `.rel` reader | Answered: 135,128 sounds and 1,658 sound sets (11,187 set entries), by file and kind (leftovers pass, [audio](/docs/audio/how-audio-is-organised.md#2731-what-the-config-files-hold-leftovers-pass)) |
+| AUD-002 | What each audio scene changes | Second pass, `dynamix.dat15` | Answered: 2,244 scenes, 2,231 patches, 6,922 category changes (volume, filters, pitch); most category names still hashes (leftovers pass, [audio](/docs/audio/how-audio-is-organised.md#2731-what-the-config-files-hold-leftovers-pass)) |
+| AUD-003 | `.awc` counts per archive | Second pass, list every archive | Answered: 7,706 `.awc`, per archive and per pack (leftovers pass, [audio](/docs/audio/how-audio-is-organised.md#2731-what-the-config-files-hold-leftovers-pass)) |
+| AUD-004 | Speech archives and voices | R9.2 | Partly answered: 794 ped voice groups, 89,096 `speech2` entries, 875 voice names (leftovers pass, [speech](/docs/audio/speech-and-dialogue.md#2851-voices-and-blocks-leftovers-pass)) |
 
 ### [Music and radio](/docs/audio/music-and-radio.md) (R9.3)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| AUD-005 | The 10 base and many DLC station objects whose names didn't resolve | Second pass with more name sources | Open |
-| AUD-006 | How a music event maps to moods and tracks, step by step | R9.1, second pass | Open |
+| AUD-005 | The 10 base and many DLC station objects whose names didn't resolve | Second pass with more name sources | Answered: every station object has a `RadioName`; 46 hidden stations, the player and club stations, 23 `REPL_*` editor stations (leftovers pass, [music and radio](/docs/audio/music-and-radio.md#stations-music-events-and-track-markers-leftovers-pass)) |
+| AUD-006 | How a music event maps to moods and tracks, step by step | R9.1, second pass | Answered: an event is one action object (start track, set mood, stop ...); moods are lists of stem mixes over 8 stems (leftovers pass, [music and radio](/docs/audio/music-and-radio.md#stations-music-events-and-track-markers-leftovers-pass)) |
 | AUD-007 | Which DLC stations are available in story mode in build 3725 | Test card 1 | Open |
-| AUD-008 | The format of a radio track's data (length, markers for the DJ) | R9.1 | Open |
+| AUD-008 | The format of a radio track's data (length, markers for the DJ) | R9.1 | Partly answered: markers are time plus a flag bit; flag meanings are a test, length is in the `.awc` (leftovers pass, [music and radio](/docs/audio/music-and-radio.md#stations-music-events-and-track-markers-leftovers-pass)) |
 
 ### [Speech and dialogue](/docs/audio/speech-and-dialogue.md) (R9.2)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| AUD-009 | The list of contexts each voice has, from `speech2.dat4.rel` | Second pass with a `.rel` reader | Open |
-| AUD-010 | Which block name maps to which mission, for all 331 containers | Second pass, with R5.1's mission table | Open |
+| AUD-009 | The list of contexts each voice has, from `speech2.dat4.rel` | Second pass with a `.rel` reader | Partly answered: the byte arrays that hold each voice's contexts are not decoded by CodeWalker; needs a format reader (leftovers pass, [speech](/docs/audio/speech-and-dialogue.md#2851-voices-and-blocks-leftovers-pass)) |
+| AUD-010 | Which block name maps to which mission, for all 331 containers | Second pass, with R5.1's mission table | Mostly answered: 194 of 331 containers tied to scripts through their `<name>AUD` text block; 137 are codes built at run time (leftovers pass, [speech](/docs/audio/speech-and-dialogue.md#2851-voices-and-blocks-leftovers-pass)) |
 | AUD-011 | The speech parameter names and what each does | Second pass, in-game test | Open |
 
 ## Rendering
