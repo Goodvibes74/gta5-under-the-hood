@@ -2,7 +2,7 @@
 
 The open questions that **can't be answered from the decompiled scripts alone**, grouped by the file to extract. Use it as a shopping list for one CodeWalker session (`tools/rpf-cw.ps1`, see [research tools](/docs/00-getting-started/research-tools.md)): extract everything in a group into a scratch folder outside the repo, then answer the group's questions together. Status and full wording of each question: [`OPEN_QUESTIONS.md`](/OPEN_QUESTIONS.md). Everything else that is still open is listed in [`HANDOFF.md`](/HANDOFF.md) (executable, in-game tests, scripts only).
 
-**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, and batch D2 every explosion and weapon file; the rows marked *done, D1* or *done, D2* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
+**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, batch D2 every explosion and weapon file, and batch D3 the water files; the rows marked *done, D1*, *D2* or *D3* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
 
 How to read the tables:
 - **Extract** gives the path as this repo's guides already use it (`common:` = `common.rpf`, `update:` = `update\update.rpf`, DLC = `update\x64\dlcpacks\<pack>\dlc.rpf` and the `dlc_patch` folders in `update.rpf`). Where no guide has given the path yet, it says *find*: list the archives with the tool and search for the file name.
@@ -44,10 +44,10 @@ How to read the tables:
 
 | ID | What to find | Extract | Scripts too? |
 | --- | --- | --- | --- |
-| PHY-015 | What the five water quad types mean | `common:/data/levels/gta5/water.xml` | no |
-| PHY-016 | The format of `waterheight.dat` | `common:/data/levels/gta5/waterheight.dat` | no |
+| PHY-015 (*done, D3*) | What the five water quad types mean | `common:/data/levels/gta5/water.xml` | no |
+| PHY-016 (*done, D3*) | The format of `waterheight.dat` | `common:/data/levels/gta5/waterheight.dat` | no |
 | PHY-005 | Water collision vs water simulation | `water.xml` and the collision (`.ybn`) data | no |
-| PHY-018 | Where swimming pools are defined | `water.xml` and map data (`.ymap`) | no |
+| PHY-018 (*done, D3*) | Where swimming pools are defined | `water.xml` and map data (`.ymap`) | no |
 
 ## Map data (`.ymap`, `.ytyp`, `.ybn`, `.ynv`, `.ynd`, `.ymf`, scenarios)
 

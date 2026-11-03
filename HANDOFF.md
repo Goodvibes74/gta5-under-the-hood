@@ -5,7 +5,7 @@ Short state file for the next AI session or contributor, so the work can resume 
 ## Where things are
 
 - **Phases 1 to 4 and the first leftovers are on `main`** (merged as #126 and #127, with a graph refresh). `main-km1sze` and `research/second-pass-phase4` are superseded; don't use them.
-- **The leftovers plan is under way** (step 2 of "Next steps" below) on branch `research/second-pass-leftovers-data`. Batches D1 (text blocks and vehicle files) and D2 (explosion and weapon files) are done; its row is in `OPEN_QUESTIONS.md` under "Leftovers: the data-file batches", and [`DATA-NEEDS.md`](/DATA-NEEDS.md) marks its questions done.
+- **The leftovers plan is under way** (step 2 of "Next steps" below) on branch `research/second-pass-leftovers-data`. Batches D1 (text blocks and vehicle files), D2 (explosion and weapon files) and D3 (water files) are done; its row is in `OPEN_QUESTIONS.md` under "Leftovers: the data-file batches", and [`DATA-NEEDS.md`](/DATA-NEEDS.md) marks its questions done.
 - **Not done yet:** the other DATA-NEEDS groups, the graph refresh for the leftovers branch (once, when the branch is finished), and its pull request.
 - **Tracker:** `OPEN_QUESTIONS.md`, 438 questions. Every status changed in this work links to its doc section.
 

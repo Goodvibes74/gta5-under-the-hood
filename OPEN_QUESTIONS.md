@@ -115,6 +115,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | D1 | Every American `.gxt2` text block (base, `update.rpf`, `update2.rpf`, DLC); every `vehicles.meta`, `handling.meta`, `carcols` and `carvariations` (base, update, DLC, `dlc_patch`) | GP-090, GP-047, GP-082, ENT-005, GP-045, GP-046, ENT-036, ENT-037, ON-068 | Done: GP-045, GP-046, ENT-005, ENT-036 answered; GP-047, GP-082, GP-090, ENT-037 mostly; ON-068 narrowed (not a vehicle) |
 | D2 | `explosion.ymt` (update), all 19 `explosion.meta` (16 packs + 3 `dlc_patch`), every `*weapon*.meta` and `*ammo*.meta` (base, update, DLC, `dlc_patch`) | GP-078, GP-079, PHY-008, PHY-009, PHY-010 | Done: GP-079, PHY-010 answered; PHY-008, PHY-009 mostly; GP-078 partly |
+| D3 | `water.xml`, `water_heistisland.xml`, `waterheight.dat`, `water.dat`, `watertune*.xml` | PHY-015, PHY-016, PHY-018, PHY-005 | Done: PHY-015 answered; PHY-016, PHY-018 partly; PHY-005 waits for the collision files (map-data batch); new: Cayo Perico's own water file |
 
 ## By category
 
@@ -344,10 +345,10 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| PHY-015 | What the 5 water quad types mean | Second pass: compare where each type is | Open |
-| PHY-016 | The format of `waterheight.dat` | Second pass | Open |
+| PHY-015 | What the 5 water quad types mean | Second pass: compare where each type is | Answered: type 0 rectangles (342 quads, 53.6 km²), types 1 to 4 the corner triangles along diagonal shores (**Known** reading of the field); counts and heights per type (leftovers pass, [water](/docs/physics/water-and-buoyancy.md#the-five-quad-types-leftovers-pass)) |
+| PHY-016 | The format of `waterheight.dat` | Second pass | Partly answered: `WMAP` header, version 100, a 183 × 249 grid of 50 m cells from (−4,050, 8,400); the 59,360-byte body is still undecoded (leftovers pass, [water](/docs/physics/water-and-buoyancy.md#the-waterheightdat-file-leftovers-pass)) |
 | PHY-017 | How wave quads differ from calming quads in effect | In-game test | Open |
-| PHY-018 | Where swimming pools are defined | R4.6 second pass | Open |
+| PHY-018 | Where swimming pools are defined | R4.6 second pass | Partly answered: no pool is in `water.xml` (all 504 quads at the four sea, lake and reservoir heights); the map data that holds them is left for the map-data batch (leftovers pass, [water](/docs/physics/water-and-buoyancy.md#water-heights)) |
 
 ## AI
 
