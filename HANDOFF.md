@@ -10,6 +10,20 @@ Short state file for the next AI session or contributor, so the work can resume 
   - The pull request (open it only when the contributor asks).
 - **Tracker:** `OPEN_QUESTIONS.md`, 438 questions. Every status changed in this work links to its doc section.
 
+## Resources to have ready locally (checklist)
+
+| Resource | What for | Questions |
+| --- | --- | --- |
+| **Decompile clone** at commit `6c18d3e8` (community repository, with `native_tables/`) | Everything still open that is scripts only | Phase 1 to 4: GP-011, GP-021, GP-038, GP-083, CORE-009, CORE-021, UI-002, ON-001, ON-005, ON-006, ON-010 to ON-014, ON-017, ON-024, ON-037, ON-039, ON-040, ON-043, ON-069, ON-070 |
+| **CodeWalker + `tools/rpf-cw.ps1`** (vanilla install, 1.0.3725.0) | Extract data files into a scratch folder | All of [`DATA-NEEDS.md`](/DATA-NEEDS.md); from phases 1 to 4: GP-045, GP-046, GP-073, GP-078, GP-081, ON-065 (`mpstatscharactermappingdata.xml`), ON-068 (every `vehicles.meta`) |
+| **Text files** (`.gxt2`, American, base + update + DLC) via CodeWalker | Names and labels | GP-047 (`PSCHOOL`), GP-082 (`CSHOP_TITLE`), GP-083, GP-090 / GP-001 (`BSS_BSTR_`), ON-018, ON-008 |
+| **A tunable name list** (or a wider candidate list to hash with `joaat`) | Hashed tunables | ON-021, ON-035, ON-077, ON-072 |
+| **Job files** (UGC JSON of the five classic heist finales) | Elite rewards and targets | ON-076 / ON-023 |
+| **The game executable** (read-only) | Engine behaviour | GS-004, CORE-002, CORE-016, CORE-018, CORE-031, CORE-032, GP-023, GP-025/GP-087, GP-069/GP-092, UI-020, SCR-004 |
+| **The game, story mode** + a small test mod (SHVDN or ScriptHookV) | In-game test cards | GP-006, GP-039, GP-043, GP-049, GP-050, GP-053, GP-054, GP-062, GP-064, GP-068, GP-071, GP-072, GP-085, GP-091, GS-003, CORE-001, ON-058; GP-088/GP-089 remainders (watch `Global_114904.f_8620[6/12/18]`, entries 36 and 54) |
+| **NativeDB** (online) | Native names | SCR-004, config flag names |
+| **Ask the contributor** | Install history | GP-076 |
+
 ## What the cloud sessions did (summary)
 
 - **P4.9, controls (R6.4).** Build 3717 renumbered control IDs: 37 `INPUT_CREATOR_*` controls were inserted at 257 to 293, so every old ID from 257 to 364 is now +37. Also the shared disable helpers and the view-mode context numbers.
