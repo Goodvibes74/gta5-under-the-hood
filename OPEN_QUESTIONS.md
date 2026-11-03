@@ -732,7 +732,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-027 | The full interaction-menu tree and its conditions | Second pass, `am_pi_menu` | Answered: the top page with each item's conditions and all 144 pages by area ([R7.10 21.3.1](/docs/online/interaction-menu-phone-apps.md#2131-the-menu-tree-second-pass)); per-page conditions stay in each page's function |
 | ON-028 | Every website page and what each sells | Second pass, `appinternet` | Answered: the eight selling sites with their numbers and stock counts, and the 683-item model list ([R7.10 21.5](/docs/online/interaction-menu-phone-apps.md#215-the-internet)) |
 | ON-029 | The Facade phone's movie and the character-to-phone mapping | Second pass | Answered: `cellphone_facade` is Trevor's; the four-entry phone table ([R7.10 21.2.1](/docs/online/interaction-menu-phone-apps.md#2121-the-slots-by-mode-and-the-phone-each-character-carries-second-pass)) |
-| ON-067 | Who sets the story phone's Sniper-app flag, and what the two Online flags are that switch the phone to the Badger skin and empty slot 24 | Third pass, `cellphone_controller` callers | Open |
+| ON-067 | Who sets the story phone's Sniper-app flag, and what the two Online flags are that switch the phone to the Badger skin and empty slot 24 | Third pass, `cellphone_controller` callers | Answered: the Badger flags are set by the mission controllers when the player is in Franklin's (`p_franklin_02`) or Lamar's (`ig_lamardavis_02`) model; the Sniper flag (`Is_Sniper_App_Available`) is written by no script ([phone](/docs/online/interaction-menu-phone-apps.md)) |
 | ON-068 | What website items 323, 324, 357 and 402 are (hashes set at start that match no model name) | Third pass, the preview code in `appinternet` | Open |
 | ON-069 | Each interaction-menu page's own show and grey conditions (the top page is mapped) | Third pass, `am_pi_menu` page by page | Open |
 
@@ -758,7 +758,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-038 | What `gb_bosscost` and `gb_bosssetupcost` charge | Next pass, `freemode` | Answered: defaults $200,000 and $5,000, but no script reads them in this build ([R7.7 46.5.1](/docs/online/organisations-and-businesses.md#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass)); new ON-075 |
 | ON-039 | The MC challenge and VIP challenge rules (cash, RP, time) | Third pass (was: Next pass, per script) | Mostly answered: the 8 VIP and 3 MC challenges with their scripts, time limits, cash, RP and rules ([R7.7 46.5.2](/docs/online/organisations-and-businesses.md#4652-vip-and-mc-challenges-second-pass)); how the rival, solo and member percentages combine in the payout is left |
 | ON-040 | Business battles and the `fm_content_*` business missions | Third pass (was: R7.9 and a later pass) | Open |
-| ON-075 | Where registering as a boss is charged now (`gb_bosscost` and `gb_bosssetupcost` are read by no script) | Third pass, the boss registration code in `freemode` and `am_pi_menu` | Open |
+| ON-075 | Where registering as a boss is charged now (`gb_bosscost` and `gb_bosssetupcost` are read by no script) | Third pass, the boss registration code in `freemode` and `am_pi_menu` | Answered: it isn't; the menu only checks that the player could spend `gb_become_boss_threshold` (default 0) ([organisations](/docs/online/organisations-and-businesses.md)) |
 | ON-077 | How long a nightclub production step takes, and how technicians are assigned to goods types (the goods tunables are hashed; [R7.7 46.5.3](/docs/online/organisations-and-businesses.md#4653-the-nightclubs-safe-and-warehouse-second-pass)) | Third pass, the business hub code in `freemode` | Open |
 
 ### [Properties in GTA Online](/docs/online/properties.md) (R7.6)
@@ -798,7 +798,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-054 | What `SaveCategory` 0 and 1 mean exactly | Second pass | Answered: 1 is the original per-character set (2,522), 0 everything since (15,411) ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
 | ON-055 | The basket flow step by step in one shop script | R7.6 or a second pass | Answered: the six steps in `clothes_shop_mp` ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
 | ON-056 | Which tunables a given offline system needs | Per mod, with the defaults list | Answered by method: per mod, read from the tunable index ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
-| ON-072 | The names behind the 7,296 tunables registered by hash only | Third pass: needs a name list; hash every candidate name | Open |
+| ON-072 | The names behind the 7,296 tunables registered by hash only | Third pass: needs a name list; hash every candidate name | Partly answered: 311 recovered by hashing candidate names (numbered playlist, vehicle-website and `enable_vehicle_*` series); the rest need a name list ([stats and tunables](/docs/online/stats-and-tunables.md)) |
 | ON-073 | Whether the two `SaveCategory` groups are saved as separate cloud files | Third pass: in-game or cloud check (read-only) | Open |
 
 ### [Story systems that clash with an Online mode](/docs/online/story-systems-in-online-mode.md) (R5.7)
@@ -818,7 +818,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-062 | What the four character "slots" in the retry states are (two characters plus?) and how `HUD_SLOTONE` / `HUD_SLOTTWO` relate | R7.3 stats | Answered: cloud save slots 0 (account), 1 and 2 (the two characters); "Slot 1" and "Slot 2" label the character saves ([R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) |
 | ON-063 | The order of states on the way back to story mode, step by step | Second pass | Answered: 63 then 64, step by step ([R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) |
 | ON-064 | What the testbed session is used for in release builds | Second pass | Answered: only level 5 (development) enters it; unused in release ([R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) |
-| ON-074 | Which scripts outside `maintransition` ask for the return to story mode, and what retry state 13 waits for | Third pass, the callers of the state request | Open |
+| ON-074 | Which scripts outside `maintransition` ask for the return to story mode, and what retry state 13 waits for | Third pass, the callers of the state request | Partly answered: only `ingamehud` (on accepting a connection-problem warning) and `selector` (the character wheel); retry state 13 still open ([transitions](/docs/online/transitions-and-sessions.md)) |
 
 ## User interface
 

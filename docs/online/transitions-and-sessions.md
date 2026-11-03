@@ -64,7 +64,7 @@ Before the state machine runs (**Verified**, entry function): marks itself netwo
 
 Each one goes back to the HUD checks (4) when the load finishes, or to the waiting state (5) on failure. `HUD_SLOTONE` and `HUD_SLOTTWO` are the text "Slot 1" and "Slot 2". They label the two character saves in the warning screen shown when one or both failed to load. So there are two characters, plus the account-wide save.
 
-**The way back to story mode.** `maintransition` asks for state 63 `RETURN_TO_SINGLEPLAYER` directly from several places. Session errors go first through 58 `TERMINATE_SESSION` and 59 `WAIT_TERMINATE_SESSION`, which route the player on. State 63 then:
+**The way back to story mode.** `maintransition` asks for state 63 `RETURN_TO_SINGLEPLAYER` directly from several places. Outside it (**Verified**, second pass: every copy of the state setter in the other 115 scripts traced to its literal states) only two scripts ask for 63. `ingamehud` asks when the player accepts one of its connection-problem warnings (`HUD_CONNPROB` with `HUD_NOCONNECT`, `PM_LAUNCH`, `BAIL_SPPRO`, `HUD_BAILSAVEISS`, `TRAN_J_FL`, `BUD_BAILPOLC` ...; accept is control 201), when the current state is 15. `selector` asks for it from the character wheel (picking a story character while in Online). The other scripts that carry the setter use it only for state 66 (110 scripts) or the freemode states (`freemode`, `pausemenu_multiplayer`: 18; `main_persistent`: 5, 16, 58). Session errors go first through 58 `TERMINATE_SESSION` and 59 `WAIT_TERMINATE_SESSION`, which route the player on. State 63 then:
 
 1. Shows the "quitting" spinner (`HUD_QUITTING`).
 2. Waits until `startup_positioning`, the transition helper and every creator script have stopped, and the session is not busy.
@@ -94,7 +94,7 @@ The other exit, 7 `SP_SWOOP_DOWN`, can't be taken: the check that picks between 
 | What the four character "slots" in the retry states are (two characters plus?) and how `HUD_SLOTONE` / `HUD_SLOTTWO` relate | Answered in [9.4.1](#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass) |
 | The order of states on the way back to story mode, step by step | Answered in [9.4.1](#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass) |
 | What the testbed session is used for in release builds | Answered in [9.4.1](#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass): unused; only level 5 enters it |
-| Which scripts outside `maintransition` ask for the return to story mode, and what retry state 13 waits for | Third pass, the callers of the state request |
+| What retry state 13 waits for (ON-074; the scripts that ask for the return to story mode are answered in [9.4.1](#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass)) | Third pass, `maintransition` state 13 |
 
 ## 9.7 Test cards
 
