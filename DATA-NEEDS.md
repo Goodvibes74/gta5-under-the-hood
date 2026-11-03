@@ -2,7 +2,7 @@
 
 The open questions that **can't be answered from the decompiled scripts alone**, grouped by the file to extract. Use it as a shopping list for one CodeWalker session (`tools/rpf-cw.ps1`, see [research tools](/docs/00-getting-started/research-tools.md)): extract everything in a group into a scratch folder outside the repo, then answer the group's questions together. Status and full wording of each question: [`OPEN_QUESTIONS.md`](/OPEN_QUESTIONS.md). Everything else that is still open is listed in [`HANDOFF.md`](/HANDOFF.md) (executable, in-game tests, scripts only).
 
-**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, batch D2 every explosion and weapon file, batch D3 the water files, batch D4 the police and population files, batch D5 the personality and ped files, batch D6 the shop catalogues, batch D7 `gameconfig.xml` and the archive listings, batch D8 the map data, and batch D9 the audio files; the rows marked *done, D1* to *D9* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
+**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, batch D2 every explosion and weapon file, batch D3 the water files, batch D4 the police and population files, batch D5 the personality and ped files, batch D6 the shop catalogues, batch D7 `gameconfig.xml` and the archive listings, batch D8 the map data, batch D9 the audio files, and batch D10 the effects and timecycle files; the rows marked *done, D1* to *D10* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
 
 How to read the tables:
 - **Extract** gives the path as this repo's guides already use it (`common:` = `common.rpf`, `update:` = `update\update.rpf`, DLC = `update\x64\dlcpacks\<pack>\dlc.rpf` and the `dlc_patch` folders in `update.rpf`). Where no guide has given the path yet, it says *find*: list the archives with the tool and search for the file name.
@@ -127,13 +127,13 @@ How to read the tables:
 | REN-006 | Animation memory cost per dictionary | `.ycd` sizes (resource headers) | no |
 | REN-008 | The 50 shake names and other camera names that didn't resolve | `update:/x64/data/metadata/cameras.ymt` | hash candidate names |
 | REN-009 | Which `CREATE_CAMERA` hashes scripts use | `cameras.ymt` names | yes (the hashes in the decompile) |
-| REN-014 | `entityfx.dat`, `materialfx.dat`, `wheelfx.dat` row by row | `common:/data/effects/entityfx.dat` and the two others | no |
-| REN-015 | Which DLC particle dictionaries are mounted in story mode | DLC `.ypt` lists and the DLC setup files | no |
-| REN-016 | Effect names per particle dictionary | every `.ypt` | no |
-| GP-027, REN-024, REN-026 | The editor's 10 post effects; the 39 unnamed post effects; `GroupId` and `EventType` | the post-effect (animpostfx) metadata (*find*) | `startup` registers the 10 |
-| REN-017 | What each changed key between base and update does | `common:/data/visualsettings.dat`, base vs update copy | in-game check |
-| REN-021, REN-022, REN-027 | Timecycle modifier line values and `userFlags` | `common:/data/timecycle/` modifier files | in-game check |
-| WLD-017 | The 380 timecycle variables per region and how modifiers stack on weather | `common:/data/timecycle/w_<weather>.xml` | no |
+| REN-014 (*done, D10*) | `entityfx.dat`, `materialfx.dat`, `wheelfx.dat` row by row | `common:/data/effects/entityfx.dat` and the two others | no |
+| REN-015 (*done, D10*) | Which DLC particle dictionaries are mounted in story mode | DLC `.ypt` lists and the DLC setup files | no |
+| REN-016 (*done, D10*) | Effect names per particle dictionary | every `.ypt` | no |
+| GP-027, REN-024, REN-026 (*done, D10*) | The editor's 10 post effects; the 39 unnamed post effects; `GroupId` and `EventType` | the post-effect (animpostfx) metadata (*find*) | `startup` registers the 10 |
+| REN-017 (*done, D10*) | What each changed key between base and update does | `common:/data/visualsettings.dat`, base vs update copy | in-game check |
+| REN-021, REN-022, REN-027 (*done, D10*) | Timecycle modifier line values and `userFlags` | `common:/data/timecycle/` modifier files | in-game check |
+| WLD-017 (*done, D10*) | The 380 timecycle variables per region and how modifiers stack on weather | `common:/data/timecycle/w_<weather>.xml` | no |
 
 ## Engine config and archives
 

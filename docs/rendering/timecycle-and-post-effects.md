@@ -6,7 +6,7 @@ How GTA V decides what a scene looks like: the timecycle (light, fog, sky, colou
 
 ## Short version
 
-- **Three layers decide the look.** The weather timecycle (one file per weather, 380 variables per region, 13 keyframes across the day) blended between the previous and next weather; then timecycle modifiers (named sets of overrides: 1,072 in build 3725) from the place you're in or from a script; then animated post effects (`ANIMPOSTFX_*`, 252 defined) on top.
+- **Three layers decide the look.** The weather timecycle (one file per weather, 423 variables per region, 13 keyframes across the day) blended between the previous and next weather; then timecycle modifiers (named sets of overrides: 1,072 in build 3725) from the place you're in or from a script; then animated post effects (`ANIMPOSTFX_*`, 252 defined) on top.
 - **Modifiers are partial.** A modifier changes only the variables it lists: 29 on average, from 1 to 136, out of 282 different variables used across all modifiers. The most common are bloom (`postfx_intensity_bloom`, in 620 modifiers), the bright-pass threshold (597), and the interior and natural ambient light multipliers (520 and 517).
 - **Rockstar adds modifiers by editing one file set.** The base copy in `common.rpf` has 563 modifiers; the update copy has 1,072. No DLC pack registers a timecycle modifier file in its `content.xml` (0 of 90); every Online DLC's modifiers (`dlc_mp2025_*`, `mp_battle_*` ...) were merged into `update.rpf`.
 - **An animated post effect is a stack of up to six timecycle modifiers,** each with an ease-in, hold and ease-out time and a loop mode. The 252 effects use 705 of their 1,512 layer slots and point at 192 different modifiers, all but one of which are in the timecycle files.
@@ -18,7 +18,7 @@ How GTA V decides what a scene looks like: the timecycle (light, fog, sky, colou
 
 | File | What it holds | Count (build 3725) |
 | --- | --- | --- |
-| `common:/data/timecycle/w_<weather>.xml` | The weather timecycles: one `<cycle>` per weather with 2 regions (`GLOBAL`, `URBAN`), each with 380 variables, each a row of 13 keyframe values across the day | 14 base files plus `underwater_deep.xml`; the update copy replaces 11 and adds 3 Halloween ones |
+| `common:/data/timecycle/w_<weather>.xml` | The weather timecycles: one `<cycle>` per weather with 2 regions (`GLOBAL`, `URBAN`), each with 423 variables (426 to 429 in the Halloween files), each a row of 13 keyframe values across the day | 14 base files plus `underwater_deep.xml`; the update copy replaces 11 and adds 3 Halloween ones |
 | `common:/data/timecycle/timecycle_mods_1.xml` to `_4.xml` | Timecycle modifiers: `<modifier name numMods userFlags>` with one line per overridden variable, two numbers each | 1,072 distinct names in the update copy (635, 30, 125 and 295 per file, a few repeated); 563 in the base copy |
 | `update:/x64/data/effects/animpostfx.ymt` | Animated post effects: 252 registered stacks, each with a layer blend and 6 layer slots | 252 effects, 705 layers used |
 | `common:/data/visualsettings.dat` | Fixed renderer values that aren't per weather or time (rain, lights, tonemapping defaults) | Plain `key value` lines |
@@ -63,6 +63,34 @@ Example: `DrugsMichaelAliensFight` holds `michealspliff` and `michealspliff_blen
 
 The layers point at 192 different modifiers; 191 are in the timecycle files. 39 of the 252 effect names didn't match any string in the scripts or data, so they are probably unused or only reached by hash.
 
+### Modifier values, flags and post-effect names (leftovers pass)
+
+**Verified**, the update copies of the four `timecycle_mods` files (1,076 modifiers, 30,927 lines), the weather files, `animpostfx.ymt` and `startup` in the decompile.
+
+**The weather files have 423 variables per region, not 380** (all 14 base files and the update copies; the Halloween ones 426 to 429). By name: `sky_` 83, `light_` 61, `postfx_` 57, `fog_` 47, `water_` 30, `nv_` (night vision) 23, `hh_` (heat haze) 22, `dof_` 10, `reflection_` 10, `lod_` 8, then lens, fog rays, bokeh, sprites, SSAO, sun, moon and clouds.
+
+**The second number on a modifier line.** It is 0 on 20,628 lines (67%), 1 on 8,425, and between 0 and 1 on 97% of all lines, even where the first number is far above 1 (4,295 of the 5,057 lines whose first value is over 1). It equals the first number on 6,536 lines. So it is not the far end of a range of the same scale. *Our reading:* the first number is the value and the second a 0-to-1 weight (how strongly the modifier pulls that variable); the test card still has to show it.
+
+**`userFlags` by group** (the modifiers that carry each value):
+
+| `userFlags` | Modifiers | Which |
+| ---: | ---: | --- |
+| 0 | 748 | Most: story and Online looks, HUD, phone, glasses, spectator |
+| 1 | 23 | Water: `underwater`, `underwater_deep`, the `WATER_*` set (port, Salton, river, shore, muddy, silty ...), `SALTONSEA`, ships |
+| 2 | 298 | Interiors: `INT_*`, `Garage`, the Online properties (`mp_` 144, `dlc_` 85), casino, strip club |
+| 4 | 2 | `TUNNEL_green`, `INT_garage` |
+| 6 | 1 | `CS1_railwayB_tunnel` (2 + 4) |
+| 8 | 1 | `NO_streetAmbient` |
+| 16 | 3 | `TUNNEL_orange_exterior`, `TUNNEL_yellow_ext`, `TUNNEL_green_ext` |
+
+So *our reading* is: 1 marks water and under-water looks, 2 interior looks, 4 and 16 tunnel looks (16 the outside of a tunnel), 8 the one that turns off street ambient light. It is a bit field (6 = 2 + 4).
+
+**Post-effect names.** Adding every timecycle modifier name (and the same names with `In`, `Out` and similar endings) to the script strings names **215 of the 252 effects**; 37 stay hashes. Their layers show what they are: character-switch screens (`hud_def_Franklin`, `hud_def_Michael`, `hud_def_Trevor` with blur and lens distortion), Online job and heist lobby screens (`MP_corona_heist`, `MP_job_preload_night`, `MP_job_end_night`, `MP_island_heist`), sunglasses (`glasses_black`, `Glasses_BlackOut`), stunt-race slow and fast pads, Voltic and air-race boosts, the bomb camera and a drug-flying effect. No script names them by literal; whether code reaches them by hash is not known.
+
+**`GroupId` and `EventType`.** 241 effects have neither (group −1, no event). Three, `Heist4CameraFlash`, `Heist4CameraFlash2` and `Heist4CameraFlash3`, share group 1 (*our reading*: variants of one effect). Four transition effects (`DefaultBlinkOutro`, `PokerCamTransition` and two glasses effects) have group 64 and event `hash_7242674A`, and four view effects (`DeadlineNeon`, `MP_OrbitalCannon`, `RemixDrone`, `MissileOutOfRange`) have event `hash_07F80F07`. The event names did not resolve. Each stack also has a `Priority` and two more hashed fields, all 0 here.
+
+**The editor's ten effects.** `startup` registers `No_Filter` and `phone_cam1` to `phone_cam7`, `phone_cam9` and `phone_cam12` with `REGISTER_EFFECT_FOR_REPLAY_EDITOR` (the flag is true for all but `phone_cam12`). The nine `phone_cam` names are timecycle modifiers (the phone camera filters); `No_Filter` is not a modifier, so it is the editor's "no filter" entry.
+
 ## How scripts change the look
 
 | Native | Scripts | Calls | Use |
@@ -104,12 +132,12 @@ The modifiers scripts set most by literal name (117 distinct): `CAMERA_secuirity
 
 | Question | Where it goes |
 | --- | --- |
-| What the two numbers on each modifier line mean (value and strength? value at two ends of a range?) | Second pass: test with a modifier that sets one variable |
-| What `userFlags` 1, 2, 4, 8 and 16 do | Second pass: compare the modifiers in each group |
+| What the two numbers on each modifier line mean (value and strength? value at two ends of a range?) | Partly answered in [modifier values](#modifier-values-flags-and-post-effect-names-leftovers-pass): the second is a 0-to-1 number on 97% of lines, so probably a weight; test card still needed |
+| What `userFlags` 1, 2, 4, 8 and 16 do | Mostly answered in [modifier values](#modifier-values-flags-and-post-effect-names-leftovers-pass): water, interior, tunnel, no street ambient, tunnel exterior (a bit field) |
 | The game hours of the 13 keyframes | Second pass: test card 2 |
-| What the 39 unnamed post effects are, and whether anything plays them | Second pass: hash lists from other sources |
+| What the 39 unnamed post effects are, and whether anything plays them | Mostly answered in [post-effect names](#modifier-values-flags-and-post-effect-names-leftovers-pass): 37 left, identified by their layers; none is played by a literal name |
 | How many timecycle boxes and interior room modifiers the map has | Answered (leftovers pass, **Verified**): **6,263 timecycle boxes** in 527 ymaps (3,685 DLC, 2,122 `dlc_patch`, 456 base; none in a script-loaded ymap), using 100 modifiers, 99 of them named from the `timecycle_mods` files: `NoAmbientmult` 4,544, `WATER_shore` 277, `NOdirectLight` 170, `MP_Heist4_Artificial_Amb_Mul` 169, `overwater` 139, `NO_streetAmbient` 131, `NO_weather` 86. Interiors: **1,269 of 1,658 rooms** in the 386 interiors name a timecycle modifier (333 different ones, 39 rooms a second one), and 147 interiors add 939 modifier boxes of their own |
-| `GroupId` and `EventType` on post effects | Second pass |
+| `GroupId` and `EventType` on post effects | Partly answered in [post-effect names](#modifier-values-flags-and-post-effect-names-leftovers-pass): which effects carry them; the event names are hashes |
 
 ## Test cards
 

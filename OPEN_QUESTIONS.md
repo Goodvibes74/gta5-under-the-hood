@@ -122,6 +122,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | D7 | `gameconfig.xml` (base and update), a listing of every archive with entry sizes, one `fm_content_*` script for the content keys | SCR-014, PERF-025, FF-001, FF-002, FF-003, FF-004, FF-005 | Done: SCR-014, FF-001, FF-002, FF-003 answered (and AI-006 with SCR-014); FF-004 mostly; PERF-025 partly (a test). FF-005 needs `fm_mission_controller` read key by key, a scripts job, so it stays open |
 | D8 | Every `.ymap`, `.ytyp`, `.ymf`, `.ynd`, `.ynv` and scenario region file, loaded with CodeWalker's library; the archive listing for `.ybn` | GP-035, ENT-001 to ENT-003, ENT-028 to ENT-031, ENT-034, ENT-035, WLD-001, WLD-004, WLD-005, WLD-007, AI-027 to AI-029, REN-025, PHY-002 | Done: WLD-004, WLD-007, ENT-001, ENT-028, ENT-034, AI-028, AI-029, REN-025, PHY-002 answered; WLD-001, ENT-003, ENT-029, ENT-031 mostly; WLD-005, ENT-002, ENT-030, ENT-035, AI-027 partly; GP-035 not found. UI-009 (interior map names), PHY-005 and the pools part of PHY-018 were not attempted |
 | D9 | Every audio `.rel` file (253, CodeWalker's library), the `.awc` listing, the dialogue text-block names in the decompile | AUD-001 to AUD-006, AUD-008 to AUD-010 | Done: AUD-001, AUD-002, AUD-003, AUD-005, AUD-006 answered; AUD-010 mostly; AUD-004, AUD-008, AUD-009 partly (the per-voice context lists need a reader for the `speech2` byte arrays). AUD-007 stays a test |
+| D10 | `entityfx.dat`, `materialfx.dat`, `wheelfx.dat`, every `.ypt` (CodeWalker), DLC `content.xml` and `setup2.xml`, `animpostfx.ymt`, the `timecycle_mods` and `w_*.xml` files, `visualsettings.dat` | REN-014 to REN-017, REN-021, REN-022, REN-024, REN-026, REN-027, GP-027, WLD-017 | Done: REN-014, REN-015, REN-016, GP-027 answered; REN-022, REN-024, REN-027 mostly; REN-017, REN-021, REN-026, WLD-017 partly. Correction: the weather files have 423 variables per region, not 380 |
 
 ## By category
 
@@ -510,7 +511,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | WLD-014 | Whether wind changes the flight of aircraft, the drift of boats, or bullets | Test card 3; R2.2, R2.4 | Open |
 | WLD-015 | What the global flag that skips the post-death weather reroll is, and which scripts set it | Second pass: read the writers of that global in `respawn_controller`'s callers | Open |
 | WLD-016 | How `SET_OVERRIDE_WEATHER` and the persistent lock interact when both are set | In-game test | Open |
-| WLD-017 | What the 380 timecycle variables per region do, and how timecycle modifiers stack on the weather | R13.2 | Open |
+| WLD-017 | What the 380 timecycle variables per region do, and how timecycle modifiers stack on the weather | R13.2 | Partly answered: there are 423 variables per region (not 380), grouped by name; stacking is engine code (leftovers pass, [timecycle](/docs/rendering/timecycle-and-post-effects.md#modifier-values-flags-and-post-effect-names-leftovers-pass)) |
 | WLD-018 | The base length of one weather `TimeMult` unit (not in the file) *(from the guide's text)* | In-game test | Open |
 | WLD-019 | Whether wind pushes aircraft or boats *(from the guide's text)* | In-game test | Open |
 
@@ -568,7 +569,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | GP-024 | The meaning of `replay_controller` states 1 to 6 and 11 to 13 | Second pass (also open in mission anatomy) | Answered with GP-017 ([mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip)) |
 | GP-025 | The `REPLAY_START_EVENT` and `REPLAY_RECORD_BACK_FOR_TIME` type numbers | Second pass | Partly answered: who passes each value (4 and 3 story missions, 1 and 0 side missions, 2 six scripts); the engine meaning is new GP-087 ([replay guide](/docs/gameplay/missions/replay-director-and-editor.md#the-clip-recorder)) |
 | GP-026 | Where director mode's restricted places (the prison and others) are defined | Second pass: the area checks in `director_mode` | Answered: a 200 m circle around the prison is the only restricted area; the other spots only move the start point ([replay guide](/docs/gameplay/missions/replay-director-and-editor.md#director-mode-director_mode)) |
-| GP-027 | The 10 post effects `startup` registers for the editor | R13.2 second pass | Open |
+| GP-027 | The 10 post effects `startup` registers for the editor | R13.2 second pass | Answered: `No_Filter` and `phone_cam1` to `_7`, `_9`, `_12` (leftovers pass, [timecycle](/docs/rendering/timecycle-and-post-effects.md#modifier-values-flags-and-post-effect-names-leftovers-pass)) |
 | GP-087 | What the engine does with the type number of `REPLAY_RECORD_BACK_FOR_TIME` and `REPLAY_START_EVENT` (values 0 to 4) | Third pass, the executable | Open |
 
 ### [The story mission flow: how missions unlock](/docs/gameplay/missions/story-flow.md) (R5.1)
@@ -946,15 +947,15 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | REN-012 | The exact decal limit in build 3725 and what limit patches change | Second pass with the executable; R18 | Open |
 | REN-013 | How the particle quality setting picks between `ptfx`, `ptfx_hi` and `ptfx_lo` | Test card 2; R18.2 | Open |
-| REN-014 | The format of `entityfx.dat`, `materialfx.dat` and `wheelfx.dat` row by row | Second pass | Open |
-| REN-015 | Which DLC dictionaries are mounted in story mode | R1.6 second pass | Open |
-| REN-016 | Which effect names each dictionary holds (an index) | Second pass: a read-only lister for `.ypt` | Open |
+| REN-014 | The format of `entityfx.dat`, `materialfx.dat` and `wheelfx.dat` row by row | Second pass | Answered: sections and columns of all three files (leftovers pass, [particles](/docs/rendering/particles-and-decals.md#effect-files-dictionaries-and-mounting-leftovers-pass)) |
+| REN-015 | Which DLC dictionaries are mounted in story mode | R1.6 second pass | Answered: all 33 DLC particle archives are switched on in `GROUP_STARTUP` change sets (leftovers pass, [particles](/docs/rendering/particles-and-decals.md#effect-files-dictionaries-and-mounting-leftovers-pass)) |
+| REN-016 | Which effect names each dictionary holds (an index) | Second pass: a read-only lister for `.ypt` | Answered: 364 dictionaries, 2,907 effects, counts and name families (leftovers pass, [particles](/docs/rendering/particles-and-decals.md#effect-files-dictionaries-and-mounting-leftovers-pass)) |
 
 ### [Rendering, visual settings and LOD](/docs/rendering/rendering-and-visual-settings.md) (R13.1)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| REN-017 | What each changed key between base and update copies does | Second pass, diff and in-game test | Open |
+| REN-017 | What each changed key between base and update copies does | Second pass, diff and in-game test | Partly answered: 11 changed, 136 added, 6 removed keys listed; the in-game effect is a test (leftovers pass, [visual settings](/docs/rendering/rendering-and-visual-settings.md#296-open-questions)) |
 | REN-018 | How "extended distance scaling" maps to the LOD scale value | In-game test with `GET_LODSCALE` | Open |
 | REN-019 | What popular lighting and graphics overhauls change in these files | A comparison, with each author's release page linked | Open |
 | REN-020 | Per-pass cost measured on a low-end PC | R18.1 measuring, with a frame capture tool | Open |
@@ -963,13 +964,13 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| REN-021 | What the two numbers on each modifier line mean (value and strength? value at two ends of a range?) | Second pass: test with a modifier that sets one variable | Open |
-| REN-022 | What `userFlags` 1, 2, 4, 8 and 16 do | Second pass: compare the modifiers in each group | Open |
+| REN-021 | What the two numbers on each modifier line mean (value and strength? value at two ends of a range?) | Second pass: test with a modifier that sets one variable | Partly answered: the second number is 0 to 1 on 97% of lines, probably a weight; test card still needed (leftovers pass, [timecycle](/docs/rendering/timecycle-and-post-effects.md#modifier-values-flags-and-post-effect-names-leftovers-pass)) |
+| REN-022 | What `userFlags` 1, 2, 4, 8 and 16 do | Second pass: compare the modifiers in each group | Mostly answered: 1 water, 2 interiors, 4 and 16 tunnels, 8 `NO_streetAmbient`; a bit field (leftovers pass, [timecycle](/docs/rendering/timecycle-and-post-effects.md#modifier-values-flags-and-post-effect-names-leftovers-pass)) |
 | REN-023 | The game hours of the 13 keyframes | Second pass: test card 2 | Open |
-| REN-024 | What the 39 unnamed post effects are, and whether anything plays them | Second pass: hash lists from other sources | Open |
+| REN-024 | What the 39 unnamed post effects are, and whether anything plays them | Second pass: hash lists from other sources | Mostly answered: 215 of 252 named; the 37 left identified by their layers, none played by literal name (leftovers pass, [timecycle](/docs/rendering/timecycle-and-post-effects.md#modifier-values-flags-and-post-effect-names-leftovers-pass)) |
 | REN-025 | How many timecycle boxes and interior room modifiers the map has | R4.6 (map data) | Answered: 6,263 timecycle boxes in 527 ymaps; 1,269 of 1,658 interior rooms name a modifier, plus 939 interior boxes (leftovers pass, [timecycle](/docs/rendering/timecycle-and-post-effects.md#open-questions)) |
-| REN-026 | `GroupId` and `EventType` on post effects | Second pass | Open |
-| REN-027 | Meaning of the timecycle modifier `userFlags` values (0, 2, 1, 16, 4, 8) *(from the guide's text)* | Second pass | Open |
+| REN-026 | `GroupId` and `EventType` on post effects | Second pass | Partly answered: group 1 on the three Heist4 camera flashes, group 64 and two event hashes on eight transition and view effects; event names unresolved (leftovers pass, [timecycle](/docs/rendering/timecycle-and-post-effects.md#modifier-values-flags-and-post-effect-names-leftovers-pass)) |
+| REN-027 | Meaning of the timecycle modifier `userFlags` values (0, 2, 1, 16, 4, 8) *(from the guide's text)* | Second pass | Mostly answered with REN-022 (leftovers pass, [timecycle](/docs/rendering/timecycle-and-post-effects.md#modifier-values-flags-and-post-effect-names-leftovers-pass)) |
 
 ## Performance
 

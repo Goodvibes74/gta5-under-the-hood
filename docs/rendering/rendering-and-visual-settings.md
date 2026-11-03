@@ -67,7 +67,7 @@ A line is a dotted key and a value (`trafficLight.near.radius 1.5`), `#` starts 
 
 | Question | Where it goes |
 | --- | --- |
-| What each changed key between base and update copies does | Second pass, diff and in-game test |
+| What each changed key between base and update copies does | Partly answered (leftovers pass, **Verified** diff): the update copy has 1,123 keys against 993. 11 values changed: car headlights, default lights and brake lights much brighter by day and night (`car.headlight.day.emissive.on` 10 to 25, `car.defaultlight.day.emissive.on` 1.5 to 15), the neon clip height, and the flashlight cone and offset (`dark.light.*`). 136 keys were added (a plane's lights `plane.luxe2.*` 40, a second flashlight `dark.secLight.*` 16, red interior car lights 13, submarine lights `sub.*` 20, `heli.swift2.*` 9, siren lights, a first-person flashlight offset, a ped foot light), and the distant car-light keys were reorganised (6 removed, 12 added). What each does in game is the test |
 | How "extended distance scaling" maps to the LOD scale value | In-game test with `GET_LODSCALE` |
 | What popular lighting and graphics overhauls change in these files | A comparison, with each author's release page linked |
 | Per-pass cost measured on a low-end PC | R18.1 measuring, with a frame capture tool |
