@@ -107,6 +107,14 @@ Test only: GP-054 (parent head counts), ON-058 (story clothes shop with a freemo
 
 Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), GP-039 (switch flags), GP-043 (two scripts disabling controls), GP-091 (old control numbers on build 3717+), GP-049, GP-050, GP-053 (regeneration, hurt thresholds, armour split), GP-062, GP-064 (arrest weapons, respawn point choice), GP-068 (shooting, strength, stealth), GP-071, GP-072, GP-075 (breath, drowning, swim speed). Engine: GP-023 (what NoEditorRestrictions patches). Elsewhere: GP-027 (R13.2), GP-073 (swimming stat entries), GP-074 (R2.3), GP-076 (a question for the install's owner), GP-079 (R2.5), GP-080 (R3.2).
 
+### Leftovers: the data-file batches ([DATA-NEEDS](/DATA-NEEDS.md))
+
+Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch extracts one group of game files into a scratch folder outside the repo and answers the questions that need them.
+
+| Batch | Files | Questions | Status |
+| --- | --- | --- | --- |
+| D1 | Every American `.gxt2` text block (base, `update.rpf`, `update2.rpf`, DLC); every `vehicles.meta`, `handling.meta`, `carcols` and `carvariations` (base, update, DLC, `dlc_patch`) | GP-090, GP-047, GP-082, ENT-005, GP-045, GP-046, ENT-036, ENT-037, ON-068 | Done: GP-045, GP-046, ENT-005, ENT-036 answered; GP-047, GP-082, GP-090, ENT-037 mostly; ON-068 narrowed (not a vehicle) |
+
 ## By category
 
 | Category | Guides | Questions |
@@ -229,7 +237,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | ENT-004 | The `NULL` fallback and the "CARNOTFOUND" return, confirmed in game | Test card 1 | Open |
-| ENT-005 | Which 13 maker labels have no text and whether anything shows them | Second pass | Open |
+| ENT-005 | Which 13 maker labels have no text and whether anything shows them | Second pass | Answered: 13 makers have text only in a DLC or update global table; only `KRAKEN` (`avisa`) has none anywhere; what the game shows for it is a test (leftovers pass, [text and names](/docs/entities/objects/text-and-names.md#short-version)) |
 | ENT-006 | How mod-part and livery labels are named and registered | R14.1 | Open |
 | ENT-007 | Load order when two packs define the same label | R8.3 second pass, in-game test | Open |
 
@@ -295,8 +303,8 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ENT-036 | The difference between the 901 models here and the 879 counted in R14.4 (how entries were split) | Second pass | Open |
-| ENT-037 | The meaning of the less common flags | Second pass: compare models that set them | Open |
+| ENT-036 | The difference between the 901 models here and the 879 counted in R14.4 (how entries were split) | Second pass | Answered: 921 models in all 76 files; the 879 count left out the 42 models found only in `dlc_patch` copies (leftovers pass, [vehicles](/docs/entities/vehicles/vehicles.md#how-many-models-counted-three-ways-leftovers-pass)) |
+| ENT-037 | The meaning of the less common flags | Second pass: compare models that set them | Mostly answered: which model uses each of the 79 rarest flags, and one unprefixed flag on `bodhi2`; the detailed effect is a test per model (leftovers pass, [vehicles](/docs/entities/vehicles/vehicles.md#how-many-models-counted-three-ways-leftovers-pass)) |
 | ENT-038 | Light and siren setting id ranges used by DLC packs | Second pass | Open |
 | ENT-039 | Which `carcols` mod parts each kit really links (the per-type counts include repeats) | Second pass | Open |
 
@@ -507,7 +515,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | GP-001 | How `stock_controller` moves prices and which story events move which company | Second pass | Mostly answered: LCN random walk with caps, BAWSAQ from community stats, the story stock events; counters mapped to companies by code (GP-090); only the company names (text) are left ([economy](/docs/gameplay/economy/economy-and-pickups.md#the-stock-market-second-pass)) |
 | GP-002 | Where `pickup_controller` places each pickup and when they respawn | Second pass: its coordinate tables | Answered: 253 pickups in seven groups, 10-minute regeneration, removed during mission types 13 and 14 ([economy](/docs/gameplay/economy/economy-and-pickups.md#the-pickups-pickup_controller-places-second-pass)) |
 | GP-003 | How shop robberies pay out (the till amounts) | Second pass: `shoprobberies` | Answered: bag $220 to $786 (dropped bag $50 to $219); own till grabs $10 to $50 each ([economy](/docs/gameplay/economy/economy-and-pickups.md#what-a-shop-robbery-pays-second-pass)) |
-| GP-090 | Which company each of the 126 `sm_` stock counters feeds, and the English names of the 80 companies (`BSS_BSTR_` labels, not in the base text files) | Third pass | Partly answered: 95 counters end in one of the 39 `sm_price_<code>` company codes; 31 are general activity counters. Company names still need the text ([economy](/docs/gameplay/economy/economy-and-pickups.md)) |
+| GP-090 | Which company each of the 126 `sm_` stock counters feeds, and the English names of the 80 companies (`BSS_BSTR_` labels, not in the base text files) | Third pass | Mostly answered: 95 counters map to company codes, and all 80 company names are in `global.gxt2` (`BSS_BSTR_<2n>` name, `<2n+1>` ticker; leftovers pass); how the 31 counters without a code are used is still open ([economy](/docs/gameplay/economy/economy-and-pickups.md#the-stock-market-second-pass)) |
 | GP-004 | The full list of `SPx_MONEY_SPENT_*` categories | R1.7 | Answered: 10 categories plus the total, and a second shop family `SPx_SP_MONEY_SPENT_*` ([economy](/docs/gameplay/economy/economy-and-pickups.md#where-story-money-is-booked-second-pass)) |
 
 ### [Cutscenes and dialogue](/docs/gameplay/missions/cutscenes-and-dialogue.md) (R5.6)
@@ -598,9 +606,9 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-045 | Flying blocks of all DLC aircraft | Second pass with every DLC `handling.meta` | Open (the P4.10 session had no game files; data only) |
-| GP-046 | What `SPMED` and `SPSMALL` are | Second pass, `vehicles.meta` | Open (the P4.10 session had no game files; data only) |
-| GP-047 | The 12 lessons by name, their aircraft and targets | Second pass, `pilot_school` | Partly answered: targets in [minigames](/docs/gameplay/missions/minigames-and-activities.md); the 12 set-ups use the Mallard 6 times, Cuban 800, Maverick and Frogger twice each, reached through a function table; names and lesson-to-aircraft still need the `PSCHOOL` text block ([flying](/docs/gameplay/player/flying.md#195-the-flight-school)) |
+| GP-045 | Flying blocks of all DLC aircraft | Second pass with every DLC `handling.meta` | Answered: 63 flying blocks, 41 from 12 DLC packs, with their ranges and the top thrust values (leftovers pass, [flying 19.2.1](/docs/gameplay/player/flying.md#1921-the-dlc-aircraft-leftovers-pass)) |
+| GP-046 | What `SPMED` and `SPSMALL` are | Second pass, `vehicles.meta` | Answered: no `vehicles.meta` uses them; left-over flying entries with a weapon block (leftovers pass, [flying 19.2](/docs/gameplay/player/flying.md#192-the-flying-handling-block)) |
+| GP-047 | The 12 lessons by name, their aircraft and targets | Second pass, `pilot_school` | Mostly answered: the 12 lesson names (`MGFS_0` to `11`, leftovers pass), the two Maverick set-ups are Skydiving and Drop Zone and the two Frogger set-ups the helicopter lessons; which two fixed-wing lessons use the Cuban 800 is still open ([flying 19.5](/docs/gameplay/player/flying.md#195-the-flight-school)) |
 | GP-048 | The mission type numbers used with `TASK_HELI_MISSION` and `TASK_PLANE_MISSION`, with counts | Second pass | Answered: helicopters mostly go to (4), stop (5), flee (8), land (19); planes go to (4) and crash (21, all Online) ([flying](/docs/gameplay/player/flying.md#193-what-scripts-do-with-aircraft)) |
 
 ### [Health, armour, death and arrest](/docs/gameplay/player/health-armour-death.md) (R3.8)
@@ -629,7 +637,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | GP-081 | What each restriction tag blocks or forces, as a table (hat with hood, glasses with masks ...) | Next pass, the tag checks in `shop_controller` | Open |
-| GP-082 | The full `locate` number to menu title map, and why a few menus appear only in some store layouts | Next pass, `clothes_shop_mp` menu builder | Partly answered: 305 Online menu numbers map to 306 `CSHOP_TITLE<n>` labels, 37 in story mode; the English text and the layout rules still open ([cosmetics](/docs/gameplay/player/online-cosmetic-shops.md#where-the-items-come-from)) |
+| GP-082 | The full `locate` number to menu title map, and why a few menus appear only in some store layouts | Next pass, `clothes_shop_mp` menu builder | Mostly answered: all 322 `CSHOP_TITLE` labels have English text in `CLO_MNU` (leftovers pass); why some menus appear only in some store layouts is still open ([cosmetic shops](/docs/gameplay/player/online-cosmetic-shops.md)) |
 | GP-083 | The base-wardrobe tables (labels and prices of the non-DLC clothes) | Next pass | Open |
 | GP-084 | Which barber items need a rank, and the ranks | Next pass, the unlock checks behind `HAIR_UNLOCK` | Answered: two rank tables in `hairdo_shop_mp`, hairstyles from rank 6 to 25, overlays 0 to 26 ([cosmetics](/docs/gameplay/player/online-cosmetic-shops.md#menus)) |
 | GP-085 | The hair and make-up colour counts on this build | In-game test, `GET_NUM_PED_HAIR_TINTS` / `GET_NUM_PED_MAKEUP_TINTS` | Open |
@@ -734,7 +742,7 @@ Test only (one evening's test card for the phase): GP-006 (cutscene flag bits), 
 | ON-028 | Every website page and what each sells | Second pass, `appinternet` | Answered: the eight selling sites with their numbers and stock counts, and the 683-item model list ([R7.10 21.5](/docs/online/interaction-menu-phone-apps.md#215-the-internet)) |
 | ON-029 | The Facade phone's movie and the character-to-phone mapping | Second pass | Answered: `cellphone_facade` is Trevor's; the four-entry phone table ([R7.10 21.2.1](/docs/online/interaction-menu-phone-apps.md#2121-the-slots-by-mode-and-the-phone-each-character-carries-second-pass)) |
 | ON-067 | Who sets the story phone's Sniper-app flag, and what the two Online flags are that switch the phone to the Badger skin and empty slot 24 | Third pass, `cellphone_controller` callers | Answered: the Badger flags are set by the mission controllers when the player is in Franklin's (`p_franklin_02`) or Lamar's (`ig_lamardavis_02`) model; the Sniper flag (`Is_Sniper_App_Available`) is written by no script ([phone](/docs/online/interaction-menu-phone-apps.md)) |
-| ON-068 | What website items 323, 324, 357 and 402 are (hashes set at start that match no model name) | Third pass, the preview code in `appinternet` | Open, needs data: the four hashes are -994826917 (323), 886151985 (324), -1242692076 (357), -451225720 (402), set in `standard_global_init`; no string in the decompile hashes to them, so match them against every DLC `vehicles.meta` `modelName` |
+| ON-068 | What website items 323, 324, 357 and 402 are (hashes set at start that match no model name) | Third pass, the preview code in `appinternet` | Open: the leftovers pass ruled out vehicles; the four hashes match nothing in any `vehicles.meta`, `handling.meta`, `carcols` or `carvariations` file, so the answer is in `appinternet`'s preview code ([phone and apps](/docs/online/interaction-menu-phone-apps.md)) |
 | ON-069 | Each interaction-menu page's own show and grey conditions (the top page is mapped) | Third pass, `am_pi_menu` page by page | Open |
 
 ### [The job lobby (`fmmc_launcher`)](/docs/online/job-lobby.md) (R7.5)

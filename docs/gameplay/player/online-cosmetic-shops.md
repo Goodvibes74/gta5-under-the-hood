@@ -160,6 +160,8 @@ There is no single counter menu. Each store has browse spots, each a position, a
 2. **DLC items** are read from the catalogue with `SETUP_SHOP_PED_APPAREL_QUERY_TU(character, 11, locate, props, -1, component type)` and `GET_SHOP_PED_QUERY_COMPONENT` / `_PROP` (12 query calls, 805 `GET_SHOP_PED_COMPONENT` calls). The item's `locate` number puts it on a menu.
 
 **Menu titles** (**Verified**, second pass). One function in `clothes_shop_mp` names every Online menu: 305 menu numbers (0 to 312) map to 306 different title labels `CSHOP_TITLE<n>` (with a matching `CSHOP_ITEM<n>` for the item line). Menu 0 is titled by what the store sells (`CSHOP_TITLE41` when the menu holds masks, `CSHOP_TITLE159` for gear, otherwise `CSHOP_TITLE0`). Fourteen menus have a second title used when another player's current property is of type 14 (our reading of the condition). Story-mode stores use a separate, shorter table of 37 menus. The English titles are in the shop text blocks, not read in this session.
+
+*Leftovers pass* (**Verified**, the American text blocks of every archive (base `x64b.rpf`, `update.rpf`, `update2.rpf` and the DLC packs, 645,160 entries) dumped with the CodeWalker library and searched by the `joaat` hash of each label). Every one of the 322 `CSHOP_TITLE<n>` labels the two clothes-shop scripts name (`clothes_shop_mp` and `clothes_shop_sp` name the same 322) has English text, in the `CLO_MNU` block (`clo_mnu.gxt2`, base and `update2.rpf` copies). The block holds 326 titles numbered 0 to 356. The low numbers are the story-mode wardrobe's plain categories (0 ITEMS, 1 CLOTHING, 2 JACKETS, 3 T-SHIRTS ... 41 MASKS, 42 GLASSES), the 150s to 190s the heist outfits (159 HEIST GEAR, 173 OUTFITS: HEIST to 191 OUTFITS: HEIST RIDER), and every later number one update's line, up to 356 OUTFITS: SPONSORED. Three labels have a different text in a later copy (86 AVIATOR GLASSES / AVIATORS, 164 OUTFITS: FLIGHT SUITS / OUTFITS: SA FLIGHT SCHOOL, 168 TEAM TOPS / UTILITY TOPS).
 3. **Price:** in Online the item's `textLabel` is hashed and looked up in 38 price functions (17,411 cases, each a tunable such as `Global_262145.f_16119`), then multiplied by the sale tunable of the update that added it (`CU_VAL_CLOTHES`, `CU_INDI_CLOTHES`, `CU_LOW_CLOTHES` ... with separate multipliers per slot), and doubled in one special case. Outside Online the `cost` field is used. Outfits are cheaper by what the player already owns (`CSHOP_OUTFIT_DI`).
 
 ### The catalogue in numbers
@@ -236,7 +238,7 @@ The shop scripts write through `STAT_SET_INT` on the stat for the current charac
 | Question | Where it goes |
 | --- | --- |
 | What each restriction tag blocks or forces, as a table (hat with hood, glasses with masks ...) | Next pass, the tag checks in `shop_controller` |
-| The English text of the 306 `CSHOP_TITLE` labels, and why a few menus appear only in some store layouts (GP-082) | Third pass, the shop text block and the store-layout checks |
+| The English text of the 306 `CSHOP_TITLE` labels, and why a few menus appear only in some store layouts (GP-082) | Text answered (all 322 labels in `CLO_MNU`, see the menu titles above); the store-layout rule is third pass |
 | The base-wardrobe tables (labels and prices of the non-DLC clothes) | Next pass |
 | The hair and make-up colour counts on this build | In-game test, `GET_NUM_PED_HAIR_TINTS` / `GET_NUM_PED_MAKEUP_TINTS` |
 

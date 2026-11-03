@@ -2,6 +2,8 @@
 
 The open questions that **can't be answered from the decompiled scripts alone**, grouped by the file to extract. Use it as a shopping list for one CodeWalker session (`tools/rpf-cw.ps1`, see [research tools](/docs/00-getting-started/research-tools.md)): extract everything in a group into a scratch folder outside the repo, then answer the group's questions together. Status and full wording of each question: [`OPEN_QUESTIONS.md`](/OPEN_QUESTIONS.md). Everything else that is still open is listed in [`HANDOFF.md`](/HANDOFF.md) (executable, in-game tests, scripts only).
 
+**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file; the rows marked *done, D1* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
+
 How to read the tables:
 - **Extract** gives the path as this repo's guides already use it (`common:` = `common.rpf`, `update:` = `update\update.rpf`, DLC = `update\x64\dlcpacks\<pack>\dlc.rpf` and the `dlc_patch` folders in `update.rpf`). Where no guide has given the path yet, it says *find*: list the archives with the tool and search for the file name.
 - **Scripts too?** says whether the answer also needs the decompile (commit `6c18d3e8`).
@@ -11,15 +13,15 @@ How to read the tables:
 
 | ID | What to find | Extract | Scripts too? |
 | --- | --- | --- | --- |
-| GP-045 | The `CFlyingHandlingData` block of every DLC aircraft | `handling.meta` in every DLC pack and `dlc_patch` (base: `common:/data/handling.meta`) | no |
+| GP-045 (*done, D1*) | The `CFlyingHandlingData` block of every DLC aircraft | `handling.meta` in every DLC pack and `dlc_patch` (base: `common:/data/handling.meta`) | no |
 | AI-024 | The AI handling profile of every DLC vehicle | the same `handling.meta` files | no |
 | PHY-011 | Bit names of the model, handling, damage and advanced flags | the same files, compared across known vehicles; then an in-game check | no |
 | PHY-013 | What each `statMods` modifier changes | the same files (`CCarHandlingData` / sub-handling blocks) | no |
 | PHY-014 | How `vehicles.meta` fields (`handlingId`, wheel scale, `flags`) interact with handling | `common:/data/levels/gta5/vehicles.meta` and every DLC `vehicles.meta`, with `handling.meta` | no |
-| GP-046 | What the `SPMED` and `SPSMALL` handling entries belong to | every `vehicles.meta` (`handlingId` column) | no |
-| ON-068 | Which models the website items 323, 324, 357, 402 are: hashes −994826917, 886151985, −1242692076, −451225720 | every `vehicles.meta` `modelName`, hashed with `joaat` | no (hashes already read from `standard_global_init`) |
-| ENT-036 | Why 901 models here vs 879 in R14.4 | every `vehicles.meta` | no |
-| ENT-037 | The less common vehicle flags | every `vehicles.meta` `flags` | no |
+| GP-046 (*done, D1*) | What the `SPMED` and `SPSMALL` handling entries belong to | every `vehicles.meta` (`handlingId` column) | no |
+| ON-068 (*done, D1*) | Which models the website items 323, 324, 357, 402 are: hashes −994826917, 886151985, −1242692076, −451225720 | every `vehicles.meta` `modelName`, hashed with `joaat` | no (hashes already read from `standard_global_init`) |
+| ENT-036 (*done, D1*) | Why 901 models here vs 879 in R14.4 | every `vehicles.meta` | no |
+| ENT-037 (*done, D1*) | The less common vehicle flags | every `vehicles.meta` `flags` | no |
 | ENT-038 | Light and siren id ranges per DLC pack | every `carcols` file (*find*: `carcols.ymt`/`carcols.meta`) | no |
 | ENT-039 | Which `carcols` mod parts each kit links | the same, plus `carvariations.meta` | no |
 | REN-011 | How the first-person car interior camera is chosen per vehicle | `update:/x64/data/metadata/cameras.ymt` and `vehicles.meta` (`camVehicleCustomSettingsMetadata`) | no |
@@ -151,13 +153,13 @@ How to read the tables:
 
 | ID | What to find | Extract | Scripts too? |
 | --- | --- | --- | --- |
-| GP-047 | The 12 flight school lesson names, then which lesson uses which aircraft | `PSCHOOL` block | yes (the 6 Mallard, 2 Cuban 800, 2 Maverick, 2 Frogger set-ups in `pilot_school`) |
-| GP-082 | English titles of the 306 clothes menus | shop blocks (`CSHOP_TITLE<n>`) | no (map already read) |
-| GP-090 | English names of the 80 stock companies | the block holding `BSS_BSTR_<n>` (an update or DLC block) | no (counter map already read) |
+| GP-047 (*done, D1*) | The 12 flight school lesson names, then which lesson uses which aircraft | `PSCHOOL` block | yes (the 6 Mallard, 2 Cuban 800, 2 Maverick, 2 Frogger set-ups in `pilot_school`) |
+| GP-082 (*done, D1*) | English titles of the 306 clothes menus | shop blocks (`CSHOP_TITLE<n>`) | no (map already read) |
+| GP-090 (*done, D1*) | English names of the 80 stock companies | the block holding `BSS_BSTR_<n>` (an update or DLC block) | no (counter map already read) |
 | ON-018 | The story of the `mp2025_02` update | its 13 dialogue blocks | no |
 | ON-008 | Creator libraries with no text (library 15, 39 ...) | every DLC text block | no |
 | UI-018 | A label-name index | every block, hashed against all script strings | yes |
-| ENT-005 | The 13 vehicle maker labels with no text | vehicle text blocks | no |
+| ENT-005 (*done, D1*) | The 13 vehicle maker labels with no text | vehicle text blocks | no |
 | ENT-006 | How mod-part and livery labels are named and registered | vehicle and `carcols` text | no |
 | GP-083 | Base-wardrobe labels | clothes text blocks | yes (see above) |
 

@@ -9,7 +9,7 @@ How a model gets the name players see ("Obey 9F" rather than `ninef`): the label
 - **A model's name is a label, not text.** `vehicles.meta` gives each vehicle a `gameName` (the model's name label, `NINEF`) and a `vehicleMakeName` (the maker's label, `OBEY`); `weapons.meta` gives each weapon a `HumanNameHash` (`WT_PIST`). The text lives in `global.gxt2` (`NINEF` is "9F", `OBEY` is "Obey", `WT_PIST` is "Pistol").
 - **879 vehicle models** in the base and DLC `vehicles.meta` files (38 files). 875 have a name label that exists: 294 base-game models in the base global table, 551 DLC models in their packs' global tables, and 30 that use a label from the other table. Only 4 have no text at all (`freighttrailer`, `proptrailer`, `docktrailer`, `tanker2`: trailers nobody sees named).
 - **The label is usually the model name.** For 716 of 879 vehicles `gameName` equals the model name in upper case; the rest reuse another model's label (variants that share a name) or a shortened one.
-- **65 makers** (`VAPID` 71 models, `DECLASSE` 64, `BRAVADO` 37, `KARIN` 32, `PEGASSI` 29 ...); 13 make labels have no text.
+- **65 makers** (`VAPID` 71 models, `DECLASSE` 64, `BRAVADO` 37, `KARIN` 32, `PEGASSI` 29 ...); 13 make labels have no text in the base global table. *Leftovers pass* (**Verified**, the American text blocks of every archive (base `x64b.rpf`, `update.rpf`, `update2.rpf` and the DLC packs, 645,160 entries) dumped with the CodeWalker library and searched by the `joaat` hash of each label): all but one of them do have text, in the global table of a DLC pack or the update. Those are `BENEFACTOR`, `CLASSIQUE`, `EBERHARD`, `LAMPADATI`, `MAXWELL`, `PENAUD`, `PROGEN`, `RUNE`, `TOUNDRA`, `UBERMACHT` (also written `Ubermacht` by one model; labels ignore case), `VOMFEUER`, `VYSSER` and `WILLARD`. Only `KRAKEN`, the maker of the `avisa` submarine (`mpheist4`), has no text in any block.
 - **170 weapon entries** carry a `HumanNameHash`: 130 found in the text, 37 deliberately empty (`WT_INVALID` or blank: ammo-less internal weapons), 3 missing.
 - **Scripts look names up by model:** `GET_DISPLAY_NAME_FROM_VEHICLE_MODEL` (122 scripts, 1,293 calls) returns the `gameName` label; `GET_MAKE_NAME_FROM_VEHICLE_MODEL` (45 scripts) the maker; the text comes from the label like any other (`GET_FILENAME_FOR_AUDIO_CONVERSATION` returns a label's text in 450 scripts).
 - **Other content names** follow the same pattern: vehicle mods (`GET_MOD_TEXT_LABEL`, 440 scripts), mod slots (`GET_MOD_SLOT_NAME`, 23), liveries (`GET_LIVERY_NAME`, 7), map zones (`GET_NAME_OF_ZONE`, 93), clothing and tattoos (shop metadata labels read through `GET_SHOP_PED_COMPONENT`, 569 scripts, and `GET_TATTOO_SHOP_DLC_ITEM_DATA`, 451).
@@ -63,7 +63,7 @@ How a model gets the name players see ("Obey 9F" rather than `ninef`): the label
 | Question | Where it goes |
 | --- | --- |
 | The `NULL` fallback and the "CARNOTFOUND" return, confirmed in game | Test card 1 |
-| Which 13 maker labels have no text and whether anything shows them | Second pass |
+| Which 13 maker labels have no text and whether anything shows them | Answered in [short version](#short-version): only `KRAKEN` (`avisa`); what the game shows for it is a test |
 | How mod-part and livery labels are named and registered | R14.1 |
 | Load order when two packs define the same label | R8.3 second pass, in-game test |
 

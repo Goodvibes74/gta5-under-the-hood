@@ -194,7 +194,7 @@ Each slot holds an item number from one shared vehicle item list; the list is be
 | The full interaction-menu tree and its conditions | Answered in [21.3.1](#2131-the-menu-tree-second-pass): the top page with its conditions, and every page by area; per-page conditions stay in each page's function |
 | Every website page and what each sells | Answered in [21.5](#215-the-internet): the eight selling sites, their stock counts and the 683-item model list |
 | The Facade phone's movie and the character-to-phone mapping | Answered in [21.2.1](#2121-the-slots-by-mode-and-the-phone-each-character-carries-second-pass): `cellphone_facade`, Trevor's |
-| What website items 323, 324, 357 and 402 are (hashes set at start that match no model name) | Third pass, the preview code in `appinternet` |
+| What website items 323, 324, 357 and 402 are (hashes set at start that match no model name) | Third pass, the preview code in `appinternet`. *Leftovers pass:* the four hashes match no `modelName` (or any other name or value) in the 76 `vehicles.meta`, 47 `handling.meta`, 79 `carcols` and 48 `carvariations` files, so they aren't vehicle models (**Verified**) |
 | Each interaction-menu page's own show and grey conditions (the top page is mapped) | Third pass, `am_pi_menu` page by page |
 
 ## 21.8 Test cards
