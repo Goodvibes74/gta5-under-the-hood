@@ -119,6 +119,19 @@ A mod rebuilds the flow itself (a small state machine on its own save), reuses t
 | 1.71-3570 (2025-06-17) | Money Fronts | `car_wash_detailing`, `car_wash_work`, `cutscene`, `helitours_tour`, `helitours_work`, `tycoon_odd_jobs`, `weed_shop_delivery`, `weed_shop_work` |
 | 1.72-3717.0 (2025-12-10) | A Safehouse in the Hills (`mp2025_02`) | `firefighter`, `forklift_operator`, `getaway_driver`, `postal_worker`, `survival`, `survival_grouping`, `valentine_cheater` |
 
+### 48.6.2 The `mp2025_02` story (leftovers pass)
+
+**Verified** from the dump of every American text block (base, `update.rpf`, `update2.rpf` and every DLC pack, 645,160 entries), looked up by the `joaat` hash of each label; the summary is in our words. The pack's arc is **KnoWay Out**, started from a payphone in Alta (the text says it can be replayed from that payphone later). Its global text describes it as taking down KnoWay's surveillance grid around Los Santos with the help of Avi Schwartzman. KnoWay runs driverless taxis and offices across the city. The six mission dialogue blocks (`X25A1AU` to `X25A6AU`), read in samples, give this outline (*our reading*):
+
+1. **Negative Press** (`X25A1AU`; named in a challenge that mentions the KnoWay taxi): spoil KnoWay's driverless-taxi publicity by wrecking its billboards and taxis.
+2. `X25A2AU`: the player is sent the location of a data centre.
+3. `X25A3AU`: block a tunnel so a train stops, and grab a guarded person from it (*our reading*: the mission called **Tunnel Vision**).
+4. `X25A4AU`: go in as a garbage crew and bring back KnoWay's trash, to learn who KnoWay is targeting and whether the crew is on that list (*our reading*: **Trash Talking**).
+5. `X25A5AU`: a fight with federal agents, after which the player has to reach a set of coordinates and get away by sea.
+6. `X25A6AU` (the largest, 1,099 entries): an armed assault, with a caller asking the player to come home.
+
+The other seven blocks (`X25AFAU`, `X25CBAU`, `X25DSAU`, `X25FBAU`, `X25MAAU`, `X25RBAU`, `X25VNAU`, 11 to 297 entries) were not read in this pass. The same pack's text has award steps for destroying 5, 10, 15 and 20 KnoWay taxis and a $250,000 reward for finishing every KnoWay Out mission as a crew member.
+
 ## 48.7 Open questions
 
 | Question | Where it goes |
@@ -127,4 +140,4 @@ A mod rebuilds the flow itself (a small state machine on its own save), reuses t
 | The text of the voice-only flows (`XM4V_FLW`, `S25R_FLW`, `SR2CH_FLW` ...) | Answered in [48.2.1](#4821-the-phone-call-flows-second-pass): 40 phone calls in six DLC dialogue blocks |
 | Which update each `fm_content_*` script arrived in (compare decompile commits by build) | Answered in [48.6.1](#4861-when-each-fm_content_-script-arrived-second-pass) |
 | The flows for After Hours, Doomsday and the 2015 heists (no flow label family found) | Next pass |
-| The mp2025_02 update's name and story | Partly answered (second pass): the name is A Safehouse in the Hills, from the pack's text; its 13 dialogue blocks (`X25A1AU` to `X25A6AU`, `X25MAAU`, `X25VNAU` ...) are not summarised, left for the third pass |
+| The mp2025_02 update's name and story | Mostly answered: the name is A Safehouse in the Hills (second pass); the story, KnoWay Out, is summarised in [48.6.2](#4862-the-mp2025_02-story-leftovers-pass). Missions 2, 5 and 6 are not tied to their titles |

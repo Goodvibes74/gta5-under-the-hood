@@ -124,6 +124,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | D9 | Every audio `.rel` file (253, CodeWalker's library), the `.awc` listing, the dialogue text-block names in the decompile | AUD-001 to AUD-006, AUD-008 to AUD-010 | Done: AUD-001, AUD-002, AUD-003, AUD-005, AUD-006 answered; AUD-010 mostly; AUD-004, AUD-008, AUD-009 partly (the per-voice context lists need a reader for the `speech2` byte arrays). AUD-007 stays a test |
 | D10 | `entityfx.dat`, `materialfx.dat`, `wheelfx.dat`, every `.ypt` (CodeWalker), DLC `content.xml` and `setup2.xml`, `animpostfx.ymt`, the `timecycle_mods` and `w_*.xml` files, `visualsettings.dat` | REN-014 to REN-017, REN-021, REN-022, REN-024, REN-026, REN-027, GP-027, WLD-017 | Done: REN-014, REN-015, REN-016, GP-027 answered; REN-022, REN-024, REN-027 mostly; REN-017, REN-021, REN-026, WLD-017 partly. Correction: the weather files have 423 variables per region, not 380 |
 | D11 | `clip_sets.ymt` and the DLC `clip_sets.xml` files, `cameras.ymt`, the archive listing (`.ycd`, `.yed` sizes), `CREATE_CAMERA` calls in the decompile | REN-001, REN-002, REN-004, REN-005, REN-006, REN-008, REN-009 | Done: REN-004, REN-006, REN-009 answered; REN-001, REN-002, REN-005 mostly; REN-008 partly |
+| D12 | The American text dump (every block), every `carcols.meta`, the clothes shop scripts' string literals | ON-018, ON-008, UI-018, ENT-006, GP-083 | Done: ENT-006 answered; ON-018, ON-008 mostly; GP-083 partly. UI-018 not moved: adding file and data names and numbered siblings found no clear gain over the second pass's method |
 
 ## By category
 
@@ -248,7 +249,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | ENT-004 | The `NULL` fallback and the "CARNOTFOUND" return, confirmed in game | Test card 1 | Open |
 | ENT-005 | Which 13 maker labels have no text and whether anything shows them | Second pass | Answered: 13 makers have text only in a DLC or update global table; only `KRAKEN` (`avisa`) has none anywhere; what the game shows for it is a test (leftovers pass, [text and names](/docs/entities/objects/text-and-names.md#short-version)) |
-| ENT-006 | How mod-part and livery labels are named and registered | R14.1 | Open |
+| ENT-006 | How mod-part and livery labels are named and registered | R14.1 | Answered: `modShopLabel` per part (21,955 labels), `liveryNames` for texture liveries, text in each pack's `global.gxt2` (leftovers pass, [text and names](/docs/entities/objects/text-and-names.md#open-questions)) |
 | ENT-007 | Load order when two packs define the same label | R8.3 second pass, in-game test | Open |
 
 ### [Appearance and clothing](/docs/entities/peds/appearance-and-clothing.md) (R6.3)
@@ -648,7 +649,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | GP-081 | What each restriction tag blocks or forces, as a table (hat with hood, glasses with masks ...) | Next pass, the tag checks in `shop_controller` | Partly answered: scripts test 387 tags, 383 in the catalogue; 118 catalogue tags are never tested and 4 tested tags exist in no item; a full per-check table is third pass (leftovers pass, [cosmetic shops](/docs/gameplay/player/online-cosmetic-shops.md#wearing-rules-restriction-tags)) |
 | GP-082 | The full `locate` number to menu title map, and why a few menus appear only in some store layouts | Next pass, `clothes_shop_mp` menu builder | Mostly answered: all 322 `CSHOP_TITLE` labels have English text in `CLO_MNU` (leftovers pass); why some menus appear only in some store layouts is still open ([cosmetic shops](/docs/gameplay/player/online-cosmetic-shops.md)) |
-| GP-083 | The base-wardrobe tables (labels and prices of the non-DLC clothes) | Next pass | Open |
+| GP-083 | The base-wardrobe tables (labels and prices of the non-DLC clothes) | Next pass | Partly answered: the base labels' patterns and text found; prices are in script tables, third pass (leftovers pass, [cosmetic shops](/docs/gameplay/player/online-cosmetic-shops.md)) |
 | GP-084 | Which barber items need a rank, and the ranks | Next pass, the unlock checks behind `HAIR_UNLOCK` | Answered: two rank tables in `hairdo_shop_mp`, hairstyles from rank 6 to 25, overlays 0 to 26 ([cosmetics](/docs/gameplay/player/online-cosmetic-shops.md#menus)) |
 | GP-085 | The hair and make-up colour counts on this build | In-game test, `GET_NUM_PED_HAIR_TINTS` / `GET_NUM_PED_MAKEUP_TINTS` | Open |
 | GP-086 | Which hair fade goes with which hairstyle (the barber adds one when a style is bought) | Next pass, the hairstyle-to-list-slot mapping in `hairdo_shop_mp` | Answered: hair items map to slots 93 to 114 and 123; newer DLC hair names its fade as forced component type 10 ([cosmetics](/docs/gameplay/player/online-cosmetic-shops.md#hair-fades)) |
@@ -713,7 +714,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | ON-006 | What job types 4 and 31 are, and what the even and odd race subtypes of a pair mean | Third pass (was: Next pass, with the [job lobby](/ROADMAP.md) (R7.5)) | Mostly answered: odd race subtypes are one-lap (point-to-point) races; types 4 and 31 are handled with missions and Survival but stay unnamed ([R7.11 12.3](/docs/online/creator-internals.md#123-from-the-menu-to-a-creator)) |
 | ON-007 | The prop limit in `public_mission_creator`, which uses its own messages (`PMCE_F_P`, `PMCE_F_D`) | Second pass | Answered: 200 props and 20 dynamic props, with the other eleven limits ([R7.11 12.11.1](/docs/online/creator-internals.md#12111-the-mission-creators-limits-second-pass)) |
-| ON-008 | The second dynamic list (library 15), library 39 and the other libraries with no text: hidden, Rockstar-only, or text in a pack not read | Third pass (was: Second pass, with every DLC text block) | Open |
+| ON-008 | The second dynamic list (library 15), library 39 and the other libraries with no text: hidden, Rockstar-only, or text in a pack not read | Third pass (was: Second pass, with every DLC text block) | Mostly answered: 8 of 49 library labels have no text in any block, so not a missed pack; probably hidden or Rockstar-only (leftovers pass, [creator](/docs/online/creator-internals.md#1213-open-questions)) |
 | ON-009 | What `GET_USED_CREATOR_BUDGET` measures inside the engine | Reverse engineering, R1.5 (streaming) | Open |
 | ON-010 | Which jobs are saved by the full prop writer and which by the sparse one (`func_189`) | Third pass (was: Second pass, compare with the 16 local classic missions ([R7.4](/file-formats/ugc-json.md))) | Open |
 | ON-011 | Meaning of `chs`, `chs2`, `chpp` and the `cpbs1` to `cpbs3` bits | Third pass (was: Second pass, read the race controller's checkpoint code) | Open |
@@ -728,7 +729,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | ON-015 | The text of the voice-only flows (`XM4V_FLW`, `S25R_FLW`, `SR2CH_FLW` ...) | Dialogue files, R9.2 second pass | Answered: 40 phone calls whose subtitles are in six DLC dialogue blocks (`XM4VAU`, `SR2CHAU`, `SR2RNAU`, `X24OAU`, `S25MAU`, `S25RAU`), summarised per call family ([R7.9 48.2.1](/docs/online/dlc-storylines.md#4821-the-phone-call-flows-second-pass)) |
 | ON-016 | Which update each `fm_content_*` script arrived in (compare decompile commits by build) | Next pass, `git log` of the decompile | Answered: all 97 `fm_content_*` scripts dated by the decompile commit that added them ([R7.9 48.6.1](/docs/online/dlc-storylines.md#4861-when-each-fm_content_-script-arrived-second-pass)) |
 | ON-017 | The flows for After Hours, Doomsday and the 2015 heists (no flow label family found) | Third pass (was: Next pass) | Open |
-| ON-018 | The mp2025_02 update's name and story | Third pass (was: Next pass, its pack text) | Partly answered: the update is A Safehouse in the Hills, named in the pack's own text ([R7.9 48.2](/docs/online/dlc-storylines.md#482-updates-packs-and-flows)); its story, in 13 dialogue blocks, is left for the third pass |
+| ON-018 | The mp2025_02 update's name and story | Third pass (was: Next pass, its pack text) | Mostly answered: KnoWay Out, six missions summarised (Negative Press and two titles tied); missions 2, 5 and 6 not tied to their titles (leftovers pass, [DLC storylines](/docs/online/dlc-storylines.md#4862-the-mp2025_02-story-leftovers-pass)) |
 
 ### [Heists in GTA Online](/docs/online/heists.md) (R7.8)
 

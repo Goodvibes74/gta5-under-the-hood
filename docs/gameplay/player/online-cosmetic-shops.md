@@ -247,7 +247,7 @@ The shop scripts write through `STAT_SET_INT` on the stat for the current charac
 | --- | --- |
 | What each restriction tag blocks or forces, as a table (hat with hood, glasses with masks ...) | Partly answered in [wearing rules](#wearing-rules-restriction-tags): which of the 501 tags the scripts test (387), which never (118); a per-check table is third pass |
 | The English text of the 306 `CSHOP_TITLE` labels, and why a few menus appear only in some store layouts (GP-082) | Text answered (all 322 labels in `CLO_MNU`, see the menu titles above); the store-layout rule is third pass |
-| The base-wardrobe tables (labels and prices of the non-DLC clothes) | Next pass |
+| The base-wardrobe tables (labels and prices of the non-DLC clothes) | Partly answered (leftovers pass, **Verified**, the string literals of `clothes_shop_mp` and `clothes_shop_sp`, which carry the same 9,400-odd names, matched against the American text): the base labels follow a few patterns, all with text in the base `global.gxt2`. Story mode: `TORSO_P<character>_<drawable>_<texture>` 675, `LEGS_P...` 266, `FEET_P...` 282, `OUTFIT_P<character>_<n>` 136 ("Gray Suit", "Firefighter", "Epsilon Robes"). Online launch props: glasses `G_FMM_` and `G_FMF_` (89 and 82 with text), hats `HT_FMM_` and `HT_FMF_` (76 and 79). Some early Online sets carry a pack code (`CLO_GRF_U_` 368, `CLO_IEF_U_` 173, `CLO_BIF_U_` 128). The prices are in the scripts' tables, a scripts job for the third pass |
 | The hair and make-up colour counts on this build | In-game test, `GET_NUM_PED_HAIR_TINTS` / `GET_NUM_PED_MAKEUP_TINTS` |
 
 ## Test cards

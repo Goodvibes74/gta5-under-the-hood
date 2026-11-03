@@ -64,7 +64,7 @@ How a model gets the name players see ("Obey 9F" rather than `ninef`): the label
 | --- | --- |
 | The `NULL` fallback and the "CARNOTFOUND" return, confirmed in game | Test card 1 |
 | Which 13 maker labels have no text and whether anything shows them | Answered in [short version](#short-version): only `KRAKEN` (`avisa`); what the game shows for it is a test |
-| How mod-part and livery labels are named and registered | R14.1 |
+| How mod-part and livery labels are named and registered | Answered (leftovers pass, **Verified**: every `carcols.meta` in the archives, 80 files and about 600 mod kits, and the American text dump). Each mod part in a kit names its label in `modShopLabel`: about 35,800 parts with 21,955 different labels. The labels are a model abbreviation and a part (`MONSTROC_LIV1`, `ASTRN_BUMF_1`, endings `LIV`, `HOOD`, `WING`, `BUMF`, `BUMR`, `EXH`, `ROOF`, `SKIRT` ...). Livery parts (`VMT_LIVERY_MOD`, 5,396 in 426 kits) are the largest group. Texture liveries outside the mod shop are named in the kit's `liveryNames` list, which only 15 kits fill (`SSS_SURF`, `SLVAN3_SIGN0` ...). The text sits in the adding pack's `global.gxt2` (`mptuner` 2,241, `mpsum2` 2,134, `mp2023_02` 1,255 ...): 19,918 of the labels have American text and 2,036 have none (such as `ALK_LIV1` to `_LIV10`, the `ASTRN_*` parts) |
 | Load order when two packs define the same label | R8.3 second pass, in-game test |
 
 ## Test cards

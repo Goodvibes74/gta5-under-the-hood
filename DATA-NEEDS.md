@@ -2,7 +2,7 @@
 
 The open questions that **can't be answered from the decompiled scripts alone**, grouped by the file to extract. Use it as a shopping list for one CodeWalker session (`tools/rpf-cw.ps1`, see [research tools](/docs/00-getting-started/research-tools.md)): extract everything in a group into a scratch folder outside the repo, then answer the group's questions together. Status and full wording of each question: [`OPEN_QUESTIONS.md`](/OPEN_QUESTIONS.md). Everything else that is still open is listed in [`HANDOFF.md`](/HANDOFF.md) (executable, in-game tests, scripts only).
 
-**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, batch D2 every explosion and weapon file, batch D3 the water files, batch D4 the police and population files, batch D5 the personality and ped files, batch D6 the shop catalogues, batch D7 `gameconfig.xml` and the archive listings, batch D8 the map data, batch D9 the audio files, batch D10 the effects and timecycle files, and batch D11 the animation and camera files; the rows marked *done, D1* to *D11* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
+**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, batch D2 every explosion and weapon file, batch D3 the water files, batch D4 the police and population files, batch D5 the personality and ped files, batch D6 the shop catalogues, batch D7 `gameconfig.xml` and the archive listings, batch D8 the map data, batch D9 the audio files, batch D10 the effects and timecycle files, batch D11 the animation and camera files, and batch D12 the remaining text questions; the rows marked *done, D1* to *D12* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
 
 How to read the tables:
 - **Extract** gives the path as this repo's guides already use it (`common:` = `common.rpf`, `update:` = `update\update.rpf`, DLC = `update\x64\dlcpacks\<pack>\dlc.rpf` and the `dlc_patch` folders in `update.rpf`). Where no guide has given the path yet, it says *find*: list the archives with the tool and search for the file name.
@@ -101,7 +101,7 @@ How to read the tables:
 | GP-055 | Two unlabelled morph-19 entries; the last appearance-table column | creator data and the component files | yes (the creator's item tables) |
 | GP-057 | The components of each starter outfit | catalogue / component data | yes (the outfit tables in the creator) |
 | ENT-010 | Overlay list 0 to 12 and micro-morph list 0 to 19, checked | head-overlay and freemode ped data | partly done from the creator scripts |
-| GP-083 | Base-wardrobe labels and prices of the non-DLC clothes | the shop text (labels), see "Text" below | yes (the price tables in `clothes_shop_mp`) |
+| GP-083 (*done, D12*) | Base-wardrobe labels and prices of the non-DLC clothes | the shop text (labels), see "Text" below | yes (the price tables in `clothes_shop_mp`) |
 
 ## Audio
 
@@ -156,12 +156,12 @@ How to read the tables:
 | GP-047 (*done, D1*) | The 12 flight school lesson names, then which lesson uses which aircraft | `PSCHOOL` block | yes (the 6 Mallard, 2 Cuban 800, 2 Maverick, 2 Frogger set-ups in `pilot_school`) |
 | GP-082 (*done, D1*) | English titles of the 306 clothes menus | shop blocks (`CSHOP_TITLE<n>`) | no (map already read) |
 | GP-090 (*done, D1*) | English names of the 80 stock companies | the block holding `BSS_BSTR_<n>` (an update or DLC block) | no (counter map already read) |
-| ON-018 | The story of the `mp2025_02` update | its 13 dialogue blocks | no |
-| ON-008 | Creator libraries with no text (library 15, 39 ...) | every DLC text block | no |
+| ON-018 (*done, D12*) | The story of the `mp2025_02` update | its 13 dialogue blocks | no |
+| ON-008 (*done, D12*) | Creator libraries with no text (library 15, 39 ...) | every DLC text block | no |
 | UI-018 | A label-name index | every block, hashed against all script strings | yes |
 | ENT-005 (*done, D1*) | The 13 vehicle maker labels with no text | vehicle text blocks | no |
-| ENT-006 | How mod-part and livery labels are named and registered | vehicle and `carcols` text | no |
-| GP-083 | Base-wardrobe labels | clothes text blocks | yes (see above) |
+| ENT-006 (*done, D12*) | How mod-part and livery labels are named and registered | vehicle and `carcols` text | no |
+| GP-083 (*done, D12*) | Base-wardrobe labels | clothes text blocks | yes (see above) |
 
 ## Questions that need assets (models, textures)
 
