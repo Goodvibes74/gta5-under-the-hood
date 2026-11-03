@@ -2,7 +2,7 @@
 
 The open questions that **can't be answered from the decompiled scripts alone**, grouped by the file to extract. Use it as a shopping list for one CodeWalker session (`tools/rpf-cw.ps1`, see [research tools](/docs/00-getting-started/research-tools.md)): extract everything in a group into a scratch folder outside the repo, then answer the group's questions together. Status and full wording of each question: [`OPEN_QUESTIONS.md`](/OPEN_QUESTIONS.md). Everything else that is still open is listed in [`HANDOFF.md`](/HANDOFF.md) (executable, in-game tests, scripts only).
 
-**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, batch D2 every explosion and weapon file, batch D3 the water files, and batch D4 the police and population files; the rows marked *done, D1* to *D4* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
+**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, batch D2 every explosion and weapon file, batch D3 the water files, batch D4 the police and population files, and batch D5 the personality and ped files; the rows marked *done, D1* to *D5* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
 
 How to read the tables:
 - **Extract** gives the path as this repo's guides already use it (`common:` = `common.rpf`, `update:` = `update\update.rpf`, DLC = `update\x64\dlcpacks\<pack>\dlc.rpf` and the `dlc_patch` folders in `update.rpf`). Where no guide has given the path yet, it says *find*: list the archives with the tool and search for the file name.
@@ -76,11 +76,11 @@ How to read the tables:
 
 | ID | What to find | Extract | Scripts too? |
 | --- | --- | --- | --- |
-| AI-011, AI-016 | Decode personalities, bravery, driving ability | `update:/x64/data/metadata/pedpersonality.ymt` (PSO to XML) | no |
-| AI-017 | The 5 unnamed civilian bravery types and the criminality types | the same file, hashed against candidate names | no |
-| AI-019 | How `MotivationMin/Max` is used | the same file | in-game |
-| AI-020 | How driving ranges map onto driving tasks | the same file, with the driving guides | no |
-| ENT-013 | 23 personality hashes and relationship groups that didn't resolve | `pedpersonality.ymt`, the peds and relationship files | hash the script strings |
+| AI-011, AI-016 (*done, D5*) | Decode personalities, bravery, driving ability | `update:/x64/data/metadata/pedpersonality.ymt` (PSO to XML) | no |
+| AI-017 (*done, D5*) | The 5 unnamed civilian bravery types and the criminality types | the same file, hashed against candidate names | no |
+| AI-019 (*done, D5*) | How `MotivationMin/Max` is used | the same file | in-game |
+| AI-020 (*done, D5*) | How driving ranges map onto driving tasks | the same file, with the driving guides | no |
+| ENT-013 (*done, D5*) | 23 personality hashes and relationship groups that didn't resolve | `pedpersonality.ymt`, the peds and relationship files | hash the script strings |
 | AI-014 | The full meaning of `taskdata.meta` and `scriptedguntasks.meta` | both files (*find*) | no |
 | AI-033 | How decision makers map each event to a response | `common:/data/events.meta` and the decision-maker files | no |
 | AI-034, AI-035 (*done, D4*) | The 9 crime-info entries; crime points per crime | `common:/data/ai/crimeinformation.meta` | in-game test for points |

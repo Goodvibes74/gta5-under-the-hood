@@ -117,6 +117,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | D2 | `explosion.ymt` (update), all 19 `explosion.meta` (16 packs + 3 `dlc_patch`), every `*weapon*.meta` and `*ammo*.meta` (base, update, DLC, `dlc_patch`) | GP-078, GP-079, PHY-008, PHY-009, PHY-010 | Done: GP-079, PHY-010 answered; PHY-008, PHY-009 mostly; GP-078 partly |
 | D3 | `water.xml`, `water_heistisland.xml`, `waterheight.dat`, `water.dat`, `watertune*.xml` | PHY-015, PHY-016, PHY-018, PHY-005 | Done: PHY-015 answered; PHY-016, PHY-018 partly; PHY-005 waits for the collision files (map-data batch); new: Cayo Perico's own water file |
 | D4 | `dispatch.meta`, `crimeinformation.meta`, `wantedtuning.ymt`, `playerinfo.ymt`, `zonebind.ymt`, `popcycle.dat`, `popzone.ipl`, `popgroups.ymt`, `pedpersonality.ymt` (extracted) | AI-034, AI-035, AI-036, ENT-021, ENT-024, GP-073 | Done: AI-036, ENT-021 answered; AI-034 mostly; AI-035, ENT-024, GP-073 partly. The personality questions (AI-011, AI-016, AI-017, AI-019, AI-020, ENT-013) are the next batch |
+| D5 | `pedpersonality.ymt`, every `peds.ymt` / `peds.meta`, `relationships.dat` | AI-011, AI-016, AI-017, AI-019, AI-020, ENT-013 | Done: AI-011, AI-016 answered; AI-017, ENT-013 mostly; AI-019 partly; AI-020 needs the executable |
 
 ## By category
 
@@ -258,7 +259,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ENT-013 | The 23 personality hashes and relationship groups that didn't resolve | Second pass | Open |
+| ENT-013 | The 23 personality hashes and relationship groups that didn't resolve | Second pass | Mostly answered: all 24 relationship-group hashes resolved from `relationships.dat`; every personality hash matches an entry, 69 of 96 named (leftovers pass, [peds](/docs/entities/peds/peds.md)) |
 | ENT-014 | What each `SET_PED_CONFIG_FLAG` number does (the ones Rockstar sets most) | Second pass: count flag numbers in the decompile | Open |
 | ENT-015 | The component `.ymt` format (slots, drawables, restrictions) | R6.3, R14.2 second pass | Open |
 
@@ -382,21 +383,21 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | AI-010 | Names of the common combat attributes (50, 17, 53, 52, 46) and config flags (427, 36, 398, 34), checked in game | R3.2 second pass | Open |
-| AI-011 | Decode `pedpersonality.ymt` (binary PSO): personalities, bravery, driving ability | R17.3 | Open |
+| AI-011 | Decode `pedpersonality.ymt` (binary PSO): personalities, bravery, driving ability | R17.3 | Answered: decoded in [decisions and personalities](/docs/ai/decisions-and-personalities.md) (R17.3); the leftovers pass named all 18 bravery types and 69 of 96 personalities |
 | AI-012 | Cover: how cover points are found and scored, `TASK_SEEK_COVER_*` | R17 | Open |
 | AI-013 | How aim assist and lock-on work for the player | R3.2 second pass | Open |
 | AI-014 | The full meaning of `taskdata.meta` and `scriptedguntasks.meta` | R17.1 | Open |
 | AI-015 | Whether the modded `events.meta` really drops gunfight reactions, in game | Test card | Open |
-| AI-016 | Decode `pedpersonality.ymt` (binary PSO; not decoded in the first pass) *(from the guide's text)* | R17.3 | Open |
+| AI-016 | Decode `pedpersonality.ymt` (binary PSO; not decoded in the first pass) *(from the guide's text)* | R17.3 | Answered with AI-011 ([decisions and personalities](/docs/ai/decisions-and-personalities.md)) |
 
 ### [Decisions and personalities](/docs/ai/decisions-and-personalities.md) (R17.3)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| AI-017 | The names of the 5 unnamed civilian bravery types and the criminality types | Second pass with more name sources | Open |
+| AI-017 | The names of the 5 unnamed civilian bravery types and the criminality types | Second pass with more name sources | Mostly answered: the five are `Bold`, `Bold_Female`, `Timid`, `Timid_Female` and `Average_Female` (with `Default_Female`); criminality `Law_Abiding` named, two hashes left (leftovers pass, [decisions](/docs/ai/decisions-and-personalities.md#names-of-the-hashed-types-leftovers-pass)) |
 | AI-018 | What `IsWeird` changes for Trevor | In-game test; second pass | Open |
-| AI-019 | How motivation (`MotivationMin/Max`) is used | Second pass | Open |
-| AI-020 | How the driving ranges map onto the driving tasks (R3.3, R17.6) | R3.3 | Open |
+| AI-019 | How motivation (`MotivationMin/Max`) is used | Second pass | Partly answered: max 10 for 79 personalities, 0 for the 17 gang, army, SWAT and security ones; engine use is a test (leftovers pass, [decisions](/docs/ai/decisions-and-personalities.md#names-of-the-hashed-types-leftovers-pass)) |
+| AI-020 | How the driving ranges map onto the driving tasks (R3.3, R17.6) | R3.3 | Open: scripts override the values with `SET_DRIVER_ABILITY` / `_AGGRESSIVENESS` / `_RACING_MODIFIER` (105 to 118 scripts), but how the personality range becomes the task behaviour is the executable or a test (leftovers pass) |
 
 ### [Driving AI: missions, chases, aircraft and boats](/docs/ai/driving-ai.md) (R17.6)
 
