@@ -119,6 +119,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | D4 | `dispatch.meta`, `crimeinformation.meta`, `wantedtuning.ymt`, `playerinfo.ymt`, `zonebind.ymt`, `popcycle.dat`, `popzone.ipl`, `popgroups.ymt`, `pedpersonality.ymt` (extracted) | AI-034, AI-035, AI-036, ENT-021, ENT-024, GP-073 | Done: AI-036, ENT-021 answered; AI-034 mostly; AI-035, ENT-024, GP-073 partly. The personality questions (AI-011, AI-016, AI-017, AI-019, AI-020, ENT-013) are the next batch |
 | D5 | `pedpersonality.ymt`, every `peds.ymt` / `peds.meta`, `relationships.dat` | AI-011, AI-016, AI-017, AI-019, AI-020, ENT-013 | Done: AI-011, AI-016 answered; AI-017, ENT-013 mostly; AI-019 partly; AI-020 needs the executable |
 | D6 | The 164 freemode shop catalogue files, 22 DLC component `.ymt` files, `shop_vehicle`, `shop_weapon` and `shop_tattoo` files | GP-081, ENT-015, ON-049, GP-055, GP-057, ENT-010 | Done: ENT-015 answered, GP-081 partly. ON-049 is about the server's transaction catalogue, which no game file holds; GP-055, GP-057 and ENT-010 need the creator scripts more than these files, so they stay open |
+| D7 | `gameconfig.xml` (base and update), a listing of every archive with entry sizes, one `fm_content_*` script for the content keys | SCR-014, PERF-025, FF-001, FF-002, FF-003, FF-004, FF-005 | Done: SCR-014, FF-001, FF-002, FF-003 answered (and AI-006 with SCR-014); FF-004 mostly; PERF-025 partly (a test). FF-005 needs `fm_mission_controller` read key by key, a scripts job, so it stays open |
 
 ## By category
 
@@ -369,7 +370,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | AI-004 | The distances where ped AI LOD changes | In-game test, or engine reverse engineering | Open |
 | AI-005 | Measured frame time per combat ped on a low-end PC | R18.1 measuring, test card 1 | Open |
-| AI-006 | What the second `CTask` pool (2,100) is for | Second pass with R1.4 | Open |
+| AI-006 | What the second `CTask` pool (2,100) is for | Second pass with R1.4 | Answered: 2,100 is the PS4 block's `CTask` value; PC uses 8,192 (leftovers pass, [memory and pools](/docs/core/memory-and-pools.md#72-where-the-limits-come-from)) |
 
 ### [Ambient life](/docs/ai/ambient-life.md) (R17.8)
 
@@ -1033,7 +1034,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | PERF-023 | How many Euphoria ragdolls the engine runs at once before falling back, and what one costs on a low-end PC | Test card 1 | Open |
 | PERF-024 | Cost of a vehicle crash, an explosion, a fire, on a low-end PC | Test cards 2 and 3 | Open |
-| PERF-025 | Whether raised physics pools in a modded `gameconfig.xml` change anything at a low-end PC's spawn levels | R18.3, compare with the vanilla file | Open |
+| PERF-025 | Whether raised physics pools in a modded `gameconfig.xml` change anything at a low-end PC's spawn levels | R18.3, compare with the vanilla file | Partly answered: no other block changes the physics pools on PC; whether raising them matters is a test (test card 5 in [physics cost](/docs/performance/physics-cost.md#119-test-cards)) |
 
 ### [Windows and drivers](/docs/performance/windows-and-drivers.md) (R18.6)
 
@@ -1077,7 +1078,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | SCR-011 | Meaning of force-cleanup bits 4, 16 and 32 (engine-raised) | R1.2 and R5.8 (replay), with an in-game test | Open |
 | SCR-012 | What thread priority values change | R1.4 or R18.4 | Open |
 | SCR-013 | The event queue indexes and the script event layout | R15.1 | Open |
-| SCR-014 | Which of the duplicated pool entries in `gameconfig.xml` applies to the PC build | R1.4 | Open |
+| SCR-014 | Which of the duplicated pool entries in `gameconfig.xml` applies to the PC build | R1.4 | Answered: the base block's value; the update copy has no duplicate inside a block and no pools in its `x64` block; the duplicates are PS4, Xbox One, beta and non-final overrides (leftovers pass, [memory and pools](/docs/core/memory-and-pools.md#72-where-the-limits-come-from)) |
 
 ## File formats
 
@@ -1085,15 +1086,15 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| FF-001 | Reliable sizes per type (audio sizes read as zero) | Second pass, read sizes from the resource headers | Open |
-| FF-002 | A per-pack breakdown for all 89 DLC packs | Second pass, with [DLC packs](/docs/entities/vehicles/dlc-packs.md) | Open |
-| FF-003 | How the update's copies override the base ones, type by type | R1.6 second pass | Open |
+| FF-001 | Reliable sizes per type (audio sizes read as zero) | Second pass, read sizes from the resource headers | Answered: stored (uncompressed) entries have a compressed size of 0; sizes per type, 118.6 GB in all (leftovers pass, [atlas](/file-formats/data-file-atlas.md#sizes-per-type-leftovers-pass)) |
+| FF-002 | A per-pack breakdown for all 89 DLC packs | Second pass, with [DLC packs](/docs/entities/vehicles/dlc-packs.md) | Answered: files, size and main types for all 89 packs; the 15 `g9ec` packs are near-empty on Legacy (leftovers pass, [atlas](/file-formats/data-file-atlas.md#the-89-dlc-packs-leftovers-pass)) |
+| FF-003 | How the update's copies override the base ones, type by type | R1.6 second pass | Answered: 14,893 same-path replacements, 7,441 `dlc_patch` files, 1,672 same-name moves, 5,377 new, by type (leftovers pass, [atlas](/file-formats/data-file-atlas.md#how-the-update-overrides-the-base-leftovers-pass)) |
 
 ### [UGC mission files (JSON) and who reads them](/file-formats/ugc-json.md) (R7.4)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| FF-004 | Meaning of each content section key (`me`, `sro`, `amb`, `gt`, `ta`, `tot`, `mvdr` ...), from the `fm_content_*` helper that reads them | Second pass, with one `re_` file and its script | Open |
+| FF-004 | Meaning of each content section key (`me`, `sro`, `amb`, `gt`, `ta`, `tot`, `mvdr` ...), from the `fm_content_*` helper that reads them | Second pass, with one `re_` file and its script | Mostly answered: the sub-keys of every section from `fm_content_bounty_targets`; `sro`, `cst`, `fcs`, `modt` still a *probable* reading (leftovers pass, [UGC JSON](/file-formats/ugc-json.md#113-content-files)) |
 | FF-005 | The `gen` keys (8,472 paths): which ones `fm_mission_controller` actually reads | Second pass | Open |
 | FF-006 | How the controller picks rules per team and stage | R7.5 (job lobby) and a second pass | Open |
 

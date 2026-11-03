@@ -6,7 +6,7 @@ How the game keeps AI affordable: the hard limits on peds, vehicles, tasks, even
 
 ## 37.1 Short version
 
-- **Hard caps** (`gameconfig.xml`): 256 peds, 300 vehicles, 8,192 tasks (a second `CTask` pool of 2,100), 950 events, 1,024 navmesh routes, 10,010 dummy objects, 2,300 objects ([R1.4](/docs/core/memory-and-pools.md)).
+- **Hard caps** (`gameconfig.xml`): 256 peds, 300 vehicles, 8,192 tasks, 950 events, 1,024 navmesh routes, 10,010 dummy objects, 2,300 objects ([R1.4](/docs/core/memory-and-pools.md)).
 - **The population is capped lower than the pools:** `MaxTotalPeds` 200 (`_Base` 70), so ambient peds never fill the 256-ped pool and scripts keep room for mission peds.
 - **Vehicles are timesliced:** at most 10 vehicle AI updates per frame (`VehicleTimesliceMaxUpdatesPerFrame`; base value 4). *Known*: the rest wait their turn, and far-away cars become cheap "dummy" or "super-dummy" vehicles that follow road nodes without full physics.
 - **Peds far away use low-detail locomotion** (`CTaskMotionBasicLocomotionLowLod`): a simpler clip set and faster heading changes (`LowLodWalkHeadingLerpRate` 3 against 1 for high detail); animation timeslicing is skipped when a heading change is above 4–5° and within 55 m for shadows (`NoAnimTimeslicingShadowRange`).
@@ -20,7 +20,7 @@ How the game keeps AI affordable: the hard limits on peds, vehicles, tasks, even
 | `Peds` (and `PedIntelligence`) | 256 | Every ped, including the player and cutscene peds |
 | `MaxTotalPeds` / `_Base` | 200 / 70 | Population cap below the pool |
 | `Vehicles` | 300 | |
-| `CTask` | 8,192 (and 2,100) | Running AI tasks; complex peds run several at once |
+| `CTask` | 8,192 (2,100 is the PS4 value, not used on PC) | Running AI tasks; complex peds run several at once |
 | `CEvent` | 950 | Events waiting to be handled ([R17.2](/docs/ai/perception-and-events.md)) |
 | `NavMeshRoute` | 1,024 | Routes being planned or followed ([R17.5](/docs/ai/navigation.md)) |
 | `ScenarioPoint`, `ScenarioPointWorld`, `ScenarioPointEntity` | 900, 1,400, 350 | |
@@ -78,7 +78,7 @@ And lower the ambient population (`SET_PED_DENSITY_MULTIPLIER_THIS_FRAME`, budge
 | --- | --- |
 | The distances where ped AI LOD changes | In-game test, or engine reverse engineering |
 | Measured frame time per combat ped on a low-end PC | R18.1 measuring, test card 1 |
-| What the second `CTask` pool (2,100) is for | Second pass with R1.4 |
+| What the second `CTask` pool (2,100) is for | Answered (leftovers pass): it is the PS4 block's override; PC uses 8,192 ([memory and pools 7.2](/docs/core/memory-and-pools.md#72-where-the-limits-come-from)) |
 
 ## 37.8 Test cards (story mode, a script mod)
 

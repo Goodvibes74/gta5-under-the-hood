@@ -94,7 +94,7 @@ Until measured, keep mods at or under these (based on Rockstar's own set pieces,
 | --- | --- |
 | How many Euphoria ragdolls the engine runs at once before falling back, and what one costs on a low-end PC | Test card 1 |
 | Cost of a vehicle crash, an explosion, a fire, on a low-end PC | Test cards 2 and 3 |
-| Whether raised physics pools in a modded `gameconfig.xml` change anything at a low-end PC's spawn levels | R18.3, compare with the vanilla file |
+| Whether raised physics pools in a modded `gameconfig.xml` change anything at a low-end PC's spawn levels | The file comparison is done (above); the leftovers pass confirmed no other block changes these pools on PC. Whether it matters is test card 5 |
 
 ## 11.9 Test cards
 
@@ -104,3 +104,4 @@ Run each with a frame-time log on (hitches and samples; see [measuring performan
 2. **Crashes:** spawn 5 cars and push them into each other at speed; then 10. Note the drop and how long it lasts.
 3. **Explosions and fire:** set off 1, then 3 explosions a second apart near parked cars. Note the drop.
 4. **A set piece:** run a mod's crash or explosion scene and line up its own log with the frame-time log at the same second.
+5. **Raised physics pools:** run cards 1 to 3 once with the vanilla `gameconfig.xml` and once with the modded one (swap the file in the mods folder's `update.rpf`, nothing else). If FPS, hitches and the number of ragdolls and wrecks are the same, the raised pools change nothing at these spawn levels; a "pool full" crash only with the vanilla file means they do.
