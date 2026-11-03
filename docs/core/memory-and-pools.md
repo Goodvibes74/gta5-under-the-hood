@@ -26,6 +26,8 @@ How GTA V sizes its memory: the fixed pools in `gameconfig.xml`, the hard entity
 
 The file has one base block (`Build Any / Platforms Any`) and override blocks for debug, beta and non-final builds and for PS4 and Xbox One; on PC only the base block applies (plus one `x64` override) (**Verified**).
 
+**Which duplicate wins** (*leftovers pass*, **Verified**, both copies read block by block). In the update copy the game loads, no pool appears twice inside a block, and the `x64` block holds only `Threads`, no pools. A pool name appears in more than one block only where a console or non-retail block overrides the base: `CTask` (8,192, and **2,100 in the PS4 block**), `OcclusionPathNode` and `OcclusionPortalInfo` (lower in the PS4 and Xbox One blocks), `AnimStore` and `CutSceneStore` (non-final builds) and `CScriptEntityExtension` (beta). So the PC retail build uses the base block's value every time, which the start-up log confirms (`CTask` 8,192). The older `common.rpf` copy still has a `pc` block with 27 overrides (`Peds` 110 to 256, `Vehicles` 148 to 276, `CTask` 1,450 to 8,192), but the update copy replaces the whole file, and 57 pools differ between that old PC result and today's base block.
+
 ## 7.3 The pools that matter, vanilla vs modded vs used
 
 "Used" is the size the game actually allocated, from `PoolManager_Startup.log`.

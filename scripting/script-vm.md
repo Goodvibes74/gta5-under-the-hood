@@ -130,4 +130,4 @@ A small SHVDN script can list every running Rockstar script thread (`SCRIPT_THRE
 | Meaning of force-cleanup bits 4, 16 and 32 (engine-raised) | R1.2 and R5.8 (replay), with an in-game test |
 | What thread priority values change | R1.4 or R18.4 |
 | The event queue indexes and the script event layout | R15.1 |
-| Which of the duplicated pool entries in `gameconfig.xml` applies to the PC build | R1.4 |
+| Which of the duplicated pool entries in `gameconfig.xml` applies to the PC build | Answered in [memory and pools 7.2](/docs/core/memory-and-pools.md#72-where-the-limits-come-from): the base block's; the duplicates are console and non-retail overrides |

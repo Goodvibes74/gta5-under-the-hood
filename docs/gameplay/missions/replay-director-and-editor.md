@@ -86,7 +86,7 @@ The split (4 and 3 for story missions, 1 and 0 for side missions, 2 in only six 
 | The `REPLAY_START_EVENT` and `REPLAY_RECORD_BACK_FOR_TIME` type numbers | Partly answered in [the clip recorder](#the-clip-recorder): who uses each value; what the engine does with it is third pass (GP-087) |
 | Where director mode's restricted places (the prison and others) are defined | Answered in [director mode](#director-mode-director_mode): the prison circle is the only one |
 | What the engine does with the type number of `REPLAY_RECORD_BACK_FOR_TIME` and `REPLAY_START_EVENT` (GP-087) | Third pass, the executable |
-| The 10 post effects `startup` registers for the editor | R13.2 second pass |
+| The 10 post effects `startup` registers for the editor | Answered in [timecycle](/docs/rendering/timecycle-and-post-effects.md#modifier-values-flags-and-post-effect-names-leftovers-pass): `No_Filter` and nine `phone_cam` modifiers |
 
 ## Test cards
 

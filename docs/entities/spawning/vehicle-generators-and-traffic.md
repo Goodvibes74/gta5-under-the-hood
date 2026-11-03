@@ -83,6 +83,18 @@ Most groups have an `_mp` twin for Online with a few models fewer. DLC vehicles 
 
 Scripts switch services with `ENABLE_DISPATCH_SERVICE` (290 scripts, 2,901 calls), keep them away with `ADD_DISPATCH_SPAWN_ANGLED_BLOCKING_AREA` and friends, and stop random police with `SET_CREATE_RANDOM_COPS` (109 scripts).
 
+### Flag bits and DLC generators (leftovers pass)
+
+**Verified**, the 22,506 generators in the winning ymaps (Every `.ymap`, `.ytyp`, `.ymf`, `.ynd`, `.ynv` and scenario `.ymt` in the vanilla archives loaded with CodeWalker's library by a read-only scan, build 1.0.3725.0 Legacy; one copy per file name, the update's winning over DLC over base):
+
+- **Five bits are set on almost every generator:** bit 5 (22,344), bit 6 (20,942), bit 9 (22,398), bit 10 (22,433) and bit 11 (19,855). 3,680 is exactly these five, so it is the default. *Our reading:* they are "spawn for any player" defaults (car, bike, day, night) that only special generators clear; the 1,564 without bit 6 cluster on downtown roads, the 2,651 without bit 11 downtown and at the port (`dt1_rd*`, `po1_*` sections).
+- **Bit 8 (value 256)** is on 5,579 generators, almost none with a fixed model (33); 3,936 = 3,680 + 256. They are on the road-section ymaps (`sc1_rd_strm`, `hw1_rd_strm`), so *our reading* is "parked at the roadside".
+- **Bits 0 and 1** (1,551 and 623) go with fixed models (735 and 363 of them), mostly in the `cs*_strm` and `ch*_strm` sections (countryside). 3,681 = default + bit 0.
+- **Bits 28 to 31** are set on 2,797 generators (values such as 1,879,052,128, top four bits 0111). 627 of them use a population group, including all 455 with the unresolved group `F85943A6`; what the high bits hold is not known.
+- **The unresolved group** sits only in South Los Santos road sections (`id1_rd_strm_1`, `sc1_rd_strm_5`, `sc1_rd_strm_1` and their `hei_`, `lr_`, `bkr_` copies), around Davis, Strawberry and Rancho by their coordinates. Hashing several thousand candidate names (gang, district and vehicle-type words with the usual prefixes) found no match. *Our reading:* a gang-area vehicle group.
+
+**Which DLC generators load in story mode.** 20,251 of the 22,506 generators are in DLC-pack or `dlc_patch` ymaps, and 20,177 of those are in ymaps that are **not** script-loaded. They are almost all in the renamed copies of base road sections that the heist, lowrider, apartment and biker packs ship (`hei_sc1_rd_strm_1`, `lr_sc1_rd_strm_1` ...; mpheist 9,603, patchday1ng 5,485, mplowrider 2,125). So the story-mode street generators are mostly these DLC copies, not the base files (see [map data](/docs/world/map-data.md#flags-story-mode-entities-and-manifests-leftovers-pass) for how the copies replace each other).
+
 ## How scripts control traffic
 
 | Native | Scripts | Calls | Use |
@@ -116,11 +128,11 @@ Scripts switch services with `ENABLE_DISPATCH_SERVICE` (290 scripts, 2,901 calls
 
 | Question | Where it goes |
 | --- | --- |
-| What the car generator flag bits mean (3,680, 3,936 ...) | Second pass: compare generators in known places |
-| Which DLC ymaps with generators load in story mode | R4.6 (map data), R4.5 (IPLs) |
+| What the car generator flag bits mean (3,680, 3,936 ...) | Partly answered in [flag bits](#flag-bits-and-dlc-generators-leftovers-pass): which bits are defaults and where the others are; the exact meaning of each is a test |
+| Which DLC ymaps with generators load in story mode | Mostly answered in [flag bits and DLC generators](#flag-bits-and-dlc-generators-leftovers-pass): 20,177 DLC generators are in always-on road-section copies |
 | How the schedule caps, the budget and the `CityDensity` setting combine | R4.1, test card 1 |
 | What the ten unused train tracks are and whether they work | Test card 3 |
-| Where ambient planes, helicopters and boats on routes come from | R4.2 (vehicle scenarios) |
+| Where ambient planes, helicopters and boats on routes come from | Answered in [scenarios](/docs/entities/spawning/scenarios.md#availability-chains-and-aircraft-leftovers-pass): vehicle scenario points with plane, helicopter and boat model sets, on chaining routes |
 
 ## Test cards
 

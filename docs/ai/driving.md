@@ -82,7 +82,7 @@ The high count of 262,144 in `DRIVE_TO_COORD` comes from set pieces where the ro
 | AI profiles of every DLC vehicle (all `handling.meta` files) | Second pass, with the DLC scan |
 | How `SET_DRIVER_ABILITY` and `_AGGRESSIVENESS` change the curve or braking | In-game test |
 | What `TASK_VEHICLE_TEMP_ACTION`'s action numbers mean, with Rockstar's counts | Second pass |
-| Road nodes and how routes are planned | R17.5 (navigation) |
+| Road nodes and how routes are planned | Partly answered: node, link and junction counts in [navigation 34.4.1](/docs/ai/navigation.md#3441-navmesh-and-road-node-counts-leftovers-pass); how routes are planned over them is engine code |
 
 ## 18.8 Test cards (story mode, a script mod)
 

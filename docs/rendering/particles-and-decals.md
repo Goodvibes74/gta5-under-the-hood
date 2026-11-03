@@ -85,6 +85,24 @@ Each row sets the texture atlas cell (row and column ranges), size, fade time, s
 | `PATCH_DECAL_DIFFUSE_MAP` / `UNPATCH_DECAL_DIFFUSE_MAP` | 11 / 9 | 47 / 24 | Swap a decal's texture (custom spray tags) |
 | `GET_IS_PETROL_DECAL_IN_RANGE` | 28 | 30 | Is there a petrol trail here |
 
+## Effect files, dictionaries and mounting (leftovers pass)
+
+**Verified**, build 1.0.3725.0 Legacy: the effect `.dat` files read from `common.rpf` and the update (`materialfx.dat` has no update copy), every `.ypt` loaded with CodeWalker's library (1,228 files, 364 distinct names once the update's copies win), and every DLC pack's `content.xml` and `setup2.xml`.
+
+**The three `.dat` files explain their own columns** in comment headers. Each is a version number, then named sections, each a table between `<NAME>_START` and `<NAME>_END`:
+
+| File (version) | Sections and rows (update copy) | Columns |
+| --- | --- | --- |
+| `entityfx.dat` (8.00) | `ENTITYFX_AMBIENT_PTFX` 226, `FRAGMENTFX_BREAK_PTFX` 18, `ENTITYFX_COLLISION_PTFX` 9, `FRAGMENTFX_DESTROY_PTFX` 65, `ENTITYFX_SHOT_PTFX` 27, `ENTITYFX_ANIM_PTFX` 24, `ENTITYFX_RAYFIRE_PTFX` 143, `ENTITYFX_INWATER_PTFX` 3, and four decal sections, all empty | Every row: a tag, the particle dictionary and the effect name. Ambient rows add creation thresholds (ignore rotation, always, sun, rain, wind), a temperature and time-of-day window, evolutions for rain, wind and temperature, a night probability and a triggered-effect time range. Collision rows add a collision point and an impulse range; destroy rows a no-trigger explosion range; in-water rows a speed range |
+| `materialfx.dat` | `MTLFX_TABLE` (a grid of material against material, 69 rows, each cell an index into the info lists), `MTLFX_BANG_INFO` 84 rows, `MTLFX_SCRAPE_INFO` 63 rows | Info rows: an id, a speed range, an impulse range, a skip-under-water switch, the effect, a decal id, a tint, the texture width and length range, an overlay limit and a duplicate-reject radius. Statics get tiling scrape textures, moving objects and vehicles single ones (the file's own note) |
+| `wheelfx.dat` (14.00) | `VEHFX_INFO`, `_BURST`, `_WET`, `_BURST_WET`: 69 rows each, one per surface | The surface's group, slip and pressure thresholds, three skid-mark decals and a tint, friction effects (threshold and three effects), displacement effects (three plus a LOD one), burnout effects with friction and temperature evolutions, and a light (on, colour range, intensity, range, falloff) |
+
+So a wheel on a surface picks one of the four wheel tables (normal, burst tyre, wet, burst and wet) by its state and its surface's row; an impact looks up the two materials in the grid and plays the bang or scrape row the cell points at.
+
+**Dictionaries and effects.** The 364 dictionaries hold **2,907 effects (2,541 different names)**. `core` alone has 964 (impacts, blood, fire, wheels, water, ambient effects); the next largest are `scr_hr_lny_races` (46), the cutscene dictionaries (`cut_xm3` 30, `cut_prologue` 28, `cut_finale1` 27) and `scr_sum2_hal` (30). By name: `scr_` (script effects) 809, `ent_` 492, `cs_` 251 (cutscenes), `veh_` 141, `exp_` 118, `cut_` 111, `muz_` 83 (muzzle flashes), `wheel_` 69, `water_` 66, `eject_` 53 (shell casings), `bul_` 49. 26 DLC packs ship 138 dictionaries with 745 effects (`mpchristmas2017` 103, `mp2024_02` 95). The name lists themselves come from any `.ypt` with CodeWalker; they are not copied here.
+
+**Mounting.** All 33 DLC packs that ship particles (a `ptfx.rpf`) switch it on in their `*_AUTOGEN` change set, and every one of those change sets is in the pack's `GROUP_STARTUP` group. None is in `GROUP_ON_DEMAND`. So DLC particle dictionaries are mounted at start-up, before story mode or Online is chosen, and a story-mode script can request them (*our reading*, from the group names in [change-set groups](/docs/core/archives-and-content.md#861-the-change-set-groups-second-pass); the moment each group runs is **Known**, not checked).
+
 ## What this means for modders
 
 - **Play an effect:** `REQUEST_NAMED_PTFX_ASSET("core")`, wait for `HAS_NAMED_PTFX_ASSET_LOADED`, then `USE_PARTICLE_FX_ASSET("core")` right before `START_PARTICLE_FX_NON_LOOPED_AT_COORD(effectName, ...)` or a looped call, with an effect name from that dictionary. Keep the handle of a looped effect and `STOP_PARTICLE_FX_LOOPED` it; `REMOVE_NAMED_PTFX_ASSET` when done.
@@ -100,9 +118,9 @@ Each row sets the texture atlas cell (row and column ranges), size, fade time, s
 | --- | --- |
 | The exact decal limit in build 3725 and what limit patches change | Second pass with the executable; R18 |
 | How the particle quality setting picks between `ptfx`, `ptfx_hi` and `ptfx_lo` | Test card 2; R18.2 |
-| The format of `entityfx.dat`, `materialfx.dat` and `wheelfx.dat` row by row | Second pass |
-| Which DLC dictionaries are mounted in story mode | R1.6 second pass |
-| Which effect names each dictionary holds (an index) | Second pass: a read-only lister for `.ypt` |
+| The format of `entityfx.dat`, `materialfx.dat` and `wheelfx.dat` row by row | Answered in [effect files, dictionaries and mounting](#effect-files-dictionaries-and-mounting-leftovers-pass) |
+| Which DLC dictionaries are mounted in story mode | Answered in [effect files, dictionaries and mounting](#effect-files-dictionaries-and-mounting-leftovers-pass): all of them, at start-up (`GROUP_STARTUP`) |
+| Which effect names each dictionary holds (an index) | Answered in [effect files, dictionaries and mounting](#effect-files-dictionaries-and-mounting-leftovers-pass): counts per dictionary and by name family; the names themselves are read with CodeWalker |
 
 ## Test cards
 

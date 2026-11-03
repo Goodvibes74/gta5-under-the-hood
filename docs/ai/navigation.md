@@ -63,6 +63,14 @@ Ambient traffic and AI drivers plan on nodes; peds use navmeshes. Scripts switch
 | `SET_PED_PATHS_IN_AREA`, `SET_PED_PATHS_BACK_TO_ORIGINAL` | 49, 33 | 128, 55 |
 | `ADD_COVER_POINT`, `REMOVE_COVER_POINT` | 38, 32 | 268, 235 |
 
+### 34.4.1 Navmesh and road node counts (leftovers pass)
+
+**Verified** (Every `.ymap`, `.ytyp`, `.ymf`, `.ynd`, `.ynv` and scenario `.ymt` in the vanilla archives loaded with CodeWalker's library by a read-only scan, build 1.0.3725.0 Legacy; one copy per file name, the update's winning over DLC over base).
+
+**Navmeshes.** The 4,420 base tiles hold 6.39 million polygons, 8.05 million vertices, 13,784 portals and **521,586 points** (*Known*, CodeWalker's reading: portals are links such as ladders and drops, points are cover points); the median tile has 1,012 polygons, the busiest 8,536. DLC packs add 5,618 tiles (11.7 million polygons, 1.19 million cover points), most from the newest packs (`mp2025_02` 517 tiles, `mp2025_01` 511, `mp2024_02` 499 ...) and Cayo Perico (`mpheist4` 357), because each Online interior and area brings its own navmesh.
+
+**Road nodes.** The update's 274 `.ynd` files win over the base's 259 (`x64e.rpf`): **79,788 nodes (69,251 for vehicles, 10,537 for peds), 166,544 links, 3,129 junctions**. Against the base the update adds 15 files (1,797 nodes, 3,640 links, all new areas) and changes 23 (340 more nodes, 638 more links); 236 are the same. Two old packs inside the base archives (`mpbusiness`, `mpvalentines`) still carry their own older full sets of 247 files each, which the update's copies replace (our reading).
+
 ## 34.5 What this means for modders
 
 - **Before sending a ped far, load the area:** `ADD_NAVMESH_REQUIRED_REGION`, wait for `IS_NAVMESH_LOADED_IN_AREA`, then the task; remove the region at cleanup.
@@ -74,8 +82,8 @@ Ambient traffic and AI drivers plan on nodes; peds use navmeshes. Scripts switch
 
 | Question | Where it goes |
 | --- | --- |
-| Polygon, link and cover-point counts per tile | Second pass, a `.ynv` reader |
-| Node and link counts in the `.ynd` files, and what the update changed | Second pass |
+| Polygon, link and cover-point counts per tile | Answered in [34.4.1](#3441-navmesh-and-road-node-counts-leftovers-pass) |
+| Node and link counts in the `.ynd` files, and what the update changed | Answered in [34.4.1](#3441-navmesh-and-road-node-counts-leftovers-pass) |
 | How far around the player navmeshes stream by default | In-game test with `GET_NUM_NAVMESHES_EXISTING_IN_AREA` |
 
 ## 34.7 Test cards (story mode, a script mod)

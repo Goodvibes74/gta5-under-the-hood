@@ -21,7 +21,7 @@ How the game clock runs, where the weather types are defined, how the game picks
 | --- | --- | --- |
 | `common:/data/levels/gta5/weather.xml` | Three lists: `WeatherGpuFx` (rain, snow and mist particle systems), `WeatherTypes`, `WeatherCycles` | 24 GPU effects (rain storm, thunder, snow, blizzard, underwater, and ambient ones such as `DESERT_GROUND`, `LAKE_FOG_DROP`, `WOODLAND_FIREFLY_DROP`), 17 types, 173 cycle entries |
 | `common:/data/levels/gta5/weather/*.xml` | Emitter and render settings for each GPU effect (`rainstorm_emitter_drop`, `thunder_render_mist` ...) | 52 files in the base copy, 1 replaced by the update |
-| `common:/data/timecycle/w_<name>.xml` | The look of each weather through the day: 380 variables per region, 2 regions (`GLOBAL`, `URBAN`), 13 keyframes across the day per variable | 14 base files plus `underwater_deep.xml`; the update replaces 11 and adds the 3 Halloween ones |
+| `common:/data/timecycle/w_<name>.xml` | The look of each weather through the day: 423 variables per region (380 in the first count; corrected in the leftovers pass), 2 regions (`GLOBAL`, `URBAN`), 13 keyframes across the day per variable | 14 base files plus `underwater_deep.xml`; the update replaces 11 and adds the 3 Halloween ones |
 | `common:/data/cloudkeyframes.xml` | Cloud sets by time of day: which cloud hats show and how likely each is | 8 sets: `LIGHTclouds`, `MEDIUMclouds`, `HEAVYclouds`, `STORMclouds`, `POSTRAINclouds`, `SNOWclouds`, `HALLOWEENclouds`, `default` |
 | `common:/data/clouds.xml` | The cloud hats themselves (layers of sky models) | 20 hats (`Cloudy 01`, `Stormy 01`, `Contrails`, `Cirrus`, `shower` ...) |
 | `common:/data/branchbend_windsettings.xml` | How trees and plants bend in wind (`umHighWind 3.5`, `WindSpeedSoftClamp 20.0`) | 1 file, plus an `sfx` variant for the sound |
@@ -158,7 +158,7 @@ Which weather names scripts ask for (459 literal string arguments to the `SET_WE
 | Whether wind changes the flight of aircraft, the drift of boats, or bullets | Test card 3; R2.2, R2.4 |
 | What the global flag that skips the post-death weather reroll is, and which scripts set it | Second pass: read the writers of that global in `respawn_controller`'s callers |
 | How `SET_OVERRIDE_WEATHER` and the persistent lock interact when both are set | In-game test |
-| What the 380 timecycle variables per region do, and how timecycle modifiers stack on the weather | R13.2 |
+| What the 380 timecycle variables per region do, and how timecycle modifiers stack on the weather | Partly answered in [timecycle](/docs/rendering/timecycle-and-post-effects.md#modifier-values-flags-and-post-effect-names-leftovers-pass): there are 423 per region, grouped by name; how modifiers stack on the weather is engine code (the modifier's second number is probably its weight) |
 
 ## Test cards
 

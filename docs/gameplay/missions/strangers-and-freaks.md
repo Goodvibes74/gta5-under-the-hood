@@ -157,7 +157,7 @@ The missions themselves are started by the launchers, not by the controller (no 
 | --- | --- |
 | The unlock condition of each entry (flow flags, character) from the remaining table fields | Mostly answered in [20.3.1](#2031-what-makes-an-entry-available-second-pass); the flag setters are answered; `MrsPhilips2` and `Rampage3` releases are third pass (GP-089) |
 | What releases `MrsPhilips2` and `Rampage3`, and what arms code entry 95 (flag 109, `Abigail1`) (GP-089) | Third pass, in-game: watch the entries' bit 1 |
-| Where the world points are placed and how many there are per brain | Third pass, map data (the launcher receives its point's position as its script argument; the placements aren't in the scripts) |
+| Where the world points are placed and how many there are per brain | Still open after the leftovers pass: none of the 99 brain names' hashes is in any ymap entity extension, archetype 2D effect, scenario type or chaining node, so the points are stored somewhere not yet read. Third pass, map data (the launcher receives its point's position as its script argument; the placements aren't in the scripts) |
 | What the object-brain percentage and flags mean | Answered in [20.2](#202-script-brains): the last argument is the brain set; the percentage (always 100) and the fourth argument (always -1) change nothing in this build |
 
 ## 20.7 Test cards

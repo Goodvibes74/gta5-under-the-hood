@@ -66,6 +66,33 @@ A door is registered under a hash with its model and position, then locked, unlo
 
 Auto-open flags used: `AutoOpensForSPVehicleWithPedsOnly` (7), `AutoOpensForMPVehicleWithPedsOnly` (6), `AutoOpensForSPPlayerPedsOnly` (6), `DontCloseWhenTouched` (6), `IgnoreOpenDoorTaskEdgeLerp` (6), `DelayDoorClosingForPlayer` (4), `AutoOpensForMPPlayerPedsOnly` (3), `AutoOpensForAllVehicles` (1), `AutoOpensForLawEnforcement` (1).
 
+### 30.4.1 Archetypes, fragments and rayfire objects (leftovers pass)
+
+**Verified** (Every `.ymap`, `.ytyp`, `.ymf`, `.ynd`, `.ynv` and scenario `.ymt` in the vanilla archives loaded with CodeWalker's library by a read-only scan, build 1.0.3725.0 Legacy; one copy per file name, the update's winning over DLC over base; 158,104 distinct archetypes).
+
+- **Kinds:** 153,701 plain archetypes, 4,017 time archetypes (shown only at certain hours) and 386 interiors. By asset: 76,906 drawable dictionaries, 76,318 drawables, **4,426 fragments**, 386 asset-less (the interiors).
+- **Flag bits** set on the archetypes: bit 29 on 77,759, bit 13 on 21,025, bit 17 on 14,357, bit 5 on 5,939, bits 22 and 23 on 4,785 each (always together), bit 2 on 1,979, bit 25 on 1,764; 20 other bits on fewer than 1,000 each. 53,233 archetypes have no flag. The common values are 536,870,912 (bit 29 alone, 64,721) and 8,192 (bit 13, 17,867).
+- **Fragments (the props that can break or move):** 4,426 archetypes, 2,152 from the base game, 2,215 from DLC packs, 59 from `dlc_patch`; 2,368 are in the `props` folders, then the city and hills map sections and interiors. Whether a fragment breaks is set in its `.yft` (its group strengths), so "how many break" needs those files read.
+- **2D effects on archetypes:** 27,150 particle effects, 1,533 audio collision settings, 1,378 ladders, 683 light shafts, 588 spawn points, 177 audio emitters, 144 explosion effects, 69 wind disturbances, 12 buoyancy, 13 procedural objects, 10 expressions.
+
+**Rayfire objects.** The `.ytyp` files define **49 composite (rayfire) objects**, 48 in the base game and 1 in a DLC pack, all named `des_*`; between them they list 154 animations. **17 of them are placed in the outdoor map** (32 placements counting the DLC copies of the same section, so 17 places):
+
+| Object | Ymap (base name) | Script-loaded |
+| --- | --- | --- |
+| `des_apartmentblock`, `des_gasstation01` | `cs1_04_strm_0`, `_1` (Paleto Bay) | no |
+| `des_traincrash` | `cs1_14b_long_4` | no |
+| `des_trailerparka` to `des_trailerparke` | `cs3_04_long_0` (Sandy Shores trailer park) | no |
+| `des_scaffolding` | `vb_33_strm_0` (Vespucci) | no |
+| `des_shipsink` | `po1_sh1_long_0` (the port) | no |
+| `des_smash2` | `id1_05_strm_0` | no |
+| `des_stilthouse` | `ch2_09b_strm_1` (the Vinewood Hills) | no |
+| `des_farmhs` | `des_farmhouse` | yes |
+| `des_methtrailer` | `des_methtrailer` | yes |
+| `des_protree` | `prologue04b` | yes |
+| `des_tankercrash`, `des_tankerexplosion` | `des_tankercrash`, `des_tankerexp` | yes |
+
+The other 32 (the FIB building pieces, the jewellery store cases, the vault doors, the hospital and showroom doors, `DES_JetSteal001`, `DES_mansion001` and more) are in no ymap's entity list. Most are interior pieces, so *our reading* is that they sit in the interiors' own entity lists in the `.ytyp` files (not counted here) or are created by scripts.
+
 ## 30.5 What this means for modders
 
 - **Lock or open a map door** by registering it (`ADD_DOOR_TO_SYSTEM` with the model and its exact position) and setting its state; check `IS_DOOR_REGISTERED_WITH_SYSTEM` first, since a mission may own it.
@@ -77,9 +104,9 @@ Auto-open flags used: `AutoOpensForSPVehicleWithPedsOnly` (7), `AutoOpensForMPVe
 
 | Question | Where it goes |
 | --- | --- |
-| Archetype flag bits counted across all `.ytyp` files | Second pass, with an XML export of the ytyps |
-| Which map props are fragments (`.yft`) and how many break | Second pass with R4.6's model counts |
-| Every rayfire object placed in the map, not only those named in scripts | Second pass, ymap entity extensions |
+| Archetype flag bits counted across all `.ytyp` files | Answered in [30.4.1](#3041-archetypes-fragments-and-rayfire-objects-leftovers-pass); what each bit means is mostly **Known** from CodeWalker, not tested |
+| Which map props are fragments (`.yft`) and how many break | Partly answered in [30.4.1](#3041-archetypes-fragments-and-rayfire-objects-leftovers-pass): 4,426 fragment archetypes; how many break needs the `.yft` files |
+| Every rayfire object placed in the map, not only those named in scripts | Mostly answered in [30.4.1](#3041-archetypes-fragments-and-rayfire-objects-leftovers-pass): 17 of 49 placed outdoors; the interior ones are not checked |
 
 ## 30.7 Test cards (story mode, a script mod)
 

@@ -44,6 +44,32 @@ How GTA V fills the world with people doing things (smoking outside offices, jog
 | `DOES_SCENARIO_EXIST_IN_AREA`, `TASK_USE_NEAREST_SCENARIO_TO_COORD(_WARP)` | 55, 44, 32 | | Use a placed point |
 | `SET_SCENARIO_TYPE_ENABLED` | 52 | 190 | One type on or off everywhere |
 
+## Availability, chains and aircraft (leftovers pass)
+
+**Verified** (Every `.ymap`, `.ytyp`, `.ymf`, `.ynd`, `.ynv` and scenario `.ymt` in the vanilla archives loaded with CodeWalker's library by a read-only scan, build 1.0.3725.0 Legacy; one copy per file name, the update's winning over DLC over base). Counting each region file once, the update's copy where it has one, gives **144 region files with 109,198 points** (the earlier count of 111,898 in 145 files counted differently; this one is per file name).
+
+**Availability.** Each point has a byte that CodeWalker reads as both / story only / Online only (**Known** meaning of the values):
+
+| Value | Points | Mostly |
+| --- | ---: | --- |
+| 0, both | 57,779 | People, vehicles, everything not split |
+| 1, story mode only | 50,331 | **Animals**: rabbits 29,236, coyotes, mountain lions, deer, gulls, rats, fish, sharks, dolphins, orcas; plus 6,016 `Walk` and 643 `DRIVE` route points |
+| 2, Online only | 1,088 | Street hangers-on, smokers, drug dealers, prostitutes, 95 police cars, Lost MC clubhouse and drug-field workers (`island_drug_fields` 171 on Cayo Perico) |
+
+So the answer to "how many are Online-only" is 1,088, and the big split is the other way: half the points (the wildlife) exist only in story mode.
+
+**Chaining graphs.** 140 region files have a chaining graph: **45,372 nodes, 40,907 edges, 4,697 chains**. A node is a position with a scenario type (`DRIVE` 12,071, `Walk` 10,949, `WORLD_VEHICLE_DRIVE_SOLO` 2,221, joggers, hikers, bicycles, animals); an edge joins two nodes with an action (`Move` 40,474, `MoveFollowMaster` 431), a way to travel (`Direct` 24,689, `NavMesh` 14,530, `Roads` 1,688) and one of 16 speeds; a chain is a list of edges. A ped or vehicle that starts on a chained point follows the chain from node to node (**Known**).
+
+**Where ambient aircraft and boats come from.** Not from a special system: they are vehicle scenario points (`WORLD_VEHICLE_DRIVE_SOLO`, `_DRIVE_PASSENGERS`) whose vehicle model set is a plane, helicopter or boat set, on chains. The plane routes are in four files of their own, `ng_planes`, `ng_planes_city`, `ng_planes_north` and `ng_planes_south` (360 points, 58 chains), plus the airports and coast:
+
+| Model set | Points | Where |
+| --- | ---: | --- |
+| `AIRPORT_PLANES`, `AIRPORT_PLANES_SMALL` | 220 | `ng_planes*`, Vespucci coast, LSIA |
+| `PLANE_COUNTRYSIDE`, `PLANE_CROPS` | 169 | `ng_planes`, Great Ocean Highway, the hills, crop dusters over the north-east farms |
+| `PRIVATE_HELI`, `POLICE_HELI`, `ARMY_HELI`, `LIFEGUARD_HELI`, `SWIFT_DLC_HELI` | 128 | Vespucci, Vinewood, LSIA, South LS, `ng_planes`, the beaches |
+| `BLIMP` | 14 | `downtown` |
+| `COASTGUARD_BOAT`, `BOATS_LUXURY`, `BOATS_SALTON`, `JETSKI` and other boat sets | about 410 | Zancudo, Paleto Bay, Cape Catfish, the west coast, the Alamo Sea, the reservoir |
+
 ## What this means for modders
 
 - **Animate a ped cheaply:** `TASK_START_SCENARIO_IN_PLACE(ped, "WORLD_HUMAN_SMOKING", 0, true)` gives it the full scenario (props, idle variations, exits) without loading animations yourself.
@@ -59,8 +85,8 @@ How GTA V fills the world with people doing things (smoking outside offices, jog
 | --- | --- |
 | The 44 scenario groups scripts toggle and what each controls | Second pass |
 | How the time window and probability combine with the `#Scenario` cap | Test card 1; R17.8 |
-| How many of the 111,898 points are Online-only | Second pass: the availability field |
-| The chaining graph format and how vehicles follow it | R17.6 |
+| How many of the 111,898 points are Online-only | Answered in [availability, chains and aircraft](#availability-chains-and-aircraft-leftovers-pass): 1,088; 50,331 are story-only |
+| The chaining graph format and how vehicles follow it | Mostly answered in [availability, chains and aircraft](#availability-chains-and-aircraft-leftovers-pass): nodes, edges, chains and their fields; the 16 speed values are unnamed |
 
 ## Test cards
 

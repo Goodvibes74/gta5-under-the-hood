@@ -41,15 +41,17 @@ How the creators write these sections (the `prop`, `race` and `dhprop` columns, 
 
 | Section | Files | Key paths | Shape (keys under it) |
 | --- | ---: | ---: | --- |
-| `me` | 980 | 19 | *probable* mission entities or metadata |
+| `me` | 980 | 19 | Mission entities: `ents` (model `mn`, `pos`, `rot`, `head`, `int`, `cv`, `crt`) and their blips (`blp`) |
 | `pd` | 980 | 37 | Peds: `num`, `pds` (list), `grp`, `asp` |
 | `pp` | 980 | 16 | Props: `num`, `prps` |
 | `vh` | 980 | 18 | Vehicles: `num`, `veh`, `trlr` (trailers) |
-| `sro` | 980 | 2 | *probable* scripted objects |
+| `sro` | 980 | 2 | A list of up to 30 short strings (`name`) that other entries point to by index; *probable* a shared string table |
 | `amb`, `gt`, `pop`, `ta` | 979 | 11 to 13 | *probable* ambience, gates, population, targets |
 | `ptrl` | 979 | 105 | Patrols: `num`, `pat` (routes) |
 | `cst`, `inte`, `mvdr`, `anims`, `fcs`, `la`, `port`, `seccam`, `tot`, `fmnm` | 934 to 940 | 1 to 66 | Cutscenes, interiors, *probable* moving doors, animations, *probable* focus cams, *probable* look-at, portals, security cameras, *probable* totals, name |
 | `tags`, `modt`, `want`, `sear`, `chpts`, `sp`, `fmbs` | 515 to 883 | 1 to 17 | Tags, *probable* mod types, wanted settings, search areas, checkpoints, spawn points, *probable* freemode bounds |
+
+**What the scripts read** (*leftovers pass*, **Verified** in `fm_content_bounty_targets`, build 3725 decompile). One loader function opens every section by name, then its sub-lists: `me` (`blp`, `ents`), `pd` (`pds`, `grp` with `rel` relationships and `trg` triggers), `vh` (`veh`, `blp`), `pp` (`prps`), `want`, `modt`, `amb` (`veh`, read by index `idx`: ambient vehicles), `gt` (`loc`: go-to locations with `pos`, `rad`, `brd`, `blp`), `tot` (`tohud` with `brtyp`, `brtit`, `brmax`, `brord`, and `tar`: targets and how they show on the HUD), `cst` (`csts`: `vcst` and `hcst`, *probable* vehicle and heli costs), `pop` (`blkr`: population blockers with `typ`, `min`, `max`, `rad`), `inte` (`int`), `ta` (`ars`: areas with `vmn`, `vmx`, `fwd`), `sear` (`area`, `blp`: search areas), `ptrl` (`pat`, `nd`: patrol routes and nodes), `mvdr` (`mvdrs`: a model `mn` with a start `pos`/`rot` and an end `epos`/`erot`, so moving objects such as doors or lifts), `fcs` (`fcs`: `feid`, `ftyp`, `frng`, `fvec`, *probable* focus points), `sro` (`name`), `seccam` (`seccams`), `port`, `tags` (`tag`) and `fmbs`. The same key strings appear across the content scripts (mostly `fm_content_*`, plus `am_launcher`): `me`, `gt` and `ta` in 87 decompiled scripts, `sro` in 55, `amb` in 49, `tot` in 33 and `mvdr` in 17 (a count of files containing the quoted string).
 
 The content format is built for scripts: each section gives a count first and then a list, so a controller can loop without parsing names.
 
@@ -63,7 +65,7 @@ The content format is built for scripts: each section gives a count first and th
 
 | Question | Where it goes |
 | --- | --- |
-| Meaning of each content section key (`me`, `sro`, `amb`, `gt`, `ta`, `tot`, `mvdr` ...), from the `fm_content_*` helper that reads them | Second pass, with one `re_` file and its script |
+| Meaning of each content section key (`me`, `sro`, `amb`, `gt`, `ta`, `tot`, `mvdr` ...), from the `fm_content_*` helper that reads them | Mostly answered in [content files](#113-content-files): the sub-keys each section holds; `sro`, `cst`, `fcs` and `modt` still have a *probable* reading |
 | The `gen` keys (8,472 paths): which ones `fm_mission_controller` actually reads | Second pass |
 | How the controller picks rules per team and stage | R7.5 (job lobby) and a second pass |
 

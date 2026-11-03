@@ -119,6 +119,12 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | D4 | `dispatch.meta`, `crimeinformation.meta`, `wantedtuning.ymt`, `playerinfo.ymt`, `zonebind.ymt`, `popcycle.dat`, `popzone.ipl`, `popgroups.ymt`, `pedpersonality.ymt` (extracted) | AI-034, AI-035, AI-036, ENT-021, ENT-024, GP-073 | Done: AI-036, ENT-021 answered; AI-034 mostly; AI-035, ENT-024, GP-073 partly. The personality questions (AI-011, AI-016, AI-017, AI-019, AI-020, ENT-013) are the next batch |
 | D5 | `pedpersonality.ymt`, every `peds.ymt` / `peds.meta`, `relationships.dat` | AI-011, AI-016, AI-017, AI-019, AI-020, ENT-013 | Done: AI-011, AI-016 answered; AI-017, ENT-013 mostly; AI-019 partly; AI-020 needs the executable |
 | D6 | The 164 freemode shop catalogue files, 22 DLC component `.ymt` files, `shop_vehicle`, `shop_weapon` and `shop_tattoo` files | GP-081, ENT-015, ON-049, GP-055, GP-057, ENT-010 | Done: ENT-015 answered, GP-081 partly. ON-049 is about the server's transaction catalogue, which no game file holds; GP-055, GP-057 and ENT-010 need the creator scripts more than these files, so they stay open |
+| D7 | `gameconfig.xml` (base and update), a listing of every archive with entry sizes, one `fm_content_*` script for the content keys | SCR-014, PERF-025, FF-001, FF-002, FF-003, FF-004, FF-005 | Done: SCR-014, FF-001, FF-002, FF-003 answered (and AI-006 with SCR-014); FF-004 mostly; PERF-025 partly (a test). FF-005 needs `fm_mission_controller` read key by key, a scripts job, so it stays open |
+| D8 | Every `.ymap`, `.ytyp`, `.ymf`, `.ynd`, `.ynv` and scenario region file, loaded with CodeWalker's library; the archive listing for `.ybn` | GP-035, ENT-001 to ENT-003, ENT-028 to ENT-031, ENT-034, ENT-035, WLD-001, WLD-004, WLD-005, WLD-007, AI-027 to AI-029, REN-025, PHY-002 | Done: WLD-004, WLD-007, ENT-001, ENT-028, ENT-034, AI-028, AI-029, REN-025, PHY-002 answered; WLD-001, ENT-003, ENT-029, ENT-031 mostly; WLD-005, ENT-002, ENT-030, ENT-035, AI-027 partly; GP-035 not found. UI-009 (interior map names), PHY-005 and the pools part of PHY-018 were not attempted |
+| D9 | Every audio `.rel` file (253, CodeWalker's library), the `.awc` listing, the dialogue text-block names in the decompile | AUD-001 to AUD-006, AUD-008 to AUD-010 | Done: AUD-001, AUD-002, AUD-003, AUD-005, AUD-006 answered; AUD-010 mostly; AUD-004, AUD-008, AUD-009 partly (the per-voice context lists need a reader for the `speech2` byte arrays). AUD-007 stays a test |
+| D10 | `entityfx.dat`, `materialfx.dat`, `wheelfx.dat`, every `.ypt` (CodeWalker), DLC `content.xml` and `setup2.xml`, `animpostfx.ymt`, the `timecycle_mods` and `w_*.xml` files, `visualsettings.dat` | REN-014 to REN-017, REN-021, REN-022, REN-024, REN-026, REN-027, GP-027, WLD-017 | Done: REN-014, REN-015, REN-016, GP-027 answered; REN-022, REN-024, REN-027 mostly; REN-017, REN-021, REN-026, WLD-017 partly. Correction: the weather files have 423 variables per region, not 380 |
+| D11 | `clip_sets.ymt` and the DLC `clip_sets.xml` files, `cameras.ymt`, the archive listing (`.ycd`, `.yed` sizes), `CREATE_CAMERA` calls in the decompile | REN-001, REN-002, REN-004, REN-005, REN-006, REN-008, REN-009 | Done: REN-004, REN-006, REN-009 answered; REN-001, REN-002, REN-005 mostly; REN-008 partly |
+| D12 | The American text dump (every block), every `carcols.meta`, the clothes shop scripts' string literals | ON-018, ON-008, UI-018, ENT-006, GP-083 | Done: ENT-006 answered; ON-018, ON-008 mostly; GP-083 partly. UI-018 not moved: adding file and data names and numbered siblings found no clear gain over the second pass's method |
 
 ## By category
 
@@ -233,9 +239,9 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ENT-001 | Archetype flag bits counted across all `.ytyp` files | Second pass, with an XML export of the ytyps | Open |
-| ENT-002 | Which map props are fragments (`.yft`) and how many break | Second pass with R4.6's model counts | Open |
-| ENT-003 | Every rayfire object placed in the map, not only those named in scripts | Second pass, ymap entity extensions | Open |
+| ENT-001 | Archetype flag bits counted across all `.ytyp` files | Second pass, with an XML export of the ytyps | Answered: bit counts over 158,104 archetypes (leftovers pass, [props](/docs/entities/objects/props-and-doors.md#3041-archetypes-fragments-and-rayfire-objects-leftovers-pass)) |
+| ENT-002 | Which map props are fragments (`.yft`) and how many break | Second pass with R4.6's model counts | Partly answered: 4,426 fragment archetypes by source and folder; how many break needs the `.yft` files (leftovers pass, [props](/docs/entities/objects/props-and-doors.md#3041-archetypes-fragments-and-rayfire-objects-leftovers-pass)) |
+| ENT-003 | Every rayfire object placed in the map, not only those named in scripts | Second pass, ymap entity extensions | Mostly answered: 49 rayfire objects defined, 17 placed in outdoor ymaps (5 of them in script-loaded ones); the other 32 are not in any ymap, probably interior entity lists (leftovers pass, [props](/docs/entities/objects/props-and-doors.md#3041-archetypes-fragments-and-rayfire-objects-leftovers-pass)) |
 
 ### [Text and names in content](/docs/entities/objects/text-and-names.md) (R14.4)
 
@@ -243,7 +249,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | ENT-004 | The `NULL` fallback and the "CARNOTFOUND" return, confirmed in game | Test card 1 | Open |
 | ENT-005 | Which 13 maker labels have no text and whether anything shows them | Second pass | Answered: 13 makers have text only in a DLC or update global table; only `KRAKEN` (`avisa`) has none anywhere; what the game shows for it is a test (leftovers pass, [text and names](/docs/entities/objects/text-and-names.md#short-version)) |
-| ENT-006 | How mod-part and livery labels are named and registered | R14.1 | Open |
+| ENT-006 | How mod-part and livery labels are named and registered | R14.1 | Answered: `modShopLabel` per part (21,955 labels), `liveryNames` for texture liveries, text in each pack's `global.gxt2` (leftovers pass, [text and names](/docs/entities/objects/text-and-names.md#open-questions)) |
 | ENT-007 | Load order when two packs define the same label | R8.3 second pass, in-game test | Open |
 
 ### [Appearance and clothing](/docs/entities/peds/appearance-and-clothing.md) (R6.3)
@@ -290,19 +296,19 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | ENT-026 | The 44 scenario groups scripts toggle and what each controls | Second pass | Open |
 | ENT-027 | How the time window and probability combine with the `#Scenario` cap | Test card 1; R17.8 | Open |
-| ENT-028 | How many of the 111,898 points are Online-only | Second pass: the availability field | Open |
-| ENT-029 | The chaining graph format and how vehicles follow it | R17.6 | Open |
+| ENT-028 | How many of the 111,898 points are Online-only | Second pass: the availability field | Answered: 1,088 Online-only, 50,331 story-only (mostly animals), 57,779 both (leftovers pass, [scenarios](/docs/entities/spawning/scenarios.md#availability-chains-and-aircraft-leftovers-pass)) |
+| ENT-029 | The chaining graph format and how vehicles follow it | R17.6 | Mostly answered: 45,372 nodes, 40,907 edges, 4,697 chains with their fields; the 16 speed values are unnamed (leftovers pass, [scenarios](/docs/entities/spawning/scenarios.md#availability-chains-and-aircraft-leftovers-pass)) |
 
 ### [Vehicle generators and traffic](/docs/entities/spawning/vehicle-generators-and-traffic.md) (R4.3)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ENT-030 | What the car generator flag bits mean (3,680, 3,936 ...) | Second pass: compare generators in known places | Open |
-| ENT-031 | Which DLC ymaps with generators load in story mode | R4.6 (map data), R4.5 (IPLs) | Open |
+| ENT-030 | What the car generator flag bits mean (3,680, 3,936 ...) | Second pass: compare generators in known places | Partly answered: five default bits (3,680), bit 8 on roadside generators, bits 0 and 1 with fixed models, bits 28 to 31 with groups; exact meanings are a test (leftovers pass, [car generators](/docs/entities/spawning/vehicle-generators-and-traffic.md#flag-bits-and-dlc-generators-leftovers-pass)) |
+| ENT-031 | Which DLC ymaps with generators load in story mode | R4.6 (map data), R4.5 (IPLs) | Mostly answered: 20,177 DLC generators are in always-on copies of base road sections (`hei_`, `lr_`, `bkr_`, `apa_`) (leftovers pass, [car generators](/docs/entities/spawning/vehicle-generators-and-traffic.md#flag-bits-and-dlc-generators-leftovers-pass)) |
 | ENT-032 | How the schedule caps, the budget and the `CityDensity` setting combine | R4.1, test card 1 | Open |
 | ENT-033 | What the ten unused train tracks are and whether they work | Test card 3 | Open |
-| ENT-034 | Where ambient planes, helicopters and boats on routes come from | R4.2 (vehicle scenarios) | Open |
-| ENT-035 | Meaning of the bits in the vehicle generator flags field (3,680, 3,936, 3,616, 1,632), and the unresolved population group hash on 455 generators *(from the guide's text)* | Second pass | Open |
+| ENT-034 | Where ambient planes, helicopters and boats on routes come from | R4.2 (vehicle scenarios) | Answered: vehicle scenario points with plane, helicopter and boat model sets on chains, the planes in four `ng_planes` files (leftovers pass, [scenarios](/docs/entities/spawning/scenarios.md#availability-chains-and-aircraft-leftovers-pass)) |
+| ENT-035 | Meaning of the bits in the vehicle generator flags field (3,680, 3,936, 3,616, 1,632), and the unresolved population group hash on 455 generators *(from the guide's text)* | Second pass | Partly answered: the bits as ENT-030; the group `F85943A6` is only in South Los Santos road sections and still unnamed (leftovers pass, [car generators](/docs/entities/spawning/vehicle-generators-and-traffic.md#flag-bits-and-dlc-generators-leftovers-pass)) |
 
 ### [Vehicles](/docs/entities/vehicles/vehicles.md) (R14.1)
 
@@ -320,7 +326,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | PHY-001 | The two unnamed columns (0.95 and 0.0 in every row) | R2.1 second pass | Open |
-| PHY-002 | How many `.ybn` files the map has and how they are grouped | R4.1 (map) | Open |
+| PHY-002 | How many `.ybn` files the map has and how they are grouped | R4.1 (map) | Answered: 15,124, by area, pack and name prefix (leftovers pass, [collision](/docs/physics/collision-and-materials.md#57-open-questions)) |
 | PHY-003 | The exact shape test flag bits, checked in game | R2.1 second pass | Open |
 | PHY-004 | The ragdoll and `NATURAL_MOTION` materials | R2.3 | Open |
 | PHY-005 | How water collision differs from water simulation | R2.4 | Open |
@@ -369,7 +375,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | AI-004 | The distances where ped AI LOD changes | In-game test, or engine reverse engineering | Open |
 | AI-005 | Measured frame time per combat ped on a low-end PC | R18.1 measuring, test card 1 | Open |
-| AI-006 | What the second `CTask` pool (2,100) is for | Second pass with R1.4 | Open |
+| AI-006 | What the second `CTask` pool (2,100) is for | Second pass with R1.4 | Answered: 2,100 is the PS4 block's `CTask` value; PC uses 8,192 (leftovers pass, [memory and pools](/docs/core/memory-and-pools.md#72-where-the-limits-come-from)) |
 
 ### [Ambient life](/docs/ai/ambient-life.md) (R17.8)
 
@@ -415,14 +421,14 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | AI-024 | AI profiles of every DLC vehicle (all `handling.meta` files) | Second pass, with the DLC scan | Open |
 | AI-025 | How `SET_DRIVER_ABILITY` and `_AGGRESSIVENESS` change the curve or braking | In-game test | Open |
 | AI-026 | What `TASK_VEHICLE_TEMP_ACTION`'s action numbers mean, with Rockstar's counts | Second pass | Open |
-| AI-027 | Road nodes and how routes are planned | R17.5 (navigation) | Open |
+| AI-027 | Road nodes and how routes are planned | R17.5 (navigation) | Partly answered: node, link and junction counts; route planning is engine code (leftovers pass, [navigation](/docs/ai/navigation.md#3441-navmesh-and-road-node-counts-leftovers-pass)) |
 
 ### [Navigation and pathfinding](/docs/ai/navigation.md) (R17.5)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| AI-028 | Polygon, link and cover-point counts per tile | Second pass, a `.ynv` reader | Open |
-| AI-029 | Node and link counts in the `.ynd` files, and what the update changed | Second pass | Open |
+| AI-028 | Polygon, link and cover-point counts per tile | Second pass, a `.ynv` reader | Answered: polygons, vertices, portals and cover points, base and DLC (leftovers pass, [navigation](/docs/ai/navigation.md#3441-navmesh-and-road-node-counts-leftovers-pass)) |
+| AI-029 | Node and link counts in the `.ynd` files, and what the update changed | Second pass | Answered: 79,788 nodes and 166,544 links; the update adds 15 files and changes 23 (leftovers pass, [navigation](/docs/ai/navigation.md#3441-navmesh-and-road-node-counts-leftovers-pass)) |
 | AI-030 | How far around the player navmeshes stream by default | In-game test with `GET_NUM_NAVMESHES_EXISTING_IN_AREA` | Open |
 
 ### [Perception and events](/docs/ai/perception-and-events.md) (R17.2)
@@ -476,7 +482,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| WLD-001 | A list of IPL names with the interior or building each one controls | Second pass: match IPL names to the ymaps they load | Open |
+| WLD-001 | A list of IPL names with the interior or building each one controls | Second pass: match IPL names to the ymaps they load | Mostly answered: all 410 literal IPL names are script-loaded ymaps, 134 with an interior; by prefix family; a place-by-place list is third pass (leftovers pass, [interiors and IPLs](/docs/world/interiors-and-ipls.md)) |
 | WLD-002 | What `building_controller` swaps, building by building | Second pass | Open |
 | WLD-003 | Which Online interiors work offline with IPLs alone | Test card 2; second pass | Open |
 
@@ -484,10 +490,10 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| WLD-004 | The exact meaning of the ymap `flags` values 1, 2, 3 | Second pass: compare with the IPL names scripts request | Open |
-| WLD-005 | How many entities the story-mode map loads (only ymaps active outside Online) | Second pass: filter by IPL state | Open |
+| WLD-004 | The exact meaning of the ymap `flags` values 1, 2, 3 | Second pass: compare with the IPL names scripts request | Answered: bit 1 script-loaded (all 410 requested IPL ymaps have it), bit 2 LOD (leftovers pass, [map data](/docs/world/map-data.md#flags-story-mode-entities-and-manifests-leftovers-pass)) |
+| WLD-005 | How many entities the story-mode map loads (only ymaps active outside Online) | Second pass: filter by IPL state | Partly answered: about 715,000 entities once script-loaded maps and replaced DLC copies are left out; which pack change sets apply in story mode is open (leftovers pass, [map data](/docs/world/map-data.md#flags-story-mode-entities-and-manifests-leftovers-pass)) |
 | WLD-006 | How `re_lossantosintl` and `re_yetarian` enforce their areas | Second pass | Open |
-| WLD-007 | How the LOD manifests (`.ymf`) tie ymaps together | R4.5, second pass | Open |
+| WLD-007 | How the LOD manifests (`.ymf`) tie ymaps together | R4.5, second pass | Answered: ytyp dependencies, HD texture bindings, 938 named IPL groups (47 by hour, 44 by weather) and interiors (leftovers pass, [map data](/docs/world/map-data.md#flags-story-mode-entities-and-manifests-leftovers-pass)) |
 
 ### [Random events](/docs/world/random-events.md) (R4.4)
 
@@ -507,7 +513,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | WLD-014 | Whether wind changes the flight of aircraft, the drift of boats, or bullets | Test card 3; R2.2, R2.4 | Open |
 | WLD-015 | What the global flag that skips the post-death weather reroll is, and which scripts set it | Second pass: read the writers of that global in `respawn_controller`'s callers | Open |
 | WLD-016 | How `SET_OVERRIDE_WEATHER` and the persistent lock interact when both are set | In-game test | Open |
-| WLD-017 | What the 380 timecycle variables per region do, and how timecycle modifiers stack on the weather | R13.2 | Open |
+| WLD-017 | What the 380 timecycle variables per region do, and how timecycle modifiers stack on the weather | R13.2 | Partly answered: there are 423 variables per region (not 380), grouped by name; stacking is engine code (leftovers pass, [timecycle](/docs/rendering/timecycle-and-post-effects.md#modifier-values-flags-and-post-effect-names-leftovers-pass)) |
 | WLD-018 | The base length of one weather `TimeMult` unit (not in the file) *(from the guide's text)* | In-game test | Open |
 | WLD-019 | Whether wind pushes aircraft or boats *(from the guide's text)* | In-game test | Open |
 
@@ -565,7 +571,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | GP-024 | The meaning of `replay_controller` states 1 to 6 and 11 to 13 | Second pass (also open in mission anatomy) | Answered with GP-017 ([mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip)) |
 | GP-025 | The `REPLAY_START_EVENT` and `REPLAY_RECORD_BACK_FOR_TIME` type numbers | Second pass | Partly answered: who passes each value (4 and 3 story missions, 1 and 0 side missions, 2 six scripts); the engine meaning is new GP-087 ([replay guide](/docs/gameplay/missions/replay-director-and-editor.md#the-clip-recorder)) |
 | GP-026 | Where director mode's restricted places (the prison and others) are defined | Second pass: the area checks in `director_mode` | Answered: a 200 m circle around the prison is the only restricted area; the other spots only move the start point ([replay guide](/docs/gameplay/missions/replay-director-and-editor.md#director-mode-director_mode)) |
-| GP-027 | The 10 post effects `startup` registers for the editor | R13.2 second pass | Open |
+| GP-027 | The 10 post effects `startup` registers for the editor | R13.2 second pass | Answered: `No_Filter` and `phone_cam1` to `_7`, `_9`, `_12` (leftovers pass, [timecycle](/docs/rendering/timecycle-and-post-effects.md#modifier-values-flags-and-post-effect-names-leftovers-pass)) |
 | GP-087 | What the engine does with the type number of `REPLAY_RECORD_BACK_FOR_TIME` and `REPLAY_START_EVENT` (values 0 to 4) | Third pass, the executable | Open |
 
 ### [The story mission flow: how missions unlock](/docs/gameplay/missions/story-flow.md) (R5.1)
@@ -584,7 +590,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | GP-034 | The unlock condition of each entry (flow flags, character) from the remaining table fields | Second pass | Mostly answered: the conditions and every gating flag's setter (GP-089); `MrsPhilips2` and `Rampage3` releases open ([strangers 20.3.1](/docs/gameplay/missions/strangers-and-freaks.md#2031-what-makes-an-entry-available-second-pass)) |
-| GP-035 | Where the world points are placed and how many there are per brain | Map data, R4.6 second pass | Open, moved to the third pass: the placements are in the map data, not the scripts |
+| GP-035 | Where the world points are placed and how many there are per brain | Map data, R4.6 second pass | Open, moved to the third pass: the placements are in the map data, not the scripts. The leftovers pass checked ymap extensions, archetype effects, scenario types and chaining nodes: none holds the brain names |
 | GP-036 | What the object-brain percentage and flags mean | Second pass, in-game test | Answered: the last argument is the brain-set mask (1 story, 8 Online, 9 both); percentage always 100, the fourth argument always -1 ([strangers 20.2](/docs/gameplay/missions/strangers-and-freaks.md#202-script-brains)) |
 | GP-089 | Which scripts set the flag IDs that gate stranger entries (74, 84 to 110, 133) and release `MrsPhilips2`, `Rampage3` and `TheLastOne` | Third pass | Mostly answered: every flag's setter (pass → code entry → message → code entry chains, collectibles, the Epsilon site, 100% for 133); `TheLastOne` released at 100% by `completionpercentage_controller`; `MrsPhilips2`, `Rampage3` and code entry 95 open ([strangers](/docs/gameplay/missions/strangers-and-freaks.md#2031-what-makes-an-entry-available-second-pass)) |
 
@@ -643,7 +649,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | GP-081 | What each restriction tag blocks or forces, as a table (hat with hood, glasses with masks ...) | Next pass, the tag checks in `shop_controller` | Partly answered: scripts test 387 tags, 383 in the catalogue; 118 catalogue tags are never tested and 4 tested tags exist in no item; a full per-check table is third pass (leftovers pass, [cosmetic shops](/docs/gameplay/player/online-cosmetic-shops.md#wearing-rules-restriction-tags)) |
 | GP-082 | The full `locate` number to menu title map, and why a few menus appear only in some store layouts | Next pass, `clothes_shop_mp` menu builder | Mostly answered: all 322 `CSHOP_TITLE` labels have English text in `CLO_MNU` (leftovers pass); why some menus appear only in some store layouts is still open ([cosmetic shops](/docs/gameplay/player/online-cosmetic-shops.md)) |
-| GP-083 | The base-wardrobe tables (labels and prices of the non-DLC clothes) | Next pass | Open |
+| GP-083 | The base-wardrobe tables (labels and prices of the non-DLC clothes) | Next pass | Partly answered: the base labels' patterns and text found; prices are in script tables, third pass (leftovers pass, [cosmetic shops](/docs/gameplay/player/online-cosmetic-shops.md)) |
 | GP-084 | Which barber items need a rank, and the ranks | Next pass, the unlock checks behind `HAIR_UNLOCK` | Answered: two rank tables in `hairdo_shop_mp`, hairstyles from rank 6 to 25, overlays 0 to 26 ([cosmetics](/docs/gameplay/player/online-cosmetic-shops.md#menus)) |
 | GP-085 | The hair and make-up colour counts on this build | In-game test, `GET_NUM_PED_HAIR_TINTS` / `GET_NUM_PED_MAKEUP_TINTS` | Open |
 | GP-086 | Which hair fade goes with which hairstyle (the barber adds one when a style is bought) | Next pass, the hairstyle-to-list-slot mapping in `hairdo_shop_mp` | Answered: hair items map to slots 93 to 114 and 123; newer DLC hair names its fade as forced component type 10 ([cosmetics](/docs/gameplay/player/online-cosmetic-shops.md#hair-fades)) |
@@ -708,7 +714,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | ON-006 | What job types 4 and 31 are, and what the even and odd race subtypes of a pair mean | Third pass (was: Next pass, with the [job lobby](/ROADMAP.md) (R7.5)) | Mostly answered: odd race subtypes are one-lap (point-to-point) races; types 4 and 31 are handled with missions and Survival but stay unnamed ([R7.11 12.3](/docs/online/creator-internals.md#123-from-the-menu-to-a-creator)) |
 | ON-007 | The prop limit in `public_mission_creator`, which uses its own messages (`PMCE_F_P`, `PMCE_F_D`) | Second pass | Answered: 200 props and 20 dynamic props, with the other eleven limits ([R7.11 12.11.1](/docs/online/creator-internals.md#12111-the-mission-creators-limits-second-pass)) |
-| ON-008 | The second dynamic list (library 15), library 39 and the other libraries with no text: hidden, Rockstar-only, or text in a pack not read | Third pass (was: Second pass, with every DLC text block) | Open |
+| ON-008 | The second dynamic list (library 15), library 39 and the other libraries with no text: hidden, Rockstar-only, or text in a pack not read | Third pass (was: Second pass, with every DLC text block) | Mostly answered: 8 of 49 library labels have no text in any block, so not a missed pack; probably hidden or Rockstar-only (leftovers pass, [creator](/docs/online/creator-internals.md#1213-open-questions)) |
 | ON-009 | What `GET_USED_CREATOR_BUDGET` measures inside the engine | Reverse engineering, R1.5 (streaming) | Open |
 | ON-010 | Which jobs are saved by the full prop writer and which by the sparse one (`func_189`) | Third pass (was: Second pass, compare with the 16 local classic missions ([R7.4](/file-formats/ugc-json.md))) | Open |
 | ON-011 | Meaning of `chs`, `chs2`, `chpp` and the `cpbs1` to `cpbs3` bits | Third pass (was: Second pass, read the race controller's checkpoint code) | Open |
@@ -723,7 +729,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | ON-015 | The text of the voice-only flows (`XM4V_FLW`, `S25R_FLW`, `SR2CH_FLW` ...) | Dialogue files, R9.2 second pass | Answered: 40 phone calls whose subtitles are in six DLC dialogue blocks (`XM4VAU`, `SR2CHAU`, `SR2RNAU`, `X24OAU`, `S25MAU`, `S25RAU`), summarised per call family ([R7.9 48.2.1](/docs/online/dlc-storylines.md#4821-the-phone-call-flows-second-pass)) |
 | ON-016 | Which update each `fm_content_*` script arrived in (compare decompile commits by build) | Next pass, `git log` of the decompile | Answered: all 97 `fm_content_*` scripts dated by the decompile commit that added them ([R7.9 48.6.1](/docs/online/dlc-storylines.md#4861-when-each-fm_content_-script-arrived-second-pass)) |
 | ON-017 | The flows for After Hours, Doomsday and the 2015 heists (no flow label family found) | Third pass (was: Next pass) | Open |
-| ON-018 | The mp2025_02 update's name and story | Third pass (was: Next pass, its pack text) | Partly answered: the update is A Safehouse in the Hills, named in the pack's own text ([R7.9 48.2](/docs/online/dlc-storylines.md#482-updates-packs-and-flows)); its story, in 13 dialogue blocks, is left for the third pass |
+| ON-018 | The mp2025_02 update's name and story | Third pass (was: Next pass, its pack text) | Mostly answered: KnoWay Out, six missions summarised (Negative Press and two titles tied); missions 2, 5 and 6 not tied to their titles (leftovers pass, [DLC storylines](/docs/online/dlc-storylines.md#4862-the-mp2025_02-story-leftovers-pass)) |
 
 ### [Heists in GTA Online](/docs/online/heists.md) (R7.8)
 
@@ -892,26 +898,26 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| AUD-001 | The number of sounds and sound sets in `sounds.dat54` | Second pass with a `.rel` reader | Open |
-| AUD-002 | What each audio scene changes | Second pass, `dynamix.dat15` | Open |
-| AUD-003 | `.awc` counts per archive | Second pass, list every archive | Open |
-| AUD-004 | Speech archives and voices | R9.2 | Open |
+| AUD-001 | The number of sounds and sound sets in `sounds.dat54` | Second pass with a `.rel` reader | Answered: 135,128 sounds and 1,658 sound sets (11,187 set entries), by file and kind (leftovers pass, [audio](/docs/audio/how-audio-is-organised.md#2731-what-the-config-files-hold-leftovers-pass)) |
+| AUD-002 | What each audio scene changes | Second pass, `dynamix.dat15` | Answered: 2,244 scenes, 2,231 patches, 6,922 category changes (volume, filters, pitch); most category names still hashes (leftovers pass, [audio](/docs/audio/how-audio-is-organised.md#2731-what-the-config-files-hold-leftovers-pass)) |
+| AUD-003 | `.awc` counts per archive | Second pass, list every archive | Answered: 7,706 `.awc`, per archive and per pack (leftovers pass, [audio](/docs/audio/how-audio-is-organised.md#2731-what-the-config-files-hold-leftovers-pass)) |
+| AUD-004 | Speech archives and voices | R9.2 | Partly answered: 794 ped voice groups, 89,096 `speech2` entries, 875 voice names (leftovers pass, [speech](/docs/audio/speech-and-dialogue.md#2851-voices-and-blocks-leftovers-pass)) |
 
 ### [Music and radio](/docs/audio/music-and-radio.md) (R9.3)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| AUD-005 | The 10 base and many DLC station objects whose names didn't resolve | Second pass with more name sources | Open |
-| AUD-006 | How a music event maps to moods and tracks, step by step | R9.1, second pass | Open |
+| AUD-005 | The 10 base and many DLC station objects whose names didn't resolve | Second pass with more name sources | Answered: every station object has a `RadioName`; 46 hidden stations, the player and club stations, 23 `REPL_*` editor stations (leftovers pass, [music and radio](/docs/audio/music-and-radio.md#stations-music-events-and-track-markers-leftovers-pass)) |
+| AUD-006 | How a music event maps to moods and tracks, step by step | R9.1, second pass | Answered: an event is one action object (start track, set mood, stop ...); moods are lists of stem mixes over 8 stems (leftovers pass, [music and radio](/docs/audio/music-and-radio.md#stations-music-events-and-track-markers-leftovers-pass)) |
 | AUD-007 | Which DLC stations are available in story mode in build 3725 | Test card 1 | Open |
-| AUD-008 | The format of a radio track's data (length, markers for the DJ) | R9.1 | Open |
+| AUD-008 | The format of a radio track's data (length, markers for the DJ) | R9.1 | Partly answered: markers are time plus a flag bit; flag meanings are a test, length is in the `.awc` (leftovers pass, [music and radio](/docs/audio/music-and-radio.md#stations-music-events-and-track-markers-leftovers-pass)) |
 
 ### [Speech and dialogue](/docs/audio/speech-and-dialogue.md) (R9.2)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| AUD-009 | The list of contexts each voice has, from `speech2.dat4.rel` | Second pass with a `.rel` reader | Open |
-| AUD-010 | Which block name maps to which mission, for all 331 containers | Second pass, with R5.1's mission table | Open |
+| AUD-009 | The list of contexts each voice has, from `speech2.dat4.rel` | Second pass with a `.rel` reader | Partly answered: the byte arrays that hold each voice's contexts are not decoded by CodeWalker; needs a format reader (leftovers pass, [speech](/docs/audio/speech-and-dialogue.md#2851-voices-and-blocks-leftovers-pass)) |
+| AUD-010 | Which block name maps to which mission, for all 331 containers | Second pass, with R5.1's mission table | Mostly answered: 194 of 331 containers tied to scripts through their `<name>AUD` text block; 137 are codes built at run time (leftovers pass, [speech](/docs/audio/speech-and-dialogue.md#2851-voices-and-blocks-leftovers-pass)) |
 | AUD-011 | The speech parameter names and what each does | Second pass, in-game test | Open |
 
 ## Rendering
@@ -920,20 +926,20 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| REN-001 | The names behind the 22 memory groups and their budget unit | Next pass: hash the candidate names | Open |
-| REN-002 | Which clip sets the hashed entries are (resolving the 4,526 keys from script, `peds.ymt` and `weaponanimations.meta` strings) | Next pass | Open |
+| REN-001 | The names behind the 22 memory groups and their budget unit | Next pass: hash the candidate names | Mostly answered: 19 of 22 groups named (`MG_*`), budgets and the `combat` memory situation; the unit is probably KB (leftovers pass, [animation](/docs/rendering/animation.md#4381-names-archives-and-sizes-leftovers-pass)) |
+| REN-002 | Which clip sets the hashed entries are (resolving the 4,526 keys from script, `peds.ymt` and `weaponanimations.meta` strings) | Next pass | Mostly answered: 3,065 of 4,526 clip sets named, by family (leftovers pass, [animation](/docs/rendering/animation.md#4381-names-archives-and-sizes-leftovers-pass)) |
 | REN-003 | Exactly what each `TASK_PLAY_ANIM` flag bit does (262144 and 16777216 in particular) | In-game test | Open |
-| REN-004 | The clip archive layout in DLC packs and how many dictionaries each pack adds | With [R0.7](/file-formats/data-file-atlas.md) | Open |
-| REN-005 | The 12 expression dictionaries the update replaced and why | Next pass | Open |
-| REN-006 | Animation memory cost per dictionary | R18.3 (memory) | Open |
+| REN-004 | The clip archive layout in DLC packs and how many dictionaries each pack adds | With [R0.7](/file-formats/data-file-atlas.md) | Answered: 67 packs, 13,502 dictionaries, in-game and per-cutscene archives (leftovers pass, [animation](/docs/rendering/animation.md#4381-names-archives-and-sizes-leftovers-pass)) |
+| REN-005 | The 12 expression dictionaries the update replaced and why | Next pass | Mostly answered: 5 replace a base file, 7 are new; why is not in the files (leftovers pass, [animation](/docs/rendering/animation.md#4381-names-archives-and-sizes-leftovers-pass)) |
+| REN-006 | Animation memory cost per dictionary | R18.3 (memory) | Answered: median 40 KB in game, 152 KB in cutscenes, all system memory; the biggest are nightclub DJ sets (leftovers pass, [animation](/docs/rendering/animation.md#4381-names-archives-and-sizes-leftovers-pass)) |
 
 ### [Cameras](/docs/rendering/cameras.md) (R13.5)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | REN-007 | The director priorities and exactly when the cinematic director takes over | Second pass | Open |
-| REN-008 | The 50 shake names and other camera names that didn't resolve | Second pass with more name sources | Open |
-| REN-009 | Which `CREATE_CAMERA` hashes scripts use (the hashed form of `CREATE_CAM`) | Second pass: resolve the hashes in the decompile | Open |
+| REN-008 | The 50 shake names and other camera names that didn't resolve | Second pass with more name sources | Partly answered: three spline cameras named; 28 shakes named by the sources tried, the rest need another source (leftovers pass, [cameras](/docs/rendering/cameras.md#camera-names-leftovers-pass)) |
+| REN-009 | Which `CREATE_CAMERA` hashes scripts use (the hashed form of `CREATE_CAM`) | Second pass: resolve the hashes in the decompile | Answered: six camera hashes, all named (leftovers pass, [cameras](/docs/rendering/cameras.md#camera-names-leftovers-pass)) |
 | REN-010 | The view mode contexts and modes as numbers | R6.4 | Answered by GP-044 (P4.9): contexts 0 to 7 and mode 4 first person ([controls and camera](/docs/gameplay/player/controls-and-camera.md#the-view-mode-first-and-third-person)) |
 | REN-011 | How the first-person car interior camera is chosen per vehicle (`camVehicleCustomSettingsMetadata`) | R14.1 | Open |
 
@@ -943,15 +949,15 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | REN-012 | The exact decal limit in build 3725 and what limit patches change | Second pass with the executable; R18 | Open |
 | REN-013 | How the particle quality setting picks between `ptfx`, `ptfx_hi` and `ptfx_lo` | Test card 2; R18.2 | Open |
-| REN-014 | The format of `entityfx.dat`, `materialfx.dat` and `wheelfx.dat` row by row | Second pass | Open |
-| REN-015 | Which DLC dictionaries are mounted in story mode | R1.6 second pass | Open |
-| REN-016 | Which effect names each dictionary holds (an index) | Second pass: a read-only lister for `.ypt` | Open |
+| REN-014 | The format of `entityfx.dat`, `materialfx.dat` and `wheelfx.dat` row by row | Second pass | Answered: sections and columns of all three files (leftovers pass, [particles](/docs/rendering/particles-and-decals.md#effect-files-dictionaries-and-mounting-leftovers-pass)) |
+| REN-015 | Which DLC dictionaries are mounted in story mode | R1.6 second pass | Answered: all 33 DLC particle archives are switched on in `GROUP_STARTUP` change sets (leftovers pass, [particles](/docs/rendering/particles-and-decals.md#effect-files-dictionaries-and-mounting-leftovers-pass)) |
+| REN-016 | Which effect names each dictionary holds (an index) | Second pass: a read-only lister for `.ypt` | Answered: 364 dictionaries, 2,907 effects, counts and name families (leftovers pass, [particles](/docs/rendering/particles-and-decals.md#effect-files-dictionaries-and-mounting-leftovers-pass)) |
 
 ### [Rendering, visual settings and LOD](/docs/rendering/rendering-and-visual-settings.md) (R13.1)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| REN-017 | What each changed key between base and update copies does | Second pass, diff and in-game test | Open |
+| REN-017 | What each changed key between base and update copies does | Second pass, diff and in-game test | Partly answered: 11 changed, 136 added, 6 removed keys listed; the in-game effect is a test (leftovers pass, [visual settings](/docs/rendering/rendering-and-visual-settings.md#296-open-questions)) |
 | REN-018 | How "extended distance scaling" maps to the LOD scale value | In-game test with `GET_LODSCALE` | Open |
 | REN-019 | What popular lighting and graphics overhauls change in these files | A comparison, with each author's release page linked | Open |
 | REN-020 | Per-pass cost measured on a low-end PC | R18.1 measuring, with a frame capture tool | Open |
@@ -960,13 +966,13 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| REN-021 | What the two numbers on each modifier line mean (value and strength? value at two ends of a range?) | Second pass: test with a modifier that sets one variable | Open |
-| REN-022 | What `userFlags` 1, 2, 4, 8 and 16 do | Second pass: compare the modifiers in each group | Open |
+| REN-021 | What the two numbers on each modifier line mean (value and strength? value at two ends of a range?) | Second pass: test with a modifier that sets one variable | Partly answered: the second number is 0 to 1 on 97% of lines, probably a weight; test card still needed (leftovers pass, [timecycle](/docs/rendering/timecycle-and-post-effects.md#modifier-values-flags-and-post-effect-names-leftovers-pass)) |
+| REN-022 | What `userFlags` 1, 2, 4, 8 and 16 do | Second pass: compare the modifiers in each group | Mostly answered: 1 water, 2 interiors, 4 and 16 tunnels, 8 `NO_streetAmbient`; a bit field (leftovers pass, [timecycle](/docs/rendering/timecycle-and-post-effects.md#modifier-values-flags-and-post-effect-names-leftovers-pass)) |
 | REN-023 | The game hours of the 13 keyframes | Second pass: test card 2 | Open |
-| REN-024 | What the 39 unnamed post effects are, and whether anything plays them | Second pass: hash lists from other sources | Open |
-| REN-025 | How many timecycle boxes and interior room modifiers the map has | R4.6 (map data) | Open |
-| REN-026 | `GroupId` and `EventType` on post effects | Second pass | Open |
-| REN-027 | Meaning of the timecycle modifier `userFlags` values (0, 2, 1, 16, 4, 8) *(from the guide's text)* | Second pass | Open |
+| REN-024 | What the 39 unnamed post effects are, and whether anything plays them | Second pass: hash lists from other sources | Mostly answered: 215 of 252 named; the 37 left identified by their layers, none played by literal name (leftovers pass, [timecycle](/docs/rendering/timecycle-and-post-effects.md#modifier-values-flags-and-post-effect-names-leftovers-pass)) |
+| REN-025 | How many timecycle boxes and interior room modifiers the map has | R4.6 (map data) | Answered: 6,263 timecycle boxes in 527 ymaps; 1,269 of 1,658 interior rooms name a modifier, plus 939 interior boxes (leftovers pass, [timecycle](/docs/rendering/timecycle-and-post-effects.md#open-questions)) |
+| REN-026 | `GroupId` and `EventType` on post effects | Second pass | Partly answered: group 1 on the three Heist4 camera flashes, group 64 and two event hashes on eight transition and view effects; event names unresolved (leftovers pass, [timecycle](/docs/rendering/timecycle-and-post-effects.md#modifier-values-flags-and-post-effect-names-leftovers-pass)) |
+| REN-027 | Meaning of the timecycle modifier `userFlags` values (0, 2, 1, 16, 4, 8) *(from the guide's text)* | Second pass | Mostly answered with REN-022 (leftovers pass, [timecycle](/docs/rendering/timecycle-and-post-effects.md#modifier-values-flags-and-post-effect-names-leftovers-pass)) |
 
 ## Performance
 
@@ -1033,7 +1039,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | PERF-023 | How many Euphoria ragdolls the engine runs at once before falling back, and what one costs on a low-end PC | Test card 1 | Open |
 | PERF-024 | Cost of a vehicle crash, an explosion, a fire, on a low-end PC | Test cards 2 and 3 | Open |
-| PERF-025 | Whether raised physics pools in a modded `gameconfig.xml` change anything at a low-end PC's spawn levels | R18.3, compare with the vanilla file | Open |
+| PERF-025 | Whether raised physics pools in a modded `gameconfig.xml` change anything at a low-end PC's spawn levels | R18.3, compare with the vanilla file | Partly answered: no other block changes the physics pools on PC; whether raising them matters is a test (test card 5 in [physics cost](/docs/performance/physics-cost.md#119-test-cards)) |
 
 ### [Windows and drivers](/docs/performance/windows-and-drivers.md) (R18.6)
 
@@ -1077,7 +1083,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | SCR-011 | Meaning of force-cleanup bits 4, 16 and 32 (engine-raised) | R1.2 and R5.8 (replay), with an in-game test | Open |
 | SCR-012 | What thread priority values change | R1.4 or R18.4 | Open |
 | SCR-013 | The event queue indexes and the script event layout | R15.1 | Open |
-| SCR-014 | Which of the duplicated pool entries in `gameconfig.xml` applies to the PC build | R1.4 | Open |
+| SCR-014 | Which of the duplicated pool entries in `gameconfig.xml` applies to the PC build | R1.4 | Answered: the base block's value; the update copy has no duplicate inside a block and no pools in its `x64` block; the duplicates are PS4, Xbox One, beta and non-final overrides (leftovers pass, [memory and pools](/docs/core/memory-and-pools.md#72-where-the-limits-come-from)) |
 
 ## File formats
 
@@ -1085,15 +1091,15 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| FF-001 | Reliable sizes per type (audio sizes read as zero) | Second pass, read sizes from the resource headers | Open |
-| FF-002 | A per-pack breakdown for all 89 DLC packs | Second pass, with [DLC packs](/docs/entities/vehicles/dlc-packs.md) | Open |
-| FF-003 | How the update's copies override the base ones, type by type | R1.6 second pass | Open |
+| FF-001 | Reliable sizes per type (audio sizes read as zero) | Second pass, read sizes from the resource headers | Answered: stored (uncompressed) entries have a compressed size of 0; sizes per type, 118.6 GB in all (leftovers pass, [atlas](/file-formats/data-file-atlas.md#sizes-per-type-leftovers-pass)) |
+| FF-002 | A per-pack breakdown for all 89 DLC packs | Second pass, with [DLC packs](/docs/entities/vehicles/dlc-packs.md) | Answered: files, size and main types for all 89 packs; the 15 `g9ec` packs are near-empty on Legacy (leftovers pass, [atlas](/file-formats/data-file-atlas.md#the-89-dlc-packs-leftovers-pass)) |
+| FF-003 | How the update's copies override the base ones, type by type | R1.6 second pass | Answered: 14,893 same-path replacements, 7,441 `dlc_patch` files, 1,672 same-name moves, 5,377 new, by type (leftovers pass, [atlas](/file-formats/data-file-atlas.md#how-the-update-overrides-the-base-leftovers-pass)) |
 
 ### [UGC mission files (JSON) and who reads them](/file-formats/ugc-json.md) (R7.4)
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| FF-004 | Meaning of each content section key (`me`, `sro`, `amb`, `gt`, `ta`, `tot`, `mvdr` ...), from the `fm_content_*` helper that reads them | Second pass, with one `re_` file and its script | Open |
+| FF-004 | Meaning of each content section key (`me`, `sro`, `amb`, `gt`, `ta`, `tot`, `mvdr` ...), from the `fm_content_*` helper that reads them | Second pass, with one `re_` file and its script | Mostly answered: the sub-keys of every section from `fm_content_bounty_targets`; `sro`, `cst`, `fcs`, `modt` still a *probable* reading (leftovers pass, [UGC JSON](/file-formats/ugc-json.md#113-content-files)) |
 | FF-005 | The `gen` keys (8,472 paths): which ones `fm_mission_controller` actually reads | Second pass | Open |
 | FF-006 | How the controller picks rules per team and stage | R7.5 (job lobby) and a second pass | Open |
 
