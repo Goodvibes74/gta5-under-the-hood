@@ -118,6 +118,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | D3 | `water.xml`, `water_heistisland.xml`, `waterheight.dat`, `water.dat`, `watertune*.xml` | PHY-015, PHY-016, PHY-018, PHY-005 | Done: PHY-015 answered; PHY-016, PHY-018 partly; PHY-005 waits for the collision files (map-data batch); new: Cayo Perico's own water file |
 | D4 | `dispatch.meta`, `crimeinformation.meta`, `wantedtuning.ymt`, `playerinfo.ymt`, `zonebind.ymt`, `popcycle.dat`, `popzone.ipl`, `popgroups.ymt`, `pedpersonality.ymt` (extracted) | AI-034, AI-035, AI-036, ENT-021, ENT-024, GP-073 | Done: AI-036, ENT-021 answered; AI-034 mostly; AI-035, ENT-024, GP-073 partly. The personality questions (AI-011, AI-016, AI-017, AI-019, AI-020, ENT-013) are the next batch |
 | D5 | `pedpersonality.ymt`, every `peds.ymt` / `peds.meta`, `relationships.dat` | AI-011, AI-016, AI-017, AI-019, AI-020, ENT-013 | Done: AI-011, AI-016 answered; AI-017, ENT-013 mostly; AI-019 partly; AI-020 needs the executable |
+| D6 | The 164 freemode shop catalogue files, 22 DLC component `.ymt` files, `shop_vehicle`, `shop_weapon` and `shop_tattoo` files | GP-081, ENT-015, ON-049, GP-055, GP-057, ENT-010 | Done: ENT-015 answered, GP-081 partly. ON-049 is about the server's transaction catalogue, which no game file holds; GP-055, GP-057 and ENT-010 need the creator scripts more than these files, so they stay open |
 
 ## By category
 
@@ -261,7 +262,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | ENT-013 | The 23 personality hashes and relationship groups that didn't resolve | Second pass | Mostly answered: all 24 relationship-group hashes resolved from `relationships.dat`; every personality hash matches an entry, 69 of 96 named (leftovers pass, [peds](/docs/entities/peds/peds.md)) |
 | ENT-014 | What each `SET_PED_CONFIG_FLAG` number does (the ones Rockstar sets most) | Second pass: count flag numbers in the decompile | Open |
-| ENT-015 | The component `.ymt` format (slots, drawables, restrictions) | R6.3, R14.2 second pass | Open |
+| ENT-015 | The component `.ymt` format (slots, drawables, restrictions) | R6.3, R14.2 second pass | Answered: the `CPedVariationInfo` layout part by part (leftovers pass, [appearance 10.2.1](/docs/entities/peds/appearance-and-clothing.md#1021-the-component-ymt-file-leftovers-pass)) |
 
 ### [Ped physics and ragdoll](/docs/entities/peds/ragdoll.md) (R2.3)
 
@@ -640,7 +641,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| GP-081 | What each restriction tag blocks or forces, as a table (hat with hood, glasses with masks ...) | Next pass, the tag checks in `shop_controller` | Open |
+| GP-081 | What each restriction tag blocks or forces, as a table (hat with hood, glasses with masks ...) | Next pass, the tag checks in `shop_controller` | Partly answered: scripts test 387 tags, 383 in the catalogue; 118 catalogue tags are never tested and 4 tested tags exist in no item; a full per-check table is third pass (leftovers pass, [cosmetic shops](/docs/gameplay/player/online-cosmetic-shops.md#wearing-rules-restriction-tags)) |
 | GP-082 | The full `locate` number to menu title map, and why a few menus appear only in some store layouts | Next pass, `clothes_shop_mp` menu builder | Mostly answered: all 322 `CSHOP_TITLE` labels have English text in `CLO_MNU` (leftovers pass); why some menus appear only in some store layouts is still open ([cosmetic shops](/docs/gameplay/player/online-cosmetic-shops.md)) |
 | GP-083 | The base-wardrobe tables (labels and prices of the non-DLC clothes) | Next pass | Open |
 | GP-084 | Which barber items need a rank, and the ranks | Next pass, the unlock checks behind `HAIR_UNLOCK` | Answered: two rank tables in `hairdo_shop_mp`, hairstyles from rank 6 to 25, overlays 0 to 26 ([cosmetics](/docs/gameplay/player/online-cosmetic-shops.md#menus)) |

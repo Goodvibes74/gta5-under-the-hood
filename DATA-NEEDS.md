@@ -2,7 +2,7 @@
 
 The open questions that **can't be answered from the decompiled scripts alone**, grouped by the file to extract. Use it as a shopping list for one CodeWalker session (`tools/rpf-cw.ps1`, see [research tools](/docs/00-getting-started/research-tools.md)): extract everything in a group into a scratch folder outside the repo, then answer the group's questions together. Status and full wording of each question: [`OPEN_QUESTIONS.md`](/OPEN_QUESTIONS.md). Everything else that is still open is listed in [`HANDOFF.md`](/HANDOFF.md) (executable, in-game tests, scripts only).
 
-**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, batch D2 every explosion and weapon file, batch D3 the water files, batch D4 the police and population files, and batch D5 the personality and ped files; the rows marked *done, D1* to *D5* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
+**Done so far:** batch D1 (2026-11-03) extracted every American text block and every vehicle data file, batch D2 every explosion and weapon file, batch D3 the water files, batch D4 the police and population files, batch D5 the personality and ped files, and batch D6 the shop catalogues; the rows marked *done, D1* to *D6* below are answered or narrowed, with the result in the linked guide and in `OPEN_QUESTIONS.md`.
 
 How to read the tables:
 - **Extract** gives the path as this repo's guides already use it (`common:` = `common.rpf`, `update:` = `update\update.rpf`, DLC = `update\x64\dlcpacks\<pack>\dlc.rpf` and the `dlc_patch` folders in `update.rpf`). Where no guide has given the path yet, it says *find*: list the archives with the tool and search for the file name.
@@ -95,9 +95,9 @@ How to read the tables:
 
 | ID | What to find | Extract | Scripts too? |
 | --- | --- | --- | --- |
-| GP-081 | What each restriction tag blocks or forces | the shop catalogue (`shop_ped_apparel` files, *find*) for the 510 tag names | yes: match them to the hashes `shop_controller` tests |
-| ON-049 | Catalogue item keys and categories | the same catalogue | no |
-| ENT-015 | The component `.ymt` format (slots, drawables, restrictions) | the ped component `.ymt` files (`mp_m_freemode_01` ...) | no |
+| GP-081 (*done, D6*) | What each restriction tag blocks or forces | the shop catalogue (`shop_ped_apparel` files, *find*) for the 510 tag names | yes: match them to the hashes `shop_controller` tests |
+| ON-049 (*D6: not in the files; the server catalogue*) | Catalogue item keys and categories | the same catalogue | no |
+| ENT-015 (*done, D6*) | The component `.ymt` format (slots, drawables, restrictions) | the ped component `.ymt` files (`mp_m_freemode_01` ...) | no |
 | GP-055 | Two unlabelled morph-19 entries; the last appearance-table column | creator data and the component files | yes (the creator's item tables) |
 | GP-057 | The components of each starter outfit | catalogue / component data | yes (the outfit tables in the creator) |
 | ENT-010 | Overlay list 0 to 12 and micro-morph list 0 to 19, checked | head-overlay and freemode ped data | partly done from the creator scripts |

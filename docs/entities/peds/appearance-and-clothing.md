@@ -40,6 +40,21 @@ How a ped's look is built and how the shops sell it: the 12 component slots and 
 | `ANCHOR_LEFT_WRIST` (watches) | 6 | 13 |
 | `ANCHOR_RIGHT_WRIST` (bracelets) | 7 | 13 |
 
+### 10.2.1 The component `.ymt` file (leftovers pass)
+
+**Verified**, read from the 22 freemode component files (`mp_m_freemode_01.ymt` and `mp_f_freemode_01.ymt`) that the DLC packs ship, converted to XML with the CodeWalker library. The base game's copies sit in the streamed-ped archives, which this pass didn't open; the format is the same (**Known**). The root is `CPedVariationInfo`:
+
+| Part | What it holds |
+| --- | --- |
+| `bHasTexVariations`, `bHasDrawblVariations`, `bHasLowLODs`, `bIsSuperLOD` | Switches for the whole file |
+| `availComp` | 12 numbers, one per component slot (head, mask `BERD`, hair, arms `UPPR`, legs, bags `HAND`, shoes, accessories `TEEF`, undershirt `ACCS`, armour `TASK`, decals, tops `JBIB`): which slots this file has drawables for |
+| `aComponentData3` | One entry per slot, each with `numAvailTex` and a list of drawables (`aDrawblData3`). A drawable has a `propMask`, `numAlternatives`, its textures (`aTexData`) and cloth data |
+| `compInfos` | One entry per drawable with its audio ids (`pedXml_audioID`, `_audioID2`), expression mods, `flags`, `inclusions` and `exclusions` masks, VFX component, and the slot and drawable it belongs to |
+| `propInfo` | `numAvailProps`, a list of props (`aPropMetaData`: audio id, expression mods, textures, render and prop flags, anchor and prop id, `stickyness`) and the anchors (`aAnchors`: how many props each anchor has) |
+| `aSelectionSets`, `dlcName` | Named sets of drawables, and the pack name that ties the file to its shop file |
+
+So the `.ymt` says which drawables and textures exist and how they combine at model level (`inclusions` / `exclusions`). The shop rules (restriction tags, forced components, price, lock) live in the shop `.meta` files instead (10.3).
+
 ## 10.3 The shop file
 
 One `<Item>` in `pedComponents` or `pedProps` (fields counted in the heist4 male file, 708 entries):

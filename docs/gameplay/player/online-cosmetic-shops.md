@@ -188,6 +188,14 @@ The tag names are plain text in the catalogue (`<tagNameHash>HAT</tagNameHash>`)
 
 The shop and wardrobe scripts ask `DOES_SHOP_PED_APPAREL_HAVE_RESTRICTION_TAG` (4,222 calls in `clothes_shop_mp`, 1,776 in `hairdo_shop_mp`) and `DOES_CURRENT_PED_COMPONENT_HAVE_RESTRICTION_TAG` before showing or combining an item. Examples read in `shop_controller` (**Verified** reading): masks from drawable 26 up that are tagged `hat` or `hair_shrink` are excluded from a check other masks pass; putting on a hat takes off a worn mask tagged `hair_shrink` unless the hat is tagged `shrink_hair`; hats from drawable 26 up are tested for `shrink_head`. What each tag blocks in detail is spread over hundreds of checks (open question below).
 
+**Which tags the scripts test** (*leftovers pass*, **Verified**). Every literal tag in a `DOES_SHOP_PED_APPAREL_HAVE_RESTRICTION_TAG` call was collected from the decompile (`joaat("...")` arguments), and every tag in the 164 freemode catalogue files read in this pass. The scripts test **387 different tags**, and 383 of them exist in the catalogue. That leaves:
+
+- **118 catalogue tags no script tests by name**, so they change nothing through the scripts (the engine may still read some, **Known**). Among them are `BACKWARDS_HAT`, `CAR_MEET_ITEM`, `MUSIC_STUDIO_ITEM`, `DUFFEL_BAG`, `GOGGLES_HELMET`, `BLOCK_PARACHUTE`, `MORPH_SUIT_NO_HEAD`, the parachute variants `PARA_ALT03` to `PARA_ALT11`, the crew-logo tags (`CREW_LOGO_FIXER_*`, `CREW_LOGO_X22_*`) and several pack tags (`X22_CLOTH`, `X22_DRAW_3`, `FX_DRAW_2`, `FX_DRAW_3`). Both spellings `BLOCK_SCARFS` and `BLOCK_SCARVES` are in the catalogue, but only `BLOCK_SCARFS` is tested.
+- **4 tested tags no catalogue item carries:** `arena_draw_14`, `biker_skull`, `fake_hat` and `fitted_cap`. These checks can never be true for a catalogue item in this build.
+- **The pack drawable tags** (245 of the 501 catalogue tags end in `_DRAW_<n>`: `BIKER_DRAW_*` 29, `APART_DRAW_*` 23, `HEIST_DRAW_*` 18, `GUN_DRAW_*` 16 ...) mark single drawables that need special handling. They are the most tested tags of all, because each wardrobe and shop script carries a long list of such exceptions (`silk_robe`, `morph_suit`, `gorka_suit` and the `biker_draw_*` and `stunt_draw_*` tags are each tested thousands of times across the shared code).
+
+What every one of the 387 checks blocks or forces needs each check read in its script; the names and the examples above cover the common ones.
+
 ### Saved outfits
 
 20 slots (`CSHOP_SAVE_OUT` "EDIT SAVED OUTFITS"), each with a name, saved from what the player wears; save, delete and rename (`ITEM_SAVE`, `ITEM_DEL`, `ITEM_REN`). The interaction menu reads the same slots (`PIM_HOUTF` "Select a saved outfit to wear").
@@ -237,7 +245,7 @@ The shop scripts write through `STAT_SET_INT` on the stat for the current charac
 
 | Question | Where it goes |
 | --- | --- |
-| What each restriction tag blocks or forces, as a table (hat with hood, glasses with masks ...) | Next pass, the tag checks in `shop_controller` |
+| What each restriction tag blocks or forces, as a table (hat with hood, glasses with masks ...) | Partly answered in [wearing rules](#wearing-rules-restriction-tags): which of the 501 tags the scripts test (387), which never (118); a per-check table is third pass |
 | The English text of the 306 `CSHOP_TITLE` labels, and why a few menus appear only in some store layouts (GP-082) | Text answered (all 322 labels in `CLO_MNU`, see the menu titles above); the store-layout rule is third pass |
 | The base-wardrobe tables (labels and prices of the non-DLC clothes) | Next pass |
 | The hair and make-up colour counts on this build | In-game test, `GET_NUM_PED_HAIR_TINTS` / `GET_NUM_PED_MAKEUP_TINTS` |
