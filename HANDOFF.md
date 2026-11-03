@@ -31,6 +31,8 @@ Everything below is still open or only partly answered (about 300 rows). The gro
 
 ### 1. Data files (extract with CodeWalker / `tools/rpf-cw.ps1`, update copies win)
 
+**Per-question checklist with the exact files: [`DATA-NEEDS.md`](/DATA-NEEDS.md).**
+
 | Input to extract | Questions |
 | --- | --- |
 | Every DLC `handling.meta` (+ base) | GP-045 (flying blocks), AI-024 (AI profiles), PHY-011 (flag bits), PHY-013 (`statMods`), PHY-014 (with `vehicles.meta`) |
