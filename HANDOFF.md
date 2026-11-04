@@ -90,9 +90,9 @@ GS-004, GP-025 and GP-087 (replay type numbers), GP-069 and GP-092 (ability entr
 | CORE-009 | 18 bits read (leftovers pass). Left: `.f_203` bits 2, 5 to 8, 30 and 31 (one 127-line `freemode` function about tutorial sessions) and the mod shop bits (`carmod_shop`) |
 | CORE-021 | `freemode`'s request launches are done (leftovers pass). Left: `player_controller`'s other scenes. Also reconcile "296" (launch graph) with "240" (the tracker row) for the scripts nothing starts |
 | UI-002 | Not a scripts question: what's left is in-game test card 2 in the pause menu guide |
-| ON-006 | Job types 4 and 31: the 23 checks that pair them with missions and Survival; find a writer that sets the type |
+| ON-006 | Leftovers pass: type 4 is set by six creators from `goto.atrig`, and nothing writes 31. Left: the names (a text or engine source)
 | ON-069 | `am_pi_menu`, page by page: each page's show and grey rules |
-| ON-070 | `.f_2` of the 21-value start arguments and lobby bit 1 (writers in `freemode`, `maintransition`) |
+| ON-070 | Leftovers pass: `.f_2` is traced to the corona request. Left: lobby bit 1 (writers in `freemode`, `maintransition`)
 | ON-065 | Slot 30 and property indices 119 to 134 (the `freemode` slot-to-index function); slot 33 to 35 names need `mpstatscharactermappingdata.xml` |
 | ON-001, ON-005 | `freemode`'s 183 running-state functions; the host-state counter |
 | ON-010 to ON-014, ON-017 | Creator prop writers (`func_189` sparse vs full), race checkpoint fields (`chs`, `cpbs*`), dynamic props in the DM and mission controllers, the other creators' placement, the flow stats, the After Hours / Doomsday / 2015 flows |
