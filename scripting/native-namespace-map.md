@@ -74,6 +74,31 @@ Sorted by calls. Natives: in NativeDB / used by at least one script. A topic mar
 - **`GRAPHICS` covers four topics.** Drawing sprites and text on screen, scaleform movies (R8.2), timecycles and post effects (R13.2), and particles and decals (R13.3).
 - **Script counts are inflated by shared code.** Rockstar compiles helper code into most scripts, so a native can appear in hundreds of scripts that never reach it (for example the `CLOCK` date helpers in 520 or so scripts). For "who really uses this", read the busiest scripts on the namespace's usage page.
 
+### `MISC` split into sub-families (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* All 334 `MISC` natives from the [MISC usage page](/scripting/native-usage/MISC.md) (build 3725), sorted by name into 16 sub-families, each with the guide that should own it. The calls add up to the namespace's 1,385,549. The sorting is ours, by name and by what the natives do; NativeDB keeps them in one namespace.
+
+| Sub-family | Natives | Calls | Busiest natives | Owner guide |
+| --- | ---: | ---: | --- | --- |
+| Bits, maths, random and utilities | 24 | 1,074,792 | `SET_BIT`, `CLEAR_BIT`, `GET_RANDOM_INT_IN_RANGE` | [Script VM](/scripting/script-vm.md) |
+| Strings, hashes and keyboard | 12 | 196,481 | `GET_HASH_KEY`, `IS_STRING_NULL_OR_EMPTY`, `ARE_STRINGS_EQUAL` | [Text labels](/docs/ui/text-labels.md) |
+| Time and frames | 6 | 56,391 | `GET_GAME_TIMER`, `GET_FRAME_COUNT`, `GET_FRAME_TIME` | [Script VM](/scripting/script-vm.md) |
+| Platform and settings | 24 | 19,550 | `IS_PC_VERSION`, `GET_PROFILE_SETTING`, `ARE_PROFILE_SETTINGS_VALID` | [Boot](/docs/00-getting-started/boot.md) |
+| Area clearing and ground checks | 15 | 19,324 | `GET_GROUND_Z_FOR_3D_COORD`, `CLEAR_AREA`, `GET_GROUND_Z_EXCLUDING_OBJECTS_FOR_3D_COORD` | [Collision and shape tests](/docs/physics/collision-and-materials.md) |
+| Police, dispatch and wanted | 24 | 3,666 | `ENABLE_DISPATCH_SERVICE`, `SET_FAKE_WANTED_LEVEL`, `BLOCK_DISPATCH_SERVICE_RESOURCE_CREATION` | [Wanted level and police](/docs/ai/wanted-level-and-police.md) |
+| Saves, restarts, death and arrest | 45 | 3,418 | `REGISTER_INT_TO_SAVE`, `STOP_SAVE_ARRAY`, `START_SAVE_ARRAY_WITH_SIZE` | [Saves](/docs/core/saves.md), [respawn, death and arrest](/docs/gameplay/player/respawn-death-and-arrest.md) |
+| Script and game state | 35 | 3,121 | `SET_THIS_SCRIPT_CAN_BE_PAUSED`, `SET_GAME_PAUSED`, `FORCE_GAME_STATE_PLAYING` | [Runtime scripts](/docs/core/runtime-scripts.md) |
+| Fire, bullets and projectiles | 18 | 2,845 | `IS_BULLET_IN_AREA`, `CLEAR_AREA_OF_PROJECTILES`, `SHOOT_SINGLE_BULLET_BETWEEN_COORDS` | [Fire, explosions and projectiles](/docs/physics/fire-explosions-projectiles.md) |
+| Content and creator | 5 | 2,036 | `_SET_CONTENT_PROP_TYPE`, `GET_BASE_ELEMENT_LOCATION_FROM_METADATA_BLOCK`, `_GET_CONTENT_PROP_TYPE` | [Creator internals](/docs/online/creator-internals.md) |
+| Weather and environment | 48 | 1,742 | `SET_WEATHER_TYPE_NOW_PERSIST`, `SET_WEATHER_TYPE_OVERTIME_PERSIST`, `CLEAR_WEATHER_TYPE_PERSIST` | [Time and weather](/docs/world/time-and-weather.md) |
+| Population and spawning | 13 | 947 | `REMOVE_POP_MULTIPLIER_SPHERE`, `ADD_POP_MULTIPLIER_SPHERE`, `FIND_SPAWN_POINT_IN_DIRECTION` | [Population](/docs/entities/spawning/population.md) |
+| Stunt jumps, races and minigames | 36 | 737 | `IS_MINIGAME_IN_PROGRESS`, `SET_MINIGAME_IN_PROGRESS`, `ADD_STUNT_JUMP_ANGLED` | [Minigames and activities](/docs/gameplay/missions/minigames-and-activities.md) |
+| Activity feed and presence | 10 | 399 | `ACTIVITY_FEED_CREATE`, `ACTIVITY_FEED_POST`, `ACTIVITY_FEED_ACTION_START_WITH_COMMAND_LINE` | None yet (`ingamehud`; `SET_TICKER_JOHNMARSTON_IS_DONE` in `main_persistent`) |
+| Cheats and player effects | 9 | 76 | `HAS_PC_CHEAT_WITH_HASH_BEEN_ACTIVATED`, `SET_BEAST_JUMP_THIS_FRAME`, `SET_FORCED_JUMP_THIS_FRAME` | [Runtime scripts](/docs/core/runtime-scripts.md) (`cheat_controller`) |
+| Benchmark | 10 | 24 | `LANDING_SCREEN_STARTED_END_USER_BENCHMARK`, `IS_COMMANDLINE_END_USER_BENCHMARK`, `RESET_END_USER_BENCHMARK` | [Measuring performance](/docs/performance/measuring.md) |
+
+Two sub-families carry 92% of the calls (bits and maths, strings and hashes). These are the script language's own helpers, compiled into nearly every script. The topic families (weather, saves, police, stunt jumps) are small in calls, but each has a natural owner. Activity feed natives have no guide yet.
+
 ## What this means for modders
 
 - **Find the natives for a job by namespace,** then use the usage page to see how Rockstar calls them: input is `PAD`, screen text and blips are `HUD`, AI is `TASK` and `PED`, cameras are `CAMERA`, sounds are `AUDIO`, loading is `STREAMING`.
@@ -84,6 +109,6 @@ Sorted by calls. Natives: in NativeDB / used by at least one script. A topic mar
 
 | Question | Where it goes |
 | --- | --- |
-| Split `MISC` into sub-families with their own owners (weather, cheats, area checks, game state) | Second pass |
+| Split `MISC` into sub-families with their own owners (weather, cheats, area checks, game state) | Answered in [`MISC` split into sub-families](#misc-split-into-sub-families-leftovers-pass) (leftovers pass): 16 sub-families with owner guides |
 | Which natives are reached only through shared helper code and never called in practice | R0.3 second pass: reachability from each script's entry point |
 | Which namespaces' unused natives still work in story mode (useful to mods but not to Rockstar) | Per-topic second passes |

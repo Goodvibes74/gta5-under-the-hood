@@ -1055,7 +1055,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| SCR-001 | Split `MISC` into sub-families with their own owners (weather, cheats, area checks, game state) | Second pass | Open |
+| SCR-001 | Split `MISC` into sub-families with their own owners (weather, cheats, area checks, game state) | Second pass | Answered: all 334 natives in 16 sub-families, each with an owner guide; bits and maths (24 natives, 1.07 million calls) and strings and hashes (12, 196,481) carry 92% of the calls (leftovers pass, [native namespace map](/scripting/native-namespace-map.md#misc-split-into-sub-families-leftovers-pass)) |
 | SCR-002 | Which natives are reached only through shared helper code and never called in practice | R0.3 second pass: reachability from each script's entry point | Open |
 | SCR-003 | Which namespaces' unused natives still work in story mode (useful to mods but not to Rockstar) | Per-topic second passes | Open |
 
