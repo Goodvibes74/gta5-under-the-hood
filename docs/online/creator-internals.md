@@ -72,6 +72,9 @@ The hub's own menu text (**Verified**, labels): "Create a custom Land, Sea or Ai
 
 - **Even and odd race subtypes.** One check in the race controller is true for the odd subtypes (1, 3, 5, 7, 11, 13, 19, 25, 31) and for 21, 23, 26 and 32. For those races it forces one lap and counts the finish as a checkpoint. Every other race takes its lap count from the corona. So in each pair, the even number is a lap race and the odd number a point-to-point race (*probable*, from that behaviour).
 - **Types 4 and 31.** They appear in the same check as missions, Gang Attack and Survival in 23 scripts (the creators, `appmpjoblistnew`, the mission, race and deathmatch controllers), and type 31 is paired with Survival in 12 more checks. Neither has a name or a creator branch of its own in this build.
+  - *Leftovers pass* (**Verified**, `git grep` of `Global_4718592 = <n>` at commit `6c18d3e8b`):
+    - **What sets type 4.** Six creators set it, in the same step of their shared code: the deathmatch, race, survival, capture, LTS and mission creators (`public_mission_creator`). In that step a job whose `goto` section has a non-zero `atrig` value becomes type 4. The `goto` section is read from the job file with two keys, `no` (a count) and `atrig`, and the deathmatch creator writes `atrig` back when it saves. Our reading is that type 4 is a "go to" kind of job left over from an early job design.
+    - **Nothing sets type 31.** No script writes the literal 31 into the type, so a type-31 job can only come in through loaded job data.
 
 ## 12.4 The camera and the cursor
 
@@ -260,7 +263,7 @@ Checkpoints are drawn with `CREATE_CHECKPOINT` (14 calls in the controller) from
 
 | Question | Where it goes |
 | --- | --- |
-| What job types 4 and 31 are, and what the even and odd race subtypes of a pair mean | Mostly answered above (second pass): odd subtypes are one-lap (point-to-point) races; types 4 and 31 are handled with missions and Survival but stay unnamed |
+| What job types 4 and 31 are, and what the even and odd race subtypes of a pair mean | Mostly answered above (second pass): odd subtypes are one-lap (point-to-point) races; types 4 and 31 are handled with missions and Survival but stay unnamed. Leftovers pass: type 4 is set by the six creators when the job's `goto.atrig` is non-zero, and nothing sets 31 directly; the names are still unknown |
 | The prop limit in `public_mission_creator`, which uses its own messages (`PMCE_F_P`, `PMCE_F_D`) | Answered in [12.11.1](#12111-the-mission-creators-limits-second-pass): 200 props, 20 dynamic props, and the other limits |
 | The second dynamic list (library 15), library 39 and the other libraries with no text: hidden, Rockstar-only, or text in a pack not read | Mostly answered (leftovers pass, **Verified** against every American text block, base, update and DLC): of the 49 `FMMC_PLIB_*` labels in the scripts, 41 have text and **8 have none anywhere**: `FMMC_PLIB_13D`, `_BB`, `_BTY`, `_CCTV`, `_CDY`, `_DCOR`, `_EXP3D`, `_FURN`. So the text isn't in a pack this guide missed; *our reading* is that these libraries are hidden or for Rockstar's own content. Which library number each of the 8 labels belongs to is in the script table above, not in the text |
 | What `GET_USED_CREATOR_BUDGET` measures inside the engine | Reverse engineering, R1.5 (streaming) |
