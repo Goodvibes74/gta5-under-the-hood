@@ -73,6 +73,15 @@ Across all scripts: `TASK_HANDS_UP` 123 scripts, `TASK_COWER` 188, `TASK_SMART_F
 - **Scripted routes** that must look authored use waypoint recordings: `TASK_FOLLOW_WAYPOINT_RECORDING` 49 scripts (267 calls): `agency_heist3a`, `finale_heist2a` and `2b`, `rural_bank_heist`, `fbi5a`, `exile2`. Cars use vehicle recordings ([R17.6](/docs/ai/driving-ai.md)).
 - **Sequences** chain the steps (`TASK_PERFORM_SEQUENCE`, 317 scripts, 3,202 calls).
 
+**Buddies in vehicles** (*leftovers pass*, **Verified** counts; the full decompile):
+
+- **The player drives; buddies take the seat a script gives them.** Of the 2,060 `TASK_ENTER_VEHICLE` calls (461 scripts), 1,278 pass a literal seat: 957 the driver's seat (-1), 203 the front passenger seat (0), 61 and 41 the two rear seats (1, 2), and 16 "any seat" (-2). Missions that want a buddy to drive say so this way. Nothing in the scripts picks a driver by itself.
+- **Group members pick their own seat in the player's car** (**Known**, engine). Scripts only bias it with `SET_PED_GROUP_MEMBER_PASSENGER_INDEX` (296 calls in 82 scripts; literal values 0 ×79, 2 ×51, 4 ×51, 1 ×9, the rest variables). `friendactivity` sets 0 for a friend who joins you.
+- **Friends on an activity** (`friendactivity`) are set up for car fights. Combat attributes 0 (use cover), 1 (use vehicles), 2 (drive-bys) and 5 on, and 3 (leave vehicle) off. Combat ability 2. They stay in the vehicle when jacked, and `SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE` is 3. The script never gives a friend `TASK_DRIVE_BY`: the friend's drive-bys come from the engine, allowed by attribute 2.
+- **A friend drives only to come and meet you.** `friendactivity` gives the friend `TASK_VEHICLE_MISSION_COORS_TARGET` toward the meeting point: stop within 10 m when under 10 m away, otherwise 20 m. They get out once within 2 m, or within 15 m (or 20 m) after standing still for more than 1 s (or 6 s).
+- **Scripted drive-bys** are mission work: `TASK_DRIVE_BY` has 166 calls in 43 scripts, most in `docks_heistb` (43), `trevor2` and `finale_heist2b` (12 each), `jewelry_heist` (11) and random events (`re_prisonvanbreak` 8, `re_snatched` and `re_chasethieves` 7 each). `TASK_VEHICLE_SHOOT_AT_PED` (12 calls) and `..._AT_COORD` (18) cover mounted guns.
+- **Script-wide, attribute 1 is switched off far more than on** (753 off, 302 on) and attribute 2 more on than off (323 on, 44 off). Our reading: missions keep enemies out of cars unless a chase needs them, but rarely forbid drive-bys to peds that are in one.
+
 ## 44.7 Heist crews
 
 Story heist crew members are a table in `main` (**Verified**; names from the `HC_FN_*` labels; cut and stats as stored):
@@ -159,7 +168,7 @@ The casino, nightclubs, arcade, penthouse and other properties fill themselves w
 | When the crew stat raise is called (every survived heist, or only some) | Answered (leftovers pass): once at the end of each of the six crew finales, for every surviving member chosen for that heist; each stat rises by a quarter of its cap |
 | The `TASK_COMBAT_PED` flag values (16, 67108864, 201326592) | In-game test |
 | How `fm_content_*` scripts set up patrols from content data | R7.7, R7.9 |
-| Buddy behaviour in vehicles (driver choice, drive-bys) | With [R17.6](/docs/ai/driving-ai.md) |
+| Buddy behaviour in vehicles (driver choice, drive-bys) | Mostly answered (leftovers pass, 44.6 "Buddies in vehicles"): scripts seat buddies explicitly, group members choose their own seat with a script-set preference, friends are set up for drive-bys that the engine runs. Left: what the passenger index values mean, and how the engine picks a group member's seat (a test) |
 
 ## 44.12 Test cards
 
