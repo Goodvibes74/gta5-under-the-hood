@@ -164,7 +164,9 @@ When the planning script sets up a new heist, it rolls each loot type's value on
 - **The factor** is picked by a value read from character stat 9489 (0 to 5): 1.2, 1.1, 1.05, 1, 1, 1. All six are hashed tunables.
 - **The other loot types' placement.** Each loot type has two bit words, saved in the stats above. They mark which loot spots, on the island and in the compound, hold that type.
 
-How much a full bag holds isn't set here; the finale's controller handles it, and it isn't traced (ON-021).
+- **Loose cash stacks.** In the finale, `fm_mission_controller_2020` gives a `h4_prop_h4_cash_stack_02a` a random value between two more hashed tunables (20,000 and 99,000), and any other cash prop 5,000. The 99,000 also feeds into the maximum take the controller allows (**Verified**).
+
+How much a full bag holds isn't set here, and it isn't traced (ON-021).
 
 ### 47.6.3 Where each heist's story talks (leftovers pass)
 
