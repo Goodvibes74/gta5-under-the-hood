@@ -85,10 +85,10 @@ GS-004, GP-025 and GP-087 (replay type numbers), GP-069 and GP-092 (ability entr
 | --- | --- |
 | GP-021 | Leftovers pass (branch `research/pass2-leftovers`): the set-ups are called only through `Call_Loc` on a per-mission table, so the decompile can't map them. Needs a YSC reader for the table's function addresses (moved to the executable list). The label prefixes are matched by name |
 | GP-038 | Trevor's pickers are done (leftovers pass). Left: the per-scene validity check (`func_670` / `func_636` at this build in `player_controller_b`) |
-| GP-011 | Done for `golf` (leftovers pass: clubs, automatic setup, aim, lie, wind). Left: the ambient `golf_ai_foursome` and `golf_ai_foursome_putting` scripts |
+| GP-011 | Answered (leftovers pass): `golf` and the two ambient foursome scripts |
 | GP-083 | Done for the 77 base table functions (leftovers pass). Left: where the pack-coded sets (`CLO_GRF_U_`, `CLO_IEF_U_`, `CLO_BIF_U_`) get their prices |
 | CORE-009 | 18 bits read (leftovers pass). Left: `.f_203` bits 2, 5 to 8, 30 and 31 (one 127-line `freemode` function about tutorial sessions) and the mod shop bits (`carmod_shop`) |
-| CORE-021 | `freemode`'s request launches are done (leftovers pass). Left: `player_controller`'s other scenes. Also reconcile "296" (launch graph) with "240" (the tracker row) for the scripts nothing starts |
+| CORE-021 | `freemode`'s request launches are done (leftovers pass). Left: `player_controller`'s other scenes. The "296" and "240" are not in conflict: the launch graph gives 296 before its third pass and 240 after |
 | UI-002 | Not a scripts question: what's left is in-game test card 2 in the pause menu guide |
 | ON-006 | Leftovers pass: type 4 is set by six creators from `goto.atrig`, and nothing writes 31. Left: the names (a text or engine source) |
 | ON-069 | Partly done: greying layers, per-page counts, Preferences, armour and vehicle pages (21.3.2). Left: the other pages' checks, helper by helper |
@@ -101,14 +101,10 @@ GS-004, GP-025 and GP-087 (replay type numbers), GP-069 and GP-092 (ability entr
 | ON-035, ON-021 | Nightclub popularity cases are hashed tunables: needs a name list (see ON-072 method). ON-077 answered in the leftovers pass (production times, technician bits). ON-021 mostly done in the leftovers pass (Cayo loot ranges from their use in `heist_island_planning`); left: bag capacity |
 | ON-037, ON-043 | Production while offline (stats) (ON-037 partly done: network-time timer, cloud-time delay timer; left: stat load and save), simple-interior entrances per type (ON-039, how the challenge percentages combine, was answered in the leftovers pass) |
 
-**Other categories (next phases, not started):**
-- **Core:** none beyond the rows above.
-- **World:** WLD-002, WLD-008, WLD-009, WLD-010 and WLD-015 (answered in the leftovers pass), WLD-006 (answered), WLD-011 (partly).
-- **Entities and AI:**
-  - ENT-014, AI-010, AI-032 (config flag numbers; names from NativeDB or community)
-  - ENT-023, ENT-026, AI-008, AI-012, AI-013, AI-022, AI-023, AI-026, AI-031 (hash guesses), AI-038, AI-040, AI-041, AI-042, AI-043, AI-045, AI-046, AI-048, AI-050
-- **Online creator rules:** FF-006.
-- **Performance and scripting:** PERF-012, PERF-013, SCR-001, SCR-002, SCR-003, SCR-006, SCR-013.
+**Other categories (leftovers pass, 2026-11-04):**
+- **Done or partly done from the decompile:** AI-008, AI-040, AI-041, AI-042, AI-045, AI-046; SCR-001, SCR-002, SCR-006; PERF-012, PERF-013 (see each row in `OPEN_QUESTIONS.md`).
+- **Still scripts-only:** ENT-014 and AI-032 (flag names, partly), AI-031 (hash guesses), FF-006 (rules per team and stage in the mission controller), GP-038's per-scene checks, CORE-021's `player_controller` scenes, CORE-009's last bits, and the Online rows in the table above.
+- **Need local game files or the game:** SCR-002's last 54 natives (a YSC reader or a call logger), SCR-003 (in-game tests of unused natives; SCR-006's 1,845 Online-only natives are the candidates), PERF-013's file list (`content.xml` of the 43 `GROUP_ON_DEMAND` packs, in DATA-NEEDS), AI-041's live enemy count, AI-010, AI-012, AI-013, AI-022 (engine or tests).
 
 ### Docs housekeeping from the knowledge graph
 
