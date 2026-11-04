@@ -294,7 +294,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ENT-026 | The 44 scenario groups scripts toggle and what each controls | Second pass | Open |
+| ENT-026 | The 44 scenario groups scripts toggle and what each controls | Second pass | Mostly answered: 43 groups are named in `SET_SCENARIO_GROUP_ENABLED` calls, with the scripts that switch each (`HEIST_ISLAND_PEDS` in 19 scripts, the rest in 1 to 4; mission dressing, activities, plane traffic, guards, Online areas). Most calls pass the group in a variable from shared code. Left: which points each group holds (scenario files) (leftovers pass, [scenarios](/docs/entities/spawning/scenarios.md#the-scenario-groups-scripts-switch-leftovers-pass)) |
 | ENT-027 | How the time window and probability combine with the `#Scenario` cap | Test card 1; R17.8 | Open |
 | ENT-028 | How many of the 111,898 points are Online-only | Second pass: the availability field | Answered: 1,088 Online-only, 50,331 story-only (mostly animals), 57,779 both (leftovers pass, [scenarios](/docs/entities/spawning/scenarios.md#availability-chains-and-aircraft-leftovers-pass)) |
 | ENT-029 | The chaining graph format and how vehicles follow it | R17.6 | Mostly answered: 45,372 nodes, 40,907 edges, 4,697 chains with their fields; the 16 speed values are unnamed (leftovers pass, [scenarios](/docs/entities/spawning/scenarios.md#availability-chains-and-aircraft-leftovers-pass)) |
