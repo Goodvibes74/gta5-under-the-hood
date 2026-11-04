@@ -93,7 +93,7 @@ Story heist crew members are a table in `main` (**Verified**; names from the `HC
 | 13 | Taliana Martinez | Driver | 5% | 94 | 83 | 68 | 0 |
 | 9 | Karim Denz | Driver | 8% | 60 | 54 | 24 | 0 |
 
-For gunmen the heist scripts use stat 1 as max health, stat 2 as accuracy and stat 3 as shoot rate when they spawn the crew member (`rural_bank_heist`, `finale_heist2b` and `jewelry_heist` share the function). Anyone spawned through it who isn't a gunman gets health 100, accuracy 25 and shoot rate 40 (**Verified**). Stats are packed two to an integer, 15 bits each. A shared function raises a stat by 25 (a quarter of its cap of 100) and clamps it at 100; crew members improve after heists they survive (**Known**). The crew's names for the other stats (hacking speed, driving) are **Known**, not read.
+For gunmen the heist scripts use stat 1 as max health, stat 2 as accuracy and stat 3 as shoot rate when they spawn the crew member (`rural_bank_heist`, `finale_heist2b` and `jewelry_heist` share the function). Anyone spawned through it who isn't a gunman gets health 100, accuracy 25 and shoot rate 40 (**Verified**). Stats are packed two to an integer, 15 bits each. A shared function raises a stat by 25 (a quarter of its cap of 100) and clamps it at 100; crew members improve after heists they survive (**Known**). *Leftovers pass (**Verified**):* the raise runs once, near the end of each of the six crew finales (`rural_bank_heist`, `jewelry_heist`, `finale_heist2a`, `finale_heist2b`, `agency_heist3a`, `agency_heist3b`; the two docks heists have no crew and no raise). It goes through the crew chosen for that heist and skips members marked dead in the save or lost during the heist. Every stat of each remaining member goes up by a quarter of that stat's cap, rounded, and stops at the cap: 4 stats for gunmen, 3 for each of the other two crew types. A check at the top skips the whole raise in one state (our reading: a replay). The crew's names for the other stats (hacking speed, driving) are **Known**, not read.
 
 ## 44.8 Waves and difficulty in Online content
 
@@ -129,7 +129,7 @@ The casino, nightclubs, arcade, penthouse and other properties fill themselves w
 | --- | --- |
 | Where story missions keep enemy spawn tables (positions, triggers) and how many enemies a big shootout has alive at once | Next pass: `rural_bank_heist`, `finale_heist2b` |
 | What hackers' and drivers' stats do in each heist | Next pass: the heist scripts |
-| When the crew stat raise is called (every survived heist, or only some) | Next pass |
+| When the crew stat raise is called (every survived heist, or only some) | Answered (leftovers pass): once at the end of each of the six crew finales, for every surviving member chosen for that heist; each stat rises by a quarter of its cap |
 | The `TASK_COMBAT_PED` flag values (16, 67108864, 201326592) | In-game test |
 | How `fm_content_*` scripts set up patrols from content data | R7.7, R7.9 |
 | Buddy behaviour in vehicles (driver choice, drive-bys) | With [R17.6](/docs/ai/driving-ai.md) |
