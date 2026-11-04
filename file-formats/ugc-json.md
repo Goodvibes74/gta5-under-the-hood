@@ -55,6 +55,35 @@ How the creators write these sections (the `prop`, `race` and `dhprop` columns, 
 
 The content format is built for scripts: each section gives a count first and then a list, so a controller can loop without parsing names.
 
+### 11.3.1 Rules per team and stage (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in `fmmc_launcher` (the loader the controllers share) and `fm_mission_controller_2020`, build 1.0.3725.0. The C-style names below are ours; the keys are the file's.
+
+**Teams and rules.** A classic mission has up to four teams, each with its own list of rules: the steps it has to complete, in order. `endcon` → `nrl` gives each team's rule count. The arrays that hold a rule's settings are sized for **17 rules per team** (0 to 16). Each team's settings fill one 26,968-value block of the mission global, and each rule has 67 per-rule keys, read as `<key>` plus the team number. Examples:
+
+- timers: `tmt`, `ttime`, `timelim`;
+- wanted level: `wntchng`, `wntforc`, `mxwl`, `wntdlay`;
+- gang backup: `gbtp`, `gbnum`, `gbdelay`, `gbmax`, `gbaccur` and more;
+- objective texts: `txt`, `1txt` to `5txt`;
+- rule option bitsets: `irbs` and `irbs2` to `irbs18`;
+- bounds (play areas): `bndtype`, `bndtime`, `bndtxt`;
+- branching: `nxtrulb`.
+
+**How each entity is tied to a rule.** Every enemy (`ene`), vehicle (`veh`), object (`obj`) and location (`goto`) carries two arrays per team:
+
+- `rule<team>` says what that team must do with the entity. 0 or 99999 means nothing.
+- `pri<team>` says which of the team's rules (0 to 16) it belongs to, or -1 for none.
+
+So one van can be "deliver" on the attackers' rule 2 and "protect" on the defenders' rule 1. The rule-type numbers have creator labels (`PMC_RULE1` for 0, `PMC_RULE2` for 1, `PMC_RULE3`/`3B` for 2, `PMC_RULE4` for 3, `PMC_RULE6` for 4, `PMC_RULE7`/`7B` for 5, then 11, 13, 16, 23, 24, 31, 32 and 36). Their English text is in the game's text files, not the scripts.
+
+**How the controller moves through rules.** The controller keeps a current rule for each team. When it changes, the controller resets that team's per-rule timers and reads the new rule's settings. If the new rule has an `nxtrulb` value, that value is a bitset of rule numbers the team may branch to:
+
+- **One bit set:** that rule is next.
+- **Several bits set:** a random one is chosen. All players agree on the choice, because the random seed is shared: the mission's seed when a mission-wide option bit is set, or a per-team seed carried from rule to rule when a rule option bit is set.
+- The controller then jumps the team forward to the chosen rule, skipping those in between, or back to an earlier one. A rule option bit can block the branch in one team state.
+
+Without `nxtrulb` the team simply goes on to its next rule (**Known**; the host code that decides a rule is complete was not traced).
+
 ## 11.4 What this means for modders
 
 - **The content files are the easier format to play back:** fixed short sections, a count and a list each. A mission player can start with `vh`, `pd`, `pp` and `ptrl` (vehicles, peds, props, patrols) and grow from there.
@@ -67,7 +96,7 @@ The content format is built for scripts: each section gives a count first and th
 | --- | --- |
 | Meaning of each content section key (`me`, `sro`, `amb`, `gt`, `ta`, `tot`, `mvdr` ...), from the `fm_content_*` helper that reads them | Mostly answered in [content files](#113-content-files): the sub-keys each section holds; `sro`, `cst`, `fcs` and `modt` still have a *probable* reading |
 | The `gen` keys (8,472 paths): which ones `fm_mission_controller` actually reads | Second pass |
-| How the controller picks rules per team and stage | R7.5 (job lobby) and a second pass |
+| How the controller picks rules per team and stage | Answered in [11.3.1](#1131-rules-per-team-and-stage-leftovers-pass) (leftovers pass): up to four teams with up to 17 rules each; entities tie to a rule with `rule<team>` and `pri<team>`; `nxtrulb` branches, with a shared random pick. Left: the rule-type texts (game text files) and the host's completion test |
 
 ## 11.6 Test cards
 

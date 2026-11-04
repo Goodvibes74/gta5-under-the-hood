@@ -1101,7 +1101,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | FF-004 | Meaning of each content section key (`me`, `sro`, `amb`, `gt`, `ta`, `tot`, `mvdr` ...), from the `fm_content_*` helper that reads them | Second pass, with one `re_` file and its script | Mostly answered: the sub-keys of every section from `fm_content_bounty_targets`; `sro`, `cst`, `fcs`, `modt` still a *probable* reading (leftovers pass, [UGC JSON](/file-formats/ugc-json.md#113-content-files)) |
 | FF-005 | The `gen` keys (8,472 paths): which ones `fm_mission_controller` actually reads | Second pass | Open |
-| FF-006 | How the controller picks rules per team and stage | R7.5 (job lobby) and a second pass | Open |
+| FF-006 | How the controller picks rules per team and stage | R7.5 (job lobby) and a second pass | Mostly answered: up to four teams, each with up to 17 rules (`endcon.nrl`, 67 per-rule keys); every enemy, vehicle, object and location has `rule<team>` (what to do) and `pri<team>` (which rule) per team; a rule's `nxtrulb` bitset branches to one of several next rules with a shared random seed, jumping forward or back. Left: the rule-type texts (**local game text files**) and the host's rule-complete test (leftovers pass, [UGC JSON 11.3.1](/file-formats/ugc-json.md#1131-rules-per-team-and-stage-leftovers-pass)) |
 
 ## Knowledge graph
 
