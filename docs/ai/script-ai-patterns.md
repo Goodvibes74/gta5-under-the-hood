@@ -152,6 +152,8 @@ Survival (`fm_survival_controller`) sets each enemy's accuracy from a table inde
 
 Story missions have no wave system: each stage spawns its own enemies when the player reaches a trigger, and moves on when they are dead or a time passes ([R5.2](/docs/gameplay/missions/mission-anatomy.md)) (**Known** from reading missions).
 
+*Leftovers pass (**Verified**, counted in four finales):* story enemies have no spawn table in a data file or a global. Their positions are written into the code of each stage. In `rural_bank_heist`, 63 of the 73 direct `CREATE_PED` calls take literal coordinates; in `jewelry_heist`, 13 of 25; in `agency_heist3b`, 3 of 7. `finale_heist2b` spawns almost everything through wrapper functions (3 direct calls). The ped handles go into fixed-size local arrays. `rural_bank_heist` has 19 int arrays of 4 to 15 entries (the ped arrays among them, such as 7, 8 and 12), and its enemy model is the army's `s_m_y_marine_03` (80 references; one SWAT and one sheriff model besides). Its largest single spawning function creates 18 peds of mixed models, and the next ones 8, 8 and 7. How many are alive at once in play is not settled by reading: stages overlap and many spawns go through helper functions, so it needs an in-game count.
+
 ## 44.9 Online venue peds
 
 The casino, nightclubs, arcade, penthouse and other properties fill themselves with scripted actors (**Verified** counts): `am_mp_peds` (138,700 lines, most of it location and activity tables), `am_casino_peds`, `am_penthouse_peds`, `am_mp_arcade_peds`, plus the nightclub and island scripts. They create peds on the freemode models (`mp_m_freemode_01`, `mp_f_freemode_01`) or story models, dress them through the shared clothing code, set head blends (`SET_PED_HEAD_BLEND_DATA` in each) and run them on animation tables: in `am_mp_peds` 77 `TASK_PLAY_ANIM` calls, 33 sequences, 30 `TASK_FOLLOW_NAV_MESH_TO_COORD` and 12 synchronized scenes, polled with `GET_SCRIPT_TASK_STATUS` (99). They look like players but carry no combat set-up (*probable* design: they are crowd, not opponents).
@@ -170,7 +172,7 @@ The casino, nightclubs, arcade, penthouse and other properties fill themselves w
 
 | Question | Where it goes |
 | --- | --- |
-| Where story missions keep enemy spawn tables (positions, triggers) and how many enemies a big shootout has alive at once | Next pass: `rural_bank_heist`, `finale_heist2b` |
+| Where story missions keep enemy spawn tables (positions, triggers) and how many enemies a big shootout has alive at once | Partly answered (leftovers pass, 44.8): there are no tables; positions are literals in each stage's code (63 of 73 `CREATE_PED` calls in `rural_bank_heist`) and handles go in fixed local arrays of 4 to 15. Left: the number alive at once (an in-game count) |
 | What hackers' and drivers' stats do in each heist | Mostly answered (leftovers pass, 44.7): they count only through a skill tier that is recomputed when a finale passes; the table in 44.7 lists every tier check. Left: what the `agency_heist3b` hacker's counter and `finale_heist2a`'s slot 3 driver branch do in play (an in-game test) |
 | When the crew stat raise is called (every survived heist, or only some) | Answered (leftovers pass): once at the end of each of the six crew finales, for every surviving member chosen for that heist; each stat rises by a quarter of its cap |
 | The `TASK_COMBAT_PED` flag values (16, 67108864, 201326592) | In-game test |
