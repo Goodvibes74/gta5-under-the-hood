@@ -462,7 +462,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | AI-041 | Where story missions keep enemy spawn tables (positions, triggers) and how many enemies a big shootout has alive at once | Next pass: `rural_bank_heist`, `finale_heist2b` | Open |
 | AI-042 | What hackers' and drivers' stats do in each heist | Next pass: the heist scripts | Open |
-| AI-043 | When the crew stat raise is called (every survived heist, or only some) | Next pass | Answered: once near the end of each of the six crew finales (the docks heists have none), for every member chosen for that heist who is neither dead in the save nor lost in the heist. Each of their 3 or 4 stats rises by a quarter of its cap, clamped at the cap; skipped in one state (our reading: a replay) (leftovers pass, [script AI patterns 44.7](/docs/ai/script-ai-patterns.md#447-heist-crews)) |
+| AI-043 | When the crew stat raise is called (every survived heist, or only some) | Next pass | Answered: once near the end of each of the six crew finales (the docks heist scripts contain none), for every member chosen for that heist who is neither dead in the save nor lost in the heist. Each of their 3 or 4 stats rises by a quarter of its cap, clamped at the cap; skipped in one state (our reading: a replay) (leftovers pass, [script AI patterns 44.7](/docs/ai/script-ai-patterns.md#447-heist-crews)) |
 | AI-044 | The `TASK_COMBAT_PED` flag values (16, 67108864, 201326592) | In-game test | Open |
 | AI-045 | How `fm_content_*` scripts set up patrols from content data | R7.7, R7.9 | Open |
 | AI-046 | Buddy behaviour in vehicles (driver choice, drive-bys) | With [R17.6](/docs/ai/driving-ai.md) | Open |
