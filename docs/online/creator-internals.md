@@ -239,6 +239,14 @@ The same hash check appears 5 or 6 times in each of the six creators (the shared
 
 **Who reads it.** Only the menu-side scripts parse the `prop` section from JSON (12 scripts: the six creators, `creator`, `fmmc_launcher`, `fmmc_playlist_controller`, `net_cloud_mission_loader`, `appmpjoblistnew`, `pausemenu_multiplayer`). They fill the FMMC globals; the race and mission controllers then read the globals, not the file.
 
+**The other creators' sections** (*leftovers pass, 2026-11-04*, **Verified**). All six creators (race, deathmatch, LTS, capture, survival and `public_mission_creator`) carry the same save code, with the same 41 sections: `mission`, `gen`, `meta`, `race`, `prop`, `dprop`, `dhprop`, `veh`, `weap`, `obj`, `ene`, `surv`, `zone`, `rule`, `endcon`, `goto`, `cover`, `door`, spawn and inventory sections (`fsp`, `invty`, `DMinvty`, `DMD`, `tmD`, `WpnDm`, `PwrUp`) and others. What differs between creators is which sections their menus fill. The placement data each mode adds:
+
+- **Survival waves (`surv`, 77 key names).** The wave count is `wave`. Then, per wave, the kills that end it (`wKil`), a difficulty (`wdif`), three squads (`sqd*`: count, accuracy, health, model, weapons), heavy units (`hvy*`), up to four land vehicles (`vC`, `vHP`, `vmn`, `vped`) and three air units (`air*`, `a`), plus per-wave weapon lists (`wepT`, `wepC`, `wepTyp`) and wave-end bonuses (`wv*`). Key names are built as a prefix plus the wave and slot numbers. The meanings of the abbreviations are our reading.
+- **Enemies (`ene`, 399 key names)** and **objects (`obj`, 248 key names)** are the largest sections. Objects carry the capture and pickup options (`cpup*`, `cont`, the `oAs*` assist settings) next to the position, heading and model.
+- **Team spawn points** (`fsp`: `loc`, `head`), and the start points the spawn writer saves (12.10).
+
+Which menu sets which key, and each creator's own placement limits, are left.
+
 ## 12.11 How a race puts the props back
 
 When a race starts, `fm_race_controler` loops over the prop list in the globals (**Verified**, `func_12540` and `func_12541`). For each prop:
@@ -308,7 +316,7 @@ Checkpoints are drawn with `CREATE_CHECKPOINT` (14 calls in the controller) from
 | Which jobs are saved by the full prop writer and which by the sparse one (`func_189`) | Answered in [12.10](#1210-saving-and-publishing) (leftovers pass): the short writers are used whenever `public_mission_creator` is running; they cover 14 sections, and 7 more sections are left out. Every other creator saves the full form |
 | Meaning of `chs`, `chs2`, `chpp` and the `cpbs1` to `cpbs3` bits | Partly answered in [12.10](#1210-saving-and-publishing) (leftovers pass): `chs`/`chs2` are size scales, `chpp` is a pitch angle, the key-to-field map, the primary and secondary bit pairs, and the effects of about a dozen bits. Left: the other bits' names (the creator's menu table) |
 | How the deathmatch and mission controllers create dynamic props (the race is in 12.11) | Answered in [12.11.2](#12112-dynamic-props-in-the-deathmatch-and-mission-controllers-leftovers-pass) (leftovers pass): one creation pass behind the entity budget, the skipped models, the per-prop rule and team checks, networked creation through a shared helper, and a per-frame cap while a lobby flag is set |
-| The other creators' own placement (spawn points, enemy waves, capture objects) | Second pass per creator |
+| The other creators' own placement (spawn points, enemy waves, capture objects) | Partly answered in [12.10](#1210-saving-and-publishing) (leftovers pass): all six creators share one writer with 41 sections; the survival wave keys, and the sizes of the enemy and object sections. Left: which menu sets which key, and each creator's limits |
 
 ## 12.14 Test cards (story mode, a script mod)
 
