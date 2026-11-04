@@ -61,6 +61,21 @@ The few seconds before a mission, with characters already waiting at the blip, b
 
 No triggerer requests a cutscene: every intro cutscene (`armenian_1_int` and so on) is played by the mission script. The lead-in is built from ordinary peds and vehicles, synchronized scenes and a short conversation (the `_LI` labels). Our reading of the `_LOOP` / `_ACTION` label pairs is that a scene loops until the player walks up and then plays its action part, after which the mission takes over those entities. Which scene belongs to which mission, and how the handover works, are left for the third pass.
 
+**Why the scene-to-mission map can't be read from the decompile** (*leftovers pass*, **Verified** at commit `6c18d3e8b`):
+
+- **The triggerers call their set-ups indirectly.** Each trigger point has a record in `Global_99337` (17 values). Its `.f_5` is the story mission index into the mission table `Global_93192`. Each triggerer also keeps a local table with 13 values for each of its missions, and calls that table's functions through `Call_Loc` on fields `.f_2`, `.f_4`, `.f_9` and `.f_12`. For example, `.f_2` is called once the player is inside the trigger radius (`Global_99337[i].f_10.f_2`). Each of the four triggerers has 25 `Call_Loc` calls.
+- **So the set-up functions have no named callers.** Of the 65 distinct lead-in labels in the four scripts, 59 sit in functions that nothing calls by name: all 8 in A, 27 of 32 in B, all 13 in C and 11 of 12 in D. Tying a set-up function to its mission needs the function addresses held in the table. The decompile prints those as values, not names, so this is a job for a YSC reader (third pass).
+- **The labels are used only here.** Of the 27 lead-in labels checked across the four scripts, only `_LEADIN_LOOP1_LESTER` appears in another script (`am_lester_cut`).
+
+**The labels' prefixes, matched to mission scripts** (our reading, from the names only):
+
+| Triggerer | Prefix and mission script |
+| --- | --- |
+| A | `AR2_` `armenian2`, `ARM3_` `armenian3`, `FAM3_` `family3`, `JHS1_` `jewelry_setup1`, `MISSHEIST_JEWEL...` `jewelry_heist`, `LES1A_` `lester1` |
+| B | `CHINESE_1_` / `CHIN_` `chinese1`, `DH2A_` `docks_heista`, `FBI1_` / `FIB1_` / `MISSFBI1...` `fbi1`, `fbi4_` / `MISSFBI4...` `fbi4`, `TR2_` `trevor2`; unclear: `DS2B_`, `HUSB_`, `RUSS_`, `OLDMAN1_` / `2_` |
+| C | `CST3_` `carsteal3`, `FBI5_` / `MISSFBI5...` `fbi5a`, `FH1_` `finale_heist1`, `M1_` / `MISSMARTIN1...` `martin1`; unclear: `TRV5_`, `LEADIN_1_MIC` / `_2_FRA` / `_2_MIC` |
+| D | `AH_` / `ah3a_` the agency heist (`agency_heist3a`), `FINC1_` `finalec1`, `SOL2_` `solomon2`, `MISSBIGSCORE2A...` `finale_heist2a` / `2b`, the `_LESTER` / `_WCHAIR` loops (Lester in his wheelchair); unclear: `FBS1_` |
+
 ## 3.4 The main loop
 
 Each frame (**Verified**, `armenian1`):
@@ -215,4 +230,4 @@ When the step is 4 (a restart is setting up), the same cleanup runs but clears t
 | How the snapshot in `Global_108447` is restored on retry, and what it leaves out | Answered in [3.6](#36-checkpoints-retry-and-skip) |
 | How crew skill changes the heist take and the fail labels in `Local_3373` | Answered for the Jewel Store Job (second pass): gunman tier scales each case, hacker tier sets the alarm window, a lost bag costs a third with a floor; other heists not read |
 | How `mission_repeat_controller` replays a mission without moving the flow (from guide 2) | Answered in [3.9](#39-passing) |
-| What the mission triggerers build before a mission starts (lead-in scenes, from guide 2) | Partly answered in [3.3.1](#331-before-the-script-starts-the-lead-in-second-pass): what each triggerer creates and its lead-in labels; which scene goes with which mission, and the handover, are third pass |
+| What the mission triggerers build before a mission starts (lead-in scenes, from guide 2) | Partly answered in [3.3.1](#331-before-the-script-starts-the-lead-in-second-pass): what each triggerer creates and its lead-in labels; leftovers pass: the label prefixes matched to missions (our reading), and why the decompile can't tie a set-up function to its mission (they're called through `Call_Loc`). The exact map needs the function table's addresses (a YSC reader), and the handover is still open |

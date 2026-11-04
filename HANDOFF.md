@@ -9,7 +9,7 @@ A public, Markdown-only reference on how GTA V (PC, Legacy, build 1.0.3725.0) wo
 ## Status
 
 - **Everything is on `main`, nothing is in flight.** The last merges are #127 (second-pass phases 1 to 4), #128 (data batches D1 to D6), #129 (D7 to D12) and #130 (this file).
-- **Tracker:** 442 question rows: 168 answered, 40 mostly, 41 partly, 193 open. A row's last column is its status and links to the guide section with the answer. The table "Leftovers: the data-file batches" in `OPEN_QUESTIONS.md` says what each batch read and settled.
+- **Tracker:** 442 question rows: 168 answered, 42 mostly, 39 partly, 193 open (after the leftovers pass on branch `research/pass2-leftovers`, PR #132). A row's last column is its status and links to the guide section with the answer. The table "Leftovers: the data-file batches" in `OPEN_QUESTIONS.md` says what each batch read and settled.
 - **The data batches are finished, but not every row in [`DATA-NEEDS.md`](/DATA-NEEDS.md) was worked.** Each group had a batch, and each row a batch touched carries its result (*done*, *mostly*, *partly* or *still open*). The 25 rows with no tag were never attempted; they are listed below.
 - **The knowledge graph is out of date.** `graphify-out/` wasn't refreshed for the guides changed in #127, #128 and #129, because the maintainer chose to merge without it.
 
@@ -66,7 +66,7 @@ Story mode only; never test in GTA Online. Some lists below were written before 
 
 ### The executable (read-only reverse engineering)
 
-GS-004, GP-025 and GP-087 (replay type numbers), GP-069 and GP-092 (ability entries 8 to 16), GP-080 (aim assist; also a test), CORE-002, CORE-016, CORE-018, CORE-024, CORE-027, CORE-031, CORE-032 (= ON-060, SCR-011), AI-001, AI-003, ON-009, ON-052, GP-023, GP-087, GP-092, UI-020, REN-007, REN-012, SCR-004 (`0x8F5D1AD832AEB06C`), SCR-007 (a YSC dump), PERF-016.
+GS-004, GP-025 and GP-087 (replay type numbers), GP-069 and GP-092 (ability entries 8 to 16), GP-080 (aim assist; also a test), CORE-002, CORE-016, CORE-018, CORE-024, CORE-027, CORE-031, CORE-032 (= ON-060, SCR-011), AI-001, AI-003, ON-009, ON-052, GP-023, GP-087, GP-092, UI-020, REN-007, REN-012, SCR-004 (`0x8F5D1AD832AEB06C`), SCR-007 (a YSC dump), PERF-016, GP-021 (the mission triggerers' per-mission function tables, read with a YSC reader).
 
 ### In-game tests (story mode; most have a test card in their guide)
 
@@ -83,13 +83,13 @@ GS-004, GP-025 and GP-087 (replay type numbers), GP-069 and GP-092 (ability entr
 
 | ID | Where to start |
 | --- | --- |
-| GP-021 | The four `mission_triggerer_*` scripts number their cases locally (not by mission id): map each local case to its mission through the triggerer's mission-id list first, then read the scene set-up per case |
-| GP-038 | `player_controller_b` / `selector`: the 42-entry scene table's per-scene check function and Trevor's pickers |
-| GP-011 | `golf`: the AI shot-choice routine (club and power by distance and lie) |
-| GP-083 | `clothes_shop_mp`: the prices of the non-DLC items (the label patterns and their text are done) |
-| CORE-009 | Single-bit names of `Global_1845250` / `Global_2658291` bitfields (writers are grouped already) |
-| CORE-021 | `freemode`'s launches by request (the request queue and who fills it) |
-| UI-002 | The `listId` draw lists and depths (`SET_SCRIPT_GFX_DRAW_ORDER` and the callers) |
+| GP-021 | Leftovers pass (branch `research/pass2-leftovers`): the set-ups are called only through `Call_Loc` on a per-mission table, so the decompile can't map them. Needs a YSC reader for the table's function addresses (moved to the executable list). The label prefixes are matched by name |
+| GP-038 | Trevor's pickers are done (leftovers pass). Left: the per-scene validity check (`func_670` / `func_636` at this build in `player_controller_b`) |
+| GP-011 | Done for `golf` (leftovers pass: clubs, automatic setup, aim, lie, wind). Left: the ambient `golf_ai_foursome` and `golf_ai_foursome_putting` scripts |
+| GP-083 | Done for the 77 base table functions (leftovers pass). Left: where the pack-coded sets (`CLO_GRF_U_`, `CLO_IEF_U_`, `CLO_BIF_U_`) get their prices |
+| CORE-009 | 18 bits read (leftovers pass). Left: `.f_203` bits 2, 5 to 8, 30 and 31 (one 127-line `freemode` function about tutorial sessions) and the mod shop bits (`carmod_shop`) |
+| CORE-021 | `freemode`'s request launches are done (leftovers pass). Left: `player_controller`'s other scenes. Also reconcile "296" (launch graph) with "240" (the tracker row) for the scripts nothing starts |
+| UI-002 | Not a scripts question: what's left is in-game test card 2 in the pause menu guide |
 | ON-006 | Job types 4 and 31: the 23 checks that pair them with missions and Survival; find a writer that sets the type |
 | ON-069 | `am_pi_menu`, page by page: each page's show and grey rules |
 | ON-070 | `.f_2` of the 21-value start arguments and lobby bit 1 (writers in `freemode`, `maintransition`) |
