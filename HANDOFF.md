@@ -103,7 +103,14 @@ GS-004, GP-025 and GP-087 (replay type numbers), GP-069 and GP-092 (ability entr
 
 **Other categories (leftovers pass, 2026-11-04):**
 - **Done or partly done from the decompile:** AI-008, AI-040, AI-041, AI-042, AI-045, AI-046; SCR-001, SCR-002, SCR-006; PERF-012, PERF-013 (see each row in `OPEN_QUESTIONS.md`).
-- **Still scripts-only:** ENT-014 and AI-032 (flag names, partly), AI-031 (hash guesses), FF-006 (rules per team and stage in the mission controller), GP-038's per-scene checks, CORE-021's `player_controller` scenes, CORE-009's last bits, and the Online rows in the table above.
+- **Also done later in the session:** FF-006 (rules per team, `nxtrulb` branching), GP-011 (the ambient golfers), GP-038 (the draw and the 15 scene tests; five tests' meaning left), ON-049 (1999830656 is `CATEGORY_WAREHOUSE_INTERIOR`).
+- **Still scripts-only, but low yield from the decompile alone:** ENT-014 and AI-032 (flag names), AI-031 (hash guesses), CORE-021's `player_controller` scenes, CORE-009's last bits.
+- **Online rows tried and stopped:**
+  - ON-021 (bag capacity): not next to the loot tunables; the tunable names are hashed.
+  - ON-049 (category 426439576): 15.5 million candidate names tried.
+  - ON-065 (indices 130, 131, 134): nothing ever assigns them, which is likely the answer.
+  - ON-070 (`main_persistent`'s four setter branches): they hang on unnamed transition flags (`Global_2685150.f_787.f_5`, `.f_7`, `.f_10`).
+  - ON-001, ON-011 to ON-014, ON-017, ON-024 and ON-040 need long per-function reading and give names only by inference.
 - **Need local game files or the game:** SCR-002's last 54 natives (a YSC reader or a call logger), SCR-003 (in-game tests of unused natives; SCR-006's 1,845 Online-only natives are the candidates), PERF-013's file list (`content.xml` of the 43 `GROUP_ON_DEMAND` packs, in DATA-NEEDS), AI-041's live enemy count, AI-010, AI-012, AI-013, AI-022 (engine or tests).
 
 ### Docs housekeeping from the knowledge graph
