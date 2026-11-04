@@ -14,17 +14,17 @@ How to read the tables:
 | ID | What to find | Extract | Scripts too? |
 | --- | --- | --- | --- |
 | GP-045 (*done, D1*) | The `CFlyingHandlingData` block of every DLC aircraft | `handling.meta` in every DLC pack and `dlc_patch` (base: `common:/data/handling.meta`) | no |
-| AI-024 | The AI handling profile of every DLC vehicle | the same `handling.meta` files | no |
+| AI-024 (*done, PC1*) | The AI handling profile of every DLC vehicle | the same `handling.meta` files | no |
 | PHY-011 | Bit names of the model, handling, damage and advanced flags | the same files, compared across known vehicles; then an in-game check | no |
-| PHY-013 | What each `statMods` modifier changes | the same files (`CCarHandlingData` / sub-handling blocks) | no |
+| PHY-013 (*partly, PC1*) | What each `statMods` modifier changes | the same files (`CCarHandlingData` / sub-handling blocks) | no |
 | PHY-014 | How `vehicles.meta` fields (`handlingId`, wheel scale, `flags`) interact with handling | `common:/data/levels/gta5/vehicles.meta` and every DLC `vehicles.meta`, with `handling.meta` | no |
 | GP-046 (*done, D1*) | What the `SPMED` and `SPSMALL` handling entries belong to | every `vehicles.meta` (`handlingId` column) | no |
 | ON-068 (*answered from the scripts in the leftovers pass: the four package items, see the tracker*) | Which models the website items 323, 324, 357, 402 are: hashes −994826917, 886151985, −1242692076, −451225720 | every `vehicles.meta` `modelName`, hashed with `joaat` | no (hashes already read from `standard_global_init`) |
 | ENT-036 (*done, D1*) | Why 901 models here vs 879 in R14.4 | every `vehicles.meta` | no |
 | ENT-037 (*mostly, D1*) | The less common vehicle flags | every `vehicles.meta` `flags` | no |
-| ENT-038 | Light and siren id ranges per DLC pack | every `carcols` file (*find*: `carcols.ymt`/`carcols.meta`) | no |
-| ENT-039 | Which `carcols` mod parts each kit links | the same, plus `carvariations.meta` | no |
-| REN-011 | How the first-person car interior camera is chosen per vehicle | `update:/x64/data/metadata/cameras.ymt` and `vehicles.meta` (`camVehicleCustomSettingsMetadata`) | no |
+| ENT-038 (*done, PC1*) | Light and siren id ranges per DLC pack | every `carcols` file (*find*: `carcols.ymt`/`carcols.meta`) | no |
+| ENT-039 (*mostly, PC1*) | Which `carcols` mod parts each kit links | the same, plus `carvariations.meta` | no |
+| REN-011 (*done, PC1*) | How the first-person car interior camera is chosen per vehicle | `update:/x64/data/metadata/cameras.ymt` and `vehicles.meta` (`camVehicleCustomSettingsMetadata`) | no |
 
 ## Weapons, explosions, physics
 
@@ -34,11 +34,11 @@ How to read the tables:
 | GP-079, PHY-009 (*mostly, D2*) | Damage and radius per explosion type, base and the 16 DLC files | `common:/data/explosion.meta` and every DLC explosion file | no |
 | PHY-008 (*mostly, D2*) | The unnamed boolean fields | `update:/x64/data/metadata/explosion.ymt` | no |
 | PHY-010 (*done, D2*) | Every DLC projectile and its explosion | DLC weapon files (`AmmoInfo` projectile entries) | no |
-| PHY-001 | The two unnamed columns (0.95, 0.0) | `materials.dat` (*find*) | no |
-| PHY-004 | The ragdoll and `NATURAL_MOTION` materials | `materials.dat` and the ragdoll / NM files (*find*) | no |
-| ENT-017 | Which ragdoll tuning set applies to which weapon and vehicle; three hashed set names | NM tuning files and weapon / vehicle data (*find*) | no |
-| ENT-019 | What `nm_blend_out_sets.meta` sets for getting up | `nm_blend_out_sets.meta` (*find*) | no |
-| ENT-020 | Where fall damage is set | ped and player data files (`playerinfo.ymt`, ped tuning) | possibly |
+| PHY-001 (*done, PC1*) | The two unnamed columns (0.95, 0.0) | `materials.dat` (*find*) | no |
+| PHY-004 (*done, PC1*) | The ragdoll and `NATURAL_MOTION` materials | `materials.dat` and the ragdoll / NM files (*find*) | no |
+| ENT-017 (*mostly, PC1*) | Which ragdoll tuning set applies to which weapon and vehicle; three hashed set names | NM tuning files and weapon / vehicle data (*find*) | no |
+| ENT-019 (*done, PC1*) | What `nm_blend_out_sets.meta` sets for getting up | `nm_blend_out_sets.meta` (*find*) | no |
+| ENT-020 (*partly: in no data file, needs the executable, PC1*) | Where fall damage is set | ped and player data files (`playerinfo.ymt`, ped tuning) | possibly |
 
 ## Water
 
@@ -70,7 +70,7 @@ How to read the tables:
 | AI-027, AI-029 (*partly, D8*) | Road nodes, routes; node and link counts, update vs base | `.ynd` files | no |
 | AI-028 (*done, D8*) | Polygons, links and cover points per navmesh tile | `.ynv` files | no |
 | REN-025 (*done, D8*) | Timecycle boxes and interior room modifiers in the map | ymap timecycle modifiers and interior (`.ytyp` MLO) rooms | no |
-| UI-009 | Which `int<number>` interior map belongs to which interior | interior `.ytyp` / ymaps, with the text labels | yes (the map names) |
+| UI-009 (*partly, PC1: 230 of 282*) | Which `int<number>` interior map belongs to which interior | interior `.ytyp` / ymaps, with the text labels | yes (the map names) |
 
 ## Peds, population, AI behaviour
 
@@ -81,14 +81,14 @@ How to read the tables:
 | AI-019 (*partly, D5*) | How `MotivationMin/Max` is used | the same file | in-game |
 | AI-020 (*still open, D5*) | How driving ranges map onto driving tasks | the same file, with the driving guides | no |
 | ENT-013 (*mostly, D5*) | 23 personality hashes and relationship groups that didn't resolve | `pedpersonality.ymt`, the peds and relationship files | hash the script strings |
-| AI-014 | The full meaning of `taskdata.meta` and `scriptedguntasks.meta` | both files (*find*) | no |
-| AI-033 | How decision makers map each event to a response | `common:/data/events.meta` and the decision-maker files | no |
+| AI-014 (*done, PC1*) | The full meaning of `taskdata.meta` and `scriptedguntasks.meta` | both files (*find*) | no |
+| AI-033 (*mostly, PC1*) | How decision makers map each event to a response | `common:/data/events.meta` and the decision-maker files | no |
 | AI-034, AI-035 (*partly, D4*) | The 9 crime-info entries; crime points per crime | `common:/data/ai/crimeinformation.meta` | in-game test for points |
 | AI-036 (*done, D4*) | The police vehicle sets with model names | `common:/data/dispatch.meta` | no |
-| AI-009 | Animal models by kind and where each spawns | scenario types and the peds file | no |
+| AI-009 (*done, PC1*) | Animal models by kind and where each spawns | scenario types and the peds file | no |
 | ENT-021 (*done, D4*) | The 5 story schedule hashes that don't match a `popcycle.dat` name | `common:/data/levels/gta5/popcycle.dat` | the hashes come from the scripts |
 | ENT-024 (*partly, D4*) | The unnamed zone fields (`hash_7111AC8A`, three flags) | `common:/data/levels/gta5/popzone.ipl` and the zone data | no |
-| ENT-025 | How bird and fish groups spawn | `popcycle.dat`, population groups | no |
+| ENT-025 (*mostly, PC1*) | How bird and fish groups spawn | `popcycle.dat`, population groups | no |
 | GP-073 (*partly, D4*) | The 5 non-story entries in `PlayerStatInfos` | `update:/x64/data/tune/playerinfo.ymt` (hash candidate names) | no |
 
 ## Character appearance and shops

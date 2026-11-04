@@ -9,7 +9,7 @@ A public, Markdown-only reference on how GTA V (PC, Legacy, build 1.0.3725.0) wo
 ## Status
 
 - **Everything is on `main`, nothing is in flight.** The last merges are #127 (second-pass phases 1 to 4), #128 (data batches D1 to D6), #129 (D7 to D12) and #130 (this file).
-- **Tracker:** 442 question rows: 192 answered, 49 mostly, 57 partly, 144 open (after the leftovers pass on branch `research/pass2-leftovers`, PR #132). A row's last column is its status and links to the guide section with the answer. The table "Leftovers: the data-file batches" in `OPEN_QUESTIONS.md` says what each batch read and settled.
+- **Tracker:** 442 question rows: 200 answered, 53 mostly, 59 partly, 130 open (after batch PC1 at the game PC, branch `research/pc1-data-files`). A row's last column is its status and links to the guide section with the answer. The table "Leftovers: the data-file batches" in `OPEN_QUESTIONS.md` says what each batch read and settled.
 - **The data batches are finished, but not every row in [`DATA-NEEDS.md`](/DATA-NEEDS.md) was worked.** Each group had a batch, and each row a batch touched carries its result (*done*, *mostly*, *partly* or *still open*). The 25 rows with no tag were never attempted; they are listed below.
 - **The knowledge graph is current as of PR #132** (2026-11-04). The 80 docs changed in #127, #128, #129 and #132 were re-extracted, giving 4,716 nodes, 10,010 edges and 193 communities. Refresh it again after the next phase.
 
@@ -46,7 +46,7 @@ The maintainer set these in earlier sessions. Keep them, and ask if one gets in 
 
 ## Data rows not attempted, and gaps the batches left
 
-**Never attempted** (`DATA-NEEDS.md` names the file for each): AI-024, PHY-011, PHY-013, PHY-014, ENT-038, ENT-039, REN-011, PHY-001, PHY-004, ENT-017, ENT-019, ENT-020, PHY-005, UI-009, AI-014, AI-033, AI-009, ENT-025, GP-055, GP-057, ENT-010, FF-005, PERF-005, PERF-022, PERF-006, UI-018. Of these, FF-005, GP-055, GP-057 and ENT-010 lean mostly on the scripts, so they may be possible from the decompile alone. UI-009, GP-057, ENT-010 and UI-018 have partial answers from the earlier passes. D12 tried UI-018 again and didn't clearly improve it.
+**Never attempted** (`DATA-NEEDS.md` names the file for each; batch PC1 worked 15 of the earlier list, see `PC-SESSION.md`): PHY-011, PHY-014, PHY-005, GP-055, GP-057, ENT-010, FF-005, PERF-005, PERF-022, PERF-006, UI-018. Of these, FF-005, GP-055, GP-057 and ENT-010 lean mostly on the scripts, so they may be possible from the decompile alone. GP-057, ENT-010 and UI-018 have partial answers from the earlier passes. D12 tried UI-018 again and didn't clearly improve it.
 
 **Partial results, and what would finish them:**
 

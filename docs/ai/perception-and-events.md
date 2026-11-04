@@ -108,6 +108,37 @@ From `generalevents.ymt` and `weaponevents.ymt` (**Verified**; each tunes the de
 
 Scripts can also read events from the queue (`GET_EVENT_AT_INDEX`, 265 scripts), mostly for damage and network events ([sessions and sync](/docs/online/sessions-and-sync.md)).
 
+### 33.4.1 From event to response: decision makers (PC data pass)
+
+**Verified** (`common:/data/events.meta`, the `update.rpf` copy, build 1.0.3725.0; counts by us).
+
+`events.meta` (`CEventDataManager`) has three lists that chain together:
+
+1. **Response tasks** (`eventResponseTaskData`, 40): what a ped can do in reply, such as `RESPONSE_TASK_FLEE`, `_COMBAT`, `_THREAT`, `_COWER`, `_HANDS_UP`, `_TURN_TO_FACE`, `_GUN_AIMED_AT`, `_EXPLOSION`, `_HEAD_TRACK`, `RESPONSE_POLICE_TASK_WANTED`, `RESPONSE_SWAT_TASK_WANTED`. A few carry a parameter (`Flee`, `Face`, `TimeToCrouch` 3 s).
+2. **Response blocks** (`eventDecisionMakerResponseData`, 223 `CEventDecisionMakerResponse` items in our count): each names one event (74 different event names) and an ordered list of decisions (461 in all). A decision names a response task and:
+   - four chances by who caused the event: `Chance_SourcePlayer`, `_SourceFriend`, `_SourceThreat`, `_SourceOther` (1.0 in about 1,350 cases, 0.0 in about 475, 0.5 in 14, 0.4 in 2);
+   - a squared distance window, `DistanceMinSq` and `DistanceMaxSq` (−1, no limit, in 374 decisions; otherwise mostly 9, 16, 25, 100, 144 or 225, that is 3 to 15 m);
+   - `EventResponseDecisionFlags` saying when the decision applies (45 flags): where the ped is (`ValidOnFoot` 336, `ValidInCar` 192, `ValidOnBicycle` 167, `ValidInHeli` 108) and conditions such as `NotValidInComplexScenario` (49), `ValidOnlyIfRandom` (46, ambient peds only), `ValidOnlyIfSource` (31), `ValidOnlyIfSourceIsPlayer` (30), `InvalidInCrosswalk` (26), `ValidOnlyIfFriendlyWithTarget` (21), `ValidOnlyIfSourceIsAnAnimal` (14), interiors, scenario radius and MP mission peds.
+3. **Decision makers** (`eventDecisionMaker`, 25): a name, an optional parent and a list of response blocks. A ped model names its decision maker in `peds.ymt` (`DecisionMakerName`).
+
+| Decision maker | Parent | Own blocks |
+| --- | --- | ---: |
+| `DEFAULT` | `BASE` | 46 |
+| `GANG` | `BASE` | 44 |
+| `BASE` | | 28 |
+| `SWAT` | | 26 |
+| `FIREMAN`, `MEDIC` | | 24 each |
+| `Security` | `BASE` | 22 |
+| `COP` | `BASE` | 17 |
+| `FAMILY` | `GANG` | 14 |
+| `OFFDUTY_EMT` | `DEFAULT` | 4 |
+| Animals: `WildAnimal` 16, `DomesticAnimal` 15, `Cougar` 13, `DOG` 12, `SmallAnimal` 12, `HEN` 7, `HORSE` 7, `GULL` 5, `FISH` 4, `Shark` 2, `Rabbit` 2, `RAT` 1, `Cat` 1 | `Cat` and `Rabbit` inherit from `SmallAnimal` | |
+| `PLAYER`, `EMPTY` | | 0 |
+
+**An example.** `DEFAULT_RESPONSE_GUN_AIMED_AT` lists `RESPONSE_TASK_THREAT`, then `RESPONSE_TASK_HANDS_UP`, both with chance 0 when the player is the source, then `RESPONSE_TASK_GUN_AIMED_AT` with chance 1 for the player: other peds' guns get a threat or hands-up reaction, the player's gun the special aimed-at response.
+
+**How a response is picked** (our reading of the layout; the rule itself is in the executable): when a ped receives an event, the engine takes its decision maker together with its parent's blocks, finds the block for that event, and goes down the decisions in order, taking the first whose flags fit the ped's state and distance and whose chance for the event's source type comes up. Editing `events.meta` therefore changes every ped that shares a decision maker; a mod that wants one ped to react differently gives it another decision maker or uses the event-blocking natives above.
+
 ## 33.5 What this means for modders
 
 - **A ped that must follow its task** (a bodyguard, a driver in a scene) needs `SET_BLOCKING_OF_NON_TEMPORARY_EVENTS(ped, true)`, as in 627 of Rockstar's scripts; otherwise the first gunshot within 100 m pulls it away.
@@ -121,7 +152,7 @@ Scripts can also read events from the queue (`GET_EVENT_AT_INDEX`, 265 scripts),
 | --- | --- |
 | The three other unnamed shocking events | Second pass, more name guesses |
 | Which `SET_PED_CONFIG_FLAG` numbers scripts set most, and what they do | Partly answered in [peds](/docs/entities/peds/peds.md#the-config-flags-rockstar-sets-most-leftovers-pass) (leftovers pass, same as ENT-014): the top 20 of 190 flags. Left: their effects |
-| How decision makers map each event to a response | R17.3 second pass |
+| How decision makers map each event to a response | Mostly answered in [33.4.1](#3341-from-event-to-response-decision-makers-pc-data-pass): the three lists, chances, distances, flags and parents; the exact selection rule is the executable's |
 
 ## 33.7 Test cards (story mode)
 

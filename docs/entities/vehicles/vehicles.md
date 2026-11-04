@@ -95,6 +95,46 @@ The near-identical counts around 440 to 480 scripts for the look natives come fr
 
 Replacing a vanilla car instead means replacing its `.yft`/`.ytd` with the same names and leaving the data alone, or editing the vanilla entries in a `dlc_patch`; add-ons are safer across updates.
 
+### Light, siren and kit ids, and what kits contain (PC data pass)
+
+**Verified** (the update's `x64/data/carcols.ymt` and every DLC `carcols.meta`, with the `dlc_patch` copies, build 1.0.3725.0, read with CodeWalker; counts by us).
+
+**Ids in use.** Each entry in a carcols file's `<Lights>`, `<Sirens>` and `<Kits>` lists has an `id`, and vehicles refer to them by id in `carvariations` ([where it lives](#where-it-lives)). The `dlc_patch` copies carry the same ids as their packs, except where noted.
+
+| List | Base `carcols.ymt` | DLC packs, in release order | Highest |
+| --- | --- | --- | ---: |
+| Sirens | 0 to 13 (14) | `mpchristmas2017` 14, `mpbattle` 15, `mp2023_02` 16, `mp2024_01` 17 to 19, `mp2025_01` 20 | 20 |
+| Light settings | 0 to 76 (77) | `mpbeach` 77-78, `mpbusiness` 79-81, `mpbusiness2` 82-84, `mphipster` 85-88, `mppilot` 90, `mpheist` 91-92, `mpluxe2` 93-94, `mpexecutive` 95-97, `mpstunt` 98-102, `mpbiker` 103-104, `mpimportexport` 105-109 (its patch adds 114), `mpspecialraces` 110-113, `mpgunrunning` 116-118, `mpsmuggler` 119-120, `mpchristmas2017` 121-128, `mpassault` 129-133, `mpbattle` 134, `mpchristmas2018` 135-138, `mpvinewood` 139-147, `mpheist3` 148-153, `mp2024_01` 154 and 205-207, 210, `mpsum` 155-157, `mpheist4` 158-161, `mptuner` 162-171, `mpg9ec` 172-175, `mpsecurity` 172-178, `mpsum2` 179-187, `mpchristmas3` 188-192, `mp2023_01` 193-194, `mp2023_02` 195-202, `mp2025_01` 211, `mp2025_02` 212-213 | 213 |
+| Kits | 91 kits, ids 0 to 507 | from 87 (`mpbeach`) up to 627 (`mp2025_02`), plus 999 (`mplowrider2`) and 591 (the `mpbattle` patch) | 999 |
+
+Two packs reuse ids: `mpg9ec` and `mpsecurity` both define light settings 172 and 173, and `mpsum2_g9ec` repeats `mpsum2`'s light settings 179 to 185 and kits 493 to 510 (our reading: the `_g9ec` packs are the newer-generation copies of the same content). For an add-on, siren ids above 20, light ids above 213 and kit ids above 627 (avoiding 999) clash with nothing in this build.
+
+**What kits contain.** Taking each pack's newest copy (the `dlc_patch` one where it exists), 596 kits hold parts (the 602 above counts every kit in every copy; our reading is that the difference is kits with no parts or only in replaced copies). A kit has three lists:
+
+- **Visible parts** (`visibleMods`, a model per part): 39,003 entries, but only 34,959 distinct kit and model pairs (a model listed twice in one kit, under two labels or slots) and 29,202 distinct models (parts shared between kits). So the per-type counts include repeats:
+
+  | Type | Entries | Distinct models | Kits |
+  | --- | ---: | ---: | ---: |
+  | `VMT_LIVERY_MOD` | 6,099 | 4,530 | 432 |
+  | `VMT_SPOILER` | 3,629 | 3,094 | 393 |
+  | `VMT_BONNET` | 3,561 | 2,992 | 402 |
+  | `VMT_BUMPER_F` | 2,854 | 2,375 | 452 |
+  | `VMT_EXHAUST` | 2,553 | 2,027 | 451 |
+  | `VMT_SKIRT` | 2,273 | 1,913 | 341 |
+  | `VMT_ROOF` | 1,915 | 1,599 | 391 |
+  | `VMT_GRILL` | 1,810 | 1,478 | 301 |
+  | `VMT_BUMPER_R` | 1,797 | 1,442 | 364 |
+  | `VMT_CHASSIS` | 1,463 | 1,170 | 353 |
+  | `VMT_WING_L` | 1,177 | 971 | 267 |
+  | `VMT_INTERIOR2` | 1,151 | 147 | 50 |
+  | `VMT_STEERING` | 961 | 600 | 55 |
+  | `VMT_KNOB` | 390 | 38 | 46 |
+  | `VMT_PLTHOLDER` | 224 | 50 | 22 |
+
+  The interior parts of the custom-shop kits (`INTERIOR2`, `KNOB`, `PLTHOLDER`, `STEERING` ...) are a small set of models shared by many kits; body parts are mostly one model per car.
+- **Linked parts** (`linkMods`): 6,720 entries in 401 kits (6,388 distinct kit and model pairs, 4,825 distinct models). These are extra models fitted together with a visible part that names them in its `linkedModels`.
+- **Stat upgrades** (`statMods`, no model): the same small set in nearly every kit, 77 items in 265 kits and 73 to 79 in the rest: horns (33,930 items, about 57 per kit), armour (5 levels, 20 to 100), engine, brakes, gearbox, suspension and 79 hydraulics items. Their values are in [vehicle handling 4.7](/docs/physics/vehicle-handling.md#47-speed-grip-and-upgrades).
+
 ## What this means for modders
 
 - **Spawn properly:** `REQUEST_MODEL`, `CREATE_VEHICLE`, `SET_VEHICLE_ON_GROUND_PROPERLY`, then `SET_VEHICLE_MOD_KIT(veh, 0)` before any `SET_VEHICLE_MOD`, and `SET_MODEL_AS_NO_LONGER_NEEDED`.
@@ -108,8 +148,8 @@ Replacing a vanilla car instead means replacing its `.yft`/`.ytd` with the same 
 | --- | --- |
 | The difference between the 901 models here and the 879 counted in R14.4 (how entries were split) | Answered in [how many models](#how-many-models-counted-three-ways-leftovers-pass): 921 in all; 879 leaves out the 42 models only in `dlc_patch` files |
 | The meaning of the less common flags | Mostly answered in [the rare flags](#how-many-models-counted-three-ways-leftovers-pass): which model uses each; the detailed effect is a test per model |
-| Light and siren setting id ranges used by DLC packs | Second pass |
-| Which `carcols` mod parts each kit really links (the per-type counts include repeats) | Second pass |
+| Light and siren setting id ranges used by DLC packs | Answered in [light, siren and kit ids](#light-siren-and-kit-ids-and-what-kits-contain-pc-data-pass) |
+| Which `carcols` mod parts each kit really links (the per-type counts include repeats) | Mostly answered in [what kits contain](#light-siren-and-kit-ids-and-what-kits-contain-pc-data-pass): counts with and without repeats; a per-kit table is not written |
 
 ## Test cards
 

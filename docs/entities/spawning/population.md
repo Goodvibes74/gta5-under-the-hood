@@ -88,6 +88,25 @@ So the map is mostly fed by scenarios rather than free walkers: a typical slot a
 - **Weekends don't exist** in the data: every day uses the same 12 slots.
 - **Single player only.**
 
+### Birds and fish (PC data pass)
+
+**Verified** (`update:/x64/levels/gta5/popgroups.ymt` and the update's `popcycle.dat`, build 1.0.3725.0; model hashes resolved with `joaat`).
+
+Birds and fish are not a separate system: they are population groups like any other, marked by a flag in `popgroups.ymt`.
+
+| Group | Models | Flags | Schedules using it (average weight) |
+| --- | --- | --- | --- |
+| `Birds_City` | `A_C_Pigeon` | `POPGROUP_AMBIENT POPGROUP_AERIAL` | 12 (11.3; 0 at night) |
+| `Birds_Ground_City` | `A_C_Pigeon` | `POPGROUP_AMBIENT POPGROUP_WILDLIFE` | 9 (16.0) |
+| `Birds_Countryside` | `A_C_Cormorant`, `A_C_Chickenhawk`, `A_C_Crow` | `POPGROUP_AMBIENT POPGROUP_AERIAL` | 15 (54.5) |
+| `Birds_Ocean` | `A_C_Seagull` | `POPGROUP_AMBIENT POPGROUP_AERIAL` | 17 (28.7) |
+| `Birds_Ground_Ocean` | `A_C_Seagull` | `POPGROUP_AMBIENT POPGROUP_WILDLIFE` | 8 (22.5) |
+| `Fish` | `A_C_Fish` | `POPGROUP_AMBIENT POPGROUP_AQUATIC` | 21 (3.6, between 1 and 5) |
+
+A second aquatic group, which CodeWalker names `fish_`, holds the same model and is used by no schedule. `popgroups.ymt` ends with a `wildlifeHabitats` list: `sand_loose`, `sand_compact`, `sand_wet`, `grass_long`, `GRASS` and `grass_short` (our reading: the ground materials a `WILDLIFE` group may stand on).
+
+In `popcycle.dat` these groups sit in a schedule's `peds` list with a percentage like any other group, so they share the zone's `#Peds` cap. That is why they "fill many slots": the `ARMY` schedule gives `Birds_Countryside` 79 against 29 for soldiers in every time slot, and `Birds_Countryside` averages 54.5 wherever it appears. Our reading: the `AERIAL`, `AQUATIC` and `WILDLIFE` flags tell the engine to place these peds in the air, in water or on a habitat material instead of on a pavement. The placement rule itself is in the executable.
+
 ## Open questions
 
 | Question | Where it goes |
@@ -96,7 +115,7 @@ So the map is mostly fed by scenarios rather than free walkers: a typical slot a
 | How the caps, `CityDensity` and the budgets combine into the real spawn count | Test card 1; R17.9 |
 | What `scumminessLevel` changes in code and in scripts | Partly answered (leftovers pass): in the scripts, only the phone's signal bars (`cellphone_flashhand`, 5 bars at levels 0 and 1 down to 2 at level 5). Left: the engine side |
 | The unnamed zone fields (`hash_7111AC8A`, three flags) | Partly answered in [schedules that don't exist](#schedules-that-dont-exist-leftovers-pass): two are the same value everywhere; what the two flags on the west-coast zones do is a test |
-| How birds and fish groups spawn (they fill many slots) | R17.8 |
+| How birds and fish groups spawn (they fill many slots) | Mostly answered in [birds and fish](#birds-and-fish-pc-data-pass): ordinary weighted groups flagged aerial, aquatic or wildlife; where the engine places them is the executable's |
 
 ## Test cards
 

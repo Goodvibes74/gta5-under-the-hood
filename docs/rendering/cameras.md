@@ -117,6 +117,36 @@ The marketing director and its 5 cameras (free, orbit, mounted, sticky, A-to-B) 
 
 **Shake names.** Script strings, every file name in the archives, every name in the extracted data and `<word>_SHAKE` built from every word in the scripts name 28 of the 99 shakes, including `PARACHUTING_SHAKE`, `GUNRUNNING_ENGINE_START_SHAKE` and `CLUB_DANCE_SHAKE`. The other shake, oscillator and envelope names need another source.
 
+## The first-person car camera, per vehicle and per seat (PC data pass)
+
+**Verified** (every `vehicles.meta`: base, update, DLC packs and `dlc_patch`; the update's `cameras.ymt`; build 1.0.3725.0, read with CodeWalker).
+
+The first-person (POV) camera in a vehicle is chosen on two levels.
+
+**1. Per model, in `vehicles.meta`.** `povCameraName` names a `camCinematicMountedCameraMetadata` entry in `cameras.ymt`, and four offsets move it for that car: `PovCameraOffset`, `PovPassengerCameraOffset`, `PovRearPassengerCameraOffset` and `PovCameraVerticalAdjustmentForRollCage`. Taking each model's last copy (base, then update, then DLC packs, then the `dlc_patch` copies), 890 models use 85 POV cameras:
+
+| `povCameraName` | Models |
+| --- | ---: |
+| `DEFAULT_POV_CAMERA` | 212 |
+| `REDUCED_NEAR_CLIP_POV_CAMERA` | 209 |
+| `DEFAULT_POV_CAMERA_LOOKAROUND_MID` | 50 |
+| `DEFAULT_POV_CAMERA_LOOKAROUND` | 43 |
+| `REDUCED_NEAR_CLIP_POV_CAMERA_NO_REVERSE` | 39 |
+| `DEFAULT_POV_CAMERA_NO_REVERSE` | 38 |
+| `DEFAULT_POV_CAMERA_NO_REVERSE_LOOKAROUND_MID` | 30 |
+| `PLANE_POV_CAMERA` | 27 |
+| `REDUCED_NEAR_CLIP_POV_DRIFT_CAMERA` | 24 |
+| `DEFAULT_POV_CAMERA_NO_REVERSE_LOOKAROUND_LOW` | 23 |
+| `HELI_POV_CAMERA` | 16 |
+| `LAZER_POV_CAMERA` | 11 |
+| 73 others (mostly one vehicle family each: `BIKE_BAGGER_POV_CAMERA`, `BIKE_SANCHEZ_POV_CAMERA`, `DINGHY_POV_CAMERA`, `JETSKI_POV_CAMERA`, `SUB_POV_CAMERA` ...) | 168 |
+
+`DEFAULT_POV_CAMERA` has `BaseFov` 50, `BaseNearClip` 0.147 and `TripleHeadNearClip` 0.0675. The suffixes name the variants (**Known** from the names): `REDUCED_NEAR_CLIP` for tight cabins, `NO_REVERSE` without the look-behind when reversing, `LOOKAROUND`, `_MID` and `_LOW` for how far you can look around.
+
+**2. Per model and seat, in `cameras.ymt`.** The gameplay director has a `VehicleCustomSettingsList` that maps **130 model names** to **79 `camVehicleCustomSettingsMetadata` blocks** (helicopters such as `annihilator`, `savage`, `buzzard`, `maverick`, `cargobob`; buses, vans and the `boxville` family; military trucks such as `barracks`, `insurgent`, `apc`, `khanjali`; many motorbikes; `submersible`; the `cerberus` arena trucks ...). Each block holds sub-settings, each switched on by `ShouldConsiderData`: how the camera lines up with the door on exit, and a list of seat-specific cameras (`camSeatSpecificCameras`, 169 entries for seats 1 to 15, most for seats 2 and 3, the rear passengers) that give a seat its own POV camera and offset. A few sub-block names are still hashes in CodeWalker.
+
+So an add-on vehicle gets its first-person view from `povCameraName` and the offsets in its own `vehicles.meta`; only a vehicle on the director's list gets per-seat cameras, and that list is in the update's `cameras.ymt` (our reading: an add-on joins it only by replacing that file).
+
 ## What this means for modders
 
 - **A camera for a scene:** create `DEFAULT_SCRIPTED_CAMERA`, set position, rotation and FOV, `SET_CAM_ACTIVE`, `RENDER_SCRIPT_CAMS(true, false, 0, true, false, 0)`. Hand back with `RENDER_SCRIPT_CAMS(false, true, 1000, ...)` (an eased return) and `DESTROY_CAM`. Forgetting the hand-back leaves the player stuck in your camera.
@@ -135,7 +165,7 @@ The marketing director and its 5 cameras (free, orbit, mounted, sticky, A-to-B) 
 | The 50 shake names and other camera names that didn't resolve | Partly answered in [camera names](#camera-names-leftovers-pass): three spline cameras named; the shakes need another name source |
 | Which `CREATE_CAMERA` hashes scripts use (the hashed form of `CREATE_CAM`) | Answered in [camera names](#camera-names-leftovers-pass) |
 | The view mode contexts and modes as numbers | R6.4 |
-| How the first-person car interior camera is chosen per vehicle (`camVehicleCustomSettingsMetadata`) | R14.1 |
+| How the first-person car interior camera is chosen per vehicle (`camVehicleCustomSettingsMetadata`) | Answered in [the first-person car camera](#the-first-person-car-camera-per-vehicle-and-per-seat-pc-data-pass) |
 
 ## Test cards
 

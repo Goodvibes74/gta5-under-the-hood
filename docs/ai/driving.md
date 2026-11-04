@@ -28,6 +28,17 @@ All four have an absolute minimum speed of 1 m/s. *Known*: the AI looks at the b
 
 **Who uses which** (`AIHandling` in the update's `handling.meta`, **Verified**): 193 `AVERAGE`, 35 `TRUCK`, 19 `SPORTS_CAR`, 7 `CRAP`. DLC vehicles set it in their own `handling.meta` (the `mpapartment` patch: 13 `AVERAGE`, 5 `SPORTS_CAR`). So most supercars drive like an average car under AI unless their handling entry says `SPORTS_CAR`.
 
+**Every DLC vehicle** (PC data pass, **Verified**: `AIHandling` in every `handling.meta`, each entry's last copy winning: base, then update, then the DLC packs, with each `dlc_patch` copy replacing its pack's). The game has 814 handling entries; 566 of them come from DLC files: 477 `AVERAGE`, 60 `SPORTS_CAR`, 25 `TRUCK`, 4 `CRAP` (all 814: 664, 79, 60, 11).
+
+| Profile | DLC handling entries |
+| --- | --- |
+| `SPORTS_CAR` | `ASTEROPE2`, `ASTRALE`, `BANSHEE2`, `BARRAGE`, `BESTIAGTS`, `BUFFALO5`, `CHAVOSV6`, `COMET3` to `COMET7`, `COQUETTE5`, `DOMINATOR3`, `DOMINATOR8`, `DRIFTCHAVOSV6`, `DRIFTFUTO`, `DRIFTFUTO2`, `DRIFTGAUNTLET4`, `DRIFTNEBULA`, `DRIFTREMUS`, `ELEGY`, `ELLIE`, `Everon2`, `FUTO2`, `GAUNTLET2` to `GAUNTLET6`, `GROWLER`, `GT750`, `HOTRING`, `IMPALER5`, `INFERNUS2`, `MINIMUS`, `PEYOTE2`, `POLGAUNTLET`, `POLIMPALER5`, `PRIMO2`, `RAPIDGT3`, `REMUS`, `RUSTON`, `SCHAFTER3` to `SCHAFTER6`, `SM722`, `STINGERTT`, `STREITER`, `TAHOMA`, `TAILGATER2`, `TORERO`, `TULIP2`, `TURISMO2`, `URANUS1`, `VERLIER`, `VIGERO2`, `VIGERO3`, `VISERIS` |
+| `TRUCK` | `BOXVILLE5`, `BRICKADE`, `BRUISER`, `BRUISER2`, `CERBERUS`, `CERBERUS2`, `CHERNOBOG`, `GBURRITO2`, `HAULER2`, `MARSHALL`, `MONSTER`, `MONSTER3`, `PATRIOT2`, `PATRIOT3`, `PBUS2`, `POUNDER2`, `RALLYTRUCK`, `TECHNICAL`, `TECHNICAL2`, `TECHNICAL3`, `TERRORBYTE`, `TOWTRUCK3`, `TRASH2`, `VETIR`, `WASTELANDER` |
+| `CRAP` | `BRAWLER`, `TORNADO5`, `TORNADO6`, `VOODOO` |
+| `AVERAGE` | Every other DLC entry (477), including every DLC supercar not listed above and every DLC aircraft and boat |
+
+These are handling names, which several models can share.
+
 ## 18.3 Driving tasks in Rockstar's scripts
 
 | Native | Scripts | Calls | Use |
@@ -79,7 +90,7 @@ The high count of 262,144 in `DRIVE_TO_COORD` comes from set pieces where the ro
 
 | Question | Where it goes |
 | --- | --- |
-| AI profiles of every DLC vehicle (all `handling.meta` files) | Second pass, with the DLC scan |
+| AI profiles of every DLC vehicle (all `handling.meta` files) | Answered in [18.2](#182-the-ai-handling-profiles) (PC data pass) |
 | How `SET_DRIVER_ABILITY` and `_AGGRESSIVENESS` change the curve or braking | In-game test |
 | What `TASK_VEHICLE_TEMP_ACTION`'s action numbers mean, with Rockstar's counts | Second pass |
 | Road nodes and how routes are planned | Partly answered: node, link and junction counts in [navigation 34.4.1](/docs/ai/navigation.md#3441-navmesh-and-road-node-counts-leftovers-pass); how routes are planned over them is engine code |

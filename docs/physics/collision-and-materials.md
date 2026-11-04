@@ -46,7 +46,7 @@ Collision is tested in several layers (map, vehicles, peds, objects, glass, wate
 | `MISC` | 2 | |
 | `DEFAULT` | 1 | `DEFAULT` |
 
-**Columns** (names from the file's own header, **Verified**): material, filter, FX group, VFX disturbance type, rumble profile, react weapon type, `RAGE_FRICTION`, `RAGE_ELASTICITY`, `DENSITY`, `TYRE_GRIP`, `WET_GRIP`, `TYRE_DRAG`, `TOP_SPEED_MULT`, then two columns that hold 0.95 and 0.0 in every row read, `PENETRATION_RESISTANCE`, four flags (`SEE_THRU`: AI probes pass through; `SHOOT_THRU`: weapon probes pass through; `SHOOT_THRU_FX`: report the hit anyway so effects play; `NO_DECAL`), two more flags (`POROUS`, `HEATS_TYRE`) and an audio material name.
+**Columns** (names from the file's own header, **Verified**): material, filter, FX group, VFX disturbance type, rumble profile, react weapon type, `RAGE_FRICTION`, `RAGE_ELASTICITY`, `DENSITY`, `TYRE_GRIP`, `WET_GRIP`, `TYRE_DRAG`, `TOP_SPEED_MULT`, `SOFTNESS` and `NOISINESS` (0.95 and 0.0 in every row; see [5.3.1](#531-the-softness-and-noisiness-columns-and-the-ragdoll-materials-pc-data-pass)), `PENETRATION_RESISTANCE`, four flags (`SEE_THRU`: AI probes pass through; `SHOOT_THRU`: weapon probes pass through; `SHOOT_THRU_FX`: report the hit anyway so effects play; `NO_DECAL`), two more flags (`POROUS`, `HEATS_TYRE`) and an audio material name.
 
 **Selected rows** (**Verified** values):
 
@@ -81,6 +81,14 @@ Reading it: `TYRE_GRIP` replaces the surface friction for tyres, `WET_GRIP` is s
 | `rumbleprofiles.meta` | 16 controller rumble profiles (duration, frequency, speed range) picked by the rumble column |
 
 The newer `update.rpf` copy of `materials.dat` adds `STUNT_RAMP_SURFACE` and puts the old temporary slots to use for the stunt-race pads (`g_idPhysVehicleSpeedUp`, `SlowDown`, `Refill`, `StuntTargetA` ...) (**Verified** in the diff). Material indices are positions in this table, so the order must never change: new materials are added at the end or in reserved slots.
+
+### 5.3.1 The softness and noisiness columns, and the ragdoll materials (PC data pass)
+
+**Verified** (`materials.dat`, `update.rpf` copy, build 1.0.3725.0, read with CodeWalker).
+
+**The two "unnamed" columns.** The file asks to be read with tabs of size 4. Expanded that way, the column after `TOP_SPEED_MULT` sits under the header word `SOFTNESS` and the next one under `NOISINES` (sic). The file's comment header explains both: softness is how far you sink into the material ("used for second surface"), noisiness is how loud it is for the stealth code. All 213 rows hold 0.95 and 0.0, so in this build neither varies per material: sinking into soft ground and footstep noise come from elsewhere. The comment header also lists a `VIBRATION` column that no longer exists; the rumble profile column took its place. Column order after `TOP_SPEED_MULT`: `SOFTNESS`, `NOISINESS`, `PENETRATION_RESISTANCE`, the four flags `SEE_THRU`, `SHOOT_THRU`, `SHOOT_THRU_FX`, `NO_DECAL`, then `POROUS`, `HEATS_TYRE`, then the audio material.
+
+**The `NATURAL_MOTION` materials** (section comment `NATURAL MOTION (150-171)`, so material ids 150 to 171) are the surfaces of a ragdoll's body parts: `BUTTOCKS`, `THIGH_`, `SHIN_` and `FOOT_` left and right, `SPINE0` to `SPINE3`, `CLAVICLE_`, `UPPER_ARM_`, `LOWER_ARM_` and `HAND_` left and right, `NECK`, `HEAD`, plus `ANIMAL_DEFAULT`. FX groups `PED_TORSO`, `PED_LIMB`, `PED_FOOT` and `PED_HEAD` pick the hit effects. Every row has elasticity 0.0 (bodies don't bounce), density 350, tyre grip 0.70 and penetration resistance 1, with no flags; friction is 0.75, except hands and feet at 2.25, which keeps a ragdoll's hands and feet from sliding. The animated (non-ragdoll) ped uses `PHYS_PED_CAPSULE` in `SPECIAL`, with friction 0.0, so a walking ped's capsule never sticks to walls.
 
 ## 5.4 Shape tests
 
@@ -139,8 +147,8 @@ The pattern used by missions after a warp (seen in `armenian1`'s restart code, [
 
 | Question | Where it goes |
 | --- | --- |
-| The two unnamed columns (0.95 and 0.0 in every row) | R2.1 second pass |
+| The two unnamed columns (0.95 and 0.0 in every row) | Answered in [5.3.1](#531-the-softness-and-noisiness-columns-and-the-ragdoll-materials-pc-data-pass): `SOFTNESS` and `NOISINESS` |
 | How many `.ybn` files the map has and how they are grouped | Answered (leftovers pass, **Verified** from the archive listing): 15,124: 8,709 in the base archives (`_hills` 6,206, `_citye` 1,092, `_cityw` 987, `interiors` 277, `_prologue` 147, in 626 map-section archives, median 4 and at most 166 per archive), 5,363 in DLC packs (`mpheist` 2,006, `mpheist4` 1,872 ...) and 1,052 in the update's `dlc_patch` folders. By name, 4,848 start with `hi@` and 1,025 with `ma@` (separate collision sets for the same section; *Known*: `hi@` is the high-detail set vehicles use) |
 | The exact shape test flag bits, checked in game | R2.1 second pass |
-| The ragdoll and `NATURAL_MOTION` materials | R2.3 |
+| The ragdoll and `NATURAL_MOTION` materials | Answered in [5.3.1](#531-the-softness-and-noisiness-columns-and-the-ragdoll-materials-pc-data-pass) |
 | How water collision differs from water simulation | R2.4 |
