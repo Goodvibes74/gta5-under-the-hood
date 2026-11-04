@@ -125,16 +125,16 @@ The flow can also force a scene for the next switch with its *set character scen
 | 1 | The scene is one-time and already used | A bit per one-time scene in the save; scene 197 is marked used once story mission 9 is completed |
 | 2 | It is the character's last scene, or in the same small family as the last scene | Families are short lists such as 79, 80, 81 or 77, 78 |
 | 3 | It is one of the character's last five scenes | A five-entry history per character in the save |
-| 4 | Two other characters are in a given state | For example 218 to 220 and 225 when Franklin or Trevor is in state 19 (our reading: where the other characters are) |
+| 4 | A relation between two entries of a character table holds | Called with pairs such as (1, 19) and (2, 19) for scenes 218 to 220 and 225, and (0, 14) and (1, 14) for 86, 101, 102, 171 and 173; skipped during one flow state (our reading: whether certain characters are together) |
 | 5 | A test on the scene's own data fails | Reads the scene's data record (our reading: the scene needs something the character doesn't have, such as a vehicle) |
 | 6 | Certain story missions are on offer | For example 77 to 79, 86, 87, 89 and 122 while mission 17, 19 or 62 is on offer; skipped in one mode of the call |
 | 7 | Flow bits are set, or a mission is running | 311, 315, 316, 234 and 245 when one flow bit is set and a related one isn't; 118 while mission 42 runs |
-| 8 | Something in a game-time queue is due within 3 minutes near the scene | Reads a timed list in the save, skipping a few entries (our reading: the communications queue) |
+| 8 | An entry of a timed list in the save is due within 3 minutes and matches the scene | Skips a few entry ids (51 to 55, 62 ...) (our reading: the phone call and message queue) |
 | 9 | Another test on the scene's data fails | Like test 5; scene 132 has its value forced |
 | 10 | The character's story state rules out the city | Michael while flow flag 130 is set and 131 isn't, and Trevor while flag 58 is set, lose every scene inside the box x −1,900 to 1,400, y −3,500 to 400 (Los Santos) |
 | 11 | A scene is near an active mission trigger | Checked against up to eight active triggers; skipped in one mode |
 | 12 | The weather doesn't fit | Scenes 80, 87, 88, 152, 164, 184, 185, 241, 247 and 286 read the previous and next weather |
-| 13 | The character's saved vehicle doesn't fit | For scenes such as 77, 78, 82 to 84, 89, 90, 163, 175 and 176 |
+| 13 | A per-character saved value fails a check | For scenes such as 77, 78, 82 to 84, 89, 90, 163, 175 and 176 (our reading: the character's saved vehicle) |
 | 14 | A per-character save bit rules it out | For example bit 25 of a flow bitset for Franklin; scene 197 is exempt |
 | 15 | The scene is too close to where you are | Within 400 m of the player's current position (15 m in the other mode), so the switch camera has some distance to travel |
 
@@ -150,7 +150,7 @@ The flow can also force a scene for the next switch with its *set character scen
 | Question | Where it goes |
 | --- | --- |
 | What each character's saved state holds (position, outfit, weapons, vehicle, money) and where in the story save | Answered in [9.4.1](#941-what-is-saved-for-each-character-second-pass) |
-| The 42-entry scene table's conditions (time, place, mission state) | Mostly answered in [9.4.2](#942-which-arrival-scene-is-picked-second-pass): the time blocks, the flag-switched lists, the weights and the mission pull; Trevor's pickers read in the leftovers pass (after 9.4.2); the draw and the 15-test scene check read in the leftovers pass (after Trevor's pickers); the meaning of three data tests (5, 8, 9) is left |
+| The 42-entry scene table's conditions (time, place, mission state) | Mostly answered in [9.4.2](#942-which-arrival-scene-is-picked-second-pass): the time blocks, the flag-switched lists, the weights and the mission pull; Trevor's pickers read in the leftovers pass (after 9.4.2); the draw and the 15-test scene check read in the leftovers pass (after Trevor's pickers); the meaning of tests 4, 5, 8, 9 and 13 is left |
 | The meaning of switch flag bits 1, 2, 4, 8 | NativeDB notes plus a test card |
 | Who starts the `family_scene_*` scripts | Answered: `main`, within 100 m of five house points ([launch graph](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass)) |
 
