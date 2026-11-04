@@ -82,7 +82,7 @@ Everything the game keeps about the three characters between switches sits in on
 4. **Otherwise a weighted draw.** The rest of the list is pairs of scene id and weight, for example Franklin's first block before flag 126: 175 (30), 179, 181, 182, 225 and 221 (10 each). Scenes whose checks fail are dropped and the draw runs over what is left. If a story mission is waiting for that character, scenes near the mission's blip are preferred. If nothing in a block is valid, the picker falls through to the next block's function.
 5. **The scene plays.** For 42 scene ids (9.1), `player_controller_b` starts a special `player_scene_*` script; every other scene is played by `player_timetable_scene`. After the switch, the scene id is saved as that character's last scene (unless it is one of the scenes 1 to 7, which aren't remembered).
 
-The flow can also force a scene for the next switch with its *set character scene* command ([story flow 2.4.1](/docs/gameplay/missions/story-flow.md#241-every-command-type-second-pass)), which writes the same `PLAYER_SCENE_SAVED_DATA` slot. Some scenes depend on the hour in their own way too (scene 222 becomes 194 between 21:00 and 09:00 and 193 otherwise). The full per-scene validity checks are left for the third pass.
+The flow can also force a scene for the next switch with its *set character scene* command ([story flow 2.4.1](/docs/gameplay/missions/story-flow.md#241-every-command-type-second-pass)), which writes the same `PLAYER_SCENE_SAVED_DATA` slot. Some scenes depend on the hour in their own way too (scene 222 becomes 194 between 21:00 and 09:00 and 193 otherwise). The per-scene checks are listed below Trevor's pickers (leftovers pass).
 
 **Trevor's pickers** (*leftovers pass*, **Verified** in `player_controller_b` at commit `6c18d3e8b`; the meaning of the flags and missions is our reading). Trevor's are built differently from Franklin's and Michael's.
 
@@ -110,6 +110,34 @@ The flow can also force a scene for the next switch with its *set character scen
   - **Part B** adds 30, 40 or 30. In that pool, scene 312 needs a pistol, scene 314 needs mission 63 completed, and scene 258 is dropped when `Global_114904.f_24911[13]` is 2.
 - **Mission numbers** are indexes into the story mission table (`func_671` reads its completed field; `func_659` checks whether a mission is on offer, in our reading).
 
+**How a scene is checked and drawn** (*leftovers pass*, **Verified** in `player_controller_b` at commit `6c18d3e8b`; meanings marked "our reading" are inferred from the data each test reads).
+
+*The draw* (the shared code, `func_636` at this build):
+
+1. Every candidate in the list goes through the scene check below. A scene that fails gets weight 0 and drops out.
+2. If a story mission is waiting for that character, the first valid scene within 150 m of the mission's trigger point wins outright.
+3. Otherwise a random number between 0 and the sum of the remaining weights picks the scene.
+
+*The scene check* (`func_639`): scene 0 and 318 ("none") are never valid. Otherwise a scene is rejected at the first of these tests that fails:
+
+| # | Rejected when | Notes |
+| ---: | --- | --- |
+| 1 | The scene is one-time and already used | A bit per one-time scene in the save; scene 197 is marked used once story mission 9 is completed |
+| 2 | It is the character's last scene, or in the same small family as the last scene | Families are short lists such as 79, 80, 81 or 77, 78 |
+| 3 | It is one of the character's last five scenes | A five-entry history per character in the save |
+| 4 | Two other characters are in a given state | For example 218 to 220 and 225 when Franklin or Trevor is in state 19 (our reading: where the other characters are) |
+| 5 | A test on the scene's own data fails | Reads the scene's data record (our reading: the scene needs something the character doesn't have, such as a vehicle) |
+| 6 | Certain story missions are on offer | For example 77 to 79, 86, 87, 89 and 122 while mission 17, 19 or 62 is on offer; skipped in one mode of the call |
+| 7 | Flow bits are set, or a mission is running | 311, 315, 316, 234 and 245 when one flow bit is set and a related one isn't; 118 while mission 42 runs |
+| 8 | Something in a game-time queue is due within 3 minutes near the scene | Reads a timed list in the save, skipping a few entries (our reading: the communications queue) |
+| 9 | Another test on the scene's data fails | Like test 5; scene 132 has its value forced |
+| 10 | The character's story state rules out the city | Michael while flow flag 130 is set and 131 isn't, and Trevor while flag 58 is set, lose every scene inside the box x −1,900 to 1,400, y −3,500 to 400 (Los Santos) |
+| 11 | A scene is near an active mission trigger | Checked against up to eight active triggers; skipped in one mode |
+| 12 | The weather doesn't fit | Scenes 80, 87, 88, 152, 164, 184, 185, 241, 247 and 286 read the previous and next weather |
+| 13 | The character's saved vehicle doesn't fit | For scenes such as 77, 78, 82 to 84, 89, 90, 163, 175 and 176 |
+| 14 | A per-character save bit rules it out | For example bit 25 of a flow bitset for Franklin; scene 197 is exempt |
+| 15 | The scene is too close to where you are | Within 400 m of the player's current position (15 m in the other mode), so the switch camera has some distance to travel |
+
 ## 9.5 What this means for modders
 
 - **Check before acting:** don't spawn, teleport or start scenes while `IS_PLAYER_SWITCH_IN_PROGRESS()` or while `player_timetable_scene` is running (`GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH(joaat("player_timetable_scene"))`), as 231 game scripts do.
@@ -122,7 +150,7 @@ The flow can also force a scene for the next switch with its *set character scen
 | Question | Where it goes |
 | --- | --- |
 | What each character's saved state holds (position, outfit, weapons, vehicle, money) and where in the story save | Answered in [9.4.1](#941-what-is-saved-for-each-character-second-pass) |
-| The 42-entry scene table's conditions (time, place, mission state) | Mostly answered in [9.4.2](#942-which-arrival-scene-is-picked-second-pass): the time blocks, the flag-switched lists, the weights and the mission pull; Trevor's pickers read in the leftovers pass (after 9.4.2); each scene's own validity check is third pass |
+| The 42-entry scene table's conditions (time, place, mission state) | Mostly answered in [9.4.2](#942-which-arrival-scene-is-picked-second-pass): the time blocks, the flag-switched lists, the weights and the mission pull; Trevor's pickers read in the leftovers pass (after 9.4.2); the draw and the 15-test scene check read in the leftovers pass (after Trevor's pickers); the meaning of three data tests (5, 8, 9) is left |
 | The meaning of switch flag bits 1, 2, 4, 8 | NativeDB notes plus a test card |
 | Who starts the `family_scene_*` scripts | Answered: `main`, within 100 m of five house points ([launch graph](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass)) |
 
