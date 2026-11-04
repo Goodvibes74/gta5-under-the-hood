@@ -68,6 +68,39 @@ Each flow is a function in `freemode`'s running state ([R7.1](/docs/online/07-fr
 
 The flows also advertise: `GR_FLOW_TXT_*` reminds the player of discounted vehicles, `AW_FLOW_*` announces unlocks, `SUM22_*` introduces each business's new staff.
 
+### 48.3.1 Where each flow keeps its progress (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in `freemode`. A script went through every function that uses a flow's labels, plus the functions that call those, and listed which stats they read and write. Character stats are read with one helper and written with another (`func_26015` and `func_25916` in this build); packed stat bools go through `GET_PACKED_STAT_BOOL_CODE` and `SET_PACKED_STAT_BOOL_CODE`. A flow remembers its beats in one of three ways: **bits of a character stat** (read, set a bit, written back), **packed stat bools**, or **bits in the flow's own script memory** (lost when the session ends, so the beat can repeat):
+
+| Flow | Character stats (bit words) | Packed stat bools |
+| --- | --- | --- |
+| `EXEC_FLW` | 14804 | |
+| `GR_FLOW` | 5467, 7880 | |
+| `SM_FLOW` | 6122 (read only) | |
+| `AW_FLOW` | 7880 | |
+| `VCMFLOW` | 8267, 7880 (also reads 7229, 8283) | |
+| `CH_FLOW` | 8838 (also reads 8726) | |
+| `HIF_` (Cayo Perico) | 9509, 9510, 10410, 7880, 8267 | 30516 to 30518 set; 30309 and 30520 to 30521 read |
+| `TFLOW` | 9618, 9839 | 25520 (read) |
+| `SUM22_` | | 13 read (32327 to 32338), 5 set (32335 to 32338, 32364) |
+| `XM22` | 10872 (read only) | |
+| `SUM23_FLOW` | 11950 (read only) | |
+| `SAL23_FLOW`, `SALV23_` | 12033 | 41982 |
+| `HK24_FLW` | 12444 | 51342 |
+| `TYFLOW` | | 54708 to 54710 |
+| `XM4V_FLW` | | 42108 (read) |
+| `SR2CH_FLW`, `SR2RN_FLW` | | 41836 (read) |
+
+Stat 7880 is shared by four flows (Gunrunning, Arena War, the Casino and Cayo Perico). Each uses its own bits of it, so it works as a common "story beats seen" word. `FIX_FLOW`, `IMPA_FLOW`, `BT24_FLOW`, `S25R_FLW`, `X24O_FLW` and `S25M_FLW` touch no stat in these functions: they keep their beats in script memory, or read their stats two or more calls away. The stat names behind the numbers need the stats mapping data.
+
+**One flow step by step: `EXEC_FLW`.** It stays quiet while a help message is showing, in an activity session, while the screen is faded out, and in other blocking states. Then, once two player checks pass (our reading: the player owns an office and isn't a boss yet):
+
+1. If bit 14 of stat 14804 is clear: text `EXEC_FLW_TXT_2`, help `EXEC_FLW_HLP_2`, set bit 14.
+2. Ten seconds later, if bit 15 is clear and one more check fails: help `EXEC_FLW_HLP_3`, set bit 15.
+3. Once bit 15 is set and bit 23 is clear, while the second check still holds: help `EXEC_FLW_HLP4C` or `EXEC_FLW_HLP_4` (which one depends on a second check on the player), then set bit 23.
+
+Each beat writes the stat back at once, so it fires only once per character.
+
 ## 48.4 Local and cloud missions
 
 | Kind | Where | How many | Run by |
@@ -136,7 +169,7 @@ The other seven blocks (`X25AFAU`, `X25CBAU`, `X25DSAU`, `X25FBAU`, `X25MAAU`, `
 
 | Question | Where it goes |
 | --- | --- |
-| Which stats each flow keys on, step by step | Next pass, per flow function in `freemode` |
+| Which stats each flow keys on, step by step | Partly answered in [48.3.1](#4831-where-each-flow-keeps-its-progress-leftovers-pass) (leftovers pass): the progress stat or packed bools of 18 flows, and `EXEC_FLW` step by step. Left: the other flows step by step, and six flows whose storage is further away |
 | The text of the voice-only flows (`XM4V_FLW`, `S25R_FLW`, `SR2CH_FLW` ...) | Answered in [48.2.1](#4821-the-phone-call-flows-second-pass): 40 phone calls in six DLC dialogue blocks |
 | Which update each `fm_content_*` script arrived in (compare decompile commits by build) | Answered in [48.6.1](#4861-when-each-fm_content_-script-arrived-second-pass) |
 | The flows for After Hours, Doomsday and the 2015 heists (no flow label family found) | Next pass |

@@ -725,7 +725,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| ON-014 | Which stats each flow keys on, step by step | Third pass (was: Next pass, per flow function in `freemode`) | Open |
+| ON-014 | Which stats each flow keys on, step by step | Third pass (was: Next pass, per flow function in `freemode`) | Partly answered: where 18 flows keep their progress (character stat bit words such as 14804 and 12444, a shared word 7880, packed bools such as 30516 to 30518 and 54708 to 54710), and `EXEC_FLW` step by step (bits 14, 15 and 23 of stat 14804). Left: the other flows step by step ([DLC storylines 48.3.1](/docs/online/dlc-storylines.md#4831-where-each-flow-keeps-its-progress-leftovers-pass)) |
 | ON-015 | The text of the voice-only flows (`XM4V_FLW`, `S25R_FLW`, `SR2CH_FLW` ...) | Dialogue files, R9.2 second pass | Answered: 40 phone calls whose subtitles are in six DLC dialogue blocks (`XM4VAU`, `SR2CHAU`, `SR2RNAU`, `X24OAU`, `S25MAU`, `S25RAU`), summarised per call family ([R7.9 48.2.1](/docs/online/dlc-storylines.md#4821-the-phone-call-flows-second-pass)) |
 | ON-016 | Which update each `fm_content_*` script arrived in (compare decompile commits by build) | Next pass, `git log` of the decompile | Answered: all 97 `fm_content_*` scripts dated by the decompile commit that added them ([R7.9 48.6.1](/docs/online/dlc-storylines.md#4861-when-each-fm_content_-script-arrived-second-pass)) |
 | ON-017 | The flows for After Hours, Doomsday and the 2015 heists (no flow label family found) | Third pass (was: Next pass) | Open |
