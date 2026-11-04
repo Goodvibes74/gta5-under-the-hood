@@ -82,7 +82,33 @@ Everything the game keeps about the three characters between switches sits in on
 4. **Otherwise a weighted draw.** The rest of the list is pairs of scene id and weight, for example Franklin's first block before flag 126: 175 (30), 179, 181, 182, 225 and 221 (10 each). Scenes whose checks fail are dropped and the draw runs over what is left. If a story mission is waiting for that character, scenes near the mission's blip are preferred. If nothing in a block is valid, the picker falls through to the next block's function.
 5. **The scene plays.** For 42 scene ids (9.1), `player_controller_b` starts a special `player_scene_*` script; every other scene is played by `player_timetable_scene`. After the switch, the scene id is saved as that character's last scene (unless it is one of the scenes 1 to 7, which aren't remembered).
 
-The flow can also force a scene for the next switch with its *set character scene* command ([story flow 2.4.1](/docs/gameplay/missions/story-flow.md#241-every-command-type-second-pass)), which writes the same `PLAYER_SCENE_SAVED_DATA` slot. Some scenes depend on the hour in their own way too (scene 222 becomes 194 between 21:00 and 09:00 and 193 otherwise). The full per-scene validity checks, and the pickers for Trevor, are left for the third pass.
+The flow can also force a scene for the next switch with its *set character scene* command ([story flow 2.4.1](/docs/gameplay/missions/story-flow.md#241-every-command-type-second-pass)), which writes the same `PLAYER_SCENE_SAVED_DATA` slot. Some scenes depend on the hour in their own way too (scene 222 becomes 194 between 21:00 and 09:00 and 193 otherwise). The full per-scene validity checks are left for the third pass.
+
+**Trevor's pickers** (*leftovers pass*, **Verified** in `player_controller_b` at commit `6c18d3e8b`; the meaning of the flags and missions is our reading). Trevor's are built differently from Franklin's and Michael's.
+
+- **Three blocks of hours, not four:** 00:00 to 05:59, 06:00 to 14:59 and 15:00 to 23:59.
+- **Two parts per block.** Each block has two parts, and each part only applies while its flow flag is **not** set: part A needs flag 58 unset, part B needs flag 59 unset.
+  - When both flags are unset, the scenes of both parts go into the same weighted draw.
+  - When both are set, the block adds no scenes of its own (what the draw then does is in the shared code, `func_636` at this build, not read here).
+- **Part A (flag 58 not set).**
+  - **Forced first:** while story mission 65 is not completed, scenes 296, 297 or 298 win if one is valid.
+  - **00:00 to 05:59:** 292 to 295 (weight 7.5 each) and 296 to 298 (1 each), only while mission 65 is not completed; 235 and 238 (5 each); 236 and 237 (2.5 each, only when mission 85 isn't on offer).
+  - **06:00 to 14:59:** 291 (20), only while mission 65 is not completed.
+  - **15:00 to 23:59:** 250 and 251 (5 each, only while flow flag 1 is unset); 252 and 253 (5 each, once mission 30 is completed); 235 to 238 as in the first block.
+- **Part B (flag 59 not set).**
+  - **Forced first:** scenes 267 or 270 win if one is valid.
+  - **In every block:**
+    - 305 (5), when mission 12 is completed, mission 93 isn't, and missions 93 and 91 aren't on offer;
+    - 309 (10), when `Global_114904.f_24911[2]` is 2;
+    - 315 and 316 (5 each).
+  - **In the two later blocks:**
+    - 306 (5), when Trevor carries a sniper rifle or a heavy sniper and two state bits are clear;
+    - 307 and 308 (5 each).
+  - **In the first block:** 304 and 245 (15 each).
+- **A remainder in each part.** Each part ends with a fixed weight spread evenly over a pool of everyday scenes that depends on the hour.
+  - **Part A** adds 50, 80 or 70 by block, over scenes in the 239 to 290 range (only part of this pool was read).
+  - **Part B** adds 30, 40 or 30. In that pool, scene 312 needs a pistol, scene 314 needs mission 63 completed, and scene 258 is dropped when `Global_114904.f_24911[13]` is 2.
+- **Mission numbers** are indexes into the story mission table (`func_671` reads its completed field; `func_659` checks whether a mission is on offer, in our reading).
 
 ## 9.5 What this means for modders
 
@@ -96,7 +122,7 @@ The flow can also force a scene for the next switch with its *set character scen
 | Question | Where it goes |
 | --- | --- |
 | What each character's saved state holds (position, outfit, weapons, vehicle, money) and where in the story save | Answered in [9.4.1](#941-what-is-saved-for-each-character-second-pass) |
-| The 42-entry scene table's conditions (time, place, mission state) | Mostly answered in [9.4.2](#942-which-arrival-scene-is-picked-second-pass): the time blocks, the flag-switched lists, the weights and the mission pull; each scene's own validity check and Trevor's pickers are third pass |
+| The 42-entry scene table's conditions (time, place, mission state) | Mostly answered in [9.4.2](#942-which-arrival-scene-is-picked-second-pass): the time blocks, the flag-switched lists, the weights and the mission pull; Trevor's pickers read in the leftovers pass (after 9.4.2); each scene's own validity check is third pass |
 | The meaning of switch flag bits 1, 2, 4, 8 | NativeDB notes plus a test card |
 | Who starts the `family_scene_*` scripts | Answered: `main`, within 100 m of five house points ([launch graph](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass)) |
 
