@@ -420,7 +420,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | AI-024 | AI profiles of every DLC vehicle (all `handling.meta` files) | Second pass, with the DLC scan | Open |
 | AI-025 | How `SET_DRIVER_ABILITY` and `_AGGRESSIVENESS` change the curve or braking | In-game test | Open |
-| AI-026 | What `TASK_VEHICLE_TEMP_ACTION`'s action numbers mean, with Rockstar's counts | Second pass | Open |
+| AI-026 | What `TASK_VEHICLE_TEMP_ACTION`'s action numbers mean, with Rockstar's counts | Second pass | Answered: the 15 literal action numbers Rockstar uses, with counts, matched to NativeDB's community meanings (**Known**: 24 and 1 brake, 4 and 5 turn while braking, 30 burnout, 6 hard brake, 9 gentle acceleration ...). The in-game check stays AI-021 (leftovers pass, [driving AI](/docs/ai/driving-ai.md)) |
 | AI-027 | Road nodes and how routes are planned | R17.5 (navigation) | Partly answered: node, link and junction counts; route planning is engine code (leftovers pass, [navigation](/docs/ai/navigation.md#3441-navmesh-and-road-node-counts-leftovers-pass)) |
 
 ### [Navigation and pathfinding](/docs/ai/navigation.md) (R17.5)
