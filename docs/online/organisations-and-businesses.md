@@ -223,7 +223,7 @@ The winner's sum is then worked out in this order, rounding after each step: (ca
 
 **The warehouse goods.** Three seven-case functions read the goods tunables, one value per goods type:
 
-| Type | Goods (**Known** order) | Value per unit | Capacity | Units per production step |
+| Type | Goods (**Known** order) | Value per unit | Capacity | Units from one source job |
 | ---: | --- | ---: | ---: | ---: |
 | 0 | Cargo and shipments | $10,000 | 50 | 1 |
 | 1 | Sporting goods | $5,000 | 100 | 2 |
@@ -234,7 +234,7 @@ The winner's sum is then worked out in this order, rounding after each step: (ca
 | 6 | Cash creation | $4,725 | 40 | 3 |
 
 - **Which column is which.** The value column is multiplied by a unit count, so it is the sale value of each unit. The capacity column is divided by 5 elsewhere.
-- **The units column.** It is multiplied by a global multiplier and an event multiplier (both 1 by default). That makes it the amount added per production step (*probable*).
+- **The units column** (*corrected in the leftovers pass, 2026-11-04*, **Verified**). These seven tunables are read only by `fm_content_club_source`, Yohan's source missions. They are multiplied by a multiplier tunable and paid with the transaction `service_earn_yohan_source_goods` (`NETWORK_YOHAN_SOURCE_GOODS`). So they are the units one source job adds for its goods type, not a production step, as the second pass had guessed (*probable*).
 - **Not traced.** How long a step takes, and how technicians are assigned to types. That is third-pass question ON-077.
 
 ### 46.5.4 How production time is kept (leftovers pass)
@@ -288,7 +288,7 @@ These are Online systems: read them, never mod them in Online. For an offline or
 
 | Question | Where it goes |
 | --- | --- |
-| The nightclub's production and popularity numbers (their tunable names are hashed) | Mostly answered in [46.5.3](#4653-the-nightclubs-safe-and-warehouse-second-pass): the safe pay bands, cap and timer, and each goods type's value, capacity and units per step |
+| The nightclub's production and popularity numbers (their tunable names are hashed) | Mostly answered in [46.5.3](#4653-the-nightclubs-safe-and-warehouse-second-pass): the safe pay bands, cap and timer, and each goods type's value, capacity and units one Yohan source job adds |
 | How long a nightclub production step takes and how technicians are assigned (ON-077) | Third pass, the business hub code in `freemode` |
 | Special cargo warehouse capacities (16, 42 and 111 crates are **Known**) and where the scripts keep them | Answered in [46.5.1](#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass) |
 | How production is stored in stats and advanced while offline or in another session | Partly answered in [46.5.4](#4654-how-production-time-is-kept-leftovers-pass) (leftovers pass): production runs on a network-time timer, and only the time left to the next unit carries over (broadcast data `.f_9`), so offline time isn't counted (our reading). A second biker timer runs on cloud time and is backdated by the units already held. Left: the stat load and save |
