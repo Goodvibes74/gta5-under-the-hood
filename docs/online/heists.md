@@ -146,6 +146,20 @@ If none of these is above 0, it returns a value from the loaded job's content da
 
 The launcher requests these movies and draws them in the room with `DRAW_SCALEFORM_MOVIE_3D_SOLID` (5 calls). `am_mp_property_int`, the apartment interior, has the same name function, but only checks that `heist_pre` is loaded.
 
+### 47.6.2 Where each heist's story talks (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in the decompile; the contacts are **Known** (the DLC storylines table, [48.2](/docs/online/dlc-storylines.md#482-updates-packs-and-flows)). Each heist's story dialogue sits in a few dialogue blocks, and the scripts name each conversation root (`<block prefix>_<name>`):
+
+| Heist | Script | Dialogue blocks (conversation roots named) | Contacts (**Known**) |
+| --- | --- | --- | --- |
+| Classic heists | `freemode` | Lester's calls and texts, the `HEIST_*` help (48.2.2) | Lester |
+| Doomsday | `freemode` (`gb_gang_ops_planning` names no block) | `XMFMAUD` (64 roots, `XMFM_*`) | Lester, Agent 14 |
+| Diamond Casino | `gb_casino_heist_planning` | `HS3LEAU` (76 roots `HS3LE_*`), `HS3PRAU` (4 roots `HS3PR_*`) | Lester, Yung Ancestor, Packie |
+| Cayo Perico | `heist_island_planning` | `HS4PAAU` (53 roots `HS4PA_*`, such as `HS4PA_PS_*` on the planning screen) | Miguel Madrazo, Pavel |
+| Cayo Perico preps | `fm_content_island_heist` | `HS4PAAU` (504 roots), `HS4PSAU` (75), `H4SCPAU` | as above |
+
+Our reading of the block names: `LE` is Lester and `PA` is Pavel. The speakers and what each line says are in the packs' dialogue text, which wasn't read for this pass.
+
 ## 47.7 What this means for modders
 
 These are Online systems: read them, never mod them in Online. For a story-mode heist mod:
@@ -165,4 +179,4 @@ These are Online systems: read them, never mod them in Online. For a story-mode 
 | How the classic apartment board is drawn and which script owns it | Answered in [47.6.1](#4761-casino-targets-and-elite-challenges-second-pass): `fmmc_launcher`, with `heist_mp`, `heistmap_mp` and `heist_pre` drawn in 3D |
 | Elite challenge rewards for each heist | Mostly answered in [47.6.1](#4761-casino-targets-and-elite-challenges-second-pass): the tunable values; the classic heists' real values are in the mission controller |
 | The classic heists' elite rewards and targets: they come from each finale's job file, not the scripts (ON-076) | Needs the job files (UGC JSON of the five finales) |
-| The heist story arcs and their contacts | [R7.9](/ROADMAP.md) |
+| The heist story arcs and their contacts | Partly answered in [47.6.2](#4762-where-each-heists-story-talks-leftovers-pass) (leftovers pass): which script and which dialogue blocks carry each heist's story, with root counts. Left: the lines themselves (dialogue text, data) |
