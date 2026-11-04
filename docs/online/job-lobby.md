@@ -95,7 +95,13 @@ Survival picks `FM_Survival_Controller` or `FM_Horde_Controler` from one flag of
 1. The player's broadcast data records the job instance and activity, and a "launching" bit is set.
 2. If that script is already active for this instance (`NETWORK_IS_SCRIPT_ACTIVE`), nothing is started.
 3. The stack size comes from the activity: **89,500** for all the job controllers, minigames and the larger boss jobs; 8,344, 5,050, 2,050 or 1,424 for smaller events.
-4. With the screen faded out where required, `START_NEW_SCRIPT_WITH_ARGS(name, args, 21, stack)` starts it with a 21-value argument block (the instance and the activity among them), then `SET_SCRIPT_AS_NO_LONGER_NEEDED`.
+4. With the screen faded out where required, `START_NEW_SCRIPT_WITH_ARGS(name, args, 21, stack)` starts it with a 21-value argument block (the instance and the activity among them), then `SET_SCRIPT_AS_NO_LONGER_NEEDED`. *Leftovers pass* (**Verified** at commit `6c18d3e8b`): what the block's fields hold, and where the job value `.f_2` comes from.
+   - **The fields.** `.f_16` is the instance. `.f_2` is the job value, and `.f_1` travels with it.
+   - **Where `.f_2` starts.** Each corona is registered in `Global_4526171` (26 values a corona), and its `.f_15` is a small request with the value at `.f_2`. Only three scripts write these requests: `freemode`, `fmmc_launcher` and `am_npc_invites`. About 20 scripts use the corona list, among them the `am_*` free-mode events, two biker missions and the mission controllers.
+   - **How it reaches the start block.** When the player uses a corona, `fmmc_launcher` copies that request into `Global_4526143.f_18`, and from there into the player's broadcast data (`Global_1845250[p].f_36.f_2` and `.f_2`). The value goes into `.f_2` of the start block.
+   - **Special values.** Values 40, 61, 62 and 63 make the launcher read extra data for the job.
+   - **After the start.** The started script writes its own `.f_2`, `.f_1` and `.f_16` back into `Global_1845250[p].f_36` through a shared helper found in 19 scripts. `mg_race_to_point` writes 32 there itself.
+   - **Our reading:** `.f_2` tells the started script which activity or variant the corona was for.
 
 **The 21 start-argument values** (*second pass*, **Verified** in `fmmc_launcher` and the controllers' entry code). The block is a shared launch structure, and the launcher fills only two of its values. The rest keep their defaults: -1 at `.f_1`, `.f_9`, `.f_19` and `.f_20`, and 0 everywhere else.
 
@@ -170,7 +176,7 @@ Then `freemode` copies the entry into the transition data (`Global_2686090`) and
 | How the corona's settings are stored and sent to the controller | Answered in [13.5](#135-from-job-type-to-running-controller) |
 | How playlists and series step from job to job (`FMMC_PlayList_Controller`) | Answered in [13.7.1](#1371-playlists-and-walk-in-markers-second-pass) |
 | How a walk-in job marker in freemode hands over to the launcher | Answered in [13.7.1](#1371-playlists-and-walk-in-markers-second-pass) |
-| What the job value in start argument `.f_2` is, and what lobby flag bit 1 and `.f_880` are raised for | Third pass, the `freemode` and `maintransition` writers |
+| What the job value in start argument `.f_2` is, and what lobby flag bit 1 and `.f_880` are raised for | `.f_2` traced in the leftovers pass (step 4 of the start sequence): it is the value written into its corona's request (by `freemode`, `fmmc_launcher` or `am_npc_invites`). Lobby bit 1 is still open: third pass, the `freemode` and `maintransition` writers |
 
 ## 13.10 Test cards
 
