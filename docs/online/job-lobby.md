@@ -54,7 +54,7 @@ The state setter is called with a fixed state 38 times; the busiest source is th
 | --- | --- | --- |
 | `.f_3` bit 0 (return to a job in progress) | `main_persistent` | 9, after putting the player back at the stored position |
 | `.f_693` (the player is already in the job's session) | `freemode`, `maintransition`, `main_persistent`, the launcher | 9 when the job is ready, otherwise 4 (the lobby) or 5 (cleanup) |
-| Bit 1 | `freemode`, `maintransition`, `main_persistent` | 8 |
+| Bit 1 (the player has joined another player's transition; see below) | `freemode`, `maintransition`, `main_persistent`, the launcher | 8 |
 | Bit 2 (a job picked inside a property) | the property scripts (`am_mp_property_int`, `am_mp_auto_shop`, `am_mp_bail_office`, `am_mp_submarine` ...) | 8 |
 | `.f_14` or `.f_880` (play again or a quick job) | the job controllers when they end (`.f_14`), `freemode` (`.f_880`) | 8 |
 | Bit 5 (a job picked from a list or board) | the phone apps (`appmpjoblistnew`, `appjipmp`, `appsecuroserv`, the business apps), the planning boards (`heist_island_planning`, `gb_casino_heist_planning`, `gb_gang_ops_planning`), `freemode`'s walk-in markers | 8 |
@@ -62,6 +62,13 @@ The state setter is called with a fixed state 38 times; the busiest source is th
 | A join request in another block | `freemode` | joins that player's job, then cleanup |
 | `.f_723` (the job is already loaded) | `freemode`, `maintransition` | 9 |
 | `.f_870` (next playlist job) | `FMMC_PlayList_Controller` | 10 |
+
+**Lobby bit 1: joined another player's transition** (*leftovers pass, 2026-11-04*, **Verified**). The bit is bit 1 of the lobby state's first word (`Global_2685150`). It is set in seven places across four scripts:
+
+- **`freemode`, `maintransition` and the launcher** each set it from one copy of the same routine. The routine checks that a given player has started a transition (`NETWORK_HAS_PLAYER_STARTED_TRANSITION`), that the details are valid (`NETWORK_ARE_TRANSITION_DETAILS_VALID`), and that `NETWORK_JOIN_TRANSITION` on that player succeeded. Only then does it raise the bit, after two other setters. In plain terms: this player has just joined someone else's job transition, so the launcher must find that job.
+- **`main_persistent`** sets it from one helper called in four places. Two are in its transition routine (near the labels `FMMC_PLYLOAD` and `FMMC_STTRANOC`), one is in a routine that calls `NETWORK_RETAIN_ACTIVITY_GROUP`, and one is in a routine that sets a transition state global to 8. We have not read what each of these branches stands for.
+
+The bit is cleared by the launcher, `freemode` and `maintransition`, once each. When idle sees it, the launcher goes to state 8 (finding a job). It does the same as for bit 2, plus one more cleanup call, and clears three bits of the player's broadcast word `.f_36.f_18`. The one-line reader of the bit is shared header code found in 293 scripts.
 
 ## 13.4 The activity table
 
@@ -176,7 +183,7 @@ Then `freemode` copies the entry into the transition data (`Global_2686090`) and
 | How the corona's settings are stored and sent to the controller | Answered in [13.5](#135-from-job-type-to-running-controller) |
 | How playlists and series step from job to job (`FMMC_PlayList_Controller`) | Answered in [13.7.1](#1371-playlists-and-walk-in-markers-second-pass) |
 | How a walk-in job marker in freemode hands over to the launcher | Answered in [13.7.1](#1371-playlists-and-walk-in-markers-second-pass) |
-| What the job value in start argument `.f_2` is, and what lobby flag bit 1 and `.f_880` are raised for | `.f_2` traced in the leftovers pass (step 4 of the start sequence): it is the value written into its corona's request (by `freemode`, `fmmc_launcher` or `am_npc_invites`). Lobby bit 1 is still open: third pass, the `freemode` and `maintransition` writers |
+| What the job value in start argument `.f_2` is, and what lobby flag bit 1 and `.f_880` are raised for | `.f_2` traced in the leftovers pass (step 4 of the start sequence): it is the value written into its corona's request (by `freemode`, `fmmc_launcher` or `am_npc_invites`). Lobby bit 1 is answered in the leftovers pass: it is raised once the player has joined another player's transition (`NETWORK_JOIN_TRANSITION`), and it sends idle to state 8 (see the flag table). Left: `.f_880`'s exact meaning and `main_persistent`'s four branches |
 
 ## 13.10 Test cards
 
