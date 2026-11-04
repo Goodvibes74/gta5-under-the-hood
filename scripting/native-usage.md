@@ -119,6 +119,27 @@ Two imported hashes are not in NativeDB at all: `0x8F5D1AD832AEB06C` (185 script
 
 **`TRIGGER_SCRIPT_EVENT` is never used by the game.** Rockstar's scripts send script events only through `_SEND_TU_SCRIPT_EVENT_NEW` (since build 3095; 435 scripts, 6,982 calls). Mods that still send events with `TRIGGER_SCRIPT_EVENT` use a path the game itself abandoned (relevant to [freemode's 381 script events](/docs/online/07-freemode.md)).
 
+### Story mode and Online: which natives each needs (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** counts over all 1,145 scripts of the build 1.0.3725.0 decompile. The scripts were sorted into three classes:
+
+- **Story only (430 scripts):** the [story and shared catalog](/docs/gameplay/missions/story-script-catalog.md) without its debug and cut-prototype groups (113 scripts, left out), minus every script that marks itself a network script (`NETWORK_SET_THIS_SCRIPT_IS_NETWORK_SCRIPT`).
+- **Both modes (58):** the catalog scripts that do mark themselves network scripts. These are things that also run in Online: vending machines, the cinema, the strip club, casino games, arcade cabinets, `golf_mp`. Also the shared framework from the Online catalog's core group that runs in story too: `main`, `main_persistent`, `startup` and its test variants, `ingamehud`, the pause menu scripts, `code_controller`, `building_controller`, `stats_controller`, `standard_global_reg`, `error_listener`.
+- **Online (544):** every other script.
+
+Each named native was then sorted by the classes of the scripts that contain it (6,471 natives; the 105 that the decompiler writes as `unk_0x...` are not included):
+
+| Class | Natives | Examples (scripts) |
+| --- | ---: | --- |
+| In both story and Online scripts | 3,765 | |
+| **Online scripts only: story mode never needs them** | **1,845** | session checks (`NETWORK_SESSION_IS_PRIVATE` 182, `NETWORK_SESSION_IS_SOLO` 174), `GET_PLAYER_FAKE_WANTED_LEVEL` 168, `PLAYSTATS_EARNED_MC_POINTS` 167, `GET_SAFE_ZONE_SIZE` 196, `BEGIN_TEXT_COMMAND_CLEAR_PRINT` 215 |
+| Story-only scripts only | 634 | mission stats and replays (`PLAYSTATS_MISSION_CHECKPOINT` 150, `STOP_REPLAY_RECORDING` 143, `REPLAY_START_EVENT` 107), mission news stories (`UNLOCK_MISSION_NEWS_STORY` 68), gameplay hint cameras, `ADD_VEHICLE_UPSIDEDOWN_CHECK` 44 |
+| Story and both-mode scripts, no Online script | 227 | `SET_MISSION_FLAG` 200, `START_FIRING_AMNESTY` 161, `SPECIAL_ABILITY_CHARGE_ON_MISSION_FAILED` 96, `LOAD_SCENE` 47 |
+
+**By namespace** (decompiler names): `APP` is Online only (17 of 17), as are 43 of 57 `DATAFILE` natives (the UGC files) and 384 of 825 `NETWORK` natives. Story only are all 9 `ITEMSET` natives, 11 of 17 `RECORDING` (the replay editor's mission recording), 28 of 48 `PHYSICS` (ropes and glass) and 7 of 13 `EVENT`. `PED` (87), `VEHICLE` (71), `TASK` (69), `MISC` (66) and `AUDIO` (61) have the most story-only natives.
+
+**What it does and doesn't say.** "Story mode never needs" means no story-capable script contains the native. It doesn't mean the native fails in story mode: a mod can call an Online-only native in story mode, and whether it works there is SCR-003, an in-game test. Shared helper code also pulls Online-flavoured natives into story scripts (see [what the compiler keeps](/scripting/native-namespace-map.md#what-the-compiler-keeps-leftovers-pass)), so the 3,765 shared natives include natives that story scripts contain but seldom run.
+
 ## 9.7 Using it
 
 ```powershell
@@ -148,7 +169,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\native-usage.ps1 -Nati
 | --- | --- |
 | What `0x8F5D1AD832AEB06C` does, and confirm `0x0F7082C60FB479EF` returns a creator budget cost (SCR-004) | In-game test or the executable |
 | Whether the 29 "build 3889" natives exist in the 3725 executable (no 3725 script calls them) (SCR-005) | In-game test with a small C++ check |
-| A story-only vs Online-only split of every native (which natives story mode never needs) | R0.8 namespace coverage map, using the script groups from R0.1 and the Online catalog |
+| A story-only vs Online-only split of every native (which natives story mode never needs) | Answered in [story mode and Online](#story-mode-and-online-which-natives-each-needs-leftovers-pass) (leftovers pass): 1,845 natives appear only in Online scripts, 634 only in story-only scripts, 3,765 in both |
 | What the table order is (not first use; maybe first use in compiled code order) | Second pass, compare with a YSC dump |
 
 ## 9.10 Test cards
