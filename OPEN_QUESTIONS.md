@@ -483,7 +483,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | WLD-001 | A list of IPL names with the interior or building each one controls | Second pass: match IPL names to the ymaps they load | Mostly answered: all 410 literal IPL names are script-loaded ymaps, 134 with an interior; by prefix family; a place-by-place list is third pass (leftovers pass, [interiors and IPLs](/docs/world/interiors-and-ipls.md)) |
-| WLD-002 | What `building_controller` swaps, building by building | Second pass | Open |
+| WLD-002 | What `building_controller` swaps, building by building | Second pass | Answered: one function describes 198 buildings. 180 have IPL state names (up to three states; `REMOVE_ALL_STATES` clears all of them), three are FIB building model swaps, and the rest work through areas or interiors. The full table is in the guide (leftovers pass, [interiors and IPLs](/docs/world/interiors-and-ipls.md#what-building_controller-swaps-leftovers-pass)) |
 | WLD-003 | Which Online interiors work offline with IPLs alone | Test card 2; second pass | Open |
 
 ### [Map data](/docs/world/map-data.md) (R4.6)
