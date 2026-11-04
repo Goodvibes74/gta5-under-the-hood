@@ -42,7 +42,7 @@ The order Rockstar uses, with how many scripts use each step (**Verified** count
 3. `ADD_PATROL_ROUTE_LINK(1, 2)`, `(2, 3)`, `(3, 4)`, `(4, 1)`: a closed loop.
 4. `CLOSE_PATROL_ROUTE`, `CREATE_PATROL_ROUTE`, then `TASK_PATROL(ped, name, 0, true, true)`.
 
-**Patrols in `fm_content_*` scripts** (*leftovers pass*, **Verified** in all 92 of the 97 `fm_content_*` scripts that build routes; the other five are `fm_content_mp_intro`, `_drone`, `_hsw_setup`, `_hsw_time_trial` and `_test`):
+**Patrols in `fm_content_*` scripts** (*leftovers pass*, **Verified** in all 92 `fm_content_*` scripts that build routes; of the 97 `fm_content_*` scripts, the five without one are `fm_content_mp_intro`, `_drone`, `_hsw_setup`, `_hsw_time_trial` and `_test`):
 
 - **The data.** Each script carries a "patrol" block in its mission data. A validator in the same script names it `data.Patrol.iCount`, bounded by `MAX_NUM_PATROLS`, beside `data.Ped`, `data.Prop`, `data.TriggerArea` and the other blocks. Each patrol entry names the ped it belongs to (one route per ped) and holds a list of nodes: a position, a look-at position and a wait time. The script's variation set-up fills these through per-mission function pointers (`Call_Loc`), so, as for GP-021, the decompile shows the reader but not the values.
 - **Node limit per route** is a constant compiled into each script: 1 node in 55 scripts, 2 in 6, 3 in 4, 4 in 3, 5 in 10, 6 in 4, 7 in 2, 8 and 9 in one each, 10 in 5, and 14 in one.
