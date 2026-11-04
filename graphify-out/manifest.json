@@ -18,10 +18,10 @@
     "semantic_hash": "e8c326deccd5ad357ff28c29fd8f1323"
   },
   "OPEN_QUESTIONS.md": {
-    "mtime": 1793812001.913329,
-    "seen": 1793812389.2873893,
-    "ast_hash": "b9fa8ca13cd675cf5cb8f37471059761",
-    "semantic_hash": "b9fa8ca13cd675cf5cb8f37471059761"
+    "mtime": 1793819985.73621,
+    "seen": 1793820291.529934,
+    "ast_hash": "bed11ab34e3321db70fc80dcea665368",
+    "semantic_hash": "bed11ab34e3321db70fc80dcea665368"
   },
   "README.md": {
     "mtime": 1793802338.6185532,
@@ -42,10 +42,10 @@
     "semantic_hash": "f2934a443d5317f9565306b3cb1d48a2"
   },
   "docs/00-getting-started/README.md": {
-    "mtime": 1793802338.6203172,
-    "seen": 1793810416.2563853,
-    "ast_hash": "cbcc02afd9405b991de698bec6d00ed7",
-    "semantic_hash": "cbcc02afd9405b991de698bec6d00ed7"
+    "mtime": 1793819985.73621,
+    "seen": 1793820291.5299444,
+    "ast_hash": "394be2bbd7b43ac78728bb5c4db4bf58",
+    "semantic_hash": "394be2bbd7b43ac78728bb5c4db4bf58"
   },
   "docs/00-getting-started/boot.md": {
     "mtime": 1793811590.1471016,
@@ -114,16 +114,16 @@
     "semantic_hash": "b122d6530a1b8a234433436da4bb73f4"
   },
   "docs/ai/ambient-life.md": {
-    "mtime": 1793805382.0608885,
-    "seen": 1793810416.2563891,
-    "ast_hash": "5803057202296314de911a9f786c215d",
-    "semantic_hash": "5803057202296314de911a9f786c215d"
+    "mtime": 1793819985.74021,
+    "seen": 1793820291.5299523,
+    "ast_hash": "494dddd53c859b89f3c43899b65fadaf",
+    "semantic_hash": "494dddd53c859b89f3c43899b65fadaf"
   },
   "docs/ai/combat-and-perception.md": {
-    "mtime": 1793811959.9924128,
-    "seen": 1793812389.287396,
-    "ast_hash": "94b11b6af0bc73098542504fc653666b",
-    "semantic_hash": "94b11b6af0bc73098542504fc653666b"
+    "mtime": 1793819985.74021,
+    "seen": 1793820291.5299556,
+    "ast_hash": "9d190f748376a6d2b55bfe6ef34ca3cb",
+    "semantic_hash": "9d190f748376a6d2b55bfe6ef34ca3cb"
   },
   "docs/ai/decisions-and-personalities.md": {
     "mtime": 1793811892.3285723,
@@ -138,10 +138,10 @@
     "semantic_hash": "dceeda8a81bc5c195cb06b1cf2193f44"
   },
   "docs/ai/driving.md": {
-    "mtime": 1793811892.327816,
-    "seen": 1793812389.287398,
-    "ast_hash": "69f07a84e9fed4eb299fdfe196379491",
-    "semantic_hash": "69f07a84e9fed4eb299fdfe196379491"
+    "mtime": 1793819985.74021,
+    "seen": 1793820291.5299597,
+    "ast_hash": "c53c81a3f70566fe35e222709e5a08fe",
+    "semantic_hash": "c53c81a3f70566fe35e222709e5a08fe"
   },
   "docs/ai/navigation.md": {
     "mtime": 1793811892.3282852,
@@ -150,10 +150,10 @@
     "semantic_hash": "f2e376cc3b914fb7d3e7dfb040bfbf19"
   },
   "docs/ai/perception-and-events.md": {
-    "mtime": 1793802338.6216743,
-    "seen": 1793810416.2563968,
-    "ast_hash": "da0c4d2eebed2a0c288a856ed5d83fcc",
-    "semantic_hash": "da0c4d2eebed2a0c288a856ed5d83fcc"
+    "mtime": 1793819985.74021,
+    "seen": 1793820291.5299628,
+    "ast_hash": "f94c1fc3377ce05ea3cc825426ee2361",
+    "semantic_hash": "f94c1fc3377ce05ea3cc825426ee2361"
   },
   "docs/ai/police-and-services.md": {
     "mtime": 1793802338.6216743,
@@ -300,10 +300,10 @@
     "semantic_hash": "2babc10a66842f4f4b93c29015b9199c"
   },
   "docs/entities/peds/ragdoll.md": {
-    "mtime": 1793662658.70372,
-    "seen": 1793688378.7469974,
-    "ast_hash": "f6552be658ebbd8667b4e872456951ab",
-    "semantic_hash": "f6552be658ebbd8667b4e872456951ab"
+    "mtime": 1793819985.74421,
+    "seen": 1793820291.5299664,
+    "ast_hash": "60251162ff7edc748f5e0d41669bd10f",
+    "semantic_hash": "60251162ff7edc748f5e0d41669bd10f"
   },
   "docs/entities/spawning/README.md": {
     "mtime": 1793662658.70372,
@@ -312,10 +312,10 @@
     "semantic_hash": "6d59e17538ad47c667edf6e064d4c566"
   },
   "docs/entities/spawning/population.md": {
-    "mtime": 1793811892.3304589,
-    "seen": 1793812389.2874043,
-    "ast_hash": "09cd6aecfcec6a59c20448e566964c89",
-    "semantic_hash": "09cd6aecfcec6a59c20448e566964c89"
+    "mtime": 1793819985.74421,
+    "seen": 1793820291.5299702,
+    "ast_hash": "1730790a49263f9546e6884bb2d965a3",
+    "semantic_hash": "1730790a49263f9546e6884bb2d965a3"
   },
   "docs/entities/spawning/scenarios.md": {
     "mtime": 1793802338.627107,
@@ -342,10 +342,10 @@
     "semantic_hash": "5d85da46aed1a4ffa023b03cb118a290"
   },
   "docs/entities/vehicles/vehicles.md": {
-    "mtime": 1793802338.627532,
-    "seen": 1793810416.2564268,
-    "ast_hash": "81002a10e90d76ef88f42ebc535d65fc",
-    "semantic_hash": "81002a10e90d76ef88f42ebc535d65fc"
+    "mtime": 1793819985.7482102,
+    "seen": 1793820291.5299737,
+    "ast_hash": "aae9c48767cb679aafc06d1d9fe7ce78",
+    "semantic_hash": "aae9c48767cb679aafc06d1d9fe7ce78"
   },
   "docs/gameplay/README.md": {
     "mtime": 1793802338.627532,
@@ -660,10 +660,10 @@
     "semantic_hash": "4203a41b6b5a4566e7daa52b7d9f4a4a"
   },
   "docs/physics/collision-and-materials.md": {
-    "mtime": 1793802338.6367483,
-    "seen": 1793810416.256472,
-    "ast_hash": "68b4a56a2db0d9374f7f3433b18b5fe0",
-    "semantic_hash": "68b4a56a2db0d9374f7f3433b18b5fe0"
+    "mtime": 1793819985.75621,
+    "seen": 1793820291.5299773,
+    "ast_hash": "8f3072191b86ed5e0b0001eb77b5dfa2",
+    "semantic_hash": "8f3072191b86ed5e0b0001eb77b5dfa2"
   },
   "docs/physics/fire-explosions-projectiles.md": {
     "mtime": 1793802338.6367483,
@@ -672,10 +672,10 @@
     "semantic_hash": "1636e934438a18365ef0089db73b23e9"
   },
   "docs/physics/vehicle-handling.md": {
-    "mtime": 1793811959.9960668,
-    "seen": 1793812389.287414,
-    "ast_hash": "6b47a077ae64eaca500ddbe144da614e",
-    "semantic_hash": "6b47a077ae64eaca500ddbe144da614e"
+    "mtime": 1793819985.75621,
+    "seen": 1793820291.5299811,
+    "ast_hash": "1fbf74b9dcddba28804b62e469304cf7",
+    "semantic_hash": "1fbf74b9dcddba28804b62e469304cf7"
   },
   "docs/physics/water-and-buoyancy.md": {
     "mtime": 1793811892.3346708,
@@ -696,10 +696,10 @@
     "semantic_hash": "a03b57aae2ef9fd4a4dde2a7b42b9a81"
   },
   "docs/rendering/cameras.md": {
-    "mtime": 1793802338.6374965,
-    "seen": 1793810416.2564788,
-    "ast_hash": "5c93d2afa7534a312c5d4953f31a814c",
-    "semantic_hash": "5c93d2afa7534a312c5d4953f31a814c"
+    "mtime": 1793819985.76021,
+    "seen": 1793820291.5299852,
+    "ast_hash": "e1d5abcbeefb3eceebd76fb8a31516a1",
+    "semantic_hash": "e1d5abcbeefb3eceebd76fb8a31516a1"
   },
   "docs/rendering/particles-and-decals.md": {
     "mtime": 1793802338.6374965,
@@ -738,10 +738,10 @@
     "semantic_hash": "33fdd1a971f37e888e9deeb1f9218d37"
   },
   "docs/ui/scaleform.md": {
-    "mtime": 1793662658.712525,
-    "seen": 1793688378.7471626,
-    "ast_hash": "e4eb4399bfb2c5b3cbec9b61d0e80610",
-    "semantic_hash": "e4eb4399bfb2c5b3cbec9b61d0e80610"
+    "mtime": 1793819985.76021,
+    "seen": 1793820291.5299883,
+    "ast_hash": "fd280c1e052031b750a9bd62a7835ebb",
+    "semantic_hash": "fd280c1e052031b750a9bd62a7835ebb"
   },
   "docs/ui/server-backed-screens.md": {
     "mtime": 1793662658.712525,
@@ -1026,10 +1026,10 @@
     "semantic_hash": "b63fc4ec0101162595e16a0ebb200df3"
   },
   "scripting/native-usage-index.md": {
-    "mtime": 1793662658.9388492,
-    "seen": 1793688378.7472677,
-    "ast_hash": "a42ae1d490c2cefb8ec7f6a6c402c8bc",
-    "semantic_hash": "a42ae1d490c2cefb8ec7f6a6c402c8bc"
+    "mtime": 1793819986.14821,
+    "seen": 1793820291.529995,
+    "ast_hash": "9e73bfc2c53208d0cfc9f0591c43cbe2",
+    "semantic_hash": "9e73bfc2c53208d0cfc9f0591c43cbe2"
   },
   "scripting/native-usage.md": {
     "mtime": 1793806231.0941033,
@@ -1038,16 +1038,16 @@
     "semantic_hash": "63e50f40cd08f10ce5db69f645788871"
   },
   "scripting/native-usage/APPS.md": {
-    "mtime": 1793662658.9388492,
-    "seen": 1793688378.7472732,
-    "ast_hash": "f0a680b866363966d1a974f65fe30000",
-    "semantic_hash": "f0a680b866363966d1a974f65fe30000"
+    "mtime": 1793819986.14821,
+    "seen": 1793820291.529998,
+    "ast_hash": "d68c85fa3beb961c889836ec680419f4",
+    "semantic_hash": "d68c85fa3beb961c889836ec680419f4"
   },
   "scripting/native-usage/AUDIO.md": {
-    "mtime": 1793662658.9401956,
-    "seen": 1793688378.747275,
-    "ast_hash": "291eb37d2740ecdb16e7d63efcacdfff",
-    "semantic_hash": "291eb37d2740ecdb16e7d63efcacdfff"
+    "mtime": 1793819986.15221,
+    "seen": 1793820291.5300019,
+    "ast_hash": "16eb5f43b11d8b7c094ef45d440f65bd",
+    "semantic_hash": "16eb5f43b11d8b7c094ef45d440f65bd"
   },
   "scripting/native-usage/BRAIN.md": {
     "mtime": 1793662658.9401956,
@@ -1278,10 +1278,10 @@
     "semantic_hash": "c6adb9a368e1bc7fd8bd3750108b0cbb"
   },
   "scripting/native-usage/TASK.md": {
-    "mtime": 1793662658.9567506,
-    "seen": 1793688378.7473595,
-    "ast_hash": "450e8d21cc39c6fa9d5e4b3fdd4ce0d4",
-    "semantic_hash": "450e8d21cc39c6fa9d5e4b3fdd4ce0d4"
+    "mtime": 1793819986.15221,
+    "seen": 1793820291.5300057,
+    "ast_hash": "080e0cb3f3ae8010bae385cd8c5420ee",
+    "semantic_hash": "080e0cb3f3ae8010bae385cd8c5420ee"
   },
   "scripting/native-usage/UNKNOWN.md": {
     "mtime": 1793662658.9567506,
@@ -1350,21 +1350,33 @@
     "semantic_hash": "8f1a5109e04ade4840b0922262191bbb"
   },
   "DATA-NEEDS.md": {
-    "mtime": 1793806480.879773,
-    "seen": 1793810416.2563767,
-    "ast_hash": "7b6cca6bce1c5a5b66a85a9d03aa8ea7",
-    "semantic_hash": "7b6cca6bce1c5a5b66a85a9d03aa8ea7"
+    "mtime": 1793819985.7322102,
+    "seen": 1793820291.5299153,
+    "ast_hash": "f630aefb10fbb1acbadca10e915693bb",
+    "semantic_hash": "f630aefb10fbb1acbadca10e915693bb"
   },
   "HANDOFF.md": {
-    "mtime": 1793813182.5756068,
-    "seen": 1793813318.7747512,
-    "ast_hash": "6e4280712b4bfe1ebb8eea63e0aabe0a",
-    "semantic_hash": "6e4280712b4bfe1ebb8eea63e0aabe0a"
+    "mtime": 1793819985.7322102,
+    "seen": 1793820291.529928,
+    "ast_hash": "c633cb2776a8c611afe3cceec8f5951e",
+    "semantic_hash": "c633cb2776a8c611afe3cceec8f5951e"
   },
   "PC-SESSION.md": {
-    "mtime": 1793813174.9534929,
-    "seen": 1793813318.7747576,
-    "ast_hash": "ee291157da60731b71ab45c2800dd004",
-    "semantic_hash": "ee291157da60731b71ab45c2800dd004"
+    "mtime": 1793819985.73621,
+    "seen": 1793820291.529939,
+    "ast_hash": "c16c20164b2b43b06ab4464403ef18a8",
+    "semantic_hash": "c16c20164b2b43b06ab4464403ef18a8"
+  },
+  "docs/00-getting-started/obsidian.md": {
+    "mtime": 1793819985.74021,
+    "seen": 1793820291.5299485,
+    "ast_hash": "c0c39f1c77b8df148011c3e98c6c9daf",
+    "semantic_hash": "c0c39f1c77b8df148011c3e98c6c9daf"
+  },
+  "pc-session-results-part1.md": {
+    "mtime": 1793819986.14821,
+    "seen": 1793820291.5299914,
+    "ast_hash": "11757ae1ba11a85f1ad525bb9e2e4d64",
+    "semantic_hash": "11757ae1ba11a85f1ad525bb9e2e4d64"
   }
 }
