@@ -9,7 +9,7 @@ A public, Markdown-only reference on how GTA V (PC, Legacy, build 1.0.3725.0) wo
 ## Status
 
 - **Everything is on `main`, nothing is in flight.** The last merges are #127 (second-pass phases 1 to 4), #128 (data batches D1 to D6), #129 (D7 to D12) and #130 (this file).
-- **Tracker:** 442 question rows: 176 answered, 42 mostly, 47 partly, 177 open (after the leftovers pass on branch `research/pass2-leftovers`, PR #132). A row's last column is its status and links to the guide section with the answer. The table "Leftovers: the data-file batches" in `OPEN_QUESTIONS.md` says what each batch read and settled.
+- **Tracker:** 442 question rows: 177 answered, 42 mostly, 47 partly, 176 open (after the leftovers pass on branch `research/pass2-leftovers`, PR #132). A row's last column is its status and links to the guide section with the answer. The table "Leftovers: the data-file batches" in `OPEN_QUESTIONS.md` says what each batch read and settled.
 - **The data batches are finished, but not every row in [`DATA-NEEDS.md`](/DATA-NEEDS.md) was worked.** Each group had a batch, and each row a batch touched carries its result (*done*, *mostly*, *partly* or *still open*). The 25 rows with no tag were never attempted; they are listed below.
 - **The knowledge graph is out of date.** `graphify-out/` wasn't refreshed for the guides changed in #127, #128 and #129, because the maintainer chose to merge without it.
 
@@ -103,7 +103,7 @@ GS-004, GP-025 and GP-087 (replay type numbers), GP-069 and GP-092 (ability entr
 
 **Other categories (next phases, not started):**
 - **Core:** none beyond the rows above.
-- **World:** WLD-002 and WLD-010 (answered in the leftovers pass), WLD-006, WLD-008, WLD-009, WLD-011, WLD-015.
+- **World:** WLD-002, WLD-010 and WLD-015 (answered in the leftovers pass), WLD-006, WLD-008, WLD-009, WLD-011.
 - **Entities and AI:**
   - ENT-014, AI-010, AI-032 (config flag numbers; names from NativeDB or community)
   - ENT-023, ENT-026, AI-008, AI-012, AI-013, AI-022, AI-023, AI-026, AI-031 (hash guesses), AI-038, AI-040, AI-041, AI-042, AI-043, AI-045, AI-046, AI-048, AI-050

@@ -511,7 +511,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | WLD-013 | How long one `TimeMult` unit lasts, and whether the cycle position is tied to the game clock or to real time (story vs Online) | Test card 1; second pass | Open |
 | WLD-014 | Whether wind changes the flight of aircraft, the drift of boats, or bullets | Test card 3; R2.2, R2.4 | Open |
-| WLD-015 | What the global flag that skips the post-death weather reroll is, and which scripts set it | Second pass: read the writers of that global in `respawn_controller`'s callers | Open |
+| WLD-015 | What the global flag that skips the post-death weather reroll is, and which scripts set it | Second pass: read the writers of that global in `respawn_controller`'s callers | Answered: `Global_4525837` in build 1.0.3725.0. Only `replay_controller` sets it, when a mission replay is set up while the player isn't playing (dead or arrested), and `respawn_controller` clears it after each respawn. So only a death that leads into a replay keeps the weather (leftovers pass, [time and weather](/docs/world/time-and-weather.md)) |
 | WLD-016 | How `SET_OVERRIDE_WEATHER` and the persistent lock interact when both are set | In-game test | Open |
 | WLD-017 | What the 380 timecycle variables per region do, and how timecycle modifiers stack on the weather | R13.2 | Partly answered: there are 423 variables per region (not 380), grouped by name; stacking is engine code (leftovers pass, [timecycle](/docs/rendering/timecycle-and-post-effects.md#modifier-values-flags-and-post-effect-names-leftovers-pass)) |
 | WLD-018 | The base length of one weather `TimeMult` unit (not in the file) *(from the guide's text)* | In-game test | Open |
