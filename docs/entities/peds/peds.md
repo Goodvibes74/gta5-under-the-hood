@@ -67,6 +67,35 @@ A ped's entry (Franklin, `Player_One`, as the example) names:
 
 **Known:** a ped spawned with `CREATE_PED` uses its model's defaults from `peds.ymt` (relationship group, personality, combat info) until a script overrides them; Rockstar's missions almost always override the relationship group, combat attributes and the block on events.
 
+### The config flags Rockstar sets most (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** count in the build 1.0.3725.0 decompile: 36,104 `SET_PED_CONFIG_FLAG` calls pass a literal flag number, and they use **190 different flags**. The 20 flags set in the most scripts:
+
+| Flag | Scripts | Calls | Set to |
+| ---: | ---: | ---: | --- |
+| 36 | 528 | 2,549 | 1,209 on, 1,340 off |
+| 34 | 527 | 2,409 | 1,081 on, 1,328 off |
+| 208 | 341 | 1,320 | almost always on |
+| 118 | 338 | 904 | mostly off |
+| 185 | 332 | 1,392 | mostly on |
+| 342 | 307 | 811 | both |
+| 122 | 307 | 655 | both |
+| 116 | 291 | 394 | mostly off |
+| 380 | 290 | 534 | almost always on |
+| 184 | 261 | 4,151 | 2,820 on, 1,331 off |
+| 294 | 257 | 274 | always on |
+| 202 | 253 | 453 | almost always on |
+| 398 | 253 | 2,505 | 759 on, 1,746 off |
+| 128 | 252 | 273 | almost always off |
+| 427 | 250 | 8,943 | 2,762 on, 6,181 off (the most calls, from shared code) |
+| 430 | 250 | 289 | almost always on |
+| 179 | 249 | 263 | almost always on |
+| 461 | 249 | 257 | always on |
+| 32 | 247 | 756 | both |
+| 42 | 178 | 326 | mostly on |
+
+The flag names are an engine enum that the scripts don't contain. Community lists name them (**Known**, not checked here), so read this table as "which numbers matter most", and check a flag's effect with a test before relying on it.
+
 ## What this means for modders
 
 - **Spawning a usable ped:** `REQUEST_MODEL`, wait, `CREATE_PED`, then set what the model's defaults don't give you: `SET_PED_RELATIONSHIP_GROUP_HASH`, `SET_PED_COMBAT_ATTRIBUTES`, `SET_BLOCKING_OF_NON_TEMPORARY_EVENTS` if it should ignore the world, then `SET_MODEL_AS_NO_LONGER_NEEDED`. `SET_PED_DEFAULT_COMPONENT_VARIATION` gives the model's standard look.
@@ -80,7 +109,7 @@ A ped's entry (Franklin, `Player_One`, as the example) names:
 | Question | Where it goes |
 | --- | --- |
 | The 23 personality hashes and relationship groups that didn't resolve | Mostly answered (leftovers pass, **Verified**): the 24 relationship-group hashes all match groups in `relationships.dat` (`COP`, `ARMY`, `SECURITY_GUARD`, `PRIVATE_SECURITY`, `MEDIC`, `FIREMAN`, `PRISONER`, the eleven `AMBIENT_GANG_*` groups, and the animal groups `WILD_ANIMAL`, `DOMESTIC_ANIMAL`, `GUARD_DOG`, `CAT`, `HEN`, `DEER`, `SHARK`, `COUGAR`). Every hashed personality in the ped files matches an entry in `pedpersonality.ymt`, and 69 of its 96 entries are now named ([decisions](/docs/ai/decisions-and-personalities.md#names-of-the-hashed-types-leftovers-pass)); 27 are still hashes |
-| What each `SET_PED_CONFIG_FLAG` number does (the ones Rockstar sets most) | Second pass: count flag numbers in the decompile |
+| What each `SET_PED_CONFIG_FLAG` number does (the ones Rockstar sets most) | Partly answered in [the config flags table](#the-config-flags-rockstar-sets-most-leftovers-pass) (leftovers pass): 190 flags in use, and the top 20 by scripts with their on/off counts. Left: each flag's effect (the engine enum names) |
 | The component `.ymt` format (slots, drawables, restrictions) | Answered in [appearance 10.2.1](/docs/entities/peds/appearance-and-clothing.md#1021-the-component-ymt-file-leftovers-pass) |
 
 ## Test cards

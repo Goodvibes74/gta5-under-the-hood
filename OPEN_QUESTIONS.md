@@ -267,7 +267,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | ENT-013 | The 23 personality hashes and relationship groups that didn't resolve | Second pass | Mostly answered: all 24 relationship-group hashes resolved from `relationships.dat`; every personality hash matches an entry, 69 of 96 named (leftovers pass, [peds](/docs/entities/peds/peds.md)) |
-| ENT-014 | What each `SET_PED_CONFIG_FLAG` number does (the ones Rockstar sets most) | Second pass: count flag numbers in the decompile | Open |
+| ENT-014 | What each `SET_PED_CONFIG_FLAG` number does (the ones Rockstar sets most) | Second pass: count flag numbers in the decompile | Partly answered: 190 flag numbers in 36,104 literal calls. The flags in the most scripts are 36 and 34 (528 and 527 scripts), 208, 118, 185, 342 and 122; 427 has the most calls (8,943, from shared code). Left: each flag's effect, which needs the engine enum names (leftovers pass, [peds](/docs/entities/peds/peds.md#the-config-flags-rockstar-sets-most-leftovers-pass)) |
 | ENT-015 | The component `.ymt` format (slots, drawables, restrictions) | R6.3, R14.2 second pass | Answered: the `CPedVariationInfo` layout part by part (leftovers pass, [appearance 10.2.1](/docs/entities/peds/appearance-and-clothing.md#1021-the-component-ymt-file-leftovers-pass)) |
 
 ### [Ped physics and ragdoll](/docs/entities/peds/ragdoll.md) (R2.3)
