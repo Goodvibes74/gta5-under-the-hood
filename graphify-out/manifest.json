@@ -1356,9 +1356,15 @@
     "semantic_hash": "7b6cca6bce1c5a5b66a85a9d03aa8ea7"
   },
   "HANDOFF.md": {
-    "mtime": 1793811991.746296,
-    "seen": 1793812389.2873857,
-    "ast_hash": "b66e5de08e0c7f03c940d8ffeda67ff3",
-    "semantic_hash": "b66e5de08e0c7f03c940d8ffeda67ff3"
+    "mtime": 1793813182.5756068,
+    "seen": 1793813318.7747512,
+    "ast_hash": "6e4280712b4bfe1ebb8eea63e0aabe0a",
+    "semantic_hash": "6e4280712b4bfe1ebb8eea63e0aabe0a"
+  },
+  "PC-SESSION.md": {
+    "mtime": 1793813174.9534929,
+    "seen": 1793813318.7747576,
+    "ast_hash": "ee291157da60731b71ab45c2800dd004",
+    "semantic_hash": "ee291157da60731b71ab45c2800dd004"
   }
 }
