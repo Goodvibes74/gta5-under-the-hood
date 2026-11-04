@@ -34,7 +34,6 @@ Thumbs.db
 .vscode/
 # graphify: the graph in graphify-out/ is committed; only machine-local state is ignored
 graphify-out/.graphify_python
-graphify-out/.graphify_root
 graphify-out/.graphify_*.json.tmp
 graphify-out/.graphify_chunk_*.json
 graphify-out/.chunk_list_*.txt
