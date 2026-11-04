@@ -84,6 +84,21 @@ Where the game's scripts keep shared state: the global blocks, which script owns
 
 A bit's exact name needs its callers: most are written through one-line "set or clear bit N" helpers.
 
+**What single bits mean, from their callers** (*leftovers pass, 2026-11-04*). We read the helpers that set, clear and test each bit in `freemode` and `am_mp_car_meet_property` at commit `6c18d3e8b`, then the functions that call them. The code paths are **Verified**. The names are our reading of those paths: the scripts don't name the bits.
+
+| Bits | What the code does | Our reading |
+| --- | --- | --- |
+| `.f_204` 7 | Set when this player's screen goes black for a move. While it is set and the screen is black, `freemode` starts a timer (its length is the tunable `Global_262145.f_19525`). The player fades back in (`DO_SCREEN_FADE_IN(500)`) when the timer runs out or the other side is ready, and the bit is cleared then | "Faded out, waiting to be moved with my organisation" |
+| `.f_204` 6 | Set by the player who is the organisation's boss (`Global_1892653[p].f_10`, which is set to the player's own ID when they call `START_BEING_BOSS`) once the move is done. A member whose boss has the bit set fades in | "The boss has finished the move" |
+| `.f_203` 22 and 18 | A member fades in when the boss has bit 22 and the member has bit 18. Both are tested only for players other than the one stored as the boss | "The boss is ready" (22) and "I'm waiting for the boss" (18) |
+| `.f_203` 19 to 21 | Changed in the same steps as the fade in: 19 is cleared, 21 is set and 20 is cleared, or the other way round | State bits of the same move; we haven't told them apart |
+| `.f_204` 15 and 19 | Cleared together when the driver starts the engine and presses accelerate or brake (controls 71 and 72; the names are **Known** from the control list). The same code then locks the doors for all players and lets the player be knocked off the vehicle again. Bit 19 is also tested before the player's own ID is written into `Global_1845250[p].f_808` | "Waiting in the vehicle before driving off" |
+| `.f_204` 25 and 26, 27 and 28, 29 and 30 | Three pairs, each set together when the player's vehicle (`Global_2733002.f_301`) is moved into a slot that the host hands out from one of three lists (`Global_2649159.f_427`, `Global_2652579.f_2669`, `Global_2650423.f_1961`). The vehicle fades out first (`NETWORK_FADE_OUT_ENTITY`). Each pair is cleared when the move ends; for the 27 and 28 and the 29 and 30 pairs the end step turns a Deluxo or an Oppressor Mk II back into a car (`TRANSFORM_TO_CAR`). The 29 and 30 pair also saves the owner in `.f_207` and the model in `.f_209` | "My vehicle is being moved into the host's slot", one pair per list |
+| `.f_204` 10 and 13 | Cleared when the player's vehicle is cleaned up. Bit 10's caller deletes the vehicle; bit 13's caller checks for the Deluxo and the Oppressor Mk II and lets the vehicle blend on the network again | Vehicle clean-up flags |
+| `.f_203` 15 | Set and cleared next to `GET_SCRIPT_TASK_STATUS` for `SCRIPT_TASK_LEAVE_VEHICLE` and `SCRIPT_TASK_LEAVE_ANY_VEHICLE` | "Leaving a vehicle" |
+
+That covers 18 bits and gives 15 of them a reading. Bits 2, 5 to 8, 30 and 31 of `.f_203` are all written in one 127-line `freemode` function. It checks the tutorial session and keeps distance and time checks, and its single caller removes a blip when a minigame is running. Telling those bits apart needs that function read line by line, and the mod shop bits need the same work in `carmod_shop`.
+
 **The parts of `.f_260`, named** (*third pass*, **Verified**). `freemode` fills them through a helper that turns a stat number into the current character's stat (`_GET_STAT_HASH_FOR_CHARACTER_STAT` with type 0) and reads it. The numbers are indexes into `common\data\mpstatscharactermappingdata.xml` in `update.rpf`, whose comments name every entry (`<!-- 6551 - MP_STAT_NIGHTCLUB_OWNED -->`; 18,486 int stats, 527 bools, 225 floats and smaller lists for strings, dates, vectors and user IDs). That names 16 parts:
 
 | Part | Stat | Part | Stat |
@@ -197,7 +212,7 @@ Answered in the second pass: what the references into blocks 13 and 15 are (dead
 
 | Question | Where it goes |
 | --- | --- |
-| Field layout of the player broadcast data (`Global_1845250`, `Global_2658291`) | Mostly answered in [6.3](#63-the-most-used-globals): `.f_325` named, 16 parts of `.f_260` named from the stat mapping file, every bit of `.f_204` and `.f_203` grouped by who writes it; single-bit names left (they need each helper's callers) |
+| Field layout of the player broadcast data (`Global_1845250`, `Global_2658291`) | Mostly answered in [6.3](#63-the-most-used-globals): `.f_325` named, 16 parts of `.f_260` named from the stat mapping file, every bit of `.f_204` and `.f_203` grouped by who writes it, and 18 single bits read from their callers (15 with a reading) (the organisation move-with-fade handshake, the vehicle-slot moves, leaving a vehicle); left: `.f_203` bits 2, 5 to 8, 30 and 31 (one tutorial-session function) and the mod shop bits (`carmod_shop`) |
 | The fields of the server broadcast data | Answered at block level in [6.3.1](#631-every-broadcast-block-by-its-registered-name-third-pass): all 37 blocks named, the busiest server fields typed |
 | The tunable index list: which `Global_262145.f_<n>` is which tunable | Answered in [R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass): every assignment in `tuneables_processing` gives field, type, name and default (27,691 with plain names) |
 | Roles of the **Known** rows above, by reading one use each | Answered in [6.3](#63-the-most-used-globals): `Global_1950198`, `Global_2097536`, `Global_2686090` and `Global_1892653` (`GPBD_FM_3`) now **Verified**, the rest checked as consistent |
