@@ -71,7 +71,7 @@ The content format is built for scripts: each section gives a count first and th
 
 **How each entity is tied to a rule.** Every enemy (`ene`), vehicle (`veh`), object (`obj`) and location (`goto`) carries two arrays per team:
 
-- `rule<team>` says what that team must do with the entity. 0 or 99999 means nothing.
+- `rule<team>` says what that team must do with the entity. 0 or 99999 means nothing. Locations name it `rl<team>`.
 - `pri<team>` says which of the team's rules (0 to 16) it belongs to, or -1 for none.
 
 So one van can be "deliver" on the attackers' rule 2 and "protect" on the defenders' rule 1. The rule-type numbers have creator labels (`PMC_RULE1` for 0, `PMC_RULE2` for 1, `PMC_RULE3`/`3B` for 2, `PMC_RULE4` for 3, `PMC_RULE6` for 4, `PMC_RULE7`/`7B` for 5, then 11, 13, 16, 23, 24, 31, 32 and 36). Their English text is in the game's text files, not the scripts.
