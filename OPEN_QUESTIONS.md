@@ -382,7 +382,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | AI-007 | How far from the player ambient peds despawn | R17.9, in-game test | Open |
-| AI-008 | How peds pick partners for chats | Second pass | Open |
+| AI-008 | How peds pick partners for chats | Second pass | Partly answered: no script picks partners; `TASK_CHAT_TO_PED` has only 10 calls in 5 scripts, each pairing two script-chosen peds both ways (flag 16 in 8). Ambient pairing is the engine's (`CTaskChat`, hang-outs within 2 m). Left: the engine rule (leftovers pass, [ambient life 36.3](/docs/ai/ambient-life.md#363-what-scripts-do)) |
 | AI-009 | The animal models by kind and where each spawns | Second pass with R4.2's scenario types | Open |
 
 ### [Combat and AI (first pass)](/docs/ai/combat-and-perception.md) (R3.2)
