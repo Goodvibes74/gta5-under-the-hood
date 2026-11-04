@@ -200,7 +200,20 @@ Values are bronze / silver / gold. The small shotgun and railgun numbers suggest
   - **Changes from hole to hole:** the speed moves by a random step of up to 1 divided by the number of players, and is kept within 1 to 6 (5 to 10 in bad weather).
   - **Direction:** taken from `GET_WIND_DIRECTION`, then shifted by up to 0.3 on each axis.
 
-The ambient golfers on the course (`golf_ai_foursome`, `golf_ai_foursome_putting`) are separate scripts and were not read here.
+**The ambient golfers** (*leftovers pass*, **Verified**; `golf_ai_foursome` and `golf_ai_foursome_putting`):
+
+- **Started by** `controller_ambientarea`, by distance from the course ([map data](/docs/world/map-data.md)), but only between 07:00 and 17:59 game time. The two scripts share almost all their code.
+- **Who plays:** `golf_ai_foursome` runs one group of four `a_m_y_golfer_01` golfers with two `caddy` carts, over the course's nine holes. `golf_ai_foursome_putting` runs two groups of four on putting holes and has none of the cart code. Clubs, bags and balls are props (`prop_golf_*`); swings are animations from `MINI@GOLFAI` with the `move_m@golfer@` walk.
+- **Out of your way:** a shared global holds the hole you are playing in your own round. The group moves itself to a hole you are not on.
+- **When they stop playing:** the group drops its round, clears its tasks and is released as ambient peds if any of these happens:
+  - a golfer dies;
+  - you have any wanted level;
+  - you aim an armed weapon at a golfer who is facing you within 15 m, for 1.5 s;
+  - a bullet passes within 4 m of a golfer, or lands within 25 m;
+  - you shoot within 75 m of a golfer who can see you;
+  - you damage a golfer.
+- **Taking a cart:** if you get into one of their carts, its two golfers stop and turn to face you.
+- **Pars from length:** the script works out each hole's par from the tee-to-pin distance: under 125 m par 3, under 260 m par 4, otherwise par 5 (and a band below 35 m).
 
 **Text blocks** each activity loads (`REQUEST_ADDITIONAL_TEXT`): `SP_GOLF`, `TENNIS`, `DARTS`, `YOGA`, `SP_SPR` (off-road, stunts, triathlon), `PSCHOOL`, `S_RANGE`, `BJUMP`, `AMBHT` (hunting), `TAXI`, `DTRSHRD` plus `DTRFAIR` or `DTRFKGR` (trafficking).
 
@@ -232,7 +245,7 @@ Each also sets its intro and outro animations, enemy vehicles, ambient speech, a
 | Question | Where it goes |
 | --- | --- |
 | The flight-school, range and triathlon medal thresholds | Answered in [42.5.1](#4251-medals-and-goals-second-pass) |
-| Golf: course data, AI foursome behaviour, how the score is kept | Partly answered in [42.5.1](#4251-medals-and-goals-second-pass): pars, score and save; the club table, the automatic shot setup, the computer players' aim, the lie multipliers and the wind (leftovers pass, in the paragraph after the golf course); the ambient `golf_ai_foursome` scripts are not read |
+| Golf: course data, AI foursome behaviour, how the score is kept | Partly answered in [42.5.1](#4251-medals-and-goals-second-pass): pars, score and save; the club table, the automatic shot setup, the computer players' aim, the lie multipliers and the wind (leftovers pass, in the paragraph after the golf course); the ambient golfers (leftovers pass, after the course paragraph: start hours, groups, how they keep clear of your hole, what makes them stop) |
 | How the flow unlocks each activity (blips appear after story missions) | Answered in [42.2.1](#4221-how-an-activity-is-unlocked-second-pass), except entries 6, 12 and 18 (GP-088) |
 | What arms code entries 6 (golf alone), 12 (sea races) and 18 (towing); no script calls the arming function with them (GP-088) | Third pass, in-game: watch `Global_114904.f_8620[6/12/18]` |
 | The towing quick-bonus check (what the 12 s timer measures) | Answered in [42.4](#424-fees-and-pay) |
