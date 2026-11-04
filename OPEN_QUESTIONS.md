@@ -800,7 +800,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | ON-047 | The unnamed (`unk_`) tunable readers and which service natives they are | Second pass, NativeDB hashes | Answered: `_NETWORK_GET_TUNABLES_REGISTRATION_INT`, `_FLOAT` and `_BOOL` ([R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass)) |
 | ON-048 | Which story-mode scripts call any service native, and why | Second pass, per script | Answered: mostly shared guards; real use is minigame leaderboards with crew tags, presence and the returning-player checks ([services 32.1.1](/docs/online/rockstar-services.md#3211-which-story-scripts-touch-a-service-second-pass)) |
-| ON-049 | The catalogue item keys and categories | Third pass (was: R7.7) | Open |
+| ON-049 | The catalogue item keys and categories | Third pass (was: R7.7) | Mostly answered: keys are hashed strings shaped `<name>_t<type>_v<version>` (157 written out in full, such as `VE_KOSATKA_t0_v0`) or `<PREFIX>_INDEX_<n>_v<version>` (four groups built in 247 scripts). The price calls use ten category hashes, eight of them named (`CATEGORY_VEHICLE_MOD` 333 calls, `CATEGORY_WEAPON_AMMO`, `_WEAPON`, `_WEAPON_MOD`, `_VEHICLE`, `_CLOTH`, `_PROPERTY_INTERIOR`, `_TATTOO`). Left: the names of 426439576 (1,037 calls) and 1999830656 ([Rockstar services 32.2.1](/docs/online/rockstar-services.md#3221-catalogue-keys-and-categories-leftovers-pass)) |
 
 ### [Sessions and sync](/docs/online/sessions-and-sync.md) (R15.1)
 
