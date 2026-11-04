@@ -123,6 +123,41 @@ Below the top page the script has **144 page titles** (plus 17 named at run time
 
 The conditions for each page sit in the function that builds it. They follow the same pattern as the top page: an ownership or membership check decides whether a page shows, and a session or state check decides whether it is greyed.
 
+### 21.3.2 How a page decides what shows and what is greyed (third pass)
+
+*Third pass, 2026-11-04.* **Verified** in `am_pi_menu` (build 1.0.3725.0 decompile). Counts come from a script that read every function that sets a page title and recorded each item call inside it: its row, its label, whether the call sits inside an `if` or loop, and the value passed for "selectable".
+
+**Two layers of greying.** A row can be blocked in two separate ways, and the menu uses both:
+
+1. **Drawn grey.** The item call takes a "selectable" flag. When it is false the row is drawn greyed. Rows are counted per row number, so one row can have a label call and a value call (a count, a price or a setting name on the right).
+2. **Usable when highlighted.** A separate flag is set only while the highlighted row can actually be used. It decides whether the select prompt (`PIM_CSEL` on the accept control) appears and whether pressing accept does anything. 571 places in the script set this flag. So a row can look bright and still do nothing; the body armour page works this way.
+
+**What the pages contain.** The counts below cover the 143 functions that set a page title (160 title calls, since some functions pick one of several titles):
+
+| What | Count |
+| --- | --- |
+| Item calls in total | 1,203 |
+| Item calls inside the title-setting functions | 984 (804 row labels, 180 right-hand values) |
+| Item calls in 42 helper functions that add rows for a page | 219 (one helper adds 86 rows of the top page) |
+| Row labels shown only when a condition holds (inside an `if` or loop) | 385 of 804 |
+| Row labels whose "selectable" flag is worked out at run time | 605 |
+| Row labels always selectable | 186 |
+| Row labels always drawn grey | 13 |
+| Pages that add rows directly | 127; 57 of them show every row unconditionally, and on 20 every row is always selectable |
+| Pages that add no rows directly (helpers only) | 16 |
+
+The pages with the most rows are the accessories page (`PIM_UACCE`, 36 rows), the style page (`PIM_TITLESTYL`, 36), the top page (`PIM_TITLE1`, 33), two pages of work listings (`PIM_TIHS` 25, `PIM_MAGGABC` 25) and the club work page (`PI_BIK_1_1_T`, 22).
+
+**Worked pages.** These are read in full:
+
+| Page | Rows and their conditions |
+| --- | --- |
+| Preferences (`PIM_PREFETIT`) | Row 0 (`PIM_TSPL`) is greyed while a tracked script thread is active (our reading of the check). Row 1, Phone Contact Favorites, is selectable only while a tunable is on. Row 2, Radio Station Favorites, is greyed by a script flag. Row 3 (`PIM_MUSMIXUSB`, the USB music mix in our reading) is selectable only when at least one of ten saved unlock flags is set, and its right-hand value is the chosen mix or `PIM_USBMIXNO`. Row 4 (`PIM_TCHT`) first works out greying from two checks, then replaces the result with one test: it is greyed only while the player's state value is 285. The two earlier checks have no effect. |
+| Body armour (`PIM_UARMOR`) | Built only while the player is active and playing. Five rows, `WT_BA_0` to `WT_BA_4`, are always drawn bright, each with its stock count from character stats 1881 to 1885 on the right. A row is usable only when the stock is above zero, the player's armour is below a threshold, and two blocking checks fail. The threshold is the floor of max armour ÷ 100 × (20 × a tier from 0 to 5); the tier is the highest of five saved unlock flags, 156 to 160. |
+| Vehicles (`PIM_TITLEVEHI`) | Row 0 (`PIM_TRPV`) is greyed when the player isn't active or when any of 21 checks holds. Among them: the personal vehicle's record has bit 10 of `.f_104` set; it is an `oppressor2` and a further check passes; the player is in an activity session with a session bit set. Row 1 (`PIM_TRPA`) needs a chosen entry, a list that isn't empty, and none of seven blocking states. The next row requests a work vehicle: `speedo4`; `mule4` and `pounder2` only when their own tunables are on; `trailersmall2` through its own check. Each has its own list of 14 to 16 blocking checks, and one tunable greys the row outright. |
+
+The full per-page condition list (127 pages, about 600 run-time checks) is not written out here. Many checks are helper functions whose meaning needs its own reading. The counts above tell you where to look: a page's builder sets its title with the page-title helper, and every row after that is one item call.
+
 ## 21.4 Contact services
 
 `am_contact_requests` (1.8 MB of decompiled code) serves the phone's Online contacts (**Verified**, its text): "Request a vehicle to be delivered nearby", "Request Transportation", backup helicopter and boat pick-ups (with refusals such as "The boat won't pick up a Wanted crook"), Lester's bounties ("Set Bounty", "CURRENT BOUNTY"), Agent 14 and the business shortcuts (bunker research, acid lab), and property access (Arcade, Auto Shop, Arena Workshop garage levels, Bail Office). Every paid request checks `NETWORK_CAN_SPEND_MONEY` first.
@@ -195,7 +230,7 @@ Each slot holds an item number from one shared vehicle item list; the list is be
 | Every website page and what each sells | Answered in [21.5](#215-the-internet): the eight selling sites, their stock counts and the 683-item model list |
 | The Facade phone's movie and the character-to-phone mapping | Answered in [21.2.1](#2121-the-slots-by-mode-and-the-phone-each-character-carries-second-pass): `cellphone_facade`, Trevor's |
 | What website items 323, 324, 357 and 402 are (hashes set at start that match no model name) | Third pass, the preview code in `appinternet`. *Leftovers pass:* the four hashes match no `modelName` (or any other name or value) in the 76 `vehicles.meta`, 47 `handling.meta`, 79 `carcols` and 48 `carvariations` files, so they aren't vehicle models (**Verified**) |
-| Each interaction-menu page's own show and grey conditions (the top page is mapped) | Third pass, `am_pi_menu` page by page |
+| Each interaction-menu page's own show and grey conditions (the top page is mapped) | Partly answered in [21.3.2](#2132-how-a-page-decides-what-shows-and-what-is-greyed-third-pass): the two greying layers, counts for every page, and three pages read in full; the rest page by page |
 
 ## 21.8 Test cards
 
