@@ -472,9 +472,9 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | AI-047 | Crime points added per crime (set in the engine) | In-game test: commit one crime with a multiplier of 1 and read the result | Open |
-| AI-048 | Names for the crime numbers 13, 36, 37 and 28 | Second pass with NativeDB's crime list | Open |
+| AI-048 | Names for the crime numbers 13, 36, 37 and 28 | Second pass with NativeDB's crime list | Mostly answered (Known, NativeDB's community list): 13 assault with a deadly weapon, 28 shots fired, 36 given only as a radio code. Left: 37 has no name there ([wanted level](/docs/ai/wanted-level-and-police.md)) |
 | AI-049 | How the difficulty value changes police behaviour, measured | In-game test | Open |
-| AI-050 | Confirm the crime numbers passed literally to `REPORT_CRIME` (37, 36, 13) and `SUPPRESS_CRIME_THIS_FRAME` (28 and others); the names come from NativeDB's crime list *(from the guide's text)* | Second pass | Open |
+| AI-050 | Confirm the crime numbers passed literally to `REPORT_CRIME` (37, 36, 13) and `SUPPRESS_CRIME_THIS_FRAME` (28 and others); the names come from NativeDB's crime list *(from the guide's text)* | Second pass | Answered (leftovers pass, **Verified**): `REPORT_CRIME` uses 37 (20 calls), 36 (12) and 13 (2) in 7 scripts, with one call passing a variable. `SUPPRESS_CRIME_THIS_FRAME` uses 29 numbers in 11 scripts, with 28 the most (4). Names as in AI-048 ([wanted level](/docs/ai/wanted-level-and-police.md)) |
 
 ## The world
 
