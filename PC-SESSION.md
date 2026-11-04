@@ -4,10 +4,12 @@ The work left in [`OPEN_QUESTIONS.md`](/OPEN_QUESTIONS.md) that a cloud session 
 
 **Progress.** Batch PC1 (2026-11-04, Part 1) worked 15 data rows: 8 answered and deleted here (AI-024, ENT-038, REN-011, PHY-001, PHY-004, ENT-019, AI-014, AI-009); ENT-017, ENT-039 and UI-009 stay in Part 1 with what is left; ENT-020, PHY-013, AI-033 and ENT-025 moved to Part 2, because what is left of them is in the executable. Tracker after PC1: 200 answered, 53 mostly, 59 partly, 130 open.
 
+Batch PC2 (2026-11-04, Part 2 started): `GTA5.exe` is encrypted on disk, so its decrypted image was copied read-only from the running game (story mode) and analysed in Ghidra. GS-004 answered and deleted here; CORE-018 partly (the engine starts `startup` by name); SCR-005 notes added. Tracker after PC2: 201 answered, 53 mostly, 59 partly, 129 open.
+
 Three kinds of work:
 
 1. **Data files** (one CodeWalker run, no game running): 57 rows.
-2. **The executable** (read-only reverse engineering of `GTA5.exe`): 37 rows.
+2. **The executable** (read-only reverse engineering of `GTA5.exe`): 36 rows.
 3. **In-game tests** (story mode): 122 rows, 11 of them also listed for the executable.
 
 ## Before you start
@@ -141,6 +143,8 @@ Extract everything below in one pass into a scratch folder, then pack the folder
 
 Read-only reverse engineering of `GTA5.exe` (build 1.0.3725.0): look, never patch. Rows that also appear in Part 3 can often be settled faster by a test.
 
+**The code is encrypted on disk** (entropy 8.0 in every megabyte of both code sections), so Ghidra on `GTA5.exe` itself sees nothing. Analyse a read-only copy of the decrypted image instead, read from the running game in story mode (an administrator PowerShell is needed, because the game runs elevated). The main code section is readable in that copy; the second, anti-tamper code section stays scrambled. Keep the copy outside the repo.
+
 | ID | What to find out | Status | Guide |
 | --- | --- | --- | --- |
 | AI-001 | The full list of task classes the engine has (not only tuned ones) | open | [The AI architecture](/docs/ai/ai-architecture.md) |
@@ -152,7 +156,7 @@ Read-only reverse engineering of `GTA5.exe` (build 1.0.3725.0): look, never patc
 | CORE-002 | The exact load phases for each change-set group | partly | [Archives and the content system](/docs/core/archives-and-content.md) |
 | CORE-015 | Memory cost of each raised pool (bytes per slot) | open | [Memory, pools and limits](/docs/core/memory-and-pools.md) |
 | CORE-016 | The vanilla built-in sizes of the weapon arrays that WeaponLimitsAdjuster raises | partly | [Memory, pools and limits](/docs/core/memory-and-pools.md) |
-| CORE-018 | What exactly the engine does to start `main`, `initial` and `startup`, and in which order | partly | [Runtime scripts: the scripts that keep the game running](/docs/core/runtime-scripts.md) |
+| CORE-018 | What exactly the engine does to start `main`, `initial` and `startup`, and in which order | partly (PC2: `startup` by name; `main`, `initial` open) | [Runtime scripts: the scripts that keep the game running](/docs/core/runtime-scripts.md) |
 | CORE-024 | The save file's on-disk format and how names map to it | open | [Saves: what the story save holds and how scripts write it](/docs/core/saves.md) |
 | CORE-027 | The streaming memory budget (how the engine splits RAM between stores), and what HeapAdjuster changes in it | open | [Streaming: how assets get into memory](/docs/core/streaming.md) |
 | CORE-031 | Which brain set the engine gives the random-ped brains added with `ADD_SCRIPT_TO_RANDOM_PED` (no script registers into sets 2 or 4) | open | [Surviving game updates](/docs/core/surviving-updates.md) |
@@ -167,7 +171,6 @@ Read-only reverse engineering of `GTA5.exe` (build 1.0.3725.0): look, never patc
 | GP-080 | How aim assist and lock-on work for the player versus AI | open | [Weapons](/docs/gameplay/weapons/weapons.md) |
 | GP-087 | What the engine does with the type number of `REPLAY_RECORD_BACK_FOR_TIME` and `REPLAY_START_EVENT` (values 0 to 4) | open | [Replay, director mode and the Rockstar Editor](/docs/gameplay/missions/replay-director-and-editor.md) |
 | GP-092 | What selects special ability entries 8 to 16, which have no `SAT_*` type | open | [Player skills and abilities](/docs/gameplay/player/skills-and-abilities.md) |
-| GS-004 | Which folder level index 5 loads: confirm that the testbed level is `common:/data/levels/stripped` (only **Known** in [boot … | open | [Boot and script control: from launch to control, and between story and Online](/docs/00-getting-started/boot.md) |
 | ON-009 | What `GET_USED_CREATOR_BUDGET` measures inside the engine | open | [Rockstar Creator internals: how tracks and maps are built from props](/docs/online/creator-internals.md) |
 | ON-052 | How migration chooses a new owner and host | open | [Sessions and sync](/docs/online/sessions-and-sync.md) |
 | ON-060 | How bits 16, 32 and 64 in these masks are raised (they end some systems on other occasions) | mostly | [Story systems that clash with an Online mode](/docs/online/story-systems-in-online-mode.md) |

@@ -157,7 +157,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | GS-001 | Which level index 5 is | R1.6 or R4.6 | Answered: the network testbed level; which folder it loads stays **Known** (GS-004, third pass; [boot 3.4.1](/docs/00-getting-started/boot.md#341-the-level-indexes-second-pass)) |
 | GS-002 | The exact path from a new game to `prologue1` | Answered: [boot 3.4.2](/docs/00-getting-started/boot.md#342-from-a-new-game-to-prologue1-second-pass) | Answered |
 | GS-003 | Whether the return to story mode restarts every script (test card 2) | R7.2 | Open |
-| GS-004 | Which folder level index 5 loads: confirm that the testbed level is `common:/data/levels/stripped` (only **Known** in [boot 3.4.1](/docs/00-getting-started/boot.md#341-the-level-indexes-second-pass)) | Third pass, the executable's level list | Open |
+| GS-004 | Which folder level index 5 loads: confirm that the testbed level is `common:/data/levels/stripped` (only **Known** in [boot 3.4.1](/docs/00-getting-started/boot.md#341-the-level-indexes-second-pass)) | Third pass, the executable's level list | Answered: `nettestbed`, the 5th entry of `x64a.rpf\data\levels.ymt`; not `stripped` (8th), and its folder is not shipped (PC executable pass, [boot 3.4.1](/docs/00-getting-started/boot.md#341-the-level-indexes-second-pass)) |
 
 ## Core engine
 
@@ -202,7 +202,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | CORE-017 | Meaning of force-cleanup bits 8, 16, 32, 64 and 128 | R1.1 | Answered (16 and 32 are raised by the engine; their cause is CORE-032, third pass): [runtime scripts 1.3](/docs/core/runtime-scripts.md#every-force-cleanup-bit-second-pass) |
-| CORE-018 | What exactly the engine does to start `main`, `initial` and `startup`, and in which order | R1.2 | Partly answered: no script starts them, and the order follows from what each reads and waits for ([boot 3.3](/docs/00-getting-started/boot.md#33-inside-the-boot-scripts)); the engine call needs the executable |
+| CORE-018 | What exactly the engine does to start `main`, `initial` and `startup`, and in which order | R1.2 | Partly answered: no script starts them, and the order follows from what each reads and waits for ([boot 3.3](/docs/00-getting-started/boot.md#33-inside-the-boot-scripts)); the engine starts `startup` (or `startup_install`) by name (PC executable pass); how `main` and `initial` start is still open |
 | CORE-019 | What `profiler_registration` (global block 2) is and whether anything starts it | R0.4 | Answered: empty script, block 2 never used ([runtime scripts 1.5](/docs/core/runtime-scripts.md#15-global-blocks)) |
 | CORE-020 | The story flags that pick the active mission triggerer | R5.1 | Answered: no flag; `main` reads the `completed` values of `trevor1`, `fbi4` and `michael1`, behind five gates; new CORE-033 ([story flow 2.7](/docs/gameplay/missions/story-flow.md#27-the-mission-triggerers)) |
 | CORE-021 | Resolve table-driven launches (second pass of the graph) | R0.5 | Mostly answered: 502 non-literal launches, 220 followed back, eleven tables read, including `freemode`'s launches by request (a 20-entry table of 12 travel cinematics; requests are filed by `freemode`, `fm_content_island_heist`, `fm_race_creator`, `gb_delivery` and `spawn_activities`, leftovers pass); 240 scripts nothing starts ([launch graph](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass)); `player_controller`'s other scenes left |

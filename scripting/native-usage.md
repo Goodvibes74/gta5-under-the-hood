@@ -168,7 +168,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File tools\native-usage.ps1 -Nati
 | Question | Where it goes |
 | --- | --- |
 | What `0x8F5D1AD832AEB06C` does, and confirm `0x0F7082C60FB479EF` returns a creator budget cost (SCR-004) | In-game test or the executable |
-| Whether the 29 "build 3889" natives exist in the 3725 executable (no 3725 script calls them) (SCR-005) | In-game test with a small C++ check |
+| Whether the 29 "build 3889" natives exist in the 3725 executable (no 3725 script calls them) (SCR-005) | In-game test with a small C++ check. A search of the decrypted executable can't settle it (PC executable pass, **Verified**): one function registers the 26 core natives starting with `WAIT` by call (table, NativeDB hash, handler), but most other natives (`PLAYER_PED_ID`, SCR-004's `0x8F5D1AD832AEB06C`) never occur as plain hash values, so a missing hash proves nothing. `0x0F7082C60FB479EF` occurs once, inside the anti-tamper code |
 | A story-only vs Online-only split of every native (which natives story mode never needs) | Answered in [story mode and Online](#story-mode-and-online-which-natives-each-needs-leftovers-pass) (leftovers pass): 1,845 natives appear only in Online scripts, 634 only in story-only scripts, 3,765 in both |
 | What the table order is (not first use; maybe first use in compiled code order) | Second pass, compare with a YSC dump |
 

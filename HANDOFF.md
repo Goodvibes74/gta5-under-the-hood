@@ -9,7 +9,7 @@ A public, Markdown-only reference on how GTA V (PC, Legacy, build 1.0.3725.0) wo
 ## Status
 
 - **Everything is on `main`, nothing is in flight.** The last merges are #127 (second-pass phases 1 to 4), #128 (data batches D1 to D6), #129 (D7 to D12) and #130 (this file).
-- **Tracker:** 442 question rows: 200 answered, 53 mostly, 59 partly, 130 open (after batch PC1 at the game PC, branch `research/pc1-data-files`). A row's last column is its status and links to the guide section with the answer. The table "Leftovers: the data-file batches" in `OPEN_QUESTIONS.md` says what each batch read and settled.
+- **Tracker:** 442 question rows: 201 answered, 53 mostly, 59 partly, 129 open (after batch PC2, the executable, branch `research/pc2-executable`). A row's last column is its status and links to the guide section with the answer. The table "Leftovers: the data-file batches" in `OPEN_QUESTIONS.md` says what each batch read and settled.
 - **The data batches are finished, but not every row in [`DATA-NEEDS.md`](/DATA-NEEDS.md) was worked.** Each group had a batch, and each row a batch touched carries its result (*done*, *mostly*, *partly* or *still open*). The 25 rows with no tag were never attempted; they are listed below.
 - **The knowledge graph is current as of PR #132** (2026-11-04). The 80 docs changed in #127, #128, #129 and #132 were re-extracted, giving 4,716 nodes, 10,010 edges and 193 communities. Refresh it again after the next phase.
 
