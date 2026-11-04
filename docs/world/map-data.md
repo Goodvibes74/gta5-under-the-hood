@@ -43,6 +43,17 @@ How the GTA V map is stored: `.ymap` placement files and `.ytyp` archetype files
 
 **Verified:** `re_armybase` sets a 4-star wanted level (`SET_PLAYER_WANTED_LEVEL(PLAYER_ID(), 4, false)` followed by `SET_PLAYER_WANTED_LEVEL_NOW`), three times in the script. `re_prison` sets 1, 2, 3 and 4 stars at different points (closer to the inner yard means more stars, **Known**). `re_lossantosintl` (700 lines) and `re_yetarian` (8,730 lines) set no wanted level in their own code. None of the four has a world brain point in `ambient.ipl`.
 
+**How the four are started** (*leftovers pass, 2026-11-04*, **Verified**):
+
+| Script | Started by | When |
+| --- | --- | --- |
+| `re_armybase` | `controller_ambientarea` (area 0, stack 1,424) | The player is within 1,000 m of -2189.5, 3129.6 and the script isn't already running |
+| `re_prison` | `controller_ambientarea` (area 3, stack 1,424) | Within 300 m of 1692.1, 2562.3 |
+| `re_yetarian` | A world-point script brain: `standard_global_init` registers it with a 150 m activation range (`REGISTER_WORLD_POINT_SCRIPT_BRAIN`), next to 98 other world-point brains | When the player comes near its world point. The point itself is placed in map data (**Known**) |
+| `re_lossantosintl` | No script registers or starts it | Our reading: it is either started from data outside the scripts or no longer used |
+
+The same `controller_ambientarea` also starts `golf_ai_foursome` (within 300 m of -1172.8, 66.5) and `golf_ai_foursome_putting` (250 m of -1329.7, 60.3), at stack 5,050, and `stripclub` (100 m of 114.6, -1290.3, stack 2,050). Those three are skipped when one global flag is clear (our reading: outside story mode).
+
 ## Flags, story-mode entities and manifests (leftovers pass)
 
 **Verified** (Every `.ymap`, `.ytyp`, `.ymf`, `.ynd`, `.ynv` and scenario `.ymt` in the vanilla archives loaded with CodeWalker's library by a read-only scan, build 1.0.3725.0 Legacy; one copy per file name, the update's winning over DLC over base; IPL names are every literal passed to `REQUEST_IPL`, `REMOVE_IPL` or `IS_IPL_ACTIVE` in the decompile, 410 names).

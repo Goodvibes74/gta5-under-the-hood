@@ -501,7 +501,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | WLD-008 | The event index of each script, and the full character and time rules per event | Second pass: the index each script passes to the check | Open |
 | WLD-009 | How long each event's cooldown is | Second pass: read where each script writes its next allowed time | Open |
-| WLD-010 | How `re_armybase`, `re_prison`, `re_lossantosintl` and `re_yetarian` are started | Second pass: [launch graph](/scripting/script-launch-graph.md) | Open |
+| WLD-010 | How `re_armybase`, `re_prison`, `re_lossantosintl` and `re_yetarian` are started | Second pass: [launch graph](/scripting/script-launch-graph.md) | Answered: `controller_ambientarea` starts `re_armybase` within 1,000 m of Fort Zancudo and `re_prison` within 300 m of the prison (stack 1,424). `re_yetarian` is a world-point brain registered in `standard_global_init` (150 m). No script registers or starts `re_lossantosintl` (leftovers pass, [map data](/docs/world/map-data.md#restricted-areas)) |
 | WLD-011 | When each event is unlocked (story progress) | R5.1 second pass | Open |
 | WLD-012 | The world brain activation range and how the engine picks between nearby points | Test card 2 | Open |
 

@@ -81,7 +81,7 @@ If any test fails the script ends at once and the brain waits until the player l
 | --- | --- |
 | The event index of each script, and the full character and time rules per event | Second pass: the index each script passes to the check |
 | How long each event's cooldown is | Second pass: read where each script writes its next allowed time |
-| How `re_armybase`, `re_prison`, `re_lossantosintl` and `re_yetarian` are started | Second pass: [launch graph](/scripting/script-launch-graph.md) |
+| How `re_armybase`, `re_prison`, `re_lossantosintl` and `re_yetarian` are started | Answered in [map data](/docs/world/map-data.md#restricted-areas) (leftovers pass): `controller_ambientarea` starts the army base (1,000 m) and prison (300 m) scripts, `re_yetarian` is a world-point brain (150 m), and no script starts `re_lossantosintl` |
 | When each event is unlocked (story progress) | R5.1 second pass |
 | The world brain activation range and how the engine picks between nearby points | Test card 2 |
 
