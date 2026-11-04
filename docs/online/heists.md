@@ -146,6 +146,42 @@ If none of these is above 0, it returns a value from the loaded job's content da
 
 The launcher requests these movies and draws them in the room with `DRAW_SCALEFORM_MOVIE_3D_SOLID` (5 calls). `am_mp_property_int`, the apartment interior, has the same name function, but only checks that `heist_pre` is loaded.
 
+### 47.6.2 Cayo Perico secondary loot values (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in `heist_island_planning` and `tuneables_processing`. The tunable names are hashed, so they are given here by default value. Which pair belongs to which loot type is our reading: the pairs rise in the order cash, weed, cocaine, gold, which matches the **Known** values players see.
+
+When the planning script sets up a new heist, it rolls each loot type's value once, between two tunables (both inclusive). It rounds the result **up to the next 100**, then multiplies it by a factor:
+
+| Loot (our reading) | Minimum | Maximum | Stats written |
+| --- | ---: | ---: | --- |
+| Cash | 78,750 | 83,250 | two placement bit words and the value: 9495, 9496, 9497 |
+| Weed | 130,500 | 135,000 | 9498, 9499, 9500 |
+| Cocaine | 198,000 | 202,500 | 9501, 9502, 9503 |
+| Gold | 328,333 | 333,333 | 9504, 9505, 9506 |
+| Paintings | 157,500 | 180,000 | one placement bit word and the value: 9507, 9508 |
+
+- **Paintings.** Their count is rolled between two tunables (1 and 3, upper bound exclusive, so 1 or 2). They are spread over 7 painting spots by a shuffle, and the spots used are saved as bits in stat 9507.
+- **The factor** is picked by a value read from character stat 9489 (0 to 5): 1.2, 1.1, 1.05, 1, 1, 1. All six are hashed tunables.
+- **The other loot types' placement.** Each loot type has two bit words, saved in the stats above. They mark which loot spots, on the island and in the compound, hold that type.
+
+- **Loose cash stacks.** In the finale, `fm_mission_controller_2020` gives a `h4_prop_h4_cash_stack_02a` a random value between two more hashed tunables (20,000 and 99,000), and any other cash prop 5,000. The 99,000 also feeds into the maximum take the controller allows (**Verified**).
+
+How much a full bag holds isn't set here, and it isn't traced (ON-021).
+
+### 47.6.3 Where each heist's story talks (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in the decompile; the contacts are **Known** (the DLC storylines table, [48.2](/docs/online/dlc-storylines.md#482-updates-packs-and-flows)). Each heist's story dialogue sits in a few dialogue blocks, and the scripts name each conversation root (`<block prefix>_<name>`):
+
+| Heist | Script | Dialogue blocks (conversation roots named) | Contacts (**Known**) |
+| --- | --- | --- | --- |
+| Classic heists | `freemode` | Lester's calls and texts, the `HEIST_*` help (48.2.2) | Lester |
+| Doomsday | `freemode` (`gb_gang_ops_planning` names no block) | `XMFMAUD` (64 roots, `XMFM_*`) | Lester, Agent 14 |
+| Diamond Casino | `gb_casino_heist_planning` | `HS3LEAU` (76 roots `HS3LE_*`), `HS3PRAU` (4 roots `HS3PR_*`) | Lester, Yung Ancestor, Packie |
+| Cayo Perico | `heist_island_planning` | `HS4PAAU` (53 roots `HS4PA_*`, such as `HS4PA_PS_*` on the planning screen) | Miguel Madrazo, Pavel |
+| Cayo Perico preps | `fm_content_island_heist` | `HS4PAAU` (504 roots), `HS4PSAU` (75), `H4SCPAU` | as above |
+
+Our reading of the block names: `LE` is Lester and `PA` is Pavel. The speakers and what each line says are in the packs' dialogue text, which wasn't read for this pass.
+
 ## 47.7 What this means for modders
 
 These are Online systems: read them, never mod them in Online. For a story-mode heist mod:
@@ -161,8 +197,8 @@ These are Online systems: read them, never mod them in Online. For a story-mode 
 | --- | --- |
 | The units of the failure time bands (minutes of play, *probable*) | Answered in [47.3](#473-classic-heists): minutes, compared with the mission's elapsed time plus 10 seconds |
 | The casino target index order (gold or artwork at index 1) | Answered in [47.6.1](#4761-casino-targets-and-elite-challenges-second-pass): 0 cash, 1 gold, 2 artwork, 3 diamonds |
-| Cayo secondary loot values (cash, weed, coke, gold, paintings) and bag capacity | Next pass: hashed tunables near the primary values |
+| Cayo secondary loot values (cash, weed, coke, gold, paintings) and bag capacity | Mostly answered in [47.6.2](#4762-cayo-perico-secondary-loot-values-leftovers-pass) (leftovers pass): the five value ranges, rounding, the 1.2 to 1 factor, the painting count and the stats each roll is saved to. Left: bag capacity |
 | How the classic apartment board is drawn and which script owns it | Answered in [47.6.1](#4761-casino-targets-and-elite-challenges-second-pass): `fmmc_launcher`, with `heist_mp`, `heistmap_mp` and `heist_pre` drawn in 3D |
 | Elite challenge rewards for each heist | Mostly answered in [47.6.1](#4761-casino-targets-and-elite-challenges-second-pass): the tunable values; the classic heists' real values are in the mission controller |
 | The classic heists' elite rewards and targets: they come from each finale's job file, not the scripts (ON-076) | Needs the job files (UGC JSON of the five finales) |
-| The heist story arcs and their contacts | [R7.9](/ROADMAP.md) |
+| The heist story arcs and their contacts | Partly answered in [47.6.3](#4763-where-each-heists-story-talks-leftovers-pass) (leftovers pass): which script and which dialogue blocks carry each heist's story, with root counts. Left: the lines themselves (dialogue text, data) |

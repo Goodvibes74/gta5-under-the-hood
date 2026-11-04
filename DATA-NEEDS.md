@@ -19,7 +19,7 @@ How to read the tables:
 | PHY-013 | What each `statMods` modifier changes | the same files (`CCarHandlingData` / sub-handling blocks) | no |
 | PHY-014 | How `vehicles.meta` fields (`handlingId`, wheel scale, `flags`) interact with handling | `common:/data/levels/gta5/vehicles.meta` and every DLC `vehicles.meta`, with `handling.meta` | no |
 | GP-046 (*done, D1*) | What the `SPMED` and `SPSMALL` handling entries belong to | every `vehicles.meta` (`handlingId` column) | no |
-| ON-068 (*still open, D1*) | Which models the website items 323, 324, 357, 402 are: hashes −994826917, 886151985, −1242692076, −451225720 | every `vehicles.meta` `modelName`, hashed with `joaat` | no (hashes already read from `standard_global_init`) |
+| ON-068 (*answered from the scripts in the leftovers pass: the four package items, see the tracker*) | Which models the website items 323, 324, 357, 402 are: hashes −994826917, 886151985, −1242692076, −451225720 | every `vehicles.meta` `modelName`, hashed with `joaat` | no (hashes already read from `standard_global_init`) |
 | ENT-036 (*done, D1*) | Why 901 models here vs 879 in R14.4 | every `vehicles.meta` | no |
 | ENT-037 (*mostly, D1*) | The less common vehicle flags | every `vehicles.meta` `flags` | no |
 | ENT-038 | Light and siren id ranges per DLC pack | every `carcols` file (*find*: `carcols.ymt`/`carcols.meta`) | no |
@@ -148,6 +148,7 @@ How to read the tables:
 | FF-005 | Which of the 8,472 `gen` keys `fm_mission_controller` reads | a job's UGC JSON | yes |
 | PERF-005, PERF-022 | The menu label for each value of every quality key | the player's settings file (outside the archives), compared with the menu | in-game |
 | PERF-006 | What rewrites the settings file without the player asking | the settings file before and after a driver update | no |
+| PERF-013 (*partly, leftovers pass: the script side*) | Which files `ON_ENTER_MP` switches: the change sets the 43 `GROUP_ON_DEMAND` packs run on entering Online | `content.xml` of every DLC pack with `GROUP_ON_DEMAND` in its `setup2.xml` (`contentChangeSets`) | no (the scripts are done) |
 
 ## Text (`.gxt2` text blocks: base, update and DLC, American)
 

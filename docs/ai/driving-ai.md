@@ -48,7 +48,26 @@ Literal mission numbers per task (**Verified** counts; names **Known**). "var" =
 
 ## 39.4 Temp actions
 
-`TASK_VEHICLE_TEMP_ACTION(ped, vehicle, action, time)` makes a driver do one manoeuvre for a time (**Verified** literal counts): 24 (36), 1 (21), 5 (15), 4 (13), 30 (11), 6 (10), 9 (8), 11 and 31 (6 each), 20 and 32 (4 each), 10 (3), 8, 13, 14 (1 each); 344 calls pass a variable. *Known* meanings from NativeDB's list include braking, braking and reversing, turning while braking, swerving, burnout and accelerating; which number is which is a second-pass check.
+`TASK_VEHICLE_TEMP_ACTION(ped, vehicle, action, time)` makes a driver do one manoeuvre for a time (**Verified** literal counts): 24 (36), 1 (21), 5 (15), 4 (13), 30 (11), 6 (10), 9 (8), 11 and 31 (6 each), 20 and 32 (4 each), 10 (3), 8, 13, 14 (1 each); 344 calls pass a variable. *Known* meanings from NativeDB's community list include braking, braking and reversing, turning while braking, swerving, burnout and accelerating. *Leftovers pass:* the numbers Rockstar uses, matched to that list (**Known**, not checked in game; checking them in game is still an open question below):
+
+| Action | Calls | Meaning (NativeDB, **Known**) |
+| ---: | ---: | --- |
+| 24 | 36 | Brake |
+| 1 | 21 | Brake |
+| 5 | 15 | Turn right 90° while braking |
+| 4 | 13 | Turn left 90° while braking |
+| 30 | 11 | Burnout (brake to a stop, then brake and throttle) |
+| 6 | 10 | Hard brake (handbrake) until the time ends |
+| 9 | 8 | Gentle acceleration |
+| 11 | 6 | Turn right, then straighten the wheels |
+| 31 | 6 | Accelerate with the handbrake on |
+| 20 | 4 | Gentle brake, turning left then right |
+| 32 | 4 | Accelerate very hard |
+| 10 | 3 | Turn left, then straighten the wheels |
+| 8 | 1 | Turn right and accelerate |
+| 13, 14 | 1 each | Turn left and reverse |
+
+The same list says 16 to 18 crash the game, so a mod shouldn't use them.
 
 ## 39.5 How Rockstar builds a chase or race
 
@@ -71,7 +90,7 @@ Literal mission numbers per task (**Verified** counts; names **Known**). "var" =
 | --- | --- |
 | The name of each temp action number, checked in game | In-game test, one action at a time |
 | How the flee mission picks a route | R17.5 second pass |
-| Mission numbers passed in variables (about a quarter of the calls) | Second pass, follow the variables |
+| Mission numbers passed in variables (about a quarter of the calls) | Partly answered (leftovers pass, **Verified**): a script followed each variable to the function's callers, to literal assignments, and to the literals a lookup function returns. Of 1,131 variable calls (vehicle 99, ped target 98, coords target 93, heli 283, plane 279, boat 279), only about ten resolve: to 10, 11, 12, 0 and 6. Most of the rest come from one shared vehicle-task helper compiled into about 95 `fm_content_*` scripts. It takes the mission from a value the decompiler shows only as `StackVal`, the result of a function-pointer call into the job's content data. So the numbers are chosen at run time and can't be read from the decompile; a YSC reader or a runtime log would be needed |
 
 ## 39.8 Test cards (story mode, a script mod)
 

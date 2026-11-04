@@ -206,6 +206,26 @@ Props are the five anchors of [appearance and clothing](/docs/entities/peds/appe
 
 The interaction menu's Appearance page (`PIM_TSTYL`) lets the player cycle what they own without a shop: Accessories (`PIM_TACCE`), Hats (`PIM_THELM`), Helmets (`PIM_THELM1`), Helmet Visor, Glasses, Masks, Half Masks, Earrings, Chains, Gloves, Bike Helmet, Auto Equip Bike / Aircraft Helmet, Outfit and Stunt Racing Outfit, with refusals when an outfit, the Beast or a job forbids it (`PIM_HACCEG`, `_HACCEB`, `_HACCEP`) (**Verified** labels).
 
+**What the base items cost** (*leftovers pass*, **Verified** in `clothes_shop_sp` and `clothes_shop_mp` at commit `6c18d3e8b`, counted with a small reader).
+
+- **Where the prices are.** The base wardrobe is 77 table functions in each script. Each one is a `switch` whose cases set a label, a drawable, a texture and a price, and then store the entry. The price goes into field `.f_7` of the shop's item buffer (`Global_80063`), which the shop passes to `NETWORK_CAN_SPEND_MONEY` before a sale.
+- **How many entries.** The tables hold 3,541 entries, 603 of them `NO_LABEL`. 2,377 entries set their own price. The other 1,164 keep the function's default of 10. The two scripts are identical here: all 2,720 distinct labels have the same price in both.
+- **Prices by family.** These are the non-zero prices of the labelled entries, as minimum, median and maximum:
+
+| Family | Entries | Lowest | Median | Highest |
+| --- | --- | --- | --- | --- |
+| `TORSO_P0` / `P1` / `P2` (Michael, Franklin, Trevor, **Known**) | 158 / 306 / 225 | 10 | 95 / 82.5 / 48 | 4,950 / 3,100 / 3,950 |
+| `LEGS_P0` / `P1` / `P2` | 89 / 101 / 77 | 10 | 58 / 65 / 80 | 875 / 950 / 850 |
+| `FEET_P0` / `P1` / `P2` | 85 / 126 / 71 | 10 | 670 / 157.5 / 720 | 990 / 1,275 / 990 |
+| `PROPS_P0` / `P1` / `P2` | 54 / 184 / 64 | 10 | 71 / 122.5 / 75 | 320 / 5,250 / 320 |
+| `OUTFIT_P0` / `P1` / `P2` | 47 / 46 / 47 | 10 | 10 / 57.5 / 10 | 10,000 each |
+| `G_FMM` / `G_FMF` (Online glasses) | 130 / 131 | 50 | 212.5 / 160 | 6,240 / 6,250 (38 and 46 are free) |
+| `HT_FMM` / `HT_FMF` (Online hats) | 121 / 121 | 10 | 170 / 150 | 5,000 (48 and 41 are free) |
+
+- **The most expensive entries** are five pairs of `HE_FMM_18_*` / `HE_FMF_18_*`, at 12,500 to 15,000. After them come the 10,000 outfits.
+- **The pack-coded sets aren't in these tables.** `CLO_GRF_U_`, `CLO_IEF_U_` and `CLO_BIF_U_` take their prices from elsewhere.
+- **Online changes the price.** `clothes_shop_mp` multiplies a base price by a per-item tunable (arrays in `Global_262145`) and by a category factor for hats, glasses and watches (fields of `Global_299531`; the role of that global is not yet checked). For the items it prices through the game server it uses `NET_GAMESERVER_GET_PRICE` times 1.1. So the numbers above are the story-mode prices and the Online starting points, not what an Online player pays.
+
 ## Tattoo parlours (`tattoo_shop`)
 
 - **Six zone pages:** Torso, Head, Left Arm, Right Arm, Left Leg, Right Leg (`TAT_ZONE_0` to `_5`), plus crew emblems (`TAT_FMM_CLB` "Crew Emblem Back"; locked by crew rank, `TAT_CREW`).
@@ -247,7 +267,7 @@ The shop scripts write through `STAT_SET_INT` on the stat for the current charac
 | --- | --- |
 | What each restriction tag blocks or forces, as a table (hat with hood, glasses with masks ...) | Partly answered in [wearing rules](#wearing-rules-restriction-tags): which of the 501 tags the scripts test (387), which never (118); a per-check table is third pass |
 | The English text of the 306 `CSHOP_TITLE` labels, and why a few menus appear only in some store layouts (GP-082) | Text answered (all 322 labels in `CLO_MNU`, see the menu titles above); the store-layout rule is third pass |
-| The base-wardrobe tables (labels and prices of the non-DLC clothes) | Partly answered (leftovers pass, **Verified**, the string literals of `clothes_shop_mp` and `clothes_shop_sp`, which carry the same 9,400-odd names, matched against the American text): the base labels follow a few patterns, all with text in the base `global.gxt2`. Story mode: `TORSO_P<character>_<drawable>_<texture>` 675, `LEGS_P...` 266, `FEET_P...` 282, `OUTFIT_P<character>_<n>` 136 ("Gray Suit", "Firefighter", "Epsilon Robes"). Online launch props: glasses `G_FMM_` and `G_FMF_` (89 and 82 with text), hats `HT_FMM_` and `HT_FMF_` (76 and 79). Some early Online sets carry a pack code (`CLO_GRF_U_` 368, `CLO_IEF_U_` 173, `CLO_BIF_U_` 128). The prices are in the scripts' tables, a scripts job for the third pass |
+| The base-wardrobe tables (labels and prices of the non-DLC clothes) | Partly answered (leftovers pass, **Verified**, the string literals of `clothes_shop_mp` and `clothes_shop_sp`, which carry the same 9,400-odd names, matched against the American text): the base labels follow a few patterns, all with text in the base `global.gxt2`. Story mode: `TORSO_P<character>_<drawable>_<texture>` 675, `LEGS_P...` 266, `FEET_P...` 282, `OUTFIT_P<character>_<n>` 136 ("Gray Suit", "Firefighter", "Epsilon Robes"). Online launch props: glasses `G_FMM_` and `G_FMF_` (89 and 82 with text), hats `HT_FMM_` and `HT_FMF_` (76 and 79). Some early Online sets carry a pack code (`CLO_GRF_U_` 368, `CLO_IEF_U_` 173, `CLO_BIF_U_` 128). The prices are now read from the scripts' 77 table functions (3,541 entries, the same in both shops; see "What the base items cost" under hats and props). Still left: the prices of the pack-coded sets (`CLO_GRF_U_` ...), which aren't in these tables |
 | The hair and make-up colour counts on this build | In-game test, `GET_NUM_PED_HAIR_TINTS` / `GET_NUM_PED_MAKEUP_TINTS` |
 
 ## Test cards

@@ -43,6 +43,21 @@ Started any other way it shows a warning (`FBR_BENCHMARK`) and quits when you ac
 
 It holds five scenes, each with a player position, a camera position and rotation, and a second camera: around (-10, -1474) in south Los Santos, (806, 1101, 306) in the Vinewood hills, (2006, 3804) in Sandy Shores, (-1713, -1077) at the Del Perro pier, and (-664, 4484) in the forest near Mount Chiliad (**Verified** coordinates; place names **Known**). It spawns fixed models (Armenian gang peds `g_m_m_armboss_01`, `g_m_m_armgoon_01`, `g_m_m_armlieut_01`, a `phantom` truck and a `boxville` van with workers) so every run has the same load. Recording is bracketed by `START_END_USER_BENCHMARK` and `STOP_END_USER_BENCHMARK`, then `SAVE_END_USER_BENCHMARK` writes the results and `RESET_END_USER_BENCHMARK` clears them (**Verified**). The main loop is an 8-state switch: the five passes and the stages around them.
 
+**The eight states** (*leftovers pass*, **Verified**; times are the script's own constants, and a full run is pass -1):
+
+| State | What happens | How long |
+| --- | --- | --- |
+| 0. Set-up | Saves the story game with a mission-repeat save first, if one is needed (quits if the save fails), and cleans up running missions. Makes the player invincible and ignored, takes control away, fades out, loads `BMARK`, reads the iteration and pass counts, and sets the scene positions and models | Until loaded |
+| 1. Scene set-up | Moves the player to the scene and hides their vehicle. Clears 100 m around, waits for a 100 m load scene (up to 15 s), sets the clock to 12:00. Before the 5th scene it also loads the `lazer` jet and its vehicle recording `pc_bench` | Until loaded |
+| 2. Camera | Builds a spline camera between the scene's two camera points over 15,000 ms, and works out a time 23 hours ahead | One frame |
+| 3. Scene | Fades in and starts recording at 5% of the spline. Plays a time-lapse to `EXTRASUNNY` with `cirrocumulus` clouds while the camera moves. For scenes 1 to 4, stops recording at 88% of the spline. It then goes to the next scene (state 1); after scene 5 it goes on to state 4. With a single pass chosen (0 to 4) it jumps to state 7 instead, except after scene 5 | About 15 s each; 0.83 of it recorded (about 12.5 s) |
+| 4. Flight | Plays the `lazer` recording at 2× speed, with cinematic mode between 32,000 and 100,000 ms of the recording | Ends at 104,000 ms of recording: about 52 s |
+| 5. Drive set-up | Blends the camera over 10,000 ms to a street view near (295, 169) and puts the player in a `patriot` at (295.6, 175.1, 103.1). Requests the three Armenian gang models and a second `pc_bench` vehicle recording | 10 s |
+| 6. Chase | Wanted level 2 with police dispatched. The gang gets micro SMGs once in their car. The `phantom` and `boxville` with their workers are on the street, and a `tanker` is frozen in place. The `patriot` is blown up after 70,000 ms, or earlier if it touches the tanker or the `phantom`, or stops within 15 m of the tanker. Recording stops 5 s after the explosion | Up to about 75 s |
+| 7. Results | `SAVE_END_USER_BENCHMARK`. If iterations remain, back to state 1 with the first scene; otherwise reset, restore the game (`QUEUE_MISSION_REPEAT_LOAD`) and end | One frame |
+
+So a full run records five passes. Passes 1 to 4 are the first four scenes, about 12.5 s each. Pass 5 runs from the fifth scene through the flight, the drive and the chase: roughly 2.5 minutes. One iteration takes about 3.5 minutes plus load times. The `BMARK_EXIT` help offers a way out at any time: it saves what was recorded and ends the run. These lengths come from the script's timers; the real length of each pass (load scenes, the chase) needs a timed run.
+
 **Known** (community, not checked here): the command-line switches are `-benchmark`, `-benchmarkIterations <n>` and `-benchmarkPass <n>` (in `commandline.txt` in the game folder or the launcher's arguments), and each run writes `Benchmark-<date>.txt` with per-pass minimum, maximum and average FPS and frame-time percentiles.
 
 **For mods:** the benchmark runs with every ASI and script mod loaded. Two benchmark runs, one with a mod set and one without, are the cleanest way to price a mod set, because the scenes and spawns are identical every time.
@@ -60,6 +75,17 @@ It holds five scenes, each with a player position, a camera position and rotatio
 A monitoring script should use the stopwatch: the real time between its own ticks catches a stall anywhere (streaming, another mod, Windows), while `GET_FRAME_TIME` only reports the game's frame. Log a sample every few seconds (average FPS, worst frame, hitches, memory, position), entity counts every 30 s, and an event line per hitch, fade, loading screen, vehicle and interior change, so each hitch can be matched to what was happening. Write to the log only on samples and events, never every frame.
 
 Rockstar's scripts use `GET_FRAME_COUNT` mainly to spread work over frames: `GET_FRAME_COUNT() % 60` appears 5,030 times in the decompile, `% 10` 788 times, `% 5` 531, `% 120` 330, `% 2` 294 and `% 30` 84 (**Verified**, `git grep -o` count). "Once a second at 60 FPS" is the house pattern, and also the cheapest pattern for mods ([script VM](/scripting/script-vm.md) on script cost).
+
+### What `ON_ENTER_MP` does (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in the decompile: `ON_ENTER_MP` and `ON_ENTER_SP` are `DLC` natives, not map or streaming natives. Three scripts call them, all through the same small helper: `maintransition` (joining and leaving Online) and the two creators (`creator`, `fm_survival_creator`). The helper keeps a global flag for the current mode and calls `ON_ENTER_MP` only when going from story to Online, `ON_ENTER_SP` only the other way. `maintransition` makes the call once the screen has faded out, then waits until both `HAVE_ALL_STREAMING_REQUESTS_COMPLETED` and `ARE_ANY_CCS_PENDING` (content change sets still pending) report done before it moves on.
+
+So the swap is the DLC packs' **content change sets** ([archives and content](/docs/core/archives-and-content.md)). Our reading: these are the change sets in `GROUP_ON_DEMAND` (43 packs), which switch pack files between their story and Online versions, map data among them. The 8.6 s frame is the engine applying those change sets in one blocking step. The scripts don't say which files change.
+
+Two things are still missing:
+
+- **Which files the swap touches** needs local game files: the `contentChangeSets` in the `content.xml` of the 43 `GROUP_ON_DEMAND` packs (see [DATA-NEEDS](/DATA-NEEDS.md)).
+- **Why it takes about 9 s** needs a profiler on the running game.
 
 ## Reading a session: an example from a low-end test PC
 
@@ -116,8 +142,8 @@ So the rule for reading a hitch: find its second in every log and ask whether th
 | Question | Where it goes |
 | --- | --- |
 | Confirm the benchmark switches and results file, and record a baseline with and without mods | Test card below, R18.5 |
-| What happens in each of the 8 states of the benchmark loop, and how long each pass lasts | Second pass of this topic |
-| Why `ON_ENTER_MP` blocks for about 9 s: which map data it swaps | R1.5 streaming, R18.8 load times |
+| What happens in each of the 8 states of the benchmark loop, and how long each pass lasts | Answered in [the game's benchmark](#the-games-benchmark) (leftovers pass): the eight states, with the script's timings; passes 1 to 4 about 12.5 s recorded each, pass 5 about 2.5 minutes. A timed run would confirm the real lengths |
+| Why `ON_ENTER_MP` blocks for about 9 s: which map data it swaps | Partly answered in [what `ON_ENTER_MP` does](#what-on_enter_mp-does-leftovers-pass) (leftovers pass): a `DLC` native that applies the packs' content change sets, waited on with `ARE_ANY_CCS_PENDING`. Left: which files (the `content.xml` of the 43 `GROUP_ON_DEMAND` packs, game files) and the time per step (a profiler) |
 
 ## Test cards
 

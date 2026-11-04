@@ -57,7 +57,7 @@ Size by order of magnitude: 277 scripts have 1 to 10 MB of code, 345 have 100 KB
 
 **Pausing.** `SET_THIS_SCRIPT_CAN_BE_PAUSED` (466 scripts) decides whether the script stops while the pause menu is open; `maintransition` sets it to false so the transition carries on behind the menu (**Verified**).
 
-**Priority.** `SET_THIS_THREAD_PRIORITY` is used only by `freemode` (0) and `fm_maintain_transition_players` (2). `SET_SCRIPT_HIGH_PRIO` appears in 36 scripts: the 34 random events, `altruist_cult` and `gunclub_shop`, and the random events call it with `false` as they clean up (**Verified**). What the priority values change in the scheduler is **Known** only loosely (order within the frame) and stays open.
+**Priority.** `SET_THIS_THREAD_PRIORITY` is used only by `freemode` (0) and `fm_maintain_transition_players` (2). *Leftovers pass:* NativeDB names the values (**Known**): 0 highest, 1 normal (the default), 2 lowest, and 100 manual update. So `freemode` asks to run first among the script threads each frame, and `fm_maintain_transition_players` last. No script uses 100. `SET_SCRIPT_HIGH_PRIO` appears in 36 scripts: the 34 random events, `altruist_cult` and `gunclub_shop`, and the random events call it with `false` as they clean up (**Verified**). What the priority values change in the scheduler is **Known** only loosely (order within the frame) and stays open.
 
 ## 2.5 Talking between scripts
 
@@ -71,6 +71,16 @@ Size by order of magnitude: 277 scripts have 1 to 10 MB of code, 345 have 100 KB
 | Arguments | Copied into the new script's statics at start | Launchers |
 
 **Verified.** Which event queue index means what (the first argument of `GET_EVENT_AT_INDEX`: 0 AI, 1 network, 2 error, and so on) is **Known** and left for R15.1.
+
+**The queues and the script event layout** (*leftovers pass, 2026-11-04*, **Verified** in the build 1.0.3725.0 decompile). Scripts read three queues:
+
+| Queue | Scripts reading it | What it carries (names **Known**) |
+| ---: | ---: | --- |
+| 0 | 116 (one loop each; `GET_EVENT_DATA` reads of 1 or 2 values) | Engine and AI events: damage, shocking events and the like |
+| 1 | 249 (271 loops; 3,154 data reads) | Network events, including script events from other players |
+| 2 | 1 (`error_listener`) | Errors, which `error_listener` uses to bail out of a session |
+
+Script events go out on queue 1: every `_SEND_TU_SCRIPT_EVENT_NEW` call in the scripts passes 1 first, then the data, its size in values, a bit set of target players, and the event's id again. The data is an array of 4-byte values. **Field 0 is the event id** (a hash, which the receiver switches on), **field 1 is the sender** (`PLAYER_ID()` when sent). The payload follows from field 2 or 3; many events leave field 2 at its default. Sizes run from 1 to 56 values. The most common are 6 (487 reads), 4, 5, 8 and 3, and `GET_EVENT_DATA` must be given the exact size of the event it reads.
 
 ## 2.6 Force cleanup
 
@@ -128,6 +138,6 @@ A small SHVDN script can list every running Rockstar script thread (`SCRIPT_THRE
 | Question | Where it goes |
 | --- | --- |
 | Meaning of force-cleanup bits 4, 16 and 32 (engine-raised) | R1.2 and R5.8 (replay), with an in-game test |
-| What thread priority values change | R1.4 or R18.4 |
+| What thread priority values change | Mostly answered (leftovers pass, **Known** from NativeDB): 0 highest, 1 normal, 2 lowest, 100 manual update; `freemode` uses highest and `fm_maintain_transition_players` lowest. Left: how the engine orders threads of the same priority |
 | The event queue indexes and the script event layout | R15.1 |
 | Which of the duplicated pool entries in `gameconfig.xml` applies to the PC build | Answered in [memory and pools 7.2](/docs/core/memory-and-pools.md#72-where-the-limits-come-from): the base block's; the duplicates are console and non-retail overrides |

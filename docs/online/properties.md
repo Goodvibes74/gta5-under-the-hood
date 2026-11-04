@@ -259,9 +259,31 @@ One function in `freemode` gives the number of vehicle spaces, either for a prop
 | 29 | Eclipse Blvd garage (`MULTSTOREY_GAR_OWNED`) | 50 |
 | 31 | bail office (`PROP_BAIL_OFFICE`) | 2 |
 | 32 | hacker den (`PROP_HACKER_DEN`) | 10 |
-| 30, 33, 34, 35 | not in the slot-to-stat function; 33 to 35 are three properties of one kind (20 spaces each), owned when character stats 14169, 14197 and 14225 are non-zero, and map to property indices 135, 136 and 137 (second pass, the `freemode` slot-to-index function) | |
+| 33, 34, 35 | the three mansions: Tongva Hills, West Vinewood and East Vinewood (leftovers pass: slots 33 to 35 map to property indices 135 to 137, and a second function maps the simple interiors `MANSION_TONGVA_HILLS`, `MANSION_WEST_VINEWOOD` and `MANSION_EAST_VINEWOOD`, 177 to 179, to the same three indices). Owned when character stats 14169, 14197 and 14225 are non-zero | 20 each |
+| 30 | never owned: the slot-to-index function returns 0 for it before reading any stat (leftovers pass) | |
 
-Property indices past 115 (not in the table of 45.2) get sizes by index: 116 = 35, 117 = 7, 118 = 1, 119 to 127 = 10 (122 = 9), 128 = 20, 129 = 50, 132 = 2, 133 = 10, 135 to 137 = 20. *Second pass (2026-10-30, **Verified**):* `freemode`'s slot-to-stat function names ownership slots 12 to 32 (the table above). The property indices 116 to 137 don't follow the slot numbers in a fixed offset, so which index is which property is still open (45.8).
+Property indices past 115 (not in the table of 45.2) get sizes by index: 116 = 35, 117 = 7, 118 = 1, 119 to 127 = 10 (122 = 9), 128 = 20, 129 = 50, 132 = 2, 133 = 10, 135 to 137 = 20. *Second pass (2026-10-30, **Verified**):* `freemode`'s slot-to-stat function names ownership slots 12 to 32 (the table above). The property indices 116 to 137 don't follow the slot numbers in a fixed offset.
+
+**Which index each slot holds** (*leftovers pass, 2026-11-04*, **Verified**). For most slots the slot-to-index function just returns the slot's character stat, so the index is whatever the purchase wrote there. The writes are literal values, which ties each index to its property:
+
+| Index | Slot | Property | Written by |
+| ---: | ---: | --- | --- |
+| 115 | 11 | vehicle warehouse | 2 places |
+| 116 | 12 | hangar | `freemode` |
+| 117 | 13 | facility | 1 place |
+| 118 | 14 | nightclub | 1 place |
+| 119, 120, 121 | 15, 16, 17 | nightclub garage floors 1 to 3 | 1 place each |
+| 122, 123, 124 | 18, 19, 20 | Arena workshop garage floors 1 to 3 | `appinternet` (all three), `freemode` (122) |
+| 125 | 21 | Diamond Casino penthouse garage | 3 places |
+| 126 | 22 | arcade garage | `appinternet` |
+| 127 | 25 | auto shop | 3 places |
+| 128 | 26 | Agency garage | 3 places in `appinternet` and `freemode` |
+| 129 | 29 | Eclipse Blvd garage | not a stored value: the function returns 129 whenever the slot's stat is above zero |
+| 132 | 31 | bail office | 3 places |
+| 133 | 32 | hacker den | shared code in 248 scripts |
+| 135, 136, 137 | 33, 34, 35 | the mansions | a fixed map, as above |
+
+No slot is ever given 130, 131 or 134. The size function has no entry of its own for 130 and 131 (they fall back to the home-class rule), and none at all for 134. Slot 8, the first office garage, is written 103, 104 or 105 in three places (our reading: one index per office building). Slot 7, a home, always reads as unowned unless a tunable is on.
 
 Every personal vehicle is one **record** in a per-character array of **607**, kept in stats flagged `IsVehicle` (4,412 of them): `MPSV_MODEL_n`, `MPSV_FLAGS_n` (mod flags), `MPSV_VEHICLE_BS_n` (control flags), `MPSV_LP0_n` (the plate, a 64-bit stat), `MPSV_PRICE_PAID_n`, `MPSV_PREMIUM_PAID_n` (insurance paid by whoever destroyed it), `MPSV_IMPOUND_TIME_n`, and for 133 of them `MPSV_OBTAINED_TIME_n`, plus `MPSV_VEHICLE_TIMESTAMP` and named one-offs (`MPSV_MODEL_BIKER_CLT`, `_TUNER_VEH`, `_SALVAGE_VEH`). A `freemode` function maps record numbers to stat numbers in blocks (records 0 to 9, 13 to 22, 26 to 35 ... with three unused numbers after each block of ten up to record 362, then straight runs), so a home's 13 reserved records hold up to 10 real cars. Colours, wheels and mods aren't among these stat names.
 
@@ -475,5 +497,5 @@ These are Online systems: read them, never mod them in Online. For a story-mode 
 | Instance numbering of `am_mp_property_int` (owner id, building, or both) | Answered in [45.6a](#interior-instances): per owner, rows 0 to 31, 32 without an owner |
 | Daily property fees (utility bills) and how they are charged | Answered in [45.6a](#daily-property-fees-utility-bills) |
 | The business side of each simple interior | Answered in [organisations and businesses](/docs/online/organisations-and-businesses.md#464-the-business-loop) (R7.7) |
-| Which business or vehicle the garage indices 116 to 137 and ownership slots 12 to 35 are | Mostly answered (second pass): slots 12 to 32 named in [the garage table](#garage-sizes-and-personal-vehicle-records); slots 30 and 33 to 35 and the indices 116 to 137 left |
+| Which business or vehicle the garage indices 116 to 137 and ownership slots 12 to 35 are | Mostly answered: every slot from 12 to 35 is named, and the indices from 115 to 137 are tied to their slots in [the garage table](#garage-sizes-and-personal-vehicle-records) (leftovers pass). Left: 130, 131 and 134, which no slot is given |
 | Where a personal vehicle's colours, wheels and mods are saved | Next pass, the vehicle save code in `freemode` and `carmod_shop` |

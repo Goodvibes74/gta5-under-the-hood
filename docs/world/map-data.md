@@ -12,7 +12,7 @@ How the GTA V map is stored: `.ymap` placement files and `.ytyp` archetype files
 - **Ymaps are split by detail and purpose:** by name, 2,642 are streaming chunks (`_strm_`), 1,212 `_critical`, 1,166 `_long_0` (far-visible), 928 `_interior`, 826 `_lod`, 426 `_lodlights`, 206 `_occl` (occluders), 138 `_mp`. The `flags` field is 0 for 7,863, 2 for 1,854, 1 for 919, 3 for 425.
 - **Inside the ymaps:** 22,506 car generators (R4.3), 6,262 timecycle modifier boxes (R13.2) and 19,326 box occluders.
 - **Scripts switch map sections:** `REQUEST_IPL` in 407 scripts with 371 different IPL names, `REMOVE_IPL`, `IS_IPL_ACTIVE` ([streaming](/docs/core/streaming.md)).
-- **Restricted areas are scripts, not map data:** `re_armybase` (Fort Zancudo) gives a 4-star wanted level; `re_prison` (Bolingbroke) raises it from 1 to 4 stars step by step. `re_lossantosintl` (the airport) and `re_yetarian` are area scripts of the same family.
+- **Restricted areas are scripts, not map data:** `re_armybase` (Fort Zancudo) gives a 4-star wanted level; `re_prison` (Bolingbroke) raises it from 1 to 4 stars step by step. `re_lossantosintl` (the airport) and `re_yetarian` look like they belong to the same family by name, but they enforce nothing (see below).
 
 ## Where it lives
 
@@ -42,6 +42,22 @@ How the GTA V map is stored: `.ymap` placement files and `.ytyp` archetype files
 ## Restricted areas
 
 **Verified:** `re_armybase` sets a 4-star wanted level (`SET_PLAYER_WANTED_LEVEL(PLAYER_ID(), 4, false)` followed by `SET_PLAYER_WANTED_LEVEL_NOW`), three times in the script. `re_prison` sets 1, 2, 3 and 4 stars at different points (closer to the inner yard means more stars, **Known**). `re_lossantosintl` (700 lines) and `re_yetarian` (8,730 lines) set no wanted level in their own code. None of the four has a world brain point in `ambient.ipl`.
+
+**What `re_lossantosintl` and `re_yetarian` actually do** (*leftovers pass, 2026-11-04*, **Verified**). Neither guards an area:
+
+- **`re_lossantosintl` is airport air traffic.** It creates `jet` airliners with an `s_m_m_pilot_01` pilot and flies them with `TASK_PLANE_MISSION` (5 calls) between the airport (-1542.1, -3023.8 and -1612.2, -2688.4) and points out at sea and in the sky (-3089.9, -1960.1, 313.6; 451.2, -4009.5, 135.1). It runs only while the player isn't in a plane or helicopter and has no wanted level, and it removes a jet once it is out of sight.
+- **`re_yetarian` is random event 30**, the Simeon event. It names the dealership (`DEALERSHIP`, `reyetarian_simeonoffice`, `rm_showroom`), `YETARIAN_GOON` enemies, a sniper step (`RE_YETA_SNIP`), and the cars `tailgater`, `baller2` and `bjxl`. It reads `num_rndevents_completed`, and it uses the shared random-event check with its own 420 m rule around the dealership (see [random events](/docs/world/random-events.md#the-launch-check-step-by-step)).
+
+**How the four are started** (*leftovers pass, 2026-11-04*, **Verified**):
+
+| Script | Started by | When |
+| --- | --- | --- |
+| `re_armybase` | `controller_ambientarea` (area 0, stack 1,424) | The player is within 1,000 m of -2189.5, 3129.6 and the script isn't already running |
+| `re_prison` | `controller_ambientarea` (area 3, stack 1,424) | Within 300 m of 1692.1, 2562.3 |
+| `re_yetarian` | A world-point script brain: `standard_global_init` registers it with a 150 m activation range (`REGISTER_WORLD_POINT_SCRIPT_BRAIN`), next to 98 other world-point brains | When the player comes near one of its world points. As noted above, `ambient.ipl` has no point for it, so where its point is placed isn't traced |
+| `re_lossantosintl` | No script registers or starts it | Our reading: it is either started from data outside the scripts or no longer used |
+
+The same `controller_ambientarea` also starts `golf_ai_foursome` (within 300 m of -1172.8, 66.5) and `golf_ai_foursome_putting` (250 m of -1329.7, 60.3), at stack 5,050, and `stripclub` (100 m of 114.6, -1290.3, stack 2,050). Those three are skipped when one global flag is clear (our reading: outside story mode).
 
 ## Flags, story-mode entities and manifests (leftovers pass)
 
@@ -77,7 +93,7 @@ How the GTA V map is stored: `.ymap` placement files and `.ytyp` archetype files
 | --- | --- |
 | The exact meaning of the ymap `flags` values 1, 2, 3 | Answered in [flags, story-mode entities and manifests](#flags-story-mode-entities-and-manifests-leftovers-pass): bit 1 script-loaded, bit 2 LOD |
 | How many entities the story-mode map loads (only ymaps active outside Online) | Partly answered in [flags, story-mode entities and manifests](#flags-story-mode-entities-and-manifests-leftovers-pass): about 715,000 once script-loaded maps and replaced copies are left out; which pack change sets apply in story mode is still open |
-| How `re_lossantosintl` and `re_yetarian` enforce their areas | Second pass |
+| How `re_lossantosintl` and `re_yetarian` enforce their areas | Answered (leftovers pass): they don't. `re_lossantosintl` is airport jet traffic and `re_yetarian` is random event 30 at Simeon's dealership (see restricted areas above) |
 | How the LOD manifests (`.ymf`) tie ymaps together | Answered in [flags, story-mode entities and manifests](#flags-story-mode-entities-and-manifests-leftovers-pass): ytyp dependencies, HD texture bindings, named IPL groups (some by hour and weather) and interiors |
 
 ## Test cards

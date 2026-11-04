@@ -42,6 +42,13 @@ The order Rockstar uses, with how many scripts use each step (**Verified** count
 3. `ADD_PATROL_ROUTE_LINK(1, 2)`, `(2, 3)`, `(3, 4)`, `(4, 1)`: a closed loop.
 4. `CLOSE_PATROL_ROUTE`, `CREATE_PATROL_ROUTE`, then `TASK_PATROL(ped, name, 0, true, true)`.
 
+**Patrols in `fm_content_*` scripts** (*leftovers pass*, **Verified** in all 92 `fm_content_*` scripts that build routes; of the 97 `fm_content_*` scripts, the five without one are `fm_content_mp_intro`, `_drone`, `_hsw_setup`, `_hsw_time_trial` and `_test`):
+
+- **The data.** Each script carries a "patrol" block in its mission data. A validator in the same script names it `data.Patrol.iCount`, bounded by `MAX_NUM_PATROLS`, beside `data.Ped`, `data.Prop`, `data.TriggerArea` and the other blocks. Each patrol entry names the ped it belongs to (one route per ped) and holds a list of nodes: a position, a look-at position and a wait time. The script's variation set-up fills these through per-mission function pointers (`Call_Loc`), so, as for GP-021, the decompile shows the reader but not the values.
+- **Node limit per route** is a constant compiled into each script: 1 node in 55 scripts, 2 in 6, 3 in 4, 4 in 3, 5 in 10, 6 in 4, 7 in 2, 8 and 9 in one each, 10 in 5, and 14 in one.
+- **The route.** Named `miss_<mission id>_<script instance>_<patrol index>`. The nodes are added with no scenario (an empty name in all 92) and linked in a closed loop (last node back to the first), then `TASK_PATROL(ped, name, alert state, can chat, true)`. The alert state defaults to 0 and "can chat" to true, unless the mission's own callback returns something else.
+- **A second mode without the engine's patrol.** If another callback says so, the script walks the ped itself: `TASK_GO_STRAIGHT_TO_COORD` to the current node, and on arriving within 2 m moves to the next. At the last node it turns round and walks the list back the other way (a back-and-forth route, not a loop). A last callback can skip single nodes.
+
 Across all scripts the literal node scenarios are `WORLD_HUMAN_GUARD_STAND` (67) and `StandGuard` (4). Guards that should not move get a scenario (`TASK_START_SCENARIO_IN_PLACE`, 342 scripts) or a defensive area instead; the dedicated guard tasks are nearly unused: `TASK_GUARD_CURRENT_POSITION` 4 scripts, `TASK_GUARD_SPHERE_DEFENSIVE_AREA` 4, `TASK_GUARD_ASSIGNED_DEFENSIVE_AREA` 3, `TASK_STAND_GUARD` 1.
 
 **Enemy groups and alerts** (`agency_heist3b`, **Verified** structure, *probable* intent). Enemies sit in an array of 20-field structs. Each frame the script checks groups: when any member is in combat (`IS_PED_IN_COMBAT`) or a counter of noticed events passes 3, it gives the other members of that group combat tasks. The engine's own "inform friends" (`SET_PED_TO_INFORM_RESPECTED_FRIENDS`, 20 scripts) is used less than this hand-made spreading.
@@ -73,6 +80,15 @@ Across all scripts: `TASK_HANDS_UP` 123 scripts, `TASK_COWER` 188, `TASK_SMART_F
 - **Scripted routes** that must look authored use waypoint recordings: `TASK_FOLLOW_WAYPOINT_RECORDING` 49 scripts (267 calls): `agency_heist3a`, `finale_heist2a` and `2b`, `rural_bank_heist`, `fbi5a`, `exile2`. Cars use vehicle recordings ([R17.6](/docs/ai/driving-ai.md)).
 - **Sequences** chain the steps (`TASK_PERFORM_SEQUENCE`, 317 scripts, 3,202 calls).
 
+**Buddies in vehicles** (*leftovers pass*, **Verified** counts; the full decompile):
+
+- **The player drives; buddies take the seat a script gives them.** Of the 2,060 `TASK_ENTER_VEHICLE` calls (461 scripts), 1,278 pass a literal seat: 957 the driver's seat (-1), 203 the front passenger seat (0), 61 and 41 the two rear seats (1, 2), and 16 "any seat" (-2). Missions that want a buddy to drive say so this way. Nothing in the scripts picks a driver by itself.
+- **Group members pick their own seat in the player's car** (**Known**, engine). Scripts only bias it with `SET_PED_GROUP_MEMBER_PASSENGER_INDEX` (296 calls in 82 scripts; literal values 0 ×79, 2 ×51, 4 ×51, 1 ×9, the rest variables). `friendactivity` sets 0 for a friend who joins you.
+- **Friends on an activity** (`friendactivity`) are set up for car fights. Combat attributes 0 (use cover), 1 (use vehicles), 2 (drive-bys) and 5 on, and 3 (leave vehicle) off. Combat ability 2. They stay in the vehicle when jacked, and `SET_PED_CAN_BE_KNOCKED_OFF_VEHICLE` is 3. The script never gives a friend `TASK_DRIVE_BY`: the friend's drive-bys come from the engine, allowed by attribute 2.
+- **A friend drives only to come and meet you.** `friendactivity` gives the friend `TASK_VEHICLE_MISSION_COORS_TARGET` toward the meeting point (mission 4, speed 10, target radius 2 m; the straight-line distance argument is 10 m once closer than 10 m, otherwise 20 m). They get out once within 2 m, or within 15 m (or 20 m) after standing still for more than 1 s (or 6 s).
+- **Scripted drive-bys** are mission work: `TASK_DRIVE_BY` has 166 calls in 43 scripts, most in `docks_heistb` (43), `trevor2` and `finale_heist2b` (12 each), `jewelry_heist` (11) and random events (`re_prisonvanbreak` 8, `re_snatched` and `re_chasethieves` 7 each). `TASK_VEHICLE_SHOOT_AT_PED` (12 calls) and `..._AT_COORD` (18) cover mounted guns.
+- **Script-wide, attribute 1 is switched off far more than on** (753 off, 302 on) and attribute 2 more on than off (323 on, 44 off). Our reading: missions keep enemies out of cars unless a chase needs them, but rarely forbid drive-bys to peds that are in one.
+
 ## 44.7 Heist crews
 
 Story heist crew members are a table in `main` (**Verified**; names from the `HC_FN_*` labels; cut and stats as stored):
@@ -93,7 +109,34 @@ Story heist crew members are a table in `main` (**Verified**; names from the `HC
 | 13 | Taliana Martinez | Driver | 5% | 94 | 83 | 68 | 0 |
 | 9 | Karim Denz | Driver | 8% | 60 | 54 | 24 | 0 |
 
-For gunmen the heist scripts use stat 1 as max health, stat 2 as accuracy and stat 3 as shoot rate when they spawn the crew member (`rural_bank_heist`, `finale_heist2b` and `jewelry_heist` share the function). Anyone spawned through it who isn't a gunman gets health 100, accuracy 25 and shoot rate 40 (**Verified**). Stats are packed two to an integer, 15 bits each. A shared function raises a stat by 25 (a quarter of its cap of 100) and clamps it at 100; crew members improve after heists they survive (**Known**). The crew's names for the other stats (hacking speed, driving) are **Known**, not read.
+For gunmen the heist scripts use stat 1 as max health, stat 2 as accuracy and stat 3 as shoot rate when they spawn the crew member (`rural_bank_heist`, `finale_heist2b` and `jewelry_heist` share the function). Anyone spawned through it who isn't a gunman gets health 100, accuracy 25 and shoot rate 40 (**Verified**). Stats are packed two to an integer, 15 bits each. A shared function raises a stat by 25 (a quarter of its cap of 100) and clamps it at 100; crew members improve after heists they survive (**Known**). *Leftovers pass (**Verified**):* the raise runs once, near the end of each of the six crew finales (`rural_bank_heist`, `jewelry_heist`, `finale_heist2a`, `finale_heist2b`, `agency_heist3a`, `agency_heist3b`; the two docks heist scripts contain no raise). It goes through the crew chosen for that heist and skips members marked dead in the save or lost during the heist. Every stat of each remaining member goes up by a quarter of that stat's cap, rounded, and stops at the cap: 4 stats for gunmen, 3 for each of the other two crew types. A check at the top skips the whole raise in one state (our reading: a replay). The crew's names for the other stats (hacking speed, driving) are **Known**, not read.
+
+*Leftovers pass, what the stats do (**Verified**, the six crew finales, `flow_controller` and `standard_global_init`):* the finales almost never read a stat. They read a **skill tier** (0, 1 or 2) that the save keeps next to each member's packed stats, and branch on that or on who was picked.
+
+- **Starting tiers** (`main`, new game): 2 for Gustavo, Packie, Chef, Paige, Eddie and Taliana; 1 for Christian; 0 for the other six.
+- **How the tier moves:** the finale raises stats on a working copy. When a mission with flag bit 14 in the mission table passes (our reading: a crew finale), `flow_controller` copies the working copy into the save for each chosen member without the "dead" bit, then averages that member's stats as percentages of their caps (gunman health over 1,000, every other stat over 100). Above 66.6 the tier becomes 2, above 33.3 it becomes 1. It is never lowered.
+- **Stat names on the planning board:** `HC_STA_G1` to `G4` for gunmen, `H1` to `H3` for hackers and `D1` to `D3` for drivers, each shown as a percentage of its cap. The board is the only place hacker and driver stat values are read.
+- **Slot roles per board choice** (1 gunman, 2 hacker, 3 driver): choices 1 and 2 (Jewel Store Job) are driver, gunman, hacker; 5 (Paleto Score) is one gunman; 6 (`agency_heist3a`) is two gunmen; 7 (`agency_heist3b`) is hacker, gunman, driver; 8 (`finale_heist2a`) is gunman, gunman, driver, driver, hacker; 9 (`finale_heist2b`) is driver, driver, gunman, gunman. Choices 3 and 4 (the docks heist) have no crew.
+- **Outcome 3** in a finale's crew record means the member was killed. Setting it also sets the member's permanent "dead" bit in the save.
+
+| Finale | Role | What the tier (or the pick) changes |
+| --- | --- | --- |
+| `jewelry_heist` | Hacker | Time limit in the store: 55 s at tier 0, 65 s at 1, 90 s at 2 (the raid also ends when all 20 cases are smashed). Rickie (12) never gets the drive-by task in the chase; the other two hackers do |
+| `jewelry_heist` | Gunman or driver | A multiplier on each smashed case's value: 0.8, 0.9 or 1.0 by tier. Board choice 1 uses the gunman's tier, choice 2 the driver's |
+| `jewelry_heist` | Gunman | Tier 0: a scripted bike crash in the escape (`Gunman_Bike_Crash`). The gunman is marked killed, and his dropped bag holds a third of the take, or the part above $2,741,082 if that is less. Picking the bag up restores it |
+| `jewelry_heist` | Driver | Tier 0 with a tier 0 gunman: an extra "lost" scene in the escape (`missheist_jewel@lost`). The mix of driver and gunman tiers (0 or 2) and the hacker's tier picks one of eight lines, `JH_TALK1` to `JH_TALK8` |
+| `rural_bank_heist` | Gunman | Tier 2 survives (outcome 1); tiers 0 and 1 are killed (outcome 3). Tier 2 also unlocks extra lines and a defensive area. When bullets or an explosion hit the gunman, the take (from $8,016,020) loses a random $0 to $99 at tier 2, the normal range at tier 1 (set per stage, such as $500 to $1,500), and 1.5 times that range at tier 0 |
+| `agency_heist3a` | Two gunmen | If both are tier 1 or higher, both live. Otherwise the weaker one is placed second, plays a death scene (`crew_dead_crew2`) and is marked killed |
+| `agency_heist3b` | Gunman | Tier 0 carries an assault rifle, tiers 1 and 2 a carbine rifle. Their 4th stat adds attachments: grip above 45; flashlight and (carbine) suppressor above 50; extended clip above 60; (carbine) medium scope above 75. Tier 0 has a parachute help line (`AH_CHUTE`). Tiers 1 and 2 get different combat settings (attribute 12, combat floats 0 and 3) in one fight |
+| `agency_heist3b` | Driver | Tier 2 drives a separate scripted getaway (an extra vehicle recording). Tiers 0 and 1 share the other branch, which plays a police scanner report when you are wanted. In one spawn the driver's accuracy is set from a gunman-only stat call, which returns -1 for a driver |
+| `agency_heist3b` | All three | The tier picks the line variant (suffix `B`, `M` or `G`). For the hacker, tier 1 picks `M` or `G` from a check, and the `G` branch also clears one counter (meaning not traced) |
+| `finale_heist2a` | Gunman (slot 0), driver (slot 2) | Below tier 2, each takes 9% off the take (of $201,300,000). Below tier 2 the slot 2 driver is also killed, unless a rescue flag was set during the mission (`FH3A_SAVE` line) |
+| `finale_heist2a` | Driver (slot 3) | Tier 1 or higher changes the chase branch and its timings |
+| `finale_heist2a` | Hacker | Delay before a traffic light you switch in the traffic-control minigame takes effect: none at tier 2, 0.5 s at tier 1, 2 s at tier 0 |
+| `finale_heist2b` | Driver (slot 0) | Below tier 2, a scripted crash: the helicopter carrying the load explodes, $100,800,000 of the $201,600,000 take is lost, and the driver is killed |
+| `finale_heist2b` | Gunmen (slots 2, 3) | Accuracy 10 instead of 5: slot 2 at tier 2, slot 3 at tier 1 or higher |
+
+So hacker and driver stats matter only through the tier, and the tier only changes after a finale passes. Our reading: a low-tier member who survives a finale can rise a tier and do better in the next one. The board choice numbers were matched to heists by the `JHFP`, `DHP`, `AHP` and `FHP` labels set for each choice and by the slot roles each finale script reads.
 
 ## 44.8 Waves and difficulty in Online content
 
@@ -108,6 +151,8 @@ Online missions and survivals don't hard-code enemy skill; it comes from the con
 Survival (`fm_survival_controller`) sets each enemy's accuracy from a table indexed by stage and wave, plus a per-wave bonus from the content, and its combat ability from a matching table; some special enemies are set to accuracy 3, 5 or 9 with ability 0, and get `TASK_COMBAT_PED` with flag 67108864. Health and armour are scaled by two more per-wave multipliers. Survival waves are counted and announced with labels such as `SC_WAVE_NUM` and `MP_WAVE_COMPLETE`.
 
 Story missions have no wave system: each stage spawns its own enemies when the player reaches a trigger, and moves on when they are dead or a time passes ([R5.2](/docs/gameplay/missions/mission-anatomy.md)) (**Known** from reading missions).
+
+*Leftovers pass (**Verified**, counted in four finales):* story enemies have no spawn table in a data file or a global. Their positions are written into the code of each stage. In `rural_bank_heist`, 63 of the 73 direct `CREATE_PED` calls take literal coordinates; in `jewelry_heist`, 13 of 25; in `agency_heist3b`, 3 of 7. `finale_heist2b` spawns almost everything through wrapper functions (3 direct calls). The ped handles go into fixed-size local arrays. `rural_bank_heist` has 19 int arrays of 4 to 15 entries (the ped arrays among them, such as 7, 8 and 12), and its enemy model is the army's `s_m_y_marine_03` (80 references; one SWAT and one sheriff model besides). Its largest single spawning function creates 18 peds of mixed models, and the next ones 8, 8 and 7. How many are alive at once in play is not settled by reading: stages overlap and many spawns go through helper functions, so it needs an in-game count.
 
 ## 44.9 Online venue peds
 
@@ -127,12 +172,12 @@ The casino, nightclubs, arcade, penthouse and other properties fill themselves w
 
 | Question | Where it goes |
 | --- | --- |
-| Where story missions keep enemy spawn tables (positions, triggers) and how many enemies a big shootout has alive at once | Next pass: `rural_bank_heist`, `finale_heist2b` |
-| What hackers' and drivers' stats do in each heist | Next pass: the heist scripts |
-| When the crew stat raise is called (every survived heist, or only some) | Next pass |
+| Where story missions keep enemy spawn tables (positions, triggers) and how many enemies a big shootout has alive at once | Partly answered (leftovers pass, 44.8): there are no tables; positions are literals in each stage's code (63 of 73 `CREATE_PED` calls in `rural_bank_heist`) and handles go in fixed local arrays of 4 to 15. Left: the number alive at once (an in-game count) |
+| What hackers' and drivers' stats do in each heist | Mostly answered (leftovers pass, 44.7): they count only through a skill tier that is recomputed when a finale passes; the table in 44.7 lists every tier check. Left: what the `agency_heist3b` hacker's counter and `finale_heist2a`'s slot 3 driver branch do in play (an in-game test) |
+| When the crew stat raise is called (every survived heist, or only some) | Answered (leftovers pass): once at the end of each of the six crew finales, for every surviving member chosen for that heist; each stat rises by a quarter of its cap |
 | The `TASK_COMBAT_PED` flag values (16, 67108864, 201326592) | In-game test |
-| How `fm_content_*` scripts set up patrols from content data | R7.7, R7.9 |
-| Buddy behaviour in vehicles (driver choice, drive-bys) | With [R17.6](/docs/ai/driving-ai.md) |
+| How `fm_content_*` scripts set up patrols from content data | Mostly answered (leftovers pass, 44.3): the `data.Patrol` block, node limits per script, the route name, the loop, `TASK_PATROL` defaults and the script-walked back-and-forth mode. Left: the values each variation puts in, which are set through function pointers (a YSC reader, as for GP-021) |
+| Buddy behaviour in vehicles (driver choice, drive-bys) | Mostly answered (leftovers pass, 44.6 "Buddies in vehicles"): scripts seat buddies explicitly, group members choose their own seat with a script-set preference, friends are set up for drive-bys that the engine runs. Left: what the passenger index values mean, and how the engine picks a group member's seat (a test) |
 
 ## 44.12 Test cards
 

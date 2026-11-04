@@ -42,12 +42,14 @@ So the map is mostly fed by scenarios rather than free walkers: a typical slot a
 
 | Attribute | Values (zones) | What it changes (**Known**) |
 | --- | --- | --- |
-| `scumminessLevel` | `BELOW_AVERAGE` 922, `POSH` 223, `ABOVE_AVERAGE` 90, `SCUM` 48, `CRAP` 18, `NICE` 9 | Crime events, how peds react, shop prices in some scripts (`GET_ZONE_SCUMMINESS`) |
+| `scumminessLevel` | `BELOW_AVERAGE` 922, `POSH` 223, `ABOVE_AVERAGE` 90, `SCUM` 48, `CRAP` 18, `NICE` 9 | Crime events and how peds react (**Known**); in the scripts, only the phone's signal bars (see below) |
 | `lawResponseTime` | `MEDIUM` 746, `SLOW` 564 | How fast the police arrive after a crime |
 | `lawResponseType` | `COUNTRYSIDE` 855, `DEFAULT` 433, `ARMY_BASE` 22 | Which police (sheriff, LSPD, army) respond |
 | `specialZoneAttribute` | `NONE` 1,289, `AIRPORT` 21 | Airport rules |
 | `vehDirtMin/Max`, `pedDirtMin/Max`, dirt colour | per zone | How dirty spawned cars and peds look |
 | `popRangeScaleStart/End`, `popRangeMultiplier`, `popBaseRangeScale` | per zone | How far from the player population spawns |
+
+**Scumminess in the scripts** (*leftovers pass, 2026-11-04*, **Verified**). Only one script in build 1.0.3725.0 calls `GET_ZONE_SCUMMINESS`: `cellphone_flashhand`, the phone. It reads the scumminess of the player's zone and sets the **signal bars**: levels 0 and 1 give 5 bars, 2 and 3 give 4, 4 gives 3, and 5 gives 2 (any other value 3). One time in four it takes off a further bar, if more than 2 are showing. The bars drop to 0 when one script flag is set or one location check passes. The earlier note that scumminess sets shop prices in some scripts was wrong: no shop script reads it. What it changes inside the engine (crime events, ped reactions) isn't in the scripts.
 
 **Known (engine):** the population code reads the zone under the player (and the camera), takes the current two-hour slot of its schedule, and spawns peds and cars up to the caps from the weighted groups, limited by the budgets, the density settings, what models are in memory and the road and pavement nodes nearby. It removes them when they are far away or behind the player.
 
@@ -92,7 +94,7 @@ So the map is mostly fed by scenarios rather than free walkers: a typical slot a
 | --- | --- |
 | The 5 story-mode schedule hashes that don't match a `popcycle.dat` name | Answered in [schedules that don't exist](#schedules-that-dont-exist-leftovers-pass): one hash, six zones |
 | How the caps, `CityDensity` and the budgets combine into the real spawn count | Test card 1; R17.9 |
-| What `scumminessLevel` changes in code and in scripts | Second pass: `GET_ZONE_SCUMMINESS` callers |
+| What `scumminessLevel` changes in code and in scripts | Partly answered (leftovers pass): in the scripts, only the phone's signal bars (`cellphone_flashhand`, 5 bars at levels 0 and 1 down to 2 at level 5). Left: the engine side |
 | The unnamed zone fields (`hash_7111AC8A`, three flags) | Partly answered in [schedules that don't exist](#schedules-that-dont-exist-leftovers-pass): two are the same value everywhere; what the two flags on the west-coast zones do is a test |
 | How birds and fish groups spawn (they fill many slots) | R17.8 |
 

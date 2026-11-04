@@ -45,6 +45,9 @@ From `defaulttasks.ymt` and `motiontasks.ymt` (**Verified**):
 | `SET_PED_POPULATION_BUDGET` | 70 | 291 | Overall ped budget (0 to 3) |
 | `SET_SCENARIO_TYPE_ENABLED` | 52 | 190 | Switch scenario types off |
 | `TASK_USE_MOBILE_PHONE` | 36 | 86 | |
+| `TASK_CHAT_TO_PED` | 5 | 10 | Make two chosen peds chat (leftovers pass) |
+
+*Leftovers pass (**Verified**):* scripts never pick chat partners. `TASK_CHAT_TO_PED` appears 10 times in 5 scripts (`taxi_gotyounow`, `taxi_clowncar`, `nigel2`, `franklin0`, `re_stag_do`, two calls each). Each time the script names both peds and gives each the other as partner, with flag 16 in 8 calls and 17 and 1 once each. So ambient chats, and who chats with whom, come from the engine's `CTaskChat` and the hang-out rules in `CTaskAmbientClips` (chat within 2 m).
 
 The pattern for a mission set piece: clear the area, stop the scenarios and models that would wander in, lower the densities every frame, and give the mission's own peds tasks with ambient clips off; at cleanup put a released ped back with a wander task so it lives on as an ambient ped.
 
@@ -60,7 +63,7 @@ The pattern for a mission set piece: clear the area, stop the scenarios and mode
 | Question | Where it goes |
 | --- | --- |
 | How far from the player ambient peds despawn | R17.9, in-game test |
-| How peds pick partners for chats | Second pass |
+| How peds pick partners for chats | Partly answered (leftovers pass, 36.3): no script picks them; the 10 `TASK_CHAT_TO_PED` calls pair two peds chosen by the script. Left: the engine's pairing rule (the executable, or a test) |
 | The animal models by kind and where each spawns | Second pass with R4.2's scenario types |
 
 ## 36.6 Test cards (story mode)

@@ -181,7 +181,21 @@ Each script reads its own block (checked by finding a block-specific field, such
 
 The MC time limits are in seconds: the script multiplies the tunable by 1,000 (`gb_biker_wheelie_rider`).
 
-**Shared rules.** A boss has to wait 3 minutes (`gb_cooldown_until_next_boss_challenge`, 180,000 ms) between challenges, and 5 between work. Organisation members get half the RP (`gb_challenge_goon_rp_reward_percentage` 0.5). A rival organisation that wins gets 70% of the cash and RP (`gb_rival_org_*_reward_percentage`), and a player outside an organisation 30% of the cash (`gb_solo_cash_reward_percentage`). The wagers keep 10% for the agency (`gb_challenge_wager_agency_cut`). How these percentages combine in the end-of-challenge payout isn't traced.
+**Shared rules.** A boss has to wait 3 minutes (`gb_cooldown_until_next_boss_challenge`, 180,000 ms) between challenges, and 5 between work. Organisation members get half the RP (`gb_challenge_goon_rp_reward_percentage` 0.5). A rival organisation that wins gets 70% of the cash and RP (`gb_rival_org_*_reward_percentage`), and a player outside an organisation 30% of the cash (`gb_solo_cash_reward_percentage`). The wagers keep 10% for the agency (`gb_challenge_wager_agency_cut`).
+
+**How the percentages combine** (*leftovers pass, 2026-11-04*, **Verified** in `gb_rob_shop`, with spot checks in `gb_biker_wheelie_rider`). The percentages never multiply together. A shared reward routine, copied into 69 scripts (the `gb_*` work and challenge scripts, the business battles, two deathmatch controllers and `am_penned_in`), picks **one** pair of factors, one for cash and one for RP, from the challenge id and the player's standing:
+
+| Case | Cash × | RP × |
+| --- | ---: | ---: |
+| One of the eight VIP challenges (ids 153, 154, 155, 160, 162, 163, 171, 172, the menu ids above) | 1 | 1 for a boss; otherwise `gb_challenge_goon_rp_reward_percentage` (0.5) |
+| Id 157 | 1 | 1 |
+| Any other id, player in an organisation | `gb_rival_org_cash_reward_percentage` (0.7) | `gb_rival_org_rp_reward_percentage` (0.7) |
+| Any other id, player not in an organisation | `gb_solo_cash_reward_percentage` (0.3) | `gb_solo_rp_reward_percentage` (0.3) |
+| Either of the last two, but the player belongs to the organisation their own record points at (our reading: the one running the work) | 1 | 1 |
+
+A few ids replace the 0.7 and 0.3 with tunables of their own: ids 239 to 242, 244 and 248, and a group of 25 ids: 148 and 179 (each only in one state), plus 23 ids from 180 to 211. Their names are hashed, and their defaults are the same 0.7 and 0.3, or 70 and 30 read as percentages. So the rival and solo percentages never apply to the eight VIP challenges. There, anyone who wins gets the full cash, and only the RP depends on whether the winner is the boss.
+
+The winner's sum is then worked out in this order, rounding after each step: (cash collected during the challenge + the base reward) ÷ a divisor, × the cash factor, × one more multiplier. RP goes through the same steps. The base reward is the default reward tunable × its event multiplier tunable (for Market Manipulation, `gb_smashandgrab_default_cash_reward` 5,000 × `gb_smashandgrab_event_multiplier_cash` 1.0). In `gb_rob_shop` the divisor and the extra multiplier keep their starting values (1 and 1.0), and two fixed bonuses are off (-1). The cash collected is the total cash held by the organisation's players, capped by a tunable and halved while one server flag is set. Losers get the participation amounts without any factor, except for ids 185, 220 and 221, which scale them the same way.
 
 ### 46.5.3 The nightclub's safe and warehouse (second pass)
 
@@ -209,7 +223,7 @@ The MC time limits are in seconds: the script multiplies the tunable by 1,000 (`
 
 **The warehouse goods.** Three seven-case functions read the goods tunables, one value per goods type:
 
-| Type | Goods (**Known** order) | Value per unit | Capacity | Units per production step |
+| Type | Goods (**Known** order) | Value per unit | Capacity | Units from one source job |
 | ---: | --- | ---: | ---: | ---: |
 | 0 | Cargo and shipments | $10,000 | 50 | 1 |
 | 1 | Sporting goods | $5,000 | 100 | 2 |
@@ -220,8 +234,60 @@ The MC time limits are in seconds: the script multiplies the tunable by 1,000 (`
 | 6 | Cash creation | $4,725 | 40 | 3 |
 
 - **Which column is which.** The value column is multiplied by a unit count, so it is the sale value of each unit. The capacity column is divided by 5 elsewhere.
-- **The units column.** It is multiplied by a global multiplier and an event multiplier (both 1 by default). That makes it the amount added per production step (*probable*).
-- **Not traced.** How long a step takes, and how technicians are assigned to types. That is third-pass question ON-077.
+- **The units column** (*corrected in the leftovers pass, 2026-11-04*, **Verified**). These seven tunables are read only by `fm_content_club_source`, Yohan's source missions. They are multiplied by a multiplier tunable and paid with the transaction `service_earn_yohan_source_goods` (`NETWORK_YOHAN_SOURCE_GOODS`). So they are the units one source job adds for its goods type, not a production step, as the second pass had guessed (*probable*).
+- **Production time and technicians** (*leftovers pass, 2026-11-04*, **Verified** in `freemode`; tunable names hashed). One unit of each goods type takes a fixed time:
+
+  | Type | Goods | Time per unit |
+  | ---: | --- | ---: |
+  | 0 | Cargo and shipments | 8,400,000 ms (140 min) |
+  | 1 | Sporting goods | 4,800,000 ms (80 min) |
+  | 2 | South American imports | 14,400,000 ms (240 min) |
+  | 3 | Pharmaceutical research | 7,200,000 ms (120 min) |
+  | 4 | Organic produce | 2,400,000 ms (40 min) |
+  | 5 | Printing and copying | 1,800,000 ms (30 min) |
+  | 6 | Cash creation | 3,600,000 ms (60 min) |
+
+  - **One upgrade halves every time.** The time is multiplied by a further tunable (0.5) when one nightclub check on the player passes (our reading: the equipment upgrade).
+  - **Five technician slots.** Assignments are bits in the player's broadcast data (`Global_1845250[player].f_260.f_321`). Slots 0 to 3 use bit (slot × 7 + goods type) of `.f_2`; slot 4 uses bit (goods type) of `.f_3`. A goods type is produced when a hired technician has its bit set.
+  - **The countdown.** Each type in production has a network-time timer, and its remaining time counts down only while three player checks pass (one of them is the boss check). The remaining time of each type is saved in character stats 15626 to 15632 (types 1 to 6, then 0). At start-up it is read back and reset to the full time if it is zero or larger than the full time.
+
+### 46.5.4 How production time is kept (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in `freemode` for the biker businesses and the bunker; the claim about time spent offline is our reading, and it agrees with **Known** player experience.
+
+- **One unit takes the production-time tunable** (`biker_weed_production_time` 360,000 ms, `biker_meth_production_time` 1,800,000, `biker_crack_production_time` 3,000,000, `biker_fakeids_production_time` 300,000, `biker_countercash_production_time` 720,000, `biker_acid_production_time` 135,000; `gr_manu_production_time` 600,000 and `gr_research_production_time` 300,000 for the bunker). Upgrades subtract tunable amounts from it.
+- **The timer runs on network time in script memory.** Each business slot has a timer started with the network clock (`GET_NETWORK_TIME`, or the game timer outside a network game). The time left to the next unit is kept in two places: a per-slot value in `freemode`'s memory, and the player's broadcast data (field `.f_9` of each of the seven business slots in `Global_1845250[player].f_260.f_205`, plus `.f_298` for a second line). When the timer restarts, the time already done is subtracted from the full production time, so a part-finished unit isn't lost.
+- **Time while offline isn't counted** (our reading). Nothing in this path reads a clock that keeps running outside the session. Only the time left to the next unit carries over, through the broadcast data, which is filled when the session starts.
+- **A second, real-time timer.** Each biker business also has a "delay" timer kept in seconds of cloud time (`GET_CLOUD_TIME_AS_INT`), with lengths from the `biker_*_delay_production_time` tunables (600 s; meth 1,200 s; halved with an upgrade; ×13 or ×5 in two special cases). When a slot's start time is first set and the business already holds more than one unit, the start is moved back by (units − 1) × delay, so those units count as already made. This timer is the one that uses real time.
+
+Where the broadcast fields are loaded from and saved to in the stats isn't traced here.
+
+### 46.5.5 Business Battles (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in the build 1.0.3725.0 decompile; the meaning of the cargo label abbreviations is our reading.
+
+**Four scripts.** `business_battles` (287,143 lines) is the freemode event. `fm_content_business_battles` (519,786) is the newer `fm_content` version of it. `business_battles_sell` (513,141) and `business_battles_defend` (499,894) are the related sell and defend jobs; they use the nightclub contacts' labels (`BTL_DAVE`, `BTL_TONY` ...) and the defend-text families (`BB_OT`, `BB_TXT`, `BB_BM`, `BB_TT`, `BB_HT`). The event-type table (46.2) lists all four in its range 114 to 127.
+
+**The event's variations.** `business_battles` keeps a variation number and a cargo type in its server data, both picked together when the event starts. 102 `switch` statements test the variation, with cases 0 to 28, 39 and 41 to 44 (34 variations). The location label, guard weapons and enemy models tell them apart:
+
+| Variations | Where | Enemies and weapons |
+| --- | --- | --- |
+| 0 to 2 | (no location label) | Pistol and SMG guards |
+| 3 to 12 | `BB_POLSTAT`, ten police stations | Unarmed (a break-in) |
+| 13, 14, 15 | `BB_LOC_AGUJA`, `BB_LOC_ECLPSE`, `BB_LOC_PLAYA` | Micro SMG and pistol |
+| 19 to 21 | `BB_LOC_DROPSITE` | Carbine rifle, pump shotgun, SMG, pistol and the railgun |
+| 22 | near 950.8, -2110.6, 29.6 | The Lost (`g_m_y_lost_01` on `daemon` bikes) |
+| 23 | near -936.6, -2969.1, 12.9 | Professionals (`mp_g_m_pros_01` in a `kuruma`) |
+| 24 | near -2293.6, 370.8, 173.6 | Armoured guards (`s_m_m_armoured_01` in a `huntley`) |
+| 39 | `BB_LOC_SHOWRM`, a showroom | |
+| 41, 43 | `BB_LOC_ZANC` (Fort Zancudo), `BB_LOC_LSNP` | Mercenaries (`BBOT_ELIM_MERC`) |
+| 42 | `BB_LOC_UNION` (Union Depository) | Professionals (`BBOT_ELIM_PROF`) |
+
+Variations 16 to 18, 25 to 28 and 44 have no location label or model in these switches. The objective labels (`BBOT_DOWNLOAD`, `BBOT_LAPTOP`, `BBOT_BLOWOPEN`, `BBOT_THROW`, `BBOT_RECOVER`, `BBOT_ASSASS` ...) show the steps: hacking, blowing a safe open, flares and recovering the goods.
+
+**What the goods are.** The cargo type picks the text: type 0 or 4 `BBOT_SPCCARGO` (special cargo), 2 `BBOT_BKRSPPLY` (our reading: biker supplies), 3 `BBOT_GRNSPPLY` (our reading: gunrunning supplies), 5 `BBOT_EVNTCRGO` (event cargo). `fm_content_business_battles` adds `BBOT_WCARGO`. Event cargo is chosen only while an event-cargo list in the tunables (two 10-entry lists and one single value) has an entry. It is then picked with the chance in `bb_business_battle_event_cargo_weighting` (default 0.5).
+
+**Where the goods go.** The delivery text is `BBT_NIGHTCLUB` (to the player's nightclub) or `BBT_DROPOFF` when one check on the player fails (our reading: the player owns no nightclub). The goods payout and the nightclub stock change aren't traced here.
 
 ## 46.6 What this means for modders
 
@@ -236,11 +302,11 @@ These are Online systems: read them, never mod them in Online. For an offline or
 
 | Question | Where it goes |
 | --- | --- |
-| The nightclub's production and popularity numbers (their tunable names are hashed) | Mostly answered in [46.5.3](#4653-the-nightclubs-safe-and-warehouse-second-pass): the safe pay bands, cap and timer, and each goods type's value, capacity and units per step |
-| How long a nightclub production step takes and how technicians are assigned (ON-077) | Third pass, the business hub code in `freemode` |
+| The nightclub's production and popularity numbers (their tunable names are hashed) | Mostly answered in [46.5.3](#4653-the-nightclubs-safe-and-warehouse-second-pass): the safe pay bands, cap and timer, and each goods type's value, capacity and units one Yohan source job adds |
+| How long a nightclub production step takes and how technicians are assigned (ON-077) | Answered in [46.5.3](#4653-the-nightclubs-safe-and-warehouse-second-pass) (leftovers pass): the time per unit for each goods type (30 to 240 minutes, halved by one upgrade), the five technician slots and their assignment bits, and the remaining times saved in stats 15626 to 15632 |
 | Special cargo warehouse capacities (16, 42 and 111 crates are **Known**) and where the scripts keep them | Answered in [46.5.1](#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass) |
-| How production is stored in stats and advanced while offline or in another session | Next pass, with the stats file |
+| How production is stored in stats and advanced while offline or in another session | Partly answered in [46.5.4](#4654-how-production-time-is-kept-leftovers-pass) (leftovers pass): production runs on a network-time timer, and only the time left to the next unit carries over (broadcast data `.f_9`), so offline time isn't counted (our reading). A second biker timer runs on cloud time and is backdated by the units already held. Left: the stat load and save |
 | What `gb_bosscost` and `gb_bosssetupcost` charge | Answered in [46.5.1](#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass): nothing in this build (no script reads them) |
 | Where registering as a boss is charged now (ON-075) | Third pass, the boss registration code in `freemode` and `am_pi_menu` |
-| The MC challenge and VIP challenge rules (cash, RP, time) | Mostly answered in [46.5.2](#4652-vip-and-mc-challenges-second-pass): the 11 challenges, their scripts and their tunables; how the payout percentages combine is left |
-| Business battles and the `fm_content_*` business missions | R7.9 and a later pass |
+| The MC challenge and VIP challenge rules (cash, RP, time) | Answered in [46.5.2](#4652-vip-and-mc-challenges-second-pass): the 11 challenges, their scripts and their tunables. Leftovers pass: one shared routine picks a single cash and RP factor per case, and the VIP challenges never use the rival or solo percentages |
+| Business battles and the `fm_content_*` business missions | Partly answered in [46.5.5](#4655-business-battles-leftovers-pass) (leftovers pass): the four scripts, the 34 variations with their locations and enemies, the cargo types and the event-cargo chance, and the delivery target. Left: the payouts, and the other `fm_content_*` business missions |

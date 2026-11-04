@@ -72,6 +72,9 @@ The hub's own menu text (**Verified**, labels): "Create a custom Land, Sea or Ai
 
 - **Even and odd race subtypes.** One check in the race controller is true for the odd subtypes (1, 3, 5, 7, 11, 13, 19, 25, 31) and for 21, 23, 26 and 32. For those races it forces one lap and counts the finish as a checkpoint. Every other race takes its lap count from the corona. So in each pair, the even number is a lap race and the odd number a point-to-point race (*probable*, from that behaviour).
 - **Types 4 and 31.** They appear in the same check as missions, Gang Attack and Survival in 23 scripts (the creators, `appmpjoblistnew`, the mission, race and deathmatch controllers), and type 31 is paired with Survival in 12 more checks. Neither has a name or a creator branch of its own in this build.
+  - *Leftovers pass* (**Verified**, `git grep` of `Global_4718592 = <n>` at commit `6c18d3e8b`):
+    - **What sets type 4.** Six creators set it, in the same step of their shared code: the deathmatch, race, survival, capture, LTS and mission creators (`public_mission_creator`). In that step a job whose `goto` section has a non-zero `atrig` value becomes type 4. The `goto` section is read from the job file with two keys, `no` (a count) and `atrig`, and the deathmatch creator writes `atrig` back when it saves. Our reading is that type 4 is a "go to" kind of job left over from an early job design.
+    - **Nothing sets type 31.** No script writes the literal 31 into the type, so a type-31 job can only come in through loaded job data.
 
 ## 12.4 The camera and the cursor
 
@@ -201,14 +204,48 @@ The creator also loads map variants to build in: 47 `REQUEST_IPL` calls in the r
 **Columns, not records.** Each section stores one array per field, one entry per item:
 
 - `prop`: `no` (count), then `loc` (position), `vRot` (rotation), `head` (heading), `model` (hash, as a signed integer), `prpclr`, `prplod`, `prpsba`, `prpsnpp`, `pLODDist` and so on: 69 arrays always written, `prpsdp0` to `prpsdp3`, and about 17 more (`prolib`, `prpSlSp` ...) written only when used.
-- `race`: `chp` (checkpoint count), `lap`, `subtype`, grid settings, and per-checkpoint arrays `chl` (location), `chh` (heading), `chs` and `chs2` (*probable* sizes), `chpp`, `cpbs1` to `cpbs3` (option bits), `cptfrm` (transform vehicle) and others: 32 checkpoint column names.
+- `race`: `chp` (checkpoint count), `lap`, `subtype`, grid settings, and per-checkpoint arrays `chl` (location), `chh` (heading), `chs` and `chs2` (sizes; see below), `chpp` (pitch), `cpbs1` to `cpbs3` (option bits), `cptfrm` (transform vehicle) and others: 32 checkpoint column names.
 - `dhprop`: `no`, `pos`, `mn`, `bits`, `mnSwap`, `wprad`, `vcid`.
 
-**Sparse columns** (**Verified**, `func_170`): for most optional fields the writer only creates the array when it meets the first item whose value differs from the default. It then fills the earlier entries with the default and carries on. A reader must treat a missing array as "all default". Two prop writers exist (a full one and a sparse one, chosen by `func_189`); which jobs use which is open.
+**What the checkpoint fields do in a race** (*leftovers pass, 2026-11-04*, **Verified** in the creators' read and write calls and in `fm_race_controler`). Each checkpoint is one 65-field struct (`Global_4718592.f_114994[i]`). The read and write calls, which are shared by `creator`, the race, capture and deathmatch creators and `appmpjoblistnew`, tie each key to a field: `sndchk` (the secondary checkpoint's position) is `.f_3`, `cpbs1` to `cpbs3` are `.f_30` to `.f_32`, `chh` and `sndrsp` (the primary and secondary headings) are `.f_33` and `.f_34`, `cpado` and `cpados` are `.f_35` and `.f_38`, `chs` and `chs2` are `.f_49` and `.f_50`, and `chpp` and `chpps` are `.f_51` and `.f_52`. Most options come in pairs: one value for the primary checkpoint and one, ending in `s` or `2`, for the secondary checkpoint of a split. The race reads the secondary value only when `sndchk` is set.
+
+- **`chs` and `chs2` are size scales** (written with a default of 1.0). The controller multiplies the drawn checkpoint by the scale (`CREATE_CHECKPOINT` radius = base × 0.66 × scale). It also multiplies the 42.5 m (8.5 × 5) pass radius some checkpoints use. The function that reads the scale takes the next checkpoint's value unless one race flag is set.
+- **`chpp` and `chpps` are pitch angles.** The controller turns (pitch, heading) into a direction vector with sine and cosine and uses it in `SET_CHECKPOINT_DIRECTION`, so a non-zero pitch tilts the checkpoint up or down (air and stunt races).
+- **The option bits** are read 76 times (`cpbs1`), 59 times (`cpbs2`) and 3 times (`cpbs3`) in the race controller. The primary and secondary pairs are: `cpbs1` bits 7 and 8, 9 and 13, 10 and 11, 16 and 17, 18 and 19, 30 and 31; `cpbs2` bits 5 and 6, 22 and 23, 24 and 25, 26 and 27, 28 and 29; `cpbs3` bits 0 and 1. Bits whose effect the controller shows:
+
+| Bits | Effect in the race controller |
+| --- | --- |
+| `cpbs1` 7/8 and `cpbs2` 5/6 | Either pair switches the player's vehicle to submarine mode at the checkpoint (`TRANSFORM_TO_SUBMARINE`); the controller also does this when the vehicle is at least 90% under water. `cpbs1` 7/8 also starts the special flight (hover) mode (`SET_SPECIAL_FLIGHT_MODE_RATIO`) |
+| `cpbs1` 9/13 | Special flight mode. The checkpoint gets the wide 42.5 m × scale radius when this pair and `cpbs2` bit 2 are both set, or whenever `cpbs2` bit 3 is set |
+| `cpbs1` 16/17 | Active only when `cpado`/`cpados` is also set |
+| `cpbs1` 18/19 | The checkpoint is drawn with a forced direction (`SET_CHECKPOINT_FORCE_DIRECTION`) |
+| `cpbs1` 3 | Read in the code that sets the air drag multiplier (`SET_AIR_DRAG_MULTIPLIER_FOR_PLAYERS_VEHICLE`) |
+| `cpbs2` 24/25 | The checkpoint's blip is drawn half transparent (alpha 125) |
+| `cpbs2` 28 to 31 | Read only by the script host (`NETWORK_IS_HOST_OF_THIS_SCRIPT`) |
+| `cpbs3` 0/1 | Read next to the nitrous code (`_GET_REMAINING_NITROUS_DURATION`) |
+
+The other bits are read in code without a telling native. The creator sets them through generic menu handlers, so its menu text isn't next to them; naming them needs the creator's menu table.
+
+**Sparse columns** (**Verified**, `func_170`): for most optional fields the writer only creates the array when it meets the first item whose value differs from the default. It then fills the earlier entries with the default and carries on. A reader must treat a missing array as "all default". Two prop writers exist (a full one and a short one, chosen by `func_189`).
+
+**Full and short writers** (*leftovers pass, 2026-11-04*, **Verified** in `fm_race_creator`). `func_189` isn't about props alone. It tests whether a `public_mission_creator` thread is running (`GET_NUMBER_OF_THREADS_RUNNING_THE_SCRIPT_WITH_THIS_HASH` on that script's hash). The save code asks it before 21 sections:
+
+- **Short writers instead of full ones (14 sections).** Spawn points (10 keys instead of 32), `prop` (14 keys such as `loc`, `vRot`, `head`, `model`, `team`, `spwn`, `propcol`, instead of about 120), and also `cuts`, `goto`, `interactables`, `dhprop`, `ptemp`, `zone`, `dprop`, `obj`, `weap`, `veh`, `endcon` and `gen`.
+- **Not written at all (7 sections):** `sad`, `fmmcTrain`, `ddblip`, `mocap`, `otzone`, `usj` and `cover`.
+
+The same hash check appears 5 or 6 times in each of the six creators (the shared save header). So a job saved while `public_mission_creator` runs gets the short form, and jobs from the race, deathmatch, LTS, capture and survival creators get the full form. A short-form job has none of the seven missing sections, and its props carry only the 14 short-form fields; a reader should treat everything else as default.
 
 **Sending it** (**Verified**): a new creation is uploaded with `DATAFILE::UGC_CREATE_MISSION` and an edited one with `UGC_UPDATE_MISSION`, both with content type `"gta5mission"` (the same function also knows `playlist`, `lifeinvaderpost`, `photo` and `challenge`); `UGC_PUBLISH` makes it public. Each of the six creators has one create and one update call; `UGC_PUBLISH` appears 19 times in 7 scripts. Before publishing, text is checked with `SC_PROFANITY_CHECK_STRING_UGC`, and `NETWORK_HAVE_USER_CONTENT_PRIVILEGES` gates the whole thing. Loading a creation back goes through the UGC query natives (`UGC_QUERY_MY_CONTENT`, `UGC_GET_*`); `DATAFILE_LOAD_OFFLINE_UGC` also reads local files such as `RockstarPlaylists`.
 
 **Who reads it.** Only the menu-side scripts parse the `prop` section from JSON (12 scripts: the six creators, `creator`, `fmmc_launcher`, `fmmc_playlist_controller`, `net_cloud_mission_loader`, `appmpjoblistnew`, `pausemenu_multiplayer`). They fill the FMMC globals; the race and mission controllers then read the globals, not the file.
+
+**The other creators' sections** (*leftovers pass, 2026-11-04*, **Verified**). All six creators (race, deathmatch, LTS, capture, survival and `public_mission_creator`) carry the same save code, with the same 41 sections: `mission`, `gen`, `meta`, `race`, `prop`, `dprop`, `dhprop`, `veh`, `weap`, `obj`, `ene`, `surv`, `zone`, `rule`, `endcon`, `goto`, `cover`, `door`, spawn and inventory sections (`fsp`, `invty`, `DMinvty`, `DMD`, `tmD`, `WpnDm`, `PwrUp`) and others. What differs between creators is which sections their menus fill. The placement data each mode adds:
+
+- **Survival waves (`surv`, 77 key names).** The wave count is `wave`. Then, per wave, the kills that end it (`wKil`), a difficulty (`wdif`), three squads (`sqd*`: count, accuracy, health, model, weapons), heavy units (`hvy*`), up to four land vehicles (`vC`, `vHP`, `vmn`, `vped`) and three air units (`air*`, `a`), plus per-wave weapon lists (`wepT`, `wepC`, `wepTyp`) and wave-end bonuses (`wv*`). Key names are built as a prefix plus the wave and slot numbers. The meanings of the abbreviations are our reading.
+- **Enemies (`ene`, 399 key names)** and **objects (`obj`, 248 key names)** are the largest sections. Objects carry the capture and pickup options (`cpup*`, `cont`, the `oAs*` assist settings) next to the position, heading and model.
+- **Team spawn points** (`fsp`: `loc`, `head`), and the start points the spawn writer saves (12.10).
+
+Which menu sets which key, and each creator's own placement limits, are left.
 
 ## 12.11 How a race puts the props back
 
@@ -228,6 +265,18 @@ When a race starts, `fm_race_controler` loops over the prop list in the globals 
 - Seven breakable models from the Specialist races (`sr_prop_sr_boxpile_01` to `_03`, `sr_prop_sr_track_wall`, `sr_prop_sr_tube_wall`, `sr_mp_spec_races_ammu_sign`, `ar_prop_ar_ammu_sign`) are rebuilt: when one has been broken and the host is within 200 m, the host deletes it, clears 10 m around it and creates it again.
 
 Checkpoints are drawn with `CREATE_CHECKPOINT` (14 calls in the controller) from the `chl`/`chh` arrays.
+
+### 12.11.2 Dynamic props in the deathmatch and mission controllers (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in `fm_deathmatch_controler` and `fm_mission_controller_2020`. Both read the same dynamic-prop array as the race (`Global_4980736.f_49393`, 258 fields per prop, with the count in `.f_49391` and the model in `.f_7`), and both go through it once, in their "create the job's entities" step:
+
+- **The budget comes first.** The deathmatch step asks `CAN_REGISTER_MISSION_ENTITIES` for the job's peds, vehicles and objects. The object count is the static objects plus the dynamic props, or the dynamic props alone in one mode. If that fails, nothing is created this frame and the step tries again later.
+- **Props that are skipped:** those with model 0, `prop_container_ld_pu`, and (in the mission controller) props whose `.f_8` link is set. Our reading of `.f_8`: the prop belongs to another entity and is created with it.
+- **Per-prop conditions.** The mission controller, and the deathmatch controller in one job mode, first run a per-prop check. It reads the prop's team, rule and spawn-group fields (`.f_12` to `.f_14`, `.f_45`, `.f_145`) and a "spawn later" field (`.f_188`), so a prop can appear only for a rule or team.
+- **The model can be swapped.** The mission controller takes the model from a per-prop override list when one is set, and from `.f_7` otherwise.
+- **Creating it.** A shared helper checks `CAN_REGISTER_MISSION_OBJECTS(1)`, creates the object with networking on (`CREATE_OBJECT` or `CREATE_OBJECT_NO_OFFSET`), converts it with `OBJ_TO_NET` and marks it as existing on all machines. The created object then gets its position and rotation, its tint and, depending on the prop, the not-targettable, invincible, proof and frozen settings. The mission controller also sets `SET_ENTITY_DYNAMIC`, health and max health, a draw distance and high-precision rotation.
+- **A per-frame cap.** While a lobby flag is set (and the lobby mode isn't 1), the mission controller creates at most 6 props per frame, or 2 in lobby mode 2, and carries on the next frame.
+- After creation, a per-frame update in the deathmatch controller keeps each prop inside the job's interior and runs handlers for each prop type. Some of those handlers run only on the host, or when no network game is running.
 
 ### 12.11.1 The Mission Creator's limits (second pass)
 
@@ -260,14 +309,14 @@ Checkpoints are drawn with `CREATE_CHECKPOINT` (14 calls in the controller) from
 
 | Question | Where it goes |
 | --- | --- |
-| What job types 4 and 31 are, and what the even and odd race subtypes of a pair mean | Mostly answered above (second pass): odd subtypes are one-lap (point-to-point) races; types 4 and 31 are handled with missions and Survival but stay unnamed |
+| What job types 4 and 31 are, and what the even and odd race subtypes of a pair mean | Mostly answered above (second pass): odd subtypes are one-lap (point-to-point) races; types 4 and 31 are handled with missions and Survival but stay unnamed. Leftovers pass: type 4 is set by the six creators when the job's `goto.atrig` is non-zero, and nothing sets 31 directly; the names are still unknown |
 | The prop limit in `public_mission_creator`, which uses its own messages (`PMCE_F_P`, `PMCE_F_D`) | Answered in [12.11.1](#12111-the-mission-creators-limits-second-pass): 200 props, 20 dynamic props, and the other limits |
 | The second dynamic list (library 15), library 39 and the other libraries with no text: hidden, Rockstar-only, or text in a pack not read | Mostly answered (leftovers pass, **Verified** against every American text block, base, update and DLC): of the 49 `FMMC_PLIB_*` labels in the scripts, 41 have text and **8 have none anywhere**: `FMMC_PLIB_13D`, `_BB`, `_BTY`, `_CCTV`, `_CDY`, `_DCOR`, `_EXP3D`, `_FURN`. So the text isn't in a pack this guide missed; *our reading* is that these libraries are hidden or for Rockstar's own content. Which library number each of the 8 labels belongs to is in the script table above, not in the text |
 | What `GET_USED_CREATOR_BUDGET` measures inside the engine | Reverse engineering, R1.5 (streaming) |
-| Which jobs are saved by the full prop writer and which by the sparse one (`func_189`) | Second pass, compare with the 16 local classic missions ([R7.4](/file-formats/ugc-json.md)) |
-| Meaning of `chs`, `chs2`, `chpp` and the `cpbs1` to `cpbs3` bits | Second pass, read the race controller's checkpoint code |
-| How the deathmatch and mission controllers create dynamic props (the race is in 12.11) | Next pass |
-| The other creators' own placement (spawn points, enemy waves, capture objects) | Second pass per creator |
+| Which jobs are saved by the full prop writer and which by the sparse one (`func_189`) | Answered in [12.10](#1210-saving-and-publishing) (leftovers pass): the short writers are used whenever `public_mission_creator` is running; they cover 14 sections, and 7 more sections are left out. Every other creator saves the full form |
+| Meaning of `chs`, `chs2`, `chpp` and the `cpbs1` to `cpbs3` bits | Partly answered in [12.10](#1210-saving-and-publishing) (leftovers pass): `chs`/`chs2` are size scales, `chpp` is a pitch angle, the key-to-field map, the primary and secondary bit pairs, and the effects of about a dozen bits. Left: the other bits' names (the creator's menu table) |
+| How the deathmatch and mission controllers create dynamic props (the race is in 12.11) | Answered in [12.11.2](#12112-dynamic-props-in-the-deathmatch-and-mission-controllers-leftovers-pass) (leftovers pass): one creation pass behind the entity budget, the skipped models, the per-prop rule and team checks, networked creation through a shared helper, and a per-frame cap while a lobby flag is set |
+| The other creators' own placement (spawn points, enemy waves, capture objects) | Partly answered in [12.10](#1210-saving-and-publishing) (leftovers pass): all six creators share one writer with 41 sections; the survival wave keys, and the sizes of the enemy and object sections. Left: which menu sets which key, and each creator's limits |
 
 ## 12.14 Test cards (story mode, a script mod)
 

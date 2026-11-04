@@ -101,7 +101,7 @@ Points, radii and hidden times from `dispatch.meta`; the rest from `wantedtuning
 | `SUPPRESS_CRIME_THIS_FRAME` | 11 | 57 | Ignore one crime type |
 | `REPORT_CRIME` | 7 | 35 | Report a crime by script |
 
-Crime numbers passed literally: `REPORT_CRIME` uses 37 (20 calls), 36 (12) and 13 (2); `SUPPRESS_CRIME_THIS_FRAME` uses 28 (4) and a spread of others. Their names come from NativeDB's crime list (open question).
+Crime numbers passed literally: `REPORT_CRIME` uses 37 (20 calls), 36 (12) and 13 (2); `SUPPRESS_CRIME_THIS_FRAME` uses 28 (4) and a spread of others. *Leftovers pass (2026-11-04):* the counts are confirmed in the build 1.0.3725.0 decompile (**Verified**). `REPORT_CRIME` is called with a literal crime number in 34 of its 35 calls, across 7 scripts (`am_armybase`, `am_prison`, `am_hold_up`, `am_taxi`, `am_mp_casino`, `am_mp_defunct_base`, `am_mp_property_int`). `SUPPRESS_CRIME_THIS_FRAME` uses 29 different numbers in 11 scripts. The names, from NativeDB's community list (**Known**, not checked in game): 13 is assault with a deadly weapon, 28 is shots fired, and 36 is given only as a police radio code ("9-25"). 37, the most common, has no name there.
 
 ## 38.6 What this means for modders
 
@@ -115,7 +115,7 @@ Crime numbers passed literally: `REPORT_CRIME` uses 37 (20 calls), 36 (12) and 1
 | Question | Where it goes |
 | --- | --- |
 | Crime points added per crime (set in the engine) | In-game test: commit one crime with a multiplier of 1 and read the result |
-| Names for the crime numbers 13, 36, 37 and 28 | Second pass with NativeDB's crime list |
+| Names for the crime numbers 13, 36, 37 and 28 | Mostly answered (leftovers pass, **Known** from NativeDB): 13 assault with a deadly weapon, 28 shots fired, 36 only a radio code; 37 unnamed |
 | How the difficulty value changes police behaviour, measured | In-game test |
 
 ## 38.8 Test cards (story mode)

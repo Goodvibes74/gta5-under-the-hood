@@ -70,6 +70,58 @@ So the answer to "how many are Online-only" is 1,088, and the big split is the o
 | `BLIMP` | 14 | `downtown` |
 | `COASTGUARD_BOAT`, `BOATS_LUXURY`, `BOATS_SALTON`, `JETSKI` and other boat sets | about 410 | Zancudo, Paleto Bay, Cape Catfish, the west coast, the Alamo Sea, the reservoir |
 
+### The scenario groups scripts switch (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in the build 1.0.3725.0 decompile. Scripts name **43 scenario groups** in `SET_SCENARIO_GROUP_ENABLED` calls. Most calls pass the group in a variable instead: 742 such calls come from shared code in 248 scripts. The groups and the scripts that name them:
+
+| Group | Scripts that toggle it |
+| --- | --- |
+| `HEIST_ISLAND_PEDS` | `fm_bj_race_controler`, `fm_content_island_heist`, `fm_deathmatch_controler`, `fm_deathmatch_creator` and 15 more |
+| `MP_POLICE` | `carsteal2`, `freemode`, `jewelry_prep1b`, `main_persistent` |
+| `MOVIE_STUDIO_SECURITY` | `carsteal3`, `player_timetable_scene` |
+| `LOST_BIKERS` | `code_controller`, `fbi5a` |
+| `ARMY_GUARD` | `docks_prep2b`, `mission_triggerer_b` |
+| `SANDY_PLANES` | `epsilon6`, `trevor2` |
+| `GRAPESEED_PLANES` | `finale_heist2b`, `trevor2` |
+| `SCRAP_SECURITY` | `finale_heist_prepb`, `mission_triggerer_d` |
+| `SEW_MACHINE` | `jewelry_setup1`, `mission_triggerer_a` |
+| `QUARRY` | `launcher_offroadracing`, `offroad_races` |
+| `TRIATHLON_1_START` | `launcher_triathlon`, `triathlonsp` |
+| `TRIATHLON_2_START` | `launcher_triathlon`, `triathlonsp` |
+| `TRIATHLON_3_START` | `launcher_triathlon`, `triathlonsp` |
+| `BLIMP` | `player_controller`, `standard_global_reg` |
+| `CINEMA_TEXTILE` | `act_cinema` |
+| `CINEMA_MORNINGWOOD` | `act_cinema` |
+| `CINEMA_DOWNTOWN` | `act_cinema` |
+| `FIB_GROUP_2` | `agency_heist3a` |
+| `FIB_GROUP_1` | `agency_heist3a` |
+| `ARMENIAN_CATS` | `armenian2` |
+| `CHINESE2_LUNCH` | `chinese2` |
+| `CHINESE2_HILLBILLIES` | `chinese2` |
+| `ARMY_HELI` | `docks_prep2b` |
+| `OBSERVATORY_BIKERS` | `extreme1` |
+| `LSA_PLANES` | `extreme2` |
+| `ALAMO_PLANES` | `fbi5a` |
+| `POLICE_POUND1` | `freemode` |
+| `POLICE_POUND2` | `freemode` |
+| `POLICE_POUND3` | `freemode` |
+| `POLICE_POUND4` | `freemode` |
+| `POLICE_POUND5` | `freemode` |
+| `HIPPIE_420_DLC_GROUP` | `freemode` |
+| `COUNTRYSIDE_BANKS` | `freemode` |
+| `CITY_BANKS` | `freemode` |
+| `RAMPAGE1` | `launcher_rampage` |
+| `KORTZ_SECURITY` | `michael3` |
+| `ATTRACT_PAP` | `paparazzo1` |
+| `DEALERSHIP` | `re_yetarian` |
+| `SOLOMON_GATE` | `solomon1` |
+| `PRISON_TOWERS` | `traffick_ground` |
+| `TRIATHLON_1` | `triathlonsp` |
+| `TRIATHLON_2` | `triathlonsp` |
+| `TRIATHLON_3` | `triathlonsp` |
+
+What each group holds (which scenario points) is in the scenario `.ymt` files. By name they cover mission set dressing (`FIB_GROUP_1`, `ARMENIAN_CATS`, `KORTZ_SECURITY`), activities (`TRIATHLON_*`, `CINEMA_*`, `QUARRY`), plane and blimp traffic (`SANDY_PLANES`, `GRAPESEED_PLANES`, `LSA_PLANES`, `ALAMO_PLANES`, `BLIMP`), guards (`ARMY_GUARD`, `SCRAP_SECURITY`, `PRISON_TOWERS`, `SOLOMON_GATE`) and Online areas (`HEIST_ISLAND_PEDS`, `POLICE_POUND1` to `5`, `CITY_BANKS`, `COUNTRYSIDE_BANKS`).
+
 ## What this means for modders
 
 - **Animate a ped cheaply:** `TASK_START_SCENARIO_IN_PLACE(ped, "WORLD_HUMAN_SMOKING", 0, true)` gives it the full scenario (props, idle variations, exits) without loading animations yourself.
@@ -83,7 +135,7 @@ So the answer to "how many are Online-only" is 1,088, and the big split is the o
 
 | Question | Where it goes |
 | --- | --- |
-| The 44 scenario groups scripts toggle and what each controls | Second pass |
+| The 44 scenario groups scripts toggle and what each controls | Mostly answered in [the scenario groups table](#the-scenario-groups-scripts-switch-leftovers-pass) (leftovers pass): 43 groups named in the scripts, with the scripts that switch each. Left: the points in each group (scenario files) |
 | How the time window and probability combine with the `#Scenario` cap | Test card 1; R17.8 |
 | How many of the 111,898 points are Online-only | Answered in [availability, chains and aircraft](#availability-chains-and-aircraft-leftovers-pass): 1,088; 50,331 are story-only |
 | The chaining graph format and how vehicles follow it | Mostly answered in [availability, chains and aircraft](#availability-chains-and-aircraft-leftovers-pass): nodes, edges, chains and their fields; the 16 speed values are unnamed |

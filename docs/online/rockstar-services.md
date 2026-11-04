@@ -62,6 +62,34 @@ So a story mod that never signs in loses only the leaderboards, presence and the
 
 **Store and transactions.** Every purchase in Online goes through a basket and checkout with the transaction server (`NET_GAMESERVER_BASKET_START` 291 scripts, `_CHECKOUT_START` 362), against a server catalogue and prices ([R8.5](/docs/ui/server-backed-screens.md)). The `MONEY` namespace (311 natives) records spends and earnings by category.
 
+### 32.2.1 Catalogue keys and categories (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in the build 1.0.3725.0 decompile.
+
+**A catalogue key is a text string, hashed.** The scripts build the string, take `GET_HASH_KEY` of it and pass the hash to `NET_GAMESERVER_CATALOG_ITEM_KEY_IS_VALID` and `NET_GAMESERVER_GET_PRICE`. There are two shapes:
+
+- **`<name>_t<type>_v<version>`.** 157 such keys are written out in full in the scripts, for example `VE_AVENGER_t0_v3`, `VE_KOSATKA_t0_v0`, `VEU_AVENGER3_t1_v1`, `VEM_COLOUR_6_BLACK_t65_v3`, `IEWH_INTERIOR_BRANDED_t0_v0`, `IG_BUY_0_t0_v0`, `CB_SELL_0_t0_v0`, `M_CL_HE_FMM_17_0_t14_v0`, and weapon keys such as `wp_wt_rpg_t0_v1`. Most keys are built at run time from an item's label in the same shape (84 of the literal keys end in `_t0_v0`). The version number goes up to 38 (`VE_BRICKADE2_t0_v38`), so a new version of an item gets a new key.
+- **`<PREFIX>_INDEX_<n>_v<version>`.** Built by shared code in 247 scripts for four groups: `SMALL_BUSINESS_INDEX_`, `MULTISTOREY_GARAGE_INDEX_`, `HACKER_DEN_INDEX_` and `FIELD_HANGAR_INDEX_`. Yacht options use `VEM_YACHT_*` prefixes (`_NAME_`, `_MOD_`, `_LIGHT_`, `_FLAG_`, `_FIX_`, `_COL_`).
+
+**The category** is the second argument of `NET_GAMESERVER_GET_PRICE`, also a hash. Across all scripts there are ten different values. Eight of them match `CATEGORY_*` names (checked by hashing candidate names):
+
+| Category | Price calls |
+| --- | ---: |
+| (unnamed, 426439576) | 1,037 |
+| `CATEGORY_VEHICLE_MOD` | 333 |
+| `CATEGORY_WEAPON_AMMO` | 32 |
+| `CATEGORY_WEAPON` | 15 |
+| `CATEGORY_WEAPON_MOD` | 9 |
+| `CATEGORY_VEHICLE` | 9 |
+| `CATEGORY_CLOTH` | 9 |
+| `CATEGORY_PROPERTY_INTERIOR` | 4 |
+| `CATEGORY_WAREHOUSE_INTERIOR` (1999830656) | 2 |
+| `CATEGORY_TATTOO` | 2 |
+
+The most-used category, 426439576, is the one `appinternet` uses for most of its website prices, such as the `SMALL_BUSINESS_INDEX_` keys. Its name is still unknown: it matched none of several hundred hand-picked names, nor any of 15.5 million `CATEGORY_<word>` and `CATEGORY_<word>_<word>` candidates built from the 3,936 words in `appinternet`'s and `shop_controller`'s strings (leftovers pass).
+
+*Leftovers pass:* 1999830656 hashes exactly to `CATEGORY_WAREHOUSE_INTERIOR`. Its two calls are in `am_mp_bail_office` and `am_mp_salvage_yard`, pricing the `VEM_BOUNTY_TRANSPORTER` items. That is an odd fit for the name, so a chance collision of the 32-bit hash can't be ruled out (our reading: Rockstar reused an existing category).
+
 ## 32.3 When a service is missing
 
 *Probable*, from the guards and the fall-back code:
@@ -86,7 +114,7 @@ So a story mod that never signs in loses only the leaderboards, presence and the
 | Question | Where it goes |
 | --- | --- |
 | The unnamed (`unk_`) tunable readers and which service natives they are | Answered in [R7.3 10.5.1](/docs/online/stats-and-tunables.md#1051-the-tunable-index-save-categories-and-the-basket-second-pass): the tunable registration natives for int, float and bool |
-| The catalogue item keys and categories | R7.7 |
+| The catalogue item keys and categories | Mostly answered in [32.2.1](#3221-catalogue-keys-and-categories-leftovers-pass) (leftovers pass): the two key shapes, 157 literal keys and four index groups, and the ten price categories (eight named). Left: the names of two category hashes |
 
 ## 32.6 Test cards
 

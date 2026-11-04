@@ -120,7 +120,7 @@ Scripts can also read events from the queue (`GET_EVENT_AT_INDEX`, 265 scripts),
 | Question | Where it goes |
 | --- | --- |
 | The three other unnamed shocking events | Second pass, more name guesses |
-| Which `SET_PED_CONFIG_FLAG` numbers scripts set most, and what they do | Second pass, R17.10 |
+| Which `SET_PED_CONFIG_FLAG` numbers scripts set most, and what they do | Partly answered in [peds](/docs/entities/peds/peds.md#the-config-flags-rockstar-sets-most-leftovers-pass) (leftovers pass, same as ENT-014): the top 20 of 190 flags. Left: their effects |
 | How decision makers map each event to a response | R17.3 second pass |
 
 ## 33.7 Test cards (story mode)

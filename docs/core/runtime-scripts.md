@@ -304,5 +304,5 @@ Answered in the second pass: the force-cleanup bits ([every force-cleanup bit](#
 | --- | --- |
 | What exactly the engine does to start `main`, `initial` and `startup`, and in which order | R1.2 |
 | The story flags that pick the active mission triggerer | Answered in [story flow 2.7](/docs/gameplay/missions/story-flow.md#27-the-mission-triggerers): three missions' `completed` values, no flag |
-| Resolve table-driven launches (second pass of the graph) | Mostly answered in [launches by variable and by table](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass): 220 calls followed back, ten tables read; `freemode`'s launches by request left |
+| Resolve table-driven launches (second pass of the graph) | Mostly answered in [launches by variable and by table](/scripting/script-launch-graph.md#launches-by-variable-and-by-table-second-pass): 220 calls followed back, eleven tables read, including `freemode`'s launches by request (the 20-entry travel-cinematic table, leftovers pass); `player_controller`'s other scenes left |
 | What the engine raises force-cleanup bits 16 and 32 for (no script raises them; CORE-032) | Third pass: in-game test logging `GET_CAUSE_OF_MOST_RECENT_FORCE_CLEANUP`, or the executable |

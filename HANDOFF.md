@@ -9,9 +9,9 @@ A public, Markdown-only reference on how GTA V (PC, Legacy, build 1.0.3725.0) wo
 ## Status
 
 - **Everything is on `main`, nothing is in flight.** The last merges are #127 (second-pass phases 1 to 4), #128 (data batches D1 to D6), #129 (D7 to D12) and #130 (this file).
-- **Tracker:** 442 question rows: 168 answered, 40 mostly, 41 partly, 193 open. A row's last column is its status and links to the guide section with the answer. The table "Leftovers: the data-file batches" in `OPEN_QUESTIONS.md` says what each batch read and settled.
+- **Tracker:** 442 question rows: 189 answered, 48 mostly, 57 partly, 148 open (after the leftovers pass on branch `research/pass2-leftovers`, PR #132). A row's last column is its status and links to the guide section with the answer. The table "Leftovers: the data-file batches" in `OPEN_QUESTIONS.md` says what each batch read and settled.
 - **The data batches are finished, but not every row in [`DATA-NEEDS.md`](/DATA-NEEDS.md) was worked.** Each group had a batch, and each row a batch touched carries its result (*done*, *mostly*, *partly* or *still open*). The 25 rows with no tag were never attempted; they are listed below.
-- **The knowledge graph is out of date.** `graphify-out/` wasn't refreshed for the guides changed in #127, #128 and #129, because the maintainer chose to merge without it.
+- **The knowledge graph is current as of PR #132** (2026-11-04). The 80 docs changed in #127, #128, #129 and #132 were re-extracted, giving 4,716 nodes, 10,010 edges and 193 communities. Refresh it again after the next phase.
 
 ## What needs game files and what doesn't
 
@@ -28,7 +28,7 @@ Decide first what your environment can do. **The game install, CodeWalker and th
 
 ## Next steps, in order
 
-1. **Refresh the graph:** run `/graphify . --update`, check that `grep -r "/home/\|C:\\\\Users" graphify-out` is empty, and open a PR with only `graphify-out/`. On a CRLF checkout graphify sees every file as changed; normalise the hashes rather than converting the tree to LF.
+1. **Refresh the graph after each phase:** in a cloud session graphify isn't installed: run `pip install graphifyy`, then `graphify install --platform claude`, and the `/graphify` skill becomes available; then run `/graphify . --update`. Docs are extracted by subagents, about 140k tokens per 120 KB of Markdown. If the export refuses because saved nodes are missing, check that all the missing nodes come from the re-extracted files, then export with `force=True`. Watch for node IDs that collide with a page's ID (a concept on `native-usage.md` named after a namespace page). Before committing, check that `grep -r "/home/\|C:\\\\Users" graphify-out` is empty; set `graphify-out/.graphify_root` back to `.` first, because graphify writes its absolute scan path there. On a CRLF checkout graphify sees every file as changed; normalise the hashes rather than converting the tree to LF.
 2. **Links are checked:** every relative link and heading anchor in the repo resolves (the 105 anchor links #129 added included). One stale anchor in `scripting/script-vm.md` was fixed. Re-run a link check after each phase.
 3. **Work through the scripts-only table below,** one branch per phase, batches pushed as you go. Rebuild what you need of the working method below.
 4. **When the maintainer is at the PC:** the data rows, the executable and the in-game test cards.
@@ -66,7 +66,7 @@ Story mode only; never test in GTA Online. Some lists below were written before 
 
 ### The executable (read-only reverse engineering)
 
-GS-004, GP-025 and GP-087 (replay type numbers), GP-069 and GP-092 (ability entries 8 to 16), GP-080 (aim assist; also a test), CORE-002, CORE-016, CORE-018, CORE-024, CORE-027, CORE-031, CORE-032 (= ON-060, SCR-011), AI-001, AI-003, ON-009, ON-052, GP-023, GP-087, GP-092, UI-020, REN-007, REN-012, SCR-004 (`0x8F5D1AD832AEB06C`), SCR-007 (a YSC dump), PERF-016.
+GS-004, GP-025 and GP-087 (replay type numbers), GP-069 and GP-092 (ability entries 8 to 16), GP-080 (aim assist; also a test), CORE-002, CORE-016, CORE-018, CORE-024, CORE-027, CORE-031, CORE-032 (= ON-060, SCR-011), AI-001, AI-003, ON-009, ON-052, GP-023, GP-087, GP-092, UI-020, REN-007, REN-012, SCR-004 (`0x8F5D1AD832AEB06C`), SCR-007 (a YSC dump), PERF-016, GP-021 (the mission triggerers' per-mission function tables, read with a YSC reader).
 
 ### In-game tests (story mode; most have a test card in their guide)
 
@@ -83,31 +83,35 @@ GS-004, GP-025 and GP-087 (replay type numbers), GP-069 and GP-092 (ability entr
 
 | ID | Where to start |
 | --- | --- |
-| GP-021 | The four `mission_triggerer_*` scripts number their cases locally (not by mission id): map each local case to its mission through the triggerer's mission-id list first, then read the scene set-up per case |
-| GP-038 | `player_controller_b` / `selector`: the 42-entry scene table's per-scene check function and Trevor's pickers |
-| GP-011 | `golf`: the AI shot-choice routine (club and power by distance and lie) |
-| GP-083 | `clothes_shop_mp`: the prices of the non-DLC items (the label patterns and their text are done) |
-| CORE-009 | Single-bit names of `Global_1845250` / `Global_2658291` bitfields (writers are grouped already) |
-| CORE-021 | `freemode`'s launches by request (the request queue and who fills it) |
-| UI-002 | The `listId` draw lists and depths (`SET_SCRIPT_GFX_DRAW_ORDER` and the callers) |
-| ON-006 | Job types 4 and 31: the 23 checks that pair them with missions and Survival; find a writer that sets the type |
-| ON-069 | `am_pi_menu`, page by page: each page's show and grey rules |
-| ON-070 | `.f_2` of the 21-value start arguments and lobby bit 1 (writers in `freemode`, `maintransition`) |
-| ON-065 | Slot 30 and property indices 119 to 134 (the `freemode` slot-to-index function); slot 33 to 35 names need `mpstatscharactermappingdata.xml` |
-| ON-001, ON-005 | `freemode`'s 183 running-state functions; the host-state counter |
-| ON-010 to ON-014, ON-017 | Creator prop writers (`func_189` sparse vs full), race checkpoint fields (`chs`, `cpbs*`), dynamic props in the DM and mission controllers, the other creators' placement, the flow stats, the After Hours / Doomsday / 2015 flows |
-| ON-024, ON-040 | Heist story arcs and contacts; business battles and `fm_content_*` business missions |
-| ON-035, ON-077, ON-021 | Nightclub and Cayo values are hashed tunables: needs a name list (see ON-072 method) |
-| ON-037, ON-039, ON-043 | Production while offline (stats), how challenge percentages combine, simple-interior entrances per type |
+| GP-021 | Leftovers pass (branch `research/pass2-leftovers`): the set-ups are called only through `Call_Loc` on a per-mission table, so the decompile can't map them. Needs a YSC reader for the table's function addresses (moved to the executable list). The label prefixes are matched by name |
+| GP-038 | Trevor's pickers are done (leftovers pass). Left: the per-scene validity check (`func_670` / `func_636` at this build in `player_controller_b`) |
+| GP-011 | Answered (leftovers pass): `golf` and the two ambient foursome scripts |
+| GP-083 | Done for the 77 base table functions (leftovers pass). Left: where the pack-coded sets (`CLO_GRF_U_`, `CLO_IEF_U_`, `CLO_BIF_U_`) get their prices |
+| CORE-009 | 18 bits read (leftovers pass). Left: `.f_203` bits 2, 5 to 8, 30 and 31 (one 127-line `freemode` function about tutorial sessions) and the mod shop bits (`carmod_shop`) |
+| CORE-021 | `freemode`'s request launches are done (leftovers pass). Left: `player_controller`'s other scenes. The "296" and "240" are not in conflict: the launch graph gives 296 before its third pass and 240 after |
+| UI-002 | Not a scripts question: what's left is in-game test card 2 in the pause menu guide |
+| ON-006 | Leftovers pass: type 4 is set by six creators from `goto.atrig`, and nothing writes 31. Left: the names (a text or engine source) |
+| ON-069 | Partly done: greying layers, per-page counts, Preferences, armour and vehicle pages (21.3.2). Left: the other pages' checks, helper by helper |
+| ON-070 | Leftovers pass: `.f_2` is traced to the corona request; lobby bit 1 is "joined another player's transition". Left: `.f_880`'s exact meaning, `main_persistent`'s four setter branches |
+| ON-065 | Leftovers pass: all slots and indices tied (slot 30 never owned, 33 to 35 the mansions). Left: indices 130, 131 and 134, which no slot is given |
+| ON-049 | Leftovers pass: key shapes, 157 literal keys, eight of ten price categories named. Left: the names of category hashes 426439576 and 1999830656 |
+| ON-001 | `freemode`'s 183 running-state functions (ON-005, the host rotation, was answered in the leftovers pass) |
+| ON-011 to ON-014, ON-017 | Race checkpoint fields (ON-011 partly done in the leftovers pass: scales, pitch, key map, a dozen bits; left: the other bits' names), the other creators' placement (ON-013 partly done: shared 41-section writer, survival wave keys; left: menus and limits), the flow stats (ON-014 partly done: storage for 18 flows, EXEC_FLW step by step), the After Hours / Doomsday / 2015 flows (ON-017 partly done: call blocks BATFMAU and XMFMAUD, help families; left: subtitles, data) |
+| ON-024, ON-040 | Heist story arcs and contacts (ON-024 partly done: scripts and dialogue blocks per heist; left: the lines, data); business battles (ON-040 partly done: scripts, 34 variations, cargo types; left: payouts) and the other `fm_content_*` business missions |
+| ON-035, ON-021 | Nightclub popularity cases are hashed tunables: needs a name list (see ON-072 method). ON-077 answered in the leftovers pass (production times, technician bits). ON-021 mostly done in the leftovers pass (Cayo loot ranges from their use in `heist_island_planning`); left: bag capacity |
+| ON-037, ON-043 | Production while offline (stats) (ON-037 partly done: network-time timer, cloud-time delay timer; left: stat load and save), simple-interior entrances per type (ON-039, how the challenge percentages combine, was answered in the leftovers pass) |
 
-**Other categories (next phases, not started):**
-- **Core:** none beyond the rows above.
-- **World:** WLD-002, WLD-006, WLD-008, WLD-009, WLD-010, WLD-011, WLD-015.
-- **Entities and AI:**
-  - ENT-014, AI-010, AI-032 (config flag numbers; names from NativeDB or community)
-  - ENT-023, ENT-026, AI-008, AI-012, AI-013, AI-022, AI-023, AI-026, AI-031 (hash guesses), AI-038, AI-040, AI-041, AI-042, AI-043, AI-045, AI-046, AI-048, AI-050
-- **Online creator rules:** FF-006.
-- **Performance and scripting:** PERF-012, PERF-013, SCR-001, SCR-002, SCR-003, SCR-006, SCR-013.
+**Other categories (leftovers pass, 2026-11-04):**
+- **Done or partly done from the decompile:** AI-008, AI-040, AI-041, AI-042, AI-045, AI-046; SCR-001, SCR-002, SCR-006; PERF-012, PERF-013 (see each row in `OPEN_QUESTIONS.md`).
+- **Also done later in the session:** FF-006 (rules per team, `nxtrulb` branching), GP-011 (the ambient golfers), GP-038 (the draw and the 15 scene tests; five tests' meaning left), ON-049 (1999830656 is `CATEGORY_WAREHOUSE_INTERIOR`).
+- **Still scripts-only, but low yield from the decompile alone:** ENT-014 and AI-032 (flag names), AI-031 (hash guesses), CORE-021's `player_controller` scenes, CORE-009's last bits.
+- **Online rows tried and stopped:**
+  - ON-021 (bag capacity): not next to the loot tunables; the tunable names are hashed.
+  - ON-049 (category 426439576): 15.5 million candidate names tried.
+  - ON-065 (indices 130, 131, 134): nothing ever assigns them, which is likely the answer.
+  - ON-070 (`main_persistent`'s four setter branches): they hang on unnamed transition flags (`Global_2685150.f_787.f_5`, `.f_7`, `.f_10`).
+  - ON-001, ON-011 to ON-014, ON-017, ON-024 and ON-040 need long per-function reading and give names only by inference.
+- **Need local game files or the game:** SCR-002's last 54 natives (a YSC reader or a call logger), SCR-003 (in-game tests of unused natives; SCR-006's 1,845 Online-only natives are the candidates), PERF-013's file list (`content.xml` of the 43 `GROUP_ON_DEMAND` packs, in DATA-NEEDS), AI-041's live enemy count, AI-010, AI-012, AI-013, AI-022 (engine or tests).
 
 ### Docs housekeeping from the knowledge graph
 
