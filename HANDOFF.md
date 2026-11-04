@@ -11,7 +11,7 @@ A public, Markdown-only reference on how GTA V (PC, Legacy, build 1.0.3725.0) wo
 - **Everything is on `main`, nothing is in flight.** The last merges are #127 (second-pass phases 1 to 4), #128 (data batches D1 to D6), #129 (D7 to D12) and #130 (this file).
 - **Tracker:** 442 question rows: 189 answered, 48 mostly, 57 partly, 148 open (after the leftovers pass on branch `research/pass2-leftovers`, PR #132). A row's last column is its status and links to the guide section with the answer. The table "Leftovers: the data-file batches" in `OPEN_QUESTIONS.md` says what each batch read and settled.
 - **The data batches are finished, but not every row in [`DATA-NEEDS.md`](/DATA-NEEDS.md) was worked.** Each group had a batch, and each row a batch touched carries its result (*done*, *mostly*, *partly* or *still open*). The 25 rows with no tag were never attempted; they are listed below.
-- **The knowledge graph is out of date.** `graphify-out/` wasn't refreshed for the guides changed in #127, #128 and #129, because the maintainer chose to merge without it.
+- **The knowledge graph is current as of PR #132** (2026-11-04). The 80 docs changed in #127, #128, #129 and #132 were re-extracted, giving 4,716 nodes, 10,010 edges and 193 communities. Refresh it again after the next phase.
 
 ## What needs game files and what doesn't
 
@@ -28,7 +28,7 @@ Decide first what your environment can do. **The game install, CodeWalker and th
 
 ## Next steps, in order
 
-1. **Refresh the graph:** run `/graphify . --update`, check that `grep -r "/home/\|C:\\\\Users" graphify-out` is empty, and open a PR with only `graphify-out/`. On a CRLF checkout graphify sees every file as changed; normalise the hashes rather than converting the tree to LF.
+1. **Refresh the graph after each phase:** in a cloud session graphify isn't installed: run `pip install graphifyy`, then `graphify install --platform claude`, and the `/graphify` skill becomes available; then run `/graphify . --update`. Docs are extracted by subagents, about 140k tokens per 120 KB of Markdown. If the export refuses because saved nodes are missing, check that all the missing nodes come from the re-extracted files, then export with `force=True`. Watch for node IDs that collide with a page's ID (a concept on `native-usage.md` named after a namespace page). Before committing, check that `grep -r "/home/\|C:\\\\Users" graphify-out` finds only the ignored `.graphify_root`. On a CRLF checkout graphify sees every file as changed; normalise the hashes rather than converting the tree to LF.
 2. **Links are checked:** every relative link and heading anchor in the repo resolves (the 105 anchor links #129 added included). One stale anchor in `scripting/script-vm.md` was fixed. Re-run a link check after each phase.
 3. **Work through the scripts-only table below,** one branch per phase, batches pushed as you go. Rebuild what you need of the working method below.
 4. **When the maintainer is at the PC:** the data rows, the executable and the in-game test cards.
