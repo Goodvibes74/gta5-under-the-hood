@@ -178,6 +178,30 @@ Values are bronze / silver / gold. The small shotgun and railgun numbers suggest
 
 **Golf** (`golf`, **Verified**). The course has nine holes with pars 5, 4, 3, 4, 4, 3, 4, 5, 4 (par 36), and the score shown is strokes against par (`GOLF_PAR_NUM`, `GOLF_BIRDIE`, `GOLF_EAGLE`, `GOLF_OVER_PAR`). For every hole the script has a set of standing spots for the four players while another plays. The save (`GOLF_SAVED_STRUCT`) keeps `GOLF_iBestRound`, `GOLF_iNumHolesPlayed`, `GOLF_iNumPuttsTotal`, `GOLF_iNumFairwayDrivesTotal`, `GOLF_fLongestDrive`, `GOLF_iNumGolfWins`, rounds played per character and the unlocked partners (`GOLF_eUnlockedBuddies`). How the AI players choose their shots is left for the third pass.
 
+**How a golf shot is set up, and how the computer players aim** (*leftovers pass*, **Verified** in `golf` at commit `6c18d3e8b`; names of shot types and roles are our reading).
+
+- **Lies.** The script names seven lies with `LIE_` labels: 0 bunker, 1 path, 2 fairway, 3 green, 4 rough, 5 tee, 7 water.
+- **Clubs.** Each club in the bag has an ID, and one table gives each ID a full-shot distance: 1: 105.8, 3: 100.5, 5: 97.3, 7: 90.2, 8: 87, 9: 83, 10: 79.9, 11: 73.5, 12: 68, 13: 59.1, 14: 52.5, 16: 30.9, 17: 21.8. Any other ID gives 0. The labels are built as `CLUB_` plus the ID. ID 19 is the club used on the green, the putter in our reading.
+- **The automatic setup** runs at the start of every shot. The player can then change the club and the shot type.
+  - **On the green:** a putt type is picked by the distance to the hole (under 5, under 9.5, longer), and the club is 19.
+  - **In a bunker:** shot type 0 with club 16.
+  - **Within 55 of the pin:** shot type 3, an approach.
+  - **Anywhere else:** shot type 0. The script takes the range of clubs allowed for the lie (from the tee IDs 1 to 17, from the fairway 3 to 17, otherwise 7 to 17) and picks the club with the longest distance that still falls short of the hole. If even the shortest club in the range would go past the hole, it takes that one.
+  - **Distance adjustments:** in that comparison a club's distance is multiplied by 0.935 for shot types 2 and 3 and by 0.75 for IDs 14 and up. On the tee of two holes (the script's hole numbers 2 and 3) it is multiplied by 1.1 and 2.25.
+- **The computer players' aim.** For a golfer the player doesn't control, the script takes the automatic setup and aims straight at the pin. Off the green it takes the chosen club's distance as the target, and on the green it sets 5, 10 or 20 by putt type.
+  - When a check on the aim line fails, it turns the aim by 5.5 degrees, then by 11, 16.5 and so on, alternating sides. After seven tries it goes back to aiming straight.
+- **Where the ball goes.** The lie scales every shot's power:
+  - the tee: 1;
+  - the fairway: 0.95;
+  - the rough and the path: a random value around 0.9 (spread 0.075);
+  - a bunker, water or an unknown lie: a value around 0.85 (spread 0.15), never above 0.85.
+- **Wind.** It is set once per round:
+  - **Speed:** a random value from 1 to 4, or from 5 to 8 when the previous weather was rain, thunder or overcast.
+  - **Changes from hole to hole:** the speed moves by a random step of up to 1 divided by the number of players, and is kept within 1 to 6 (5 to 10 in bad weather).
+  - **Direction:** taken from `GET_WIND_DIRECTION`, then shifted by up to 0.3 on each axis.
+
+The ambient golfers on the course (`golf_ai_foursome`, `golf_ai_foursome_putting`) are separate scripts and were not read here.
+
 **Text blocks** each activity loads (`REQUEST_ADDITIONAL_TEXT`): `SP_GOLF`, `TENNIS`, `DARTS`, `YOGA`, `SP_SPR` (off-road, stunts, triathlon), `PSCHOOL`, `S_RANGE`, `BJUMP`, `AMBHT` (hunting), `TAXI`, `DTRSHRD` plus `DTRFAIR` or `DTRFKGR` (trafficking).
 
 ## 42.6 The rampages
@@ -208,7 +232,7 @@ Each also sets its intro and outro animations, enemy vehicles, ambient speech, a
 | Question | Where it goes |
 | --- | --- |
 | The flight-school, range and triathlon medal thresholds | Answered in [42.5.1](#4251-medals-and-goals-second-pass) |
-| Golf: course data, AI foursome behaviour, how the score is kept | Partly answered in [42.5.1](#4251-medals-and-goals-second-pass): pars, score and save; the AI players' shots are third pass |
+| Golf: course data, AI foursome behaviour, how the score is kept | Partly answered in [42.5.1](#4251-medals-and-goals-second-pass): pars, score and save; the club table, the automatic shot setup, the computer players' aim, the lie multipliers and the wind (leftovers pass, in the paragraph after the golf course); the ambient `golf_ai_foursome` scripts are not read |
 | How the flow unlocks each activity (blips appear after story missions) | Answered in [42.2.1](#4221-how-an-activity-is-unlocked-second-pass), except entries 6, 12 and 18 (GP-088) |
 | What arms code entries 6 (golf alone), 12 (sea races) and 18 (towing); no script calls the arming function with them (GP-088) | Third pass, in-game: watch `Global_114904.f_8620[6/12/18]` |
 | The towing quick-bonus check (what the 12 s timer measures) | Answered in [42.4](#424-fees-and-pay) |
