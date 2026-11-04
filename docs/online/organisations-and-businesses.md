@@ -181,7 +181,21 @@ Each script reads its own block (checked by finding a block-specific field, such
 
 The MC time limits are in seconds: the script multiplies the tunable by 1,000 (`gb_biker_wheelie_rider`).
 
-**Shared rules.** A boss has to wait 3 minutes (`gb_cooldown_until_next_boss_challenge`, 180,000 ms) between challenges, and 5 between work. Organisation members get half the RP (`gb_challenge_goon_rp_reward_percentage` 0.5). A rival organisation that wins gets 70% of the cash and RP (`gb_rival_org_*_reward_percentage`), and a player outside an organisation 30% of the cash (`gb_solo_cash_reward_percentage`). The wagers keep 10% for the agency (`gb_challenge_wager_agency_cut`). How these percentages combine in the end-of-challenge payout isn't traced.
+**Shared rules.** A boss has to wait 3 minutes (`gb_cooldown_until_next_boss_challenge`, 180,000 ms) between challenges, and 5 between work. Organisation members get half the RP (`gb_challenge_goon_rp_reward_percentage` 0.5). A rival organisation that wins gets 70% of the cash and RP (`gb_rival_org_*_reward_percentage`), and a player outside an organisation 30% of the cash (`gb_solo_cash_reward_percentage`). The wagers keep 10% for the agency (`gb_challenge_wager_agency_cut`).
+
+**How the percentages combine** (*leftovers pass, 2026-11-04*, **Verified** in `gb_rob_shop`, with spot checks in `gb_biker_wheelie_rider`). The percentages never multiply together. A shared reward routine, copied into 69 scripts (the `gb_*` work and challenge scripts, the business battles, two deathmatch controllers and `am_penned_in`), picks **one** pair of factors, one for cash and one for RP, from the challenge id and the player's standing:
+
+| Case | Cash × | RP × |
+| --- | ---: | ---: |
+| One of the eight VIP challenges (ids 153, 154, 155, 160, 162, 163, 171, 172, the menu ids above) | 1 | 1 for a boss; otherwise `gb_challenge_goon_rp_reward_percentage` (0.5) |
+| Id 157 | 1 | 1 |
+| Any other id, player in an organisation | `gb_rival_org_cash_reward_percentage` (0.7) | `gb_rival_org_rp_reward_percentage` (0.7) |
+| Any other id, player not in an organisation | `gb_solo_cash_reward_percentage` (0.3) | `gb_solo_rp_reward_percentage` (0.3) |
+| Either of the last two, but the player belongs to the organisation their own record points at (our reading: the one running the work) | 1 | 1 |
+
+A few ids replace the 0.7 and 0.3 with tunables of their own: ids 239 to 242, 244 and 248, and a group of 25 ids: 148 and 179 (each only in one state), plus 23 ids from 180 to 211. Their names are hashed, and their defaults are the same 0.7 and 0.3, or 70 and 30 read as percentages. So the rival and solo percentages never apply to the eight VIP challenges. There, anyone who wins gets the full cash, and only the RP depends on whether the winner is the boss.
+
+The winner's sum is then worked out in this order, rounding after each step: (cash collected during the challenge + the base reward) ÷ a divisor, × the cash factor, × one more multiplier. RP goes through the same steps. The base reward is the default reward tunable × its event multiplier tunable (for Market Manipulation, `gb_smashandgrab_default_cash_reward` 5,000 × `gb_smashandgrab_event_multiplier_cash` 1.0). In `gb_rob_shop` the divisor and the extra multiplier keep their starting values (1 and 1.0), and two fixed bonuses are off (-1). The cash collected is the total cash held by the organisation's players, capped by a tunable and halved while one server flag is set. Losers get the participation amounts without any factor, except for ids 185, 220 and 221, which scale them the same way.
 
 ### 46.5.3 The nightclub's safe and warehouse (second pass)
 
@@ -242,5 +256,5 @@ These are Online systems: read them, never mod them in Online. For an offline or
 | How production is stored in stats and advanced while offline or in another session | Next pass, with the stats file |
 | What `gb_bosscost` and `gb_bosssetupcost` charge | Answered in [46.5.1](#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass): nothing in this build (no script reads them) |
 | Where registering as a boss is charged now (ON-075) | Third pass, the boss registration code in `freemode` and `am_pi_menu` |
-| The MC challenge and VIP challenge rules (cash, RP, time) | Mostly answered in [46.5.2](#4652-vip-and-mc-challenges-second-pass): the 11 challenges, their scripts and their tunables; how the payout percentages combine is left |
+| The MC challenge and VIP challenge rules (cash, RP, time) | Answered in [46.5.2](#4652-vip-and-mc-challenges-second-pass): the 11 challenges, their scripts and their tunables. Leftovers pass: one shared routine picks a single cash and RP factor per case, and the VIP challenges never use the rival or solo percentages |
 | Business battles and the `fm_content_*` business missions | R7.9 and a later pass |
