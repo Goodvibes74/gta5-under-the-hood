@@ -63,6 +63,52 @@ Points with no script: `re_pickpocket` 16, `re_rc_checkpoints` 3, and one each f
 
 If any test fails the script ends at once and the brain waits until the player leaves and comes back (`REACTIVATE_NAMED_WORLD_BRAINS_WAITING_TILL_OUT_OF_RANGE`, 52 scripts).
 
+### Each event's index, cooldown, character and unlock (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in the build 1.0.3725.0 decompile. The launch check takes an event index. Most scripts pass it as a literal. Those that pass −1 have it looked up from their own script name in a shared table, which 35 event scripts carry. The same scripts carry the cooldown table and the character rule. The character numbers are 0 Michael, 1 Franklin and 2 Trevor (**Known**).
+
+- **Cooldown.** When an event ends, the script reads the in-game clock, adds the event's cooldown in **game hours** (one game hour is 2 real minutes by default), and saves the result as the event's "next allowed" time in the story save. Events 31 to 33 have no entry in the table (no cooldown). A 30-hour cooldown is about an hour of real time.
+- **Unlock.** Each event needs its bit in the story save (indices 0 to 30 in one word, 31 and up in a second). The bits are set by `code_controller`, the story's delayed-action scheduler, when one of five actions runs (24, 27, 28, 29, 30, and 88 for the same set as 30). `lesterhandler` also sets bit 7, and `photographymonkey` sets bit 33. Which story moment schedules each action isn't traced here.
+
+| Index | Script | Cooldown (game hours) | Character | Unlocked by |
+| ---: | --- | ---: | --- | --- |
+| 0 | `re_accident` | 30 | any | action 24 |
+| 1 | `re_atmrobbery` | 200 | any | action 24 |
+| 2 | `re_bus_tours` | 0 | any | action 24 |
+| 3 | `re_domestic` | 60 | any | action 27 |
+| 4 | `re_getaway_driver` | 60 | any | action 24 |
+| 5 | `re_shoprobbery` | 30 | any | action 24 |
+| 6 | `re_snatched` | 40 | any | action 24 |
+| 7 | `re_lured` | 30 | any | action 27, also `lesterhandler` |
+| 8 | `re_bikethief` (second variant) | 30 | any | action 24 |
+| 9 | `re_securityvan` | 60 | any | action 24 |
+| 10 | `re_paparazzi` | 30 | any | action 24 |
+| 11 | `re_chasethieves` | 30 | any | action 27 |
+| 12 | `re_dealgonewrong` | 120 | any | action 27 |
+| 13 | `re_hitch_lift` | 35 | Michael not for variant 2 | action 29 |
+| 14 | `re_stag_do` | 40 | any | action 27 |
+| 15 | `re_arrests` | 30 | any | action 27 |
+| 16 | `re_crashrescue` | 30 | any | action 27 |
+| 17 | `re_cartheft` | 30 | any | action 27 |
+| 18 | `re_cultshootout` | 30 | Trevor only | action 27 |
+| 19 | `re_gangfight` | 30 | not Trevor | action 27 |
+| 20 | `re_gang_intimidation` | 30 | not Franklin | action 24 |
+| 21 | `re_prisonvanbreak` | 30 | any | action 27 |
+| 22 | `re_prisonerlift` | 30 | not Trevor, except variant 2 | action 27 |
+| 23 | `re_abandonedcar` | 30 | any | action 27 |
+| 24 | `re_burials` | 30 | any | action 27 |
+| 25 | `re_muggings` | 40 | any | action 24 |
+| 26 | `re_bikethief` | 30 | any | action 24 |
+| 27 | `re_drunkdriver` | 60 | any | action 27 |
+| 28 | `re_homeland_security` | 30 | not Trevor | action 27 |
+| 29 | `re_border` | 30 | any | action 27 |
+| 30 | `re_yetarian` | 60 | not Trevor | actions 30 and 88 |
+| 31 | `re_duel` | none | any | action 24 |
+| 32 | `re_seaplane` | none | any | action 28 |
+| 33 | `re_monkey` | none | any | `photographymonkey` |
+
+`re_bikethief` passes both 8 and 26. `re_armybase`, `re_prison`, `re_lossantosintl`, `re_mountdance`, `altruist_cult`, `murdermystery` and `shoprobberies` don't use this check.
+
 ## While an event runs
 
 **Verified (`re_abandonedcar`):** it sets its own time window (here only before 07:00 and after 19:00), then loops: it stays alive while `IS_WORLD_POINT_WITHIN_BRAIN_ACTIVATION_RANGE()` is true and the player has no wanted level, marks the moment for the Rockstar Editor (`REPLAY_CHECK_FOR_EVENT_THIS_FRAME("RE_AV", 0)`), and steps through its stages. On force cleanup or when the player leaves, it cleans up and records the event's next allowed time.
@@ -79,10 +125,10 @@ If any test fails the script ends at once and the brain waits until the player l
 
 | Question | Where it goes |
 | --- | --- |
-| The event index of each script, and the full character and time rules per event | Second pass: the index each script passes to the check |
-| How long each event's cooldown is | Second pass: read where each script writes its next allowed time |
+| The event index of each script, and the full character and time rules per event | Answered in [the index table](#each-events-index-cooldown-character-and-unlock-leftovers-pass) (leftovers pass): 34 indices with their scripts, cooldowns and character rules. The time-of-day windows set inside each script aren't listed |
+| How long each event's cooldown is | Answered in [the index table](#each-events-index-cooldown-character-and-unlock-leftovers-pass) (leftovers pass): 0 to 200 game hours per event, added to the in-game clock when the event ends |
 | How `re_armybase`, `re_prison`, `re_lossantosintl` and `re_yetarian` are started | Answered in [map data](/docs/world/map-data.md#restricted-areas) (leftovers pass): `controller_ambientarea` starts the army base (1,000 m) and prison (300 m) scripts, `re_yetarian` is a world-point brain (150 m), and no script starts `re_lossantosintl` |
-| When each event is unlocked (story progress) | R5.1 second pass |
+| When each event is unlocked (story progress) | Partly answered in [the index table](#each-events-index-cooldown-character-and-unlock-leftovers-pass) (leftovers pass): five `code_controller` actions (24, 27 to 30, and 88) unlock sets of events, plus `lesterhandler` (event 7) and `photographymonkey` (event 33). Left: which story moment schedules each action |
 | The world brain activation range and how the engine picks between nearby points | Test card 2 |
 
 ## Test cards
