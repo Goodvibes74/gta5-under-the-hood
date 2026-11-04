@@ -6,7 +6,7 @@ How GTA Online's content creator (the "Rockstar Creator") builds custom races, s
 
 ## 12.1 Short version
 
-- **One hub, eight creator scripts.** `maintransition` starts `creator` (the hub, stack 28,000). The hub starts `FM_Main_Menu` (stack 5,050), which reads the job type and starts one creator on the 64,500 mission stack: `FM_Race_Creator`, `FM_Deathmatch_Creator`, `FM_Capture_Creator`, `FM_LTS_Creator`, `FM_Survival_Creator`, `Public_Mission_Creator`, `Freemode_Creator` or `Basic_Creator`. The last two, plus `fm_mission_creator` and `hud_creator`, are empty in the PC build: Rockstar's internal creators were stripped.
+- **One hub, eight creator scripts.** `maintransition` ([transitions](/docs/online/transitions-and-sessions.md)) starts `creator` (the hub, stack 28,000). The hub starts `FM_Main_Menu` (stack 5,050), which reads the job type and starts one creator on the 64,500 mission stack: `FM_Race_Creator`, `FM_Deathmatch_Creator`, `FM_Capture_Creator`, `FM_LTS_Creator`, `FM_Survival_Creator`, `Public_Mission_Creator`, `Freemode_Creator` or `Basic_Creator`. The last two, plus `fm_mission_creator` and `hud_creator`, are empty in the PC build: Rockstar's internal creators were stripped.
 - **All six real creators share one prop catalogue:** 59 numbered prop libraries ("Barriers", "Ramps", "Stunt Track", "Stunt Tube", "Track Smoothing", "Arena Traps" ...) with **1,883 entries and 1,784 distinct models** in the race creator.
 - **Placing is a ray from the camera.** A fly camera (`DEFAULT_SCRIPTED_FLY_CAMERA`, ceiling 1,300 m) looks at the world. Each frame a line test runs from the camera up to **2,400 m** forward, plus a water probe. The hit point is where the held prop goes.
 - **Every placement is checked:** 106 different "cannot place" and "maximum" messages in the race creator alone (ground not level, must be on water, too close to the grid, inside an interior ...).
@@ -215,7 +215,7 @@ The creator also loads map variants to build in: 47 `REQUEST_IPL` calls in the r
 
 | Bits | Effect in the race controller |
 | --- | --- |
-| `cpbs1` 7/8 and `cpbs2` 5/6 | Either pair switches the player's vehicle to submarine mode at the checkpoint (`TRANSFORM_TO_SUBMARINE`); the controller also does this when the vehicle is at least 90% under water. `cpbs1` 7/8 also starts the special flight (hover) mode (`SET_SPECIAL_FLIGHT_MODE_RATIO`) |
+| `cpbs1` 7/8 and `cpbs2` 5/6 | Either pair switches the player's vehicle to submarine mode at the checkpoint (`TRANSFORM_TO_SUBMARINE`, see [swimming and diving](/docs/gameplay/player/swimming-and-diving.md)); the controller also does this when the vehicle is at least 90% under water. `cpbs1` 7/8 also starts the special flight (hover) mode (`SET_SPECIAL_FLIGHT_MODE_RATIO`) |
 | `cpbs1` 9/13 | Special flight mode. The checkpoint gets the wide 42.5 m × scale radius when this pair and `cpbs2` bit 2 are both set, or whenever `cpbs2` bit 3 is set |
 | `cpbs1` 16/17 | Active only when `cpado`/`cpados` is also set |
 | `cpbs1` 18/19 | The checkpoint is drawn with a forced direction (`SET_CHECKPOINT_FORCE_DIRECTION`) |

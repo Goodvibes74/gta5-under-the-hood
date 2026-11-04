@@ -70,7 +70,7 @@ So the map is mostly fed by scenarios rather than free walkers: a typical slot a
 | `SET_PED_MODEL_IS_SUPPRESSED` | 74 | 233 | Keep a model out of the population (a mission's actors) |
 | `SET_PED_POPULATION_BUDGET`, `SET_VEHICLE_POPULATION_BUDGET` | 70, 76 | 291, 361 | Lower the budgets (0 to 3) during heavy scenes |
 | `SET_REDUCE_PED_MODEL_BUDGET` | 47 | 101 | Fewer ped models in memory |
-| `GET_NAME_OF_ZONE` | 93 | 164 | The zone's area label (shown as the area name) |
+| `GET_NAME_OF_ZONE` | 93 | 164 | The zone's area label (shown as the area name; see [text and names](/docs/entities/objects/text-and-names.md)) |
 | `SET_AMBIENT_ZONE_STATE` and friends | 247 to 268 | | Ambient **sound** zones (R9.1), not population |
 
 ### Schedules that don't exist (leftovers pass)

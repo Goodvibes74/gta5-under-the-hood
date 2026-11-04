@@ -11,7 +11,7 @@ How AI drivers decide how fast to go and how to behave: the four AI handling pro
 - **Rockstar's commonest driving tasks:** `TASK_LEAVE_ANY_VEHICLE` (504 scripts), `TASK_ENTER_VEHICLE` (461), `TASK_VEHICLE_DRIVE_TO_COORD` (339), `TASK_VEHICLE_FOLLOW_WAYPOINT_RECORDING` (311), `TASK_VEHICLE_TEMP_ACTION` (293), `TASK_HELI_MISSION` (287).
 - **Recorded routes are everywhere:** waypoint recordings are followed in 311 scripts and their speed overridden in 271 (`VEHICLE_WAYPOINT_PLAYBACK_OVERRIDE_SPEED`, 1,568 calls). Chases and set pieces are driven on recorded lines, not by free AI.
 - **The usual driving styles:** 786,603 (careful: stops for cars, peds and lights, steers round empty cars and objects), 786,599, 786,469, 786,468 (rushed: no stopping) and 786,597; the single most passed value to `TASK_VEHICLE_DRIVE_TO_COORD` is 262,144 (312 of its calls).
-- **Driver personality from script:** `SET_DRIVER_ABILITY` (105 scripts), `SET_DRIVER_AGGRESSIVENESS` (118) and `SET_DRIVER_RACING_MODIFIER` (113), usually set before a race or a chase.
+- **Driver personality from script:** `SET_DRIVER_ABILITY` (105 scripts), `SET_DRIVER_AGGRESSIVENESS` (118) and `SET_DRIVER_RACING_MODIFIER` (113), usually set before a race or a chase. The default ranges they override are in [decisions and personalities](/docs/ai/decisions-and-personalities.md).
 
 ## 18.2 The AI handling profiles
 

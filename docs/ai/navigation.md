@@ -56,7 +56,7 @@ Ambient traffic and AI drivers plan on nodes; peds use navmeshes. Scripts switch
 | `ADD_NAVMESH_REQUIRED_REGION`, `REMOVE_NAVMESH_REQUIRED_REGIONS`, `IS_NAVMESH_LOADED_IN_AREA` | 223, 226, 220 | 230, 464, 221 |
 | `TASK_GO_TO_ENTITY` | 152 | 243 |
 | `SET_PED_PATH_CAN_USE_CLIMBOVERS`, `_LADDERS` | 140, 112 | 287, 237 |
-| Patrol routes (`CREATE_`, `OPEN_`, `ADD_PATROL_ROUTE_NODE`, `_LINK`, `CLOSE_`) | 97 | 115 to 164 |
+| Patrol routes (`CREATE_`, `OPEN_`, `ADD_PATROL_ROUTE_NODE`, `_LINK`, `CLOSE_`); how Rockstar builds them: [script AI patterns 44.3](/docs/ai/script-ai-patterns.md#443-guards-and-patrols) | 97 | 115 to 164 |
 | `LOAD_ALL_PATH_NODES` | 93 | 186 |
 | `ADD_NAVMESH_BLOCKING_OBJECT`, `REMOVE_`, `DOES_NAVMESH_BLOCKING_OBJECT_EXIST` | 88, 82, 56 | 221, 176, 104 |
 | `GET_NAVMESH_ROUTE_RESULT` | 65 | 80 |

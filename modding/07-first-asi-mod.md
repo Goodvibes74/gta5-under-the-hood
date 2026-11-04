@@ -8,7 +8,7 @@ Choose C++ when you need speed, DirectX drawing, or the game's memory. For every
 
 - An `.asi` is a 64-bit Windows DLL with a different extension. The ASI loader loads it; it then talks to `ScriptHookV.dll` directly.
 - `DllMain` only **registers** your main function (`scriptRegister`). No natives in `DllMain`.
-- Your main function is an endless loop that calls `scriptWait(0)` every iteration.
+- Your main function is an endless loop that calls `scriptWait(0)` every iteration ([why](01-how-mods-work.md)).
 - Keyboard input arrives on another thread: only record it there, act on it in the loop.
 - Build Release x64, close the game, copy the `.asi` next to `GTA5.exe`.
 
