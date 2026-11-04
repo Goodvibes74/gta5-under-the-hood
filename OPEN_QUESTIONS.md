@@ -286,7 +286,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | ENT-021 | The 5 story-mode schedule hashes that don't match a `popcycle.dat` name | Second pass | Answered: one hash (`7D143EDB`) matches no schedule; six Online-only zones use it in story mode, so they get no ambient population (our reading) (leftovers pass, [population](/docs/entities/spawning/population.md#schedules-that-dont-exist-leftovers-pass)) |
 | ENT-022 | How the caps, `CityDensity` and the budgets combine into the real spawn count | Test card 1; R17.9 | Open |
-| ENT-023 | What `scumminessLevel` changes in code and in scripts | Second pass: `GET_ZONE_SCUMMINESS` callers | Open |
+| ENT-023 | What `scumminessLevel` changes in code and in scripts | Second pass: `GET_ZONE_SCUMMINESS` callers | Partly answered: one script reads it, `cellphone_flashhand`, to set the phone's signal bars (levels 0 and 1 give 5 bars, 2 and 3 give 4, 4 gives 3, 5 gives 2, with a 1-in-4 chance of one fewer). The guide's earlier "shop prices" note was wrong. Left: what it changes in the engine (leftovers pass, [population](/docs/entities/spawning/population.md)) |
 | ENT-024 | The unnamed zone fields (`hash_7111AC8A`, three flags) | Second pass | Partly answered: `hash_7111AC8A` (7) and `hash_3CBB62E0` (−1) are the same in every zone; the two flags are true on the west-coast beach zones, effect untested (leftovers pass, [population](/docs/entities/spawning/population.md#schedules-that-dont-exist-leftovers-pass)) |
 | ENT-025 | How birds and fish groups spawn (they fill many slots) | R17.8 | Open |
 
