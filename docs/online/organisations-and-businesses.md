@@ -237,6 +237,33 @@ The winner's sum is then worked out in this order, rounding after each step: (ca
 - **The units column.** It is multiplied by a global multiplier and an event multiplier (both 1 by default). That makes it the amount added per production step (*probable*).
 - **Not traced.** How long a step takes, and how technicians are assigned to types. That is third-pass question ON-077.
 
+### 46.5.4 Business Battles (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in the build 1.0.3725.0 decompile; the meaning of the cargo label abbreviations is our reading.
+
+**Four scripts.** `business_battles` (287,143 lines) is the freemode event. `fm_content_business_battles` (519,786) is the newer `fm_content` version of it. `business_battles_sell` (513,141) and `business_battles_defend` (499,894) are the related sell and defend jobs; they use the nightclub contacts' labels (`BTL_DAVE`, `BTL_TONY` ...) and the defend-text families (`BB_OT`, `BB_TXT`, `BB_BM`, `BB_TT`, `BB_HT`). The event-type table (46.2) lists all four in its range 114 to 127.
+
+**The event's variations.** `business_battles` keeps a variation number and a cargo type in its server data, both picked together when the event starts. 102 `switch` statements test the variation, with cases 0 to 28, 39 and 41 to 44 (34 variations). The location label, guard weapons and enemy models tell them apart:
+
+| Variations | Where | Enemies and weapons |
+| --- | --- | --- |
+| 0 to 2 | (no location label) | Pistol and SMG guards |
+| 3 to 12 | `BB_POLSTAT`, ten police stations | Unarmed (a break-in) |
+| 13, 14, 15 | `BB_LOC_AGUJA`, `BB_LOC_ECLPSE`, `BB_LOC_PLAYA` | Micro SMG and pistol |
+| 19 to 21 | `BB_LOC_DROPSITE` | Carbine rifle, pump shotgun, SMG, pistol and the railgun |
+| 22 | near 950.8, -2110.6, 29.6 | The Lost (`g_m_y_lost_01` on `daemon` bikes) |
+| 23 | near -936.6, -2969.1, 12.9 | Professionals (`mp_g_m_pros_01` in a `kuruma`) |
+| 24 | near -2293.6, 370.8, 173.6 | Armoured guards (`s_m_m_armoured_01` in a `huntley`) |
+| 39 | `BB_LOC_SHOWRM`, a showroom | |
+| 41, 43 | `BB_LOC_ZANC` (Fort Zancudo), `BB_LOC_LSNP` | Mercenaries (`BBOT_ELIM_MERC`) |
+| 42 | `BB_LOC_UNION` (Union Depository) | Professionals (`BBOT_ELIM_PROF`) |
+
+Variations 16 to 18, 25 to 28 and 44 have no location label or model in these switches. The objective labels (`BBOT_DOWNLOAD`, `BBOT_LAPTOP`, `BBOT_BLOWOPEN`, `BBOT_THROW`, `BBOT_RECOVER`, `BBOT_ASSASS` ...) show the steps: hacking, blowing a safe open, flares and recovering the goods.
+
+**What the goods are.** The cargo type picks the text: type 0 or 4 `BBOT_SPCCARGO` (special cargo), 2 `BBOT_BKRSPPLY` (our reading: biker supplies), 3 `BBOT_GRNSPPLY` (our reading: gunrunning supplies), 5 `BBOT_EVNTCRGO` (event cargo). `fm_content_business_battles` adds `BBOT_WCARGO`. Event cargo is chosen only while an event-cargo list in the tunables (two 10-entry lists and one single value) has an entry. It is then picked with the chance in `bb_business_battle_event_cargo_weighting` (default 0.5).
+
+**Where the goods go.** The delivery text is `BBT_NIGHTCLUB` (to the player's nightclub) or `BBT_DROPOFF` when one check on the player fails (our reading: the player owns no nightclub). The goods payout and the nightclub stock change aren't traced here.
+
 ## 46.6 What this means for modders
 
 These are Online systems: read them, never mod them in Online. For an offline or story-mode project:
@@ -257,4 +284,4 @@ These are Online systems: read them, never mod them in Online. For an offline or
 | What `gb_bosscost` and `gb_bosssetupcost` charge | Answered in [46.5.1](#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass): nothing in this build (no script reads them) |
 | Where registering as a boss is charged now (ON-075) | Third pass, the boss registration code in `freemode` and `am_pi_menu` |
 | The MC challenge and VIP challenge rules (cash, RP, time) | Answered in [46.5.2](#4652-vip-and-mc-challenges-second-pass): the 11 challenges, their scripts and their tunables. Leftovers pass: one shared routine picks a single cash and RP factor per case, and the VIP challenges never use the rival or solo percentages |
-| Business battles and the `fm_content_*` business missions | R7.9 and a later pass |
+| Business battles and the `fm_content_*` business missions | Partly answered in [46.5.4](#4654-business-battles-leftovers-pass) (leftovers pass): the four scripts, the 34 variations with their locations and enemies, the cargo types and the event-cargo chance, and the delivery target. Left: the payouts, and the other `fm_content_*` business missions |
