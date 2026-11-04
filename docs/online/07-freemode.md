@@ -52,6 +52,13 @@ Each frame (**Verified**):
 
 So every player's `freemode` runs the same per-player systems, and one of them, the host, also runs the shared ones.
 
+**The host's rotation through participants** (*leftovers pass, 2026-11-04*, **Verified**). The host's running state (state 4, `func_2` in this build) calls 25 functions in a fixed order every frame. Its fifth call advances two counters before any of the per-player work runs:
+
+- **Every slot in turn.** `Global_1574689` goes up by one each frame and wraps from 31 back to 0. Next to it the script stores the previous slot (`Global_1574690`), the player index (`Global_1574692`), and whether that player is active (`NETWORK_IS_PLAYER_ACTIVE`, `Global_1574693`). Seven of the host's functions get this set, so each of them looks at one of the 32 slots per frame and at every slot within 32 frames.
+- **The next real participant.** `Global_1574684` instead searches up to 32 slots ahead for the next one where `NETWORK_IS_PARTICIPANT_ACTIVE` is true and the player's team value isn't 8. It stores that slot, the player (`Global_1574687`) and a found flag (`Global_1574688`, 0 when no slot qualifies). Six of the host's functions get this set, so they skip empty slots and players on team 8.
+
+A second routine advances both counters by a plain +1. It runs only when `Global_1574679` is set, and no script writes that global, so the search above is the one in use. Near the end of the frame the host steps a third counter (`iLocal_20264`) against `NETWORK_GET_NUM_PARTICIPANTS` for one feature behind a tunable. The decompiler prints that step as `x + 1 % n`, which by operator precedence is a plain increment. These are the host's counters among the 47 rotation counters in `freemode`.
+
 ## 7.4 The systems it runs
 
 The running state calls 183 functions. Grouped by what they reach (our labels from their strings; examples are the strings found):
@@ -166,4 +173,4 @@ It also calls `GET_NETWORK_TIME` 633 times, `NETWORK_IS_ACTIVITY_SESSION` 621 ti
 | Names of the 60 network event ids and the main script event hashes | Partly answered in [7.6.1](#761-the-60-network-event-types-second-pass): every network event type described by its data and handler; the scripts carry no names for them or for the 381 script-event hashes |
 | The fields of the player and server broadcast data | R0.4 global map |
 | What `freemode_clearGlobals` resets and when | Answered in [R7.2 9.4.1](/docs/online/transitions-and-sessions.md#941-the-offline-branch-the-slots-the-way-back-and-the-testbed-second-pass): 31 reset steps, run once at `freemode` start |
-| How the host's rotation through participants works | Mostly answered (second pass): `freemode` has 47 separate counters, each visiting one of the 32 player slots per frame and wrapping to 0 (a full pass every 32 frames). The host's work uses the same pattern; which counter belongs to the host state was not pinned |
+| How the host's rotation through participants works | Answered in [7.3](#73-the-main-loop) (leftovers pass): the host state advances two counters each frame. One steps through all 32 slots; the other jumps to the next active participant that isn't on team 8. Seven host functions use the first and six the second |
