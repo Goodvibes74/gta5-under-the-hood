@@ -95,6 +95,33 @@ Story heist crew members are a table in `main` (**Verified**; names from the `HC
 
 For gunmen the heist scripts use stat 1 as max health, stat 2 as accuracy and stat 3 as shoot rate when they spawn the crew member (`rural_bank_heist`, `finale_heist2b` and `jewelry_heist` share the function). Anyone spawned through it who isn't a gunman gets health 100, accuracy 25 and shoot rate 40 (**Verified**). Stats are packed two to an integer, 15 bits each. A shared function raises a stat by 25 (a quarter of its cap of 100) and clamps it at 100; crew members improve after heists they survive (**Known**). *Leftovers pass (**Verified**):* the raise runs once, near the end of each of the six crew finales (`rural_bank_heist`, `jewelry_heist`, `finale_heist2a`, `finale_heist2b`, `agency_heist3a`, `agency_heist3b`; the two docks heist scripts contain no raise). It goes through the crew chosen for that heist and skips members marked dead in the save or lost during the heist. Every stat of each remaining member goes up by a quarter of that stat's cap, rounded, and stops at the cap: 4 stats for gunmen, 3 for each of the other two crew types. A check at the top skips the whole raise in one state (our reading: a replay). The crew's names for the other stats (hacking speed, driving) are **Known**, not read.
 
+*Leftovers pass, what the stats do (**Verified**, the six crew finales, `flow_controller` and `standard_global_init`):* the finales almost never read a stat. They read a **skill tier** (0, 1 or 2) that the save keeps next to each member's packed stats, and branch on that or on who was picked.
+
+- **Starting tiers** (`main`, new game): 2 for Gustavo, Packie, Chef, Paige, Eddie and Taliana; 1 for Christian; 0 for the other six.
+- **How the tier moves:** the finale raises stats on a working copy. When a mission with flag bit 14 in the mission table passes (our reading: a crew finale), `flow_controller` copies the working copy into the save for each chosen member without the "dead" bit, then averages that member's stats as percentages of their caps (gunman health over 1,000, every other stat over 100). Above 66.6 the tier becomes 2, above 33.3 it becomes 1. It is never lowered.
+- **Stat names on the planning board:** `HC_STA_G1` to `G4` for gunmen, `H1` to `H3` for hackers and `D1` to `D3` for drivers, each shown as a percentage of its cap. The board is the only place hacker and driver stat values are read.
+- **Slot roles per board choice** (1 gunman, 2 hacker, 3 driver): choices 1 and 2 (Jewel Store Job) are driver, gunman, hacker; 5 (Paleto Score) is one gunman; 6 (`agency_heist3a`) is two gunmen; 7 (`agency_heist3b`) is hacker, gunman, driver; 8 (`finale_heist2a`) is gunman, gunman, driver, driver, hacker; 9 (`finale_heist2b`) is driver, driver, gunman, gunman. Choices 3 and 4 (the docks heist) have no crew.
+- **Outcome 3** in a finale's crew record means the member was killed. Setting it also sets the member's permanent "dead" bit in the save.
+
+| Finale | Role | What the tier (or the pick) changes |
+| --- | --- | --- |
+| `jewelry_heist` | Hacker | Time limit in the store: 55 s at tier 0, 65 s at 1, 90 s at 2 (the raid also ends when all 20 cases are smashed). Rickie (12) never gets the drive-by task in the chase; the other two hackers do |
+| `jewelry_heist` | Gunman or driver | A multiplier on each smashed case's value: 0.8, 0.9 or 1.0 by tier. Board choice 1 uses the gunman's tier, choice 2 the driver's |
+| `jewelry_heist` | Gunman | Tier 0: a scripted bike crash in the escape (`Gunman_Bike_Crash`). The gunman is marked killed, and his dropped bag holds a third of the take, or the part above $2,741,082 if that is less. Picking the bag up restores it |
+| `jewelry_heist` | Driver | Tier 0 with a tier 0 gunman: an extra "lost" scene in the escape (`missheist_jewel@lost`). The mix of driver and gunman tiers (0 or 2) and the hacker's tier picks one of eight lines, `JH_TALK1` to `JH_TALK8` |
+| `rural_bank_heist` | Gunman | Tier 2 survives (outcome 1); tiers 0 and 1 are killed (outcome 3). Tier 2 also unlocks extra lines and a defensive area. When bullets or an explosion hit the gunman, the take (from $8,016,020) loses a random $0 to $99 at tier 2, the normal range at tier 1 (set per stage, such as $500 to $1,500), and 1.5 times that range at tier 0 |
+| `agency_heist3a` | Two gunmen | If both are tier 1 or higher, both live. Otherwise the weaker one is placed second, plays a death scene (`crew_dead_crew2`) and is marked killed |
+| `agency_heist3b` | Gunman | Tier 0 carries an assault rifle, tiers 1 and 2 a carbine rifle. Their 4th stat adds attachments: grip above 45; flashlight and (carbine) suppressor above 50; extended clip above 60; (carbine) medium scope above 75. Tier 0 has a parachute help line (`AH_CHUTE`). Tiers 1 and 2 get different combat settings (attribute 12, combat floats 0 and 3) in one fight |
+| `agency_heist3b` | Driver | Tier 2 drives a separate scripted getaway (an extra vehicle recording). Tiers 0 and 1 share the other branch, which plays a police scanner report when you are wanted. In one spawn the driver's accuracy is set from a gunman-only stat call, which returns -1 for a driver |
+| `agency_heist3b` | All three | The tier picks the line variant (suffix `B`, `M` or `G`). For the hacker, tier 1 picks `M` or `G` from a check, and the `G` branch also clears one counter (meaning not traced) |
+| `finale_heist2a` | Gunman (slot 0), driver (slot 2) | Below tier 2, each takes 9% off the take (of $201,300,000). Below tier 2 the slot 2 driver is also killed, unless a rescue flag was set during the mission (`FH3A_SAVE` line) |
+| `finale_heist2a` | Driver (slot 3) | Tier 1 or higher changes the chase branch and its timings |
+| `finale_heist2a` | Hacker | Delay before a traffic light you switch in the traffic-control minigame takes effect: none at tier 2, 0.5 s at tier 1, 2 s at tier 0 |
+| `finale_heist2b` | Driver (slot 0) | Below tier 2, a scripted crash: the helicopter carrying the load explodes, $100,800,000 of the $201,600,000 take is lost, and the driver is killed |
+| `finale_heist2b` | Gunmen (slots 2, 3) | Accuracy 10 instead of 5: slot 2 at tier 2, slot 3 at tier 1 or higher |
+
+So hacker and driver stats matter only through the tier, and the tier only changes after a finale passes. Our reading: a low-tier member who survives a finale can rise a tier and do better in the next one. The board choice numbers were matched to heists by the `JHFP`, `DHP`, `AHP` and `FHP` labels set for each choice and by the slot roles each finale script reads.
+
 ## 44.8 Waves and difficulty in Online content
 
 Online missions and survivals don't hard-code enemy skill; it comes from the content data (**Verified**, the ped set-up shared by the mission and survival controllers):
@@ -128,7 +155,7 @@ The casino, nightclubs, arcade, penthouse and other properties fill themselves w
 | Question | Where it goes |
 | --- | --- |
 | Where story missions keep enemy spawn tables (positions, triggers) and how many enemies a big shootout has alive at once | Next pass: `rural_bank_heist`, `finale_heist2b` |
-| What hackers' and drivers' stats do in each heist | Next pass: the heist scripts |
+| What hackers' and drivers' stats do in each heist | Mostly answered (leftovers pass, 44.7): they count only through a skill tier that is recomputed when a finale passes; the table in 44.7 lists every tier check. Left: what the `agency_heist3b` hacker's counter and `finale_heist2a`'s slot 3 driver branch do in play (an in-game test) |
 | When the crew stat raise is called (every survived heist, or only some) | Answered (leftovers pass): once at the end of each of the six crew finales, for every surviving member chosen for that heist; each stat rises by a quarter of its cap |
 | The `TASK_COMBAT_PED` flag values (16, 67108864, 201326592) | In-game test |
 | How `fm_content_*` scripts set up patrols from content data | R7.7, R7.9 |
