@@ -436,7 +436,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | AI-031 | The three other unnamed shocking events | Second pass, more name guesses | Open |
-| AI-032 | Which `SET_PED_CONFIG_FLAG` numbers scripts set most, and what they do | Second pass, R17.10 | Open |
+| AI-032 | Which `SET_PED_CONFIG_FLAG` numbers scripts set most, and what they do | Second pass, R17.10 | Partly answered: the same count as ENT-014, 190 flags with the top 20 by scripts (36, 34, 208, 118, 185 ...). Left: what each does ([peds](/docs/entities/peds/peds.md#the-config-flags-rockstar-sets-most-leftovers-pass)) |
 | AI-033 | How decision makers map each event to a response | R17.3 second pass | Open |
 
 ### [Police and service AI](/docs/ai/police-and-services.md) (R17.7)
@@ -452,7 +452,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | AI-037 | The exact follower limit and what happens to the eighth | Test card 2 | Open |
-| AI-038 | Which mission groups persist between missions (global groups registered at boot) | Second pass: `standard_global_init` | Open |
+| AI-038 | Which mission groups persist between missions (global groups registered at boot) | Second pass: `standard_global_init` | Answered: no script registers groups at boot. The only story groups that last across missions are `main_persistent`'s `RELGROUPHASH_FAMILY_M`, `_F` and `_T`, used by 70 scripts. Triggerer lead-in groups and mission groups end with their scripts (leftovers pass, [relationships](/docs/ai/relationships-and-groups.md#which-groups-outlive-a-mission-leftovers-pass)) |
 | AI-039 | How dislike (4) differs from hate (5) in behaviour | In-game test | Open |
 | AI-040 | How the wanted level overrides the `COP`–`PLAYER` relationship | R3.7 | Open |
 

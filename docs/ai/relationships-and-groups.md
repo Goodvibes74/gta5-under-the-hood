@@ -59,6 +59,12 @@ Who likes and hates whom: the 40 default relationship groups and their rules in 
 
 **The usual mission pattern (Known, matching the counts):** create `ENEMIES` (or a mission-named group) with `ADD_RELATIONSHIP_GROUP`, set it to hate the player's group both ways (two `SET_RELATIONSHIP_BETWEEN_GROUPS(5, ...)` calls), put allies in a `BUDDIES` or `Player Group` that respects the player (value 1, the most common literal), and remove the groups at cleanup.
 
+### Which groups outlive a mission (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in the build 1.0.3725.0 decompile. `standard_global_init` adds no relationship groups. Apart from the built-in groups (`PLAYER`, `COP` and the others in the default rules), the only story groups that last across missions are three that **`main_persistent`** creates at start-up: `RELGROUPHASH_FAMILY_M`, `RELGROUPHASH_FAMILY_F` and `RELGROUPHASH_FAMILY_T`, one for each protagonist's family and household. It removes and re-adds each one first, so they are fresh after a load. 70 scripts use them. Each one sets them to relationship 1 toward `player` (183 calls for each group), and one script sets 5 for one group.
+
+The mission triggerers add their own groups for the lead-in scenes (`FAMILY_3_TS_RELGROUP`, `TS_LES1A`, `FRANKLIN_1_TS_RELGROUP`, `MICHAEL_1_TS_RELGROUP`, `REL_TS_FRIENDLY`, `GuardGroup`, `WorkerPedGroup`, `FIREMEN` and others). Those last only while the scene runs. Every other group is added by the mission or `freemode` script that uses it (`freemode` 17 calls, `fm_mission_controller` 7) and goes away with it.
+
 ## What this means for modders
 
 - **Make enemies:** `ADD_RELATIONSHIP_GROUP("MY_ENEMIES", &hash)`, `SET_PED_RELATIONSHIP_GROUP_HASH(ped, hash)`, then `SET_RELATIONSHIP_BETWEEN_GROUPS(5, hash, GET_HASH_KEY("PLAYER"))` and the reverse. Remove the group when your mod stops.
@@ -72,7 +78,7 @@ Who likes and hates whom: the 40 default relationship groups and their rules in 
 | Question | Where it goes |
 | --- | --- |
 | The exact follower limit and what happens to the eighth | Test card 2 |
-| Which mission groups persist between missions (global groups registered at boot) | Second pass: `standard_global_init` |
+| Which mission groups persist between missions (global groups registered at boot) | Answered in [which groups outlive a mission](#which-groups-outlive-a-mission-leftovers-pass) (leftovers pass): only `main_persistent`'s three family groups, plus the built-in groups |
 | How dislike (4) differs from hate (5) in behaviour | In-game test |
 | How the wanted level overrides the `COP`–`PLAYER` relationship | R3.7 |
 
