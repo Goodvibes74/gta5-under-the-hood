@@ -39,3 +39,5 @@ graphify-out/.graphify_chunk_*.json
 graphify-out/.chunk_list_*.txt
 graphify-out/.needs_update
 graphify-out/cache/last_query_stamp
+# Obsidian vault settings (open the repo root as a vault; settings stay local)
+.obsidian/
