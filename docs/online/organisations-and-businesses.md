@@ -235,7 +235,21 @@ The winner's sum is then worked out in this order, rounding after each step: (ca
 
 - **Which column is which.** The value column is multiplied by a unit count, so it is the sale value of each unit. The capacity column is divided by 5 elsewhere.
 - **The units column** (*corrected in the leftovers pass, 2026-11-04*, **Verified**). These seven tunables are read only by `fm_content_club_source`, Yohan's source missions. They are multiplied by a multiplier tunable and paid with the transaction `service_earn_yohan_source_goods` (`NETWORK_YOHAN_SOURCE_GOODS`). So they are the units one source job adds for its goods type, not a production step, as the second pass had guessed (*probable*).
-- **Not traced.** How long a step takes, and how technicians are assigned to types. That is third-pass question ON-077.
+- **Production time and technicians** (*leftovers pass, 2026-11-04*, **Verified** in `freemode`; tunable names hashed). One unit of each goods type takes a fixed time:
+
+  | Type | Goods | Time per unit |
+  | ---: | --- | ---: |
+  | 0 | Cargo and shipments | 8,400,000 ms (140 min) |
+  | 1 | Sporting goods | 4,800,000 ms (80 min) |
+  | 2 | South American imports | 14,400,000 ms (240 min) |
+  | 3 | Pharmaceutical research | 7,200,000 ms (120 min) |
+  | 4 | Organic produce | 2,400,000 ms (40 min) |
+  | 5 | Printing and copying | 1,800,000 ms (30 min) |
+  | 6 | Cash creation | 3,600,000 ms (60 min) |
+
+  - **One upgrade halves every time.** The time is multiplied by a further tunable (0.5) when one nightclub check on the player passes (our reading: the equipment upgrade).
+  - **Five technician slots.** Assignments are bits in the player's broadcast data (`Global_1845250[player].f_260.f_321`). Slots 0 to 3 use bit (slot × 7 + goods type) of `.f_2`; slot 4 uses bit (goods type) of `.f_3`. A goods type is produced when a hired technician has its bit set.
+  - **The countdown.** Each type in production has a network-time timer, and its remaining time counts down only while three player checks pass (one of them is the boss check). The remaining time of each type is saved in character stats 15626 to 15632 (types 1 to 6, then 0). At start-up it is read back and reset to the full time if it is zero or larger than the full time.
 
 ### 46.5.4 How production time is kept (leftovers pass)
 
@@ -289,7 +303,7 @@ These are Online systems: read them, never mod them in Online. For an offline or
 | Question | Where it goes |
 | --- | --- |
 | The nightclub's production and popularity numbers (their tunable names are hashed) | Mostly answered in [46.5.3](#4653-the-nightclubs-safe-and-warehouse-second-pass): the safe pay bands, cap and timer, and each goods type's value, capacity and units one Yohan source job adds |
-| How long a nightclub production step takes and how technicians are assigned (ON-077) | Third pass, the business hub code in `freemode` |
+| How long a nightclub production step takes and how technicians are assigned (ON-077) | Answered in [46.5.3](#4653-the-nightclubs-safe-and-warehouse-second-pass) (leftovers pass): the time per unit for each goods type (30 to 240 minutes, halved by one upgrade), the five technician slots and their assignment bits, and the remaining times saved in stats 15626 to 15632 |
 | Special cargo warehouse capacities (16, 42 and 111 crates are **Known**) and where the scripts keep them | Answered in [46.5.1](#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass) |
 | How production is stored in stats and advanced while offline or in another session | Partly answered in [46.5.4](#4654-how-production-time-is-kept-leftovers-pass) (leftovers pass): production runs on a network-time timer, and only the time left to the next unit carries over (broadcast data `.f_9`), so offline time isn't counted (our reading). A second biker timer runs on cloud time and is backdated by the units already held. Left: the stat load and save |
 | What `gb_bosscost` and `gb_bosssetupcost` charge | Answered in [46.5.1](#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass): nothing in this build (no script reads them) |
