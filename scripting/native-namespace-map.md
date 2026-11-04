@@ -72,7 +72,7 @@ Sorted by calls. Natives: in NativeDB / used by at least one script. A topic mar
 - **`MISC` is a junk drawer.** Its 334 natives range from `SET_BIT` and string checks (used everywhere) to weather (`SET_WEATHER_TYPE_*`), cheats, area checks, the game timer and save flags. Its natives belong to many topics; look a native up in the [MISC usage page](/scripting/native-usage/MISC.md) to see which scripts use it.
 - **`EXTRAMETADATA` is huge in calls but small in natives.** 49 natives make 1.2 million calls because shop scripts and Online look up every clothing and tattoo item through it (`IS_CONTENT_ITEM_LOCKED` in 630 scripts).
 - **`GRAPHICS` covers four topics.** Drawing sprites and text on screen, scaleform movies (R8.2), timecycles and post effects (R13.2), and particles and decals (R13.3).
-- **Script counts are inflated by shared code.** Rockstar compiles helper code into most scripts, so a native can appear in hundreds of scripts that never reach it (for example the `CLOCK` date helpers in 520 or so scripts). For "who really uses this", read the busiest scripts on the namespace's usage page.
+- **Script counts are inflated by shared code.** Rockstar compiles helper code into most scripts, so a native can appear in hundreds of scripts that rarely run it (for example the `CLOCK` date helpers in about 520 scripts). The code is reachable from each script's entry point (see [what the compiler keeps](#what-the-compiler-keeps-leftovers-pass)), but often only behind conditions that seldom hold. For "who really uses this", read the busiest scripts on the namespace's usage page.
 
 ### `MISC` split into sub-families (leftovers pass)
 
@@ -99,6 +99,17 @@ Sorted by calls. Natives: in NativeDB / used by at least one script. A topic mar
 
 Two sub-families carry 92% of the calls (bits and maths, strings and hashes). These are the script language's own helpers, compiled into nearly every script. The topic families (weather, saves, police, stunt jumps) are small in calls, but each has a natural owner. Activity feed natives have no guide yet.
 
+### What the compiler keeps (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in the build 1.0.3725.0 decompile (all 1,145 scripts). Every function was followed from the script's entry point through direct calls, and each native call was marked reached or not.
+
+- **Rockstar's compiler drops functions nothing calls.** 803 scripts make no indirect calls (`Call_Loc`). In them 359,076 of 359,210 functions are reachable from the entry point, and only 16 native-and-script pairs sit in unreachable code: two natives in four `gb_` and `business_battles` scripts (`IS_THIS_MODEL_A_JETSKI`, `IS_PED_GETTING_INTO_A_VEHICLE`) and eight in `traffick_air`. So a native that appears in a script's code is, as far as the code goes, callable there. "Present but never called" is a run-time question (conditions that never hold), not something the code shows.
+- **Indirect calls hide the rest.** The other 342 scripts use `Call_Loc`, whose targets are bytecode addresses: mostly the Online `fm_` (105), `am_` (60) and `gb_` (51) scripts, plus a few story ones (10 `taxi_` scripts). Only 889,816 of their 2,439,263 functions are reached by direct calls; the rest are reached through pointers or not at all, and the decompile can't tell which.
+- **54 natives appear only in such code**: present in at least one `Call_Loc` script, and never in a function reached by a direct call. Examples are `GET_ENTITY_PROOFS`, `SET_DISABLE_PED_MAP_COLLISION`, `SET_TRAILER_LEGS_LOWERED` and `GRASSBATCH_ENABLE_FLATTENING_EXT_IN_SPHERE`, each in about 247 scripts and reached by direct calls in none. They are the candidates for "compiled in but never called".
+- **The `CLOCK` date helpers are reachable** in all 521 scripts that contain `GET_CLOCK_YEAR`.
+
+Settling the 54, and the rest of the pointer-only code, needs one of two things that a cloud session doesn't have. A YSC reader can map each pointer address to its function; it needs the game's own compiled script files. A native-call logger in a running story game needs the game itself.
+
 ## What this means for modders
 
 - **Find the natives for a job by namespace,** then use the usage page to see how Rockstar calls them: input is `PAD`, screen text and blips are `HUD`, AI is `TASK` and `PED`, cameras are `CAMERA`, sounds are `AUDIO`, loading is `STREAMING`.
@@ -110,5 +121,5 @@ Two sub-families carry 92% of the calls (bits and maths, strings and hashes). Th
 | Question | Where it goes |
 | --- | --- |
 | Split `MISC` into sub-families with their own owners (weather, cheats, area checks, game state) | Answered in [`MISC` split into sub-families](#misc-split-into-sub-families-leftovers-pass) (leftovers pass): 16 sub-families with owner guides |
-| Which natives are reached only through shared helper code and never called in practice | R0.3 second pass: reachability from each script's entry point |
+| Which natives are reached only through shared helper code and never called in practice | Partly answered in [what the compiler keeps](#what-the-compiler-keeps-leftovers-pass) (leftovers pass): the compiler drops uncalled functions, so in the 803 scripts without indirect calls almost nothing is dead. 54 natives appear only in code reached through function pointers. Left: those 54 (a YSC reader on the game's script files, or a call logger in game) |
 | Which namespaces' unused natives still work in story mode (useful to mods but not to Rockstar) | Per-topic second passes |

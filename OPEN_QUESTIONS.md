@@ -1056,7 +1056,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | SCR-001 | Split `MISC` into sub-families with their own owners (weather, cheats, area checks, game state) | Second pass | Answered: all 334 natives in 16 sub-families, each with an owner guide; bits and maths (24 natives, 1.07 million calls) and strings and hashes (12, 196,481) carry 92% of the calls (leftovers pass, [native namespace map](/scripting/native-namespace-map.md#misc-split-into-sub-families-leftovers-pass)) |
-| SCR-002 | Which natives are reached only through shared helper code and never called in practice | R0.3 second pass: reachability from each script's entry point | Open |
+| SCR-002 | Which natives are reached only through shared helper code and never called in practice | R0.3 second pass: reachability from each script's entry point | Partly answered: Rockstar's compiler drops uncalled functions; in the 803 scripts with no indirect calls 359,076 of 359,210 functions are reachable and only 16 native-and-script pairs are dead. 54 natives appear only in code of the 342 `Call_Loc` scripts that no direct call reaches. Left: those 54, which **needs local game files** (a YSC reader for the pointer targets) **or the game** (a call logger) (leftovers pass, [native namespace map](/scripting/native-namespace-map.md#what-the-compiler-keeps-leftovers-pass)) |
 | SCR-003 | Which namespaces' unused natives still work in story mode (useful to mods but not to Rockstar) | Per-topic second passes | Open |
 
 ### [Native usage: which scripts call which natives](/scripting/native-usage.md) (R0.3)
