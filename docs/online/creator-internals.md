@@ -204,8 +204,27 @@ The creator also loads map variants to build in: 47 `REQUEST_IPL` calls in the r
 **Columns, not records.** Each section stores one array per field, one entry per item:
 
 - `prop`: `no` (count), then `loc` (position), `vRot` (rotation), `head` (heading), `model` (hash, as a signed integer), `prpclr`, `prplod`, `prpsba`, `prpsnpp`, `pLODDist` and so on: 69 arrays always written, `prpsdp0` to `prpsdp3`, and about 17 more (`prolib`, `prpSlSp` ...) written only when used.
-- `race`: `chp` (checkpoint count), `lap`, `subtype`, grid settings, and per-checkpoint arrays `chl` (location), `chh` (heading), `chs` and `chs2` (*probable* sizes), `chpp`, `cpbs1` to `cpbs3` (option bits), `cptfrm` (transform vehicle) and others: 32 checkpoint column names.
+- `race`: `chp` (checkpoint count), `lap`, `subtype`, grid settings, and per-checkpoint arrays `chl` (location), `chh` (heading), `chs` and `chs2` (sizes; see below), `chpp` (pitch), `cpbs1` to `cpbs3` (option bits), `cptfrm` (transform vehicle) and others: 32 checkpoint column names.
 - `dhprop`: `no`, `pos`, `mn`, `bits`, `mnSwap`, `wprad`, `vcid`.
+
+**What the checkpoint fields do in a race** (*leftovers pass, 2026-11-04*, **Verified** in the creators' read and write calls and in `fm_race_controler`). Each checkpoint is one 65-field struct (`Global_4718592.f_114994[i]`). The read and write calls, which are shared by `creator`, the race, capture and deathmatch creators and `appmpjoblistnew`, tie each key to a field: `sndchk` (the secondary checkpoint's position) is `.f_3`, `cpbs1` to `cpbs3` are `.f_30` to `.f_32`, `chh` and `sndrsp` (the primary and secondary headings) are `.f_33` and `.f_34`, `cpado` and `cpados` are `.f_35` and `.f_38`, `chs` and `chs2` are `.f_49` and `.f_50`, and `chpp` and `chpps` are `.f_51` and `.f_52`. Most options come in pairs: one value for the primary checkpoint and one, ending in `s` or `2`, for the secondary checkpoint of a split. The race reads the secondary value only when `sndchk` is set.
+
+- **`chs` and `chs2` are size scales** (written with a default of 1.0). The controller multiplies the drawn checkpoint by the scale (`CREATE_CHECKPOINT` radius = base × 0.66 × scale). It also multiplies the 42.5 m (8.5 × 5) pass radius some checkpoints use. The function that reads the scale takes the next checkpoint's value unless one race flag is set.
+- **`chpp` and `chpps` are pitch angles.** The controller turns (pitch, heading) into a direction vector with sine and cosine and uses it in `SET_CHECKPOINT_DIRECTION`, so a non-zero pitch tilts the checkpoint up or down (air and stunt races).
+- **The option bits** are read 76 times (`cpbs1`), 59 times (`cpbs2`) and 3 times (`cpbs3`) in the race controller. The primary and secondary pairs are: `cpbs1` bits 7 and 8, 9 and 13, 10 and 11, 16 and 17, 18 and 19, 30 and 31; `cpbs2` bits 5 and 6, 22 and 23, 24 and 25, 26 and 27, 28 and 29; `cpbs3` bits 0 and 1. Bits whose effect the controller shows:
+
+| Bits | Effect in the race controller |
+| --- | --- |
+| `cpbs1` 7/8 and `cpbs2` 5/6 | Either pair switches the player's vehicle to submarine mode at the checkpoint (`TRANSFORM_TO_SUBMARINE`); the controller also does this when the vehicle is at least 90% under water. `cpbs1` 7/8 also starts the special flight (hover) mode (`SET_SPECIAL_FLIGHT_MODE_RATIO`) |
+| `cpbs1` 9/13 | Special flight mode. The checkpoint gets the wide 42.5 m × scale radius when this pair and `cpbs2` bit 2 are both set, or whenever `cpbs2` bit 3 is set |
+| `cpbs1` 16/17 | Active only when `cpado`/`cpados` is also set |
+| `cpbs1` 18/19 | The checkpoint is drawn with a forced direction (`SET_CHECKPOINT_FORCE_DIRECTION`) |
+| `cpbs1` 3 | Read in the code that sets the air drag multiplier (`SET_AIR_DRAG_MULTIPLIER_FOR_PLAYERS_VEHICLE`) |
+| `cpbs2` 24/25 | The checkpoint's blip is drawn half transparent (alpha 125) |
+| `cpbs2` 28 to 31 | Read only by the script host (`NETWORK_IS_HOST_OF_THIS_SCRIPT`) |
+| `cpbs3` 0/1 | Read next to the nitrous code (`_GET_REMAINING_NITROUS_DURATION`) |
+
+The other bits are read in code without a telling native. The creator sets them through generic menu handlers, so its menu text isn't next to them; naming them needs the creator's menu table.
 
 **Sparse columns** (**Verified**, `func_170`): for most optional fields the writer only creates the array when it meets the first item whose value differs from the default. It then fills the earlier entries with the default and carries on. A reader must treat a missing array as "all default". Two prop writers exist (a full one and a sparse one, chosen by `func_189`); which jobs use which is open.
 
@@ -268,7 +287,7 @@ Checkpoints are drawn with `CREATE_CHECKPOINT` (14 calls in the controller) from
 | The second dynamic list (library 15), library 39 and the other libraries with no text: hidden, Rockstar-only, or text in a pack not read | Mostly answered (leftovers pass, **Verified** against every American text block, base, update and DLC): of the 49 `FMMC_PLIB_*` labels in the scripts, 41 have text and **8 have none anywhere**: `FMMC_PLIB_13D`, `_BB`, `_BTY`, `_CCTV`, `_CDY`, `_DCOR`, `_EXP3D`, `_FURN`. So the text isn't in a pack this guide missed; *our reading* is that these libraries are hidden or for Rockstar's own content. Which library number each of the 8 labels belongs to is in the script table above, not in the text |
 | What `GET_USED_CREATOR_BUDGET` measures inside the engine | Reverse engineering, R1.5 (streaming) |
 | Which jobs are saved by the full prop writer and which by the sparse one (`func_189`) | Second pass, compare with the 16 local classic missions ([R7.4](/file-formats/ugc-json.md)) |
-| Meaning of `chs`, `chs2`, `chpp` and the `cpbs1` to `cpbs3` bits | Second pass, read the race controller's checkpoint code |
+| Meaning of `chs`, `chs2`, `chpp` and the `cpbs1` to `cpbs3` bits | Partly answered in [12.10](#1210-saving-and-publishing) (leftovers pass): `chs`/`chs2` are size scales, `chpp` is a pitch angle, the key-to-field map, the primary and secondary bit pairs, and the effects of about a dozen bits. Left: the other bits' names (the creator's menu table) |
 | How the deathmatch and mission controllers create dynamic props (the race is in 12.11) | Next pass |
 | The other creators' own placement (spawn points, enemy waves, capture objects) | Second pass per creator |
 
