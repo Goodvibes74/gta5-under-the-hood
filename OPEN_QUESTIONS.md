@@ -1082,7 +1082,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | SCR-011 | Meaning of force-cleanup bits 4, 16 and 32 (engine-raised) | R1.2 and R5.8 (replay), with an in-game test | Open |
 | SCR-012 | What thread priority values change | R1.4 or R18.4 | Open |
-| SCR-013 | The event queue indexes and the script event layout | R15.1 | Open |
+| SCR-013 | The event queue indexes and the script event layout | R15.1 | Answered: queues 0 (engine and AI events, 116 scripts), 1 (network and script events, 249 scripts) and 2 (errors, `error_listener` only). Script events are sent on queue 1 as arrays of 4-byte values: field 0 is the event id hash, field 1 the sender, then the payload; sizes run from 1 to 56 values (leftovers pass, [script VM](/scripting/script-vm.md)) |
 | SCR-014 | Which of the duplicated pool entries in `gameconfig.xml` applies to the PC build | R1.4 | Answered: the base block's value; the update copy has no duplicate inside a block and no pools in its `x64` block; the duplicates are PS4, Xbox One, beta and non-final overrides (leftovers pass, [memory and pools](/docs/core/memory-and-pools.md#72-where-the-limits-come-from)) |
 
 ## File formats

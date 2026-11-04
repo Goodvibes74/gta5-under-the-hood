@@ -72,6 +72,16 @@ Size by order of magnitude: 277 scripts have 1 to 10 MB of code, 345 have 100 KB
 
 **Verified.** Which event queue index means what (the first argument of `GET_EVENT_AT_INDEX`: 0 AI, 1 network, 2 error, and so on) is **Known** and left for R15.1.
 
+**The queues and the script event layout** (*leftovers pass, 2026-11-04*, **Verified** in the build 1.0.3725.0 decompile). Scripts read three queues:
+
+| Queue | Scripts reading it | What it carries (names **Known**) |
+| ---: | ---: | --- |
+| 0 | 116 (one loop each; `GET_EVENT_DATA` reads of 1 or 2 values) | Engine and AI events: damage, shocking events and the like |
+| 1 | 249 (271 loops; 3,154 data reads) | Network events, including script events from other players |
+| 2 | 1 (`error_listener`) | Errors, which `error_listener` uses to bail out of a session |
+
+Script events go out on queue 1: every `_SEND_TU_SCRIPT_EVENT_NEW` call in the scripts passes 1 first, then the data, its size in values, a bit set of target players, and the event's id again. The data is an array of 4-byte values. **Field 0 is the event id** (a hash, which the receiver switches on), **field 1 is the sender** (`PLAYER_ID()` when sent). The payload follows from field 2 or 3; many events leave field 2 at its default. Sizes run from 1 to 56 values. The most common are 6 (487 reads), 4, 5, 8 and 3, and `GET_EVENT_DATA` must be given the exact size of the event it reads.
+
 ## 2.6 Force cleanup
 
 `FORCE_CLEANUP(bits)` raises cleanup bits for every script; `FORCE_CLEANUP_FOR_ALL_THREADS_WITH_THIS_NAME` and `FORCE_CLEANUP_FOR_THREAD_WITH_THIS_ID` aim at one script or thread. A script listens by calling `HAS_FORCE_CLEANUP_OCCURRED(mask)` once at the start; when a matching bit is raised later, execution jumps back to that call, which now returns true, and the script runs its cleanup (**Known** mechanism; the patterns in the decompile match it: the call sits at the top of the entry function, followed by cleanup and `TERMINATE_THIS_THREAD`). `GET_CAUSE_OF_MOST_RECENT_FORCE_CLEANUP` says which bit fired.
