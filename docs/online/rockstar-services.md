@@ -83,10 +83,12 @@ So a story mod that never signs in loses only the leaderboards, presence and the
 | `CATEGORY_VEHICLE` | 9 |
 | `CATEGORY_CLOTH` | 9 |
 | `CATEGORY_PROPERTY_INTERIOR` | 4 |
-| (unnamed, 1999830656) | 2 |
+| `CATEGORY_WAREHOUSE_INTERIOR` (1999830656) | 2 |
 | `CATEGORY_TATTOO` | 2 |
 
-The most-used category, 426439576, is the one `appinternet` uses for most of its website prices, such as the `SMALL_BUSINESS_INDEX_` keys. Its name, and the name behind 1999830656, matched none of several hundred candidate names tried.
+The most-used category, 426439576, is the one `appinternet` uses for most of its website prices, such as the `SMALL_BUSINESS_INDEX_` keys. Its name is still unknown: it matched none of several hundred hand-picked names, nor any of 15.5 million `CATEGORY_<word>` and `CATEGORY_<word>_<word>` candidates built from the 3,936 words in `appinternet`'s and `shop_controller`'s strings (leftovers pass).
+
+*Leftovers pass:* 1999830656 hashes exactly to `CATEGORY_WAREHOUSE_INTERIOR`. Its two calls are in `am_mp_bail_office` and `am_mp_salvage_yard`, pricing the `VEM_BOUNTY_TRANSPORTER` items. That is an odd fit for the name, so a chance collision of the 32-bit hash can't be ruled out (our reading: Rockstar reused an existing category).
 
 ## 32.3 When a service is missing
 
