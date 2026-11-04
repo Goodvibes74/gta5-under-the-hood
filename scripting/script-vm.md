@@ -13,7 +13,7 @@ How Rockstar's compiled scripts are stored and run: the file format, threads and
 
 ## 2.2 The compiled script
 
-The header layout is in [online guide 5, section 5.2](/docs/00-getting-started/research-tools.md#52-how-the-script-reader-works). What the 1,143 headers add up to (**Verified**, `ysc-dump` summary):
+The header layout is in [research tools, "How the script reader works"](/docs/00-getting-started/research-tools.md#how-the-script-reader-works). What the 1,143 headers add up to (**Verified**, `ysc-dump` summary):
 
 | Measure | Value |
 | --- | --- |
