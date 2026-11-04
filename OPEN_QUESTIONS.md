@@ -454,7 +454,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | AI-037 | The exact follower limit and what happens to the eighth | Test card 2 | Open |
 | AI-038 | Which mission groups persist between missions (global groups registered at boot) | Second pass: `standard_global_init` | Answered: no script registers groups at boot. The only story groups that last across missions are `main_persistent`'s `RELGROUPHASH_FAMILY_M`, `_F` and `_T`, used by 70 scripts. Triggerer lead-in groups and mission groups end with their scripts (leftovers pass, [relationships](/docs/ai/relationships-and-groups.md#which-groups-outlive-a-mission-leftovers-pass)) |
 | AI-039 | How dislike (4) differs from hate (5) in behaviour | In-game test | Open |
-| AI-040 | How the wanted level overrides the `COP`–`PLAYER` relationship | R3.7 | Open |
+| AI-040 | How the wanted level overrides the `COP`–`PLAYER` relationship | R3.7 | Partly answered: no script sets `COP` toward `PLAYER`, so the engine's wanted system does it; scripts use the wanted natives. `lamar1` and `franklin1` set `PLAYER` to hate `COP` (followers fight police), and 15 Online scripts copy the player group's value to their own groups. Left: the engine side (the executable, a test) (leftovers pass, [relationships and groups](/docs/ai/relationships-and-groups.md#police-and-the-players-group-leftovers-pass)) |
 
 ### [How Rockstar's scripts drive AI](/docs/ai/script-ai-patterns.md) (R17.10)
 

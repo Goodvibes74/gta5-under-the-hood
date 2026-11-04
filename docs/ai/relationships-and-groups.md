@@ -65,8 +65,20 @@ Who likes and hates whom: the 40 default relationship groups and their rules in 
 
 The mission triggerers add their own groups for the lead-in scenes (`FAMILY_3_TS_RELGROUP`, `TS_LES1A`, `FRANKLIN_1_TS_RELGROUP`, `MICHAEL_1_TS_RELGROUP`, `REL_TS_FRIENDLY`, `GuardGroup`, `WorkerPedGroup`, `FIREMEN` and others). Those last only while the scene runs. Every other group is added by the mission or `freemode` script that uses it (`freemode` 17 calls, `fm_mission_controller` 7) and goes away with it.
 
+### Police and the player's group (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in the build 1.0.3725.0 decompile (searched every script for `COP` in `SET_`, `CLEAR_` and `GET_RELATIONSHIP_BETWEEN_GROUPS`):
+
+- **No script sets `COP` toward `PLAYER`.** Turning police hostile when you are wanted is left to the engine's wanted system. Scripts drive it through the wanted natives: `SET_PLAYER_WANTED_LEVEL` (8,102 calls in 500 scripts), `SET_MAX_WANTED_LEVEL` (2,157 in 387), `SET_WANTED_LEVEL_MULTIPLIER` (1,219 in 372), `SET_POLICE_IGNORE_PLAYER` (1,148 in 565) and `SET_DISPATCH_COPS_FOR_PLAYER` (394 in 162).
+- **The other direction is set in two story missions.** `lamar1` (three times) and `franklin1` (once) set `PLAYER` to hate (5) `COP`, in the same block that forces a wanted level, turns on dispatch services 1, 2, 3, 5, 6 and 8, and shows police radar blips. `lamar1` and `finale_heist2b` clear it again. Our reading: the player's group, and so any follower in it, then attacks police on its own, which a wanted level alone doesn't make it do.
+- **Online copies the current value.** Fifteen Online content scripts (`gb_biker_*`, `gb_headhunter`, `gb_infiltration`, `business_battles_defend` and others) read the relationship from the player's group to `COP`, then give their own new groups that same value toward `COP`, both ways. Their own peds then treat police the way the player's group currently does.
+- **Mission groups and `COP`:** 129 literal calls in 54 scripts set a relationship between `COP` and another group: 68 respect (1), 40 hate (5, 4 of them the `PLAYER` calls above), 13 like (2), and a handful of 0, 3, 4 and 255. Most of the respect calls keep a mission's own peds from fighting police that arrive (random events such as `re_getaway_driver` and `re_securityvan`, `rural_bank_heist`, `nigel1a`); the hate calls make a gang or a target fight them.
+
+So how the wanted level makes `COP` peds attack, without any relationship change a script can see, is in the engine (test card 3 checks the default).
+
 ## What this means for modders
 
+- **Make police hostile without a wanted level:** `SET_RELATIONSHIP_BETWEEN_GROUPS(5, GET_HASH_KEY("COP"), GET_HASH_KEY("PLAYER"))`. Rockstar's scripts never do this; they use the wanted level. To make your followers fight police, set `PLAYER` to hate `COP`, as `lamar1` does (**Known** use, the effect untested).
 - **Make enemies:** `ADD_RELATIONSHIP_GROUP("MY_ENEMIES", &hash)`, `SET_PED_RELATIONSHIP_GROUP_HASH(ped, hash)`, then `SET_RELATIONSHIP_BETWEEN_GROUPS(5, hash, GET_HASH_KEY("PLAYER"))` and the reverse. Remove the group when your mod stops.
 - **Make allies:** respect (1) both ways, or make them followers with `SET_PED_AS_GROUP_MEMBER(ped, GET_PED_GROUP_INDEX(PLAYER_PED_ID()))`; set `SET_PED_NEVER_LEAVES_GROUP` if they shouldn't wander off (**Known**).
 - **Change the world's politics** with a data edit to `relationships.dat` (gang wars: make two ambient gangs hate each other). It applies to every ped of those groups for the whole session.
@@ -80,7 +92,7 @@ The mission triggerers add their own groups for the lead-in scenes (`FAMILY_3_TS
 | The exact follower limit and what happens to the eighth | Test card 2 |
 | Which mission groups persist between missions (global groups registered at boot) | Answered in [which groups outlive a mission](#which-groups-outlive-a-mission-leftovers-pass) (leftovers pass): only `main_persistent`'s three family groups, plus the built-in groups |
 | How dislike (4) differs from hate (5) in behaviour | In-game test |
-| How the wanted level overrides the `COP`–`PLAYER` relationship | R3.7 |
+| How the wanted level overrides the `COP`–`PLAYER` relationship | Partly answered in [police and the player's group](#police-and-the-players-group-leftovers-pass) (leftovers pass): no script sets `COP` toward `PLAYER`; the change is the engine's wanted system. Left: how the engine does it (the executable, test card 3) |
 
 ## Test cards
 
