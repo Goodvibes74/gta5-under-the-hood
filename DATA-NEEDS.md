@@ -148,7 +148,7 @@ How to read the tables:
 | FF-005 | Which of the 8,472 `gen` keys `fm_mission_controller` reads | a job's UGC JSON | yes |
 | PERF-005, PERF-022 | The menu label for each value of every quality key | the player's settings file (outside the archives), compared with the menu | in-game |
 | PERF-006 | What rewrites the settings file without the player asking | the settings file before and after a driver update | no |
-| PERF-013 (*partly, leftovers pass: the script side*) | Which files `ON_ENTER_MP` switches: the change sets the 43 `GROUP_ON_DEMAND` packs run on entering Online | `content.xml` of every DLC pack with `GROUP_ON_DEMAND` in its `setup2.xml` (`contentChangeSets`, `mapChangeSetData`) | no (the scripts are done) |
+| PERF-013 (*partly, leftovers pass: the script side*) | Which files `ON_ENTER_MP` switches: the change sets the 43 `GROUP_ON_DEMAND` packs run on entering Online | `content.xml` of every DLC pack with `GROUP_ON_DEMAND` in its `setup2.xml` (`contentChangeSets`) | no (the scripts are done) |
 
 ## Text (`.gxt2` text blocks: base, update and DLC, American)
 
