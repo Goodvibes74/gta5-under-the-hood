@@ -136,6 +136,19 @@ There is no native that writes a handling field. ScriptHookV's `getHandling`-sty
 
 The weight (`weight` 20 for engines, 5 for brakes) adds mass to the car (**Known**). Turbo is a toggle mod with no stat item in these kits. `CAdvancedData` (4.4) lets a single part also change a handling field for one model.
 
+**Every kit** (PC data pass, **Verified**: the 596 kits with parts in the base `carcols.ymt` and every DLC `carcols.meta`, newest copy of each; value (number of items)):
+
+| Type | Values |
+| --- | --- |
+| `VMT_ARMOUR` | 20, 40, 60, 80, 100 (614 each: five levels everywhere) |
+| `VMT_ENGINE` | 25 (405), 50 (501), 75 (368), 100 (473); per-car values from 10 to 400 (150: 63, 40: 62, 90: 56, 20: 53, 200: 50 ...) |
+| `VMT_BRAKES` | 25 (508), 50 (437), 100 (512); others from 10 to 400 (65: 96, 120: 61 ...) |
+| `VMT_GEARBOX` | 50 (560), 100 (559), 25 (282), 200 (270), 150 (62); up to 300 |
+| `VMT_SUSPENSION` | 1 to 300; most often 10 (280), 20 (270), 15 (210), 30 (160), 5 (134) |
+| `VMT_WHEELS_REAR_OR_HYDRAULICS` | 20 to 100 (79 items) |
+
+The files give the size of each step only. What the number scales (a percentage of drive force, brake force or shift speed; centimetres or a percentage of suspension travel) is applied in the executable, so the **Known** notes above stay unconfirmed.
+
 ## 4.8 DLC handling
 
 All 89 vanilla DLC packs were scanned (**Verified**). 38 of them carry a `handling.meta`, together holding **544 more `CHandlingData` entries**, more than twice the base file. With the 254 base entries the game has about 800 handling entries (some DLC entries re-define base names).
@@ -165,5 +178,5 @@ The newer entries use the newer fields far more: 172 `CAdvancedData` blocks (8 i
 | --- | --- |
 | Bit names for the model, handling, damage and advanced flags, checked one by one in game | R2.2 second pass |
 | How the engine turns `fInitialDriveMaxFlatVel` and the drive force into the real top speed | R2.2 second pass, in-game measurement |
-| What exactly each `statMods` modifier changes (percent of what) | R2.2 second pass |
+| What exactly each `statMods` modifier changes (percent of what) | Partly answered in [4.7](#47-speed-grip-and-upgrades) (PC data pass): every value in every kit; what the number scales needs the executable or an in-game measurement |
 | How `vehicles.meta` fields (`handlingId`, wheel scale, `flags`) interact with handling | R14.1 |

@@ -125,6 +125,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | D10 | `entityfx.dat`, `materialfx.dat`, `wheelfx.dat`, every `.ypt` (CodeWalker), DLC `content.xml` and `setup2.xml`, `animpostfx.ymt`, the `timecycle_mods` and `w_*.xml` files, `visualsettings.dat` | REN-014 to REN-017, REN-021, REN-022, REN-024, REN-026, REN-027, GP-027, WLD-017 | Done: REN-014, REN-015, REN-016, GP-027 answered; REN-022, REN-024, REN-027 mostly; REN-017, REN-021, REN-026, WLD-017 partly. Correction: the weather files have 423 variables per region, not 380 |
 | D11 | `clip_sets.ymt` and the DLC `clip_sets.xml` files, `cameras.ymt`, the archive listing (`.ycd`, `.yed` sizes), `CREATE_CAMERA` calls in the decompile | REN-001, REN-002, REN-004, REN-005, REN-006, REN-008, REN-009 | Done: REN-004, REN-006, REN-009 answered; REN-001, REN-002, REN-005 mostly; REN-008 partly |
 | D12 | The American text dump (every block), every `carcols.meta`, the clothes shop scripts' string literals | ON-018, ON-008, UI-018, ENT-006, GP-083 | Done: ENT-006 answered; ON-018, ON-008 mostly; GP-083 partly. UI-018 not moved: adding file and data names and numbered siblings found no clear gain over the second pass's method |
+| PC1 | At the game PC, 2026-11-04 (branch `research/pc1-data-files`, [`PC-SESSION.md`](/PC-SESSION.md) Part 1): a listing of every vanilla archive (389,555 entries) and 2,134 data files converted to XML with CodeWalker's library: `common.rpf\data`, `update.rpf\common\data`, `update.rpf\x64\data` and `x64\levels\gta5`, the `dlc_patch` folders, and every DLC `handling`, `vehicles`, `carcols`, `carvariations`, `peds`, `events`, `taskdata`, `scenarios` and weapon file | PHY-001, PHY-004, ENT-017, ENT-019, ENT-020, AI-014, AI-033, ENT-025, AI-009, REN-011, ENT-038, ENT-039, AI-024, PHY-013, UI-009 | Done: PHY-001, PHY-004, ENT-019, AI-014, AI-009, REN-011, ENT-038, AI-024 answered; ENT-017, AI-033, ENT-025, ENT-039 mostly; ENT-020 (not in any data file: the executable), PHY-013 partly; UI-009 still partly (230 of 282) |
 
 ## By category
 
@@ -275,10 +276,10 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
 | ENT-016 | How many Euphoria ragdolls run at once before peds fall back to `CTaskRageRagdoll` | In-game test, [physics cost](/docs/performance/physics-cost.md) test card 1 | Open |
-| ENT-017 | Which tuning set is chosen for which weapon and vehicle, and the 3 hashed set names | Second pass, weapon and vehicle data | Open |
+| ENT-017 | Which tuning set is chosen for which weapon and vehicle, and the 3 hashed set names | Second pass, weapon and vehicle data | Mostly answered: weapons by `NmShotTuningSet`, vehicles per seat entry in `vehiclelayouts.meta`; `KNIFE_SLASH` and `AUTOMATICMG` named (PC data pass, [ragdoll 17.3.1](/docs/entities/peds/ragdoll.md#1731-who-picks-which-tuning-set-pc-data-pass)); left: two `CGrabHelper` set names |
 | ENT-018 | Fall damage by height | R3.8 open question, in-game test | Open |
-| ENT-019 | What `nm_blend_out_sets.meta` sets for getting up | Second pass | Open |
-| ENT-020 | Where fall damage is set (not in the ragdoll files) *(from the guide's text)* | R3.8 | Open |
+| ENT-019 | What `nm_blend_out_sets.meta` sets for getting up | Second pass | Answered: 103 get-up sets, their item types, fields and flags (PC data pass, [ragdoll 17.4.1](/docs/entities/peds/ragdoll.md#1741-getting-up-nm_blend_out_setsmeta-pc-data-pass)) |
+| ENT-020 | Where fall damage is set (not in the ragdoll files) *(from the guide's text)* | R3.8 | Partly answered: in no data file; the files only set when a fall becomes a ragdoll (PC data pass, [ragdoll 17.4](/docs/entities/peds/ragdoll.md#174-falling)); left: the executable or an in-game test |
 
 ### [Population](/docs/entities/spawning/population.md) (R4.1)
 
@@ -288,7 +289,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | ENT-022 | How the caps, `CityDensity` and the budgets combine into the real spawn count | Test card 1; R17.9 | Open |
 | ENT-023 | What `scumminessLevel` changes in code and in scripts | Second pass: `GET_ZONE_SCUMMINESS` callers | Partly answered: one script reads it, `cellphone_flashhand`, to set the phone's signal bars (levels 0 and 1 give 5 bars, 2 and 3 give 4, 4 gives 3, 5 gives 2, with a 1-in-4 chance of one fewer). The guide's earlier "shop prices" note was wrong. Left: what it changes in the engine (leftovers pass, [population](/docs/entities/spawning/population.md)) |
 | ENT-024 | The unnamed zone fields (`hash_7111AC8A`, three flags) | Second pass | Partly answered: `hash_7111AC8A` (7) and `hash_3CBB62E0` (−1) are the same in every zone; the two flags are true on the west-coast beach zones, effect untested (leftovers pass, [population](/docs/entities/spawning/population.md#schedules-that-dont-exist-leftovers-pass)) |
-| ENT-025 | How birds and fish groups spawn (they fill many slots) | R17.8 | Open |
+| ENT-025 | How birds and fish groups spawn (they fill many slots) | R17.8 | Mostly answered: ordinary weighted population groups flagged aerial, aquatic or wildlife (PC data pass, [population](/docs/entities/spawning/population.md#birds-and-fish-pc-data-pass)); left: the engine's placement rule |
 
 ### [Scenarios and ambient life](/docs/entities/spawning/scenarios.md) (R4.2)
 
@@ -316,8 +317,8 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | ENT-036 | The difference between the 901 models here and the 879 counted in R14.4 (how entries were split) | Second pass | Answered: 921 models in all 76 files; the 879 count left out the 42 models found only in `dlc_patch` copies (leftovers pass, [vehicles](/docs/entities/vehicles/vehicles.md#how-many-models-counted-three-ways-leftovers-pass)) |
 | ENT-037 | The meaning of the less common flags | Second pass: compare models that set them | Mostly answered: which model uses each of the 79 rarest flags, and one unprefixed flag on `bodhi2`; the detailed effect is a test per model (leftovers pass, [vehicles](/docs/entities/vehicles/vehicles.md#how-many-models-counted-three-ways-leftovers-pass)) |
-| ENT-038 | Light and siren setting id ranges used by DLC packs | Second pass | Open |
-| ENT-039 | Which `carcols` mod parts each kit really links (the per-type counts include repeats) | Second pass | Open |
+| ENT-038 | Light and siren setting id ranges used by DLC packs | Second pass | Answered: per pack, with two clashes (PC data pass, [vehicles](/docs/entities/vehicles/vehicles.md#light-siren-and-kit-ids-and-what-kits-contain-pc-data-pass)) |
+| ENT-039 | Which `carcols` mod parts each kit really links (the per-type counts include repeats) | Second pass | Mostly answered: counts with and without repeats, linked and stat parts (PC data pass, [vehicles](/docs/entities/vehicles/vehicles.md#light-siren-and-kit-ids-and-what-kits-contain-pc-data-pass)); left: a per-kit table |
 
 ## Physics
 
@@ -325,10 +326,10 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| PHY-001 | The two unnamed columns (0.95 and 0.0 in every row) | R2.1 second pass | Open |
+| PHY-001 | The two unnamed columns (0.95 and 0.0 in every row) | R2.1 second pass | Answered: `SOFTNESS` and `NOISINESS`, the same in all 213 rows (PC data pass, [collision 5.3.1](/docs/physics/collision-and-materials.md#531-the-softness-and-noisiness-columns-and-the-ragdoll-materials-pc-data-pass)) |
 | PHY-002 | How many `.ybn` files the map has and how they are grouped | R4.1 (map) | Answered: 15,124, by area, pack and name prefix (leftovers pass, [collision](/docs/physics/collision-and-materials.md#57-open-questions)) |
 | PHY-003 | The exact shape test flag bits, checked in game | R2.1 second pass | Open |
-| PHY-004 | The ragdoll and `NATURAL_MOTION` materials | R2.3 | Open |
+| PHY-004 | The ragdoll and `NATURAL_MOTION` materials | R2.3 | Answered: ids 150 to 171, 21 body parts and `ANIMAL_DEFAULT`, with their values (PC data pass, [collision 5.3.1](/docs/physics/collision-and-materials.md#531-the-softness-and-noisiness-columns-and-the-ragdoll-materials-pc-data-pass)) |
 | PHY-005 | How water collision differs from water simulation | R2.4 | Open |
 
 ### [Fire, explosions and projectiles](/docs/physics/fire-explosions-projectiles.md) (R2.5)
@@ -347,7 +348,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | PHY-011 | Bit names for the model, handling, damage and advanced flags, checked one by one in game | R2.2 second pass | Open |
 | PHY-012 | How the engine turns `fInitialDriveMaxFlatVel` and the drive force into the real top speed | R2.2 second pass, in-game measurement | Open |
-| PHY-013 | What exactly each `statMods` modifier changes (percent of what) | R2.2 second pass | Open |
+| PHY-013 | What exactly each `statMods` modifier changes (percent of what) | R2.2 second pass | Partly answered: every value in every kit (PC data pass, [handling 4.7](/docs/physics/vehicle-handling.md#47-speed-grip-and-upgrades)); left: what the number scales (the executable or a measurement) |
 | PHY-014 | How `vehicles.meta` fields (`handlingId`, wheel scale, `flags`) interact with handling | R14.1 | Open |
 
 ### [Water and buoyancy](/docs/physics/water-and-buoyancy.md) (R2.4)
@@ -383,7 +384,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | AI-007 | How far from the player ambient peds despawn | R17.9, in-game test | Open |
 | AI-008 | How peds pick partners for chats | Second pass | Partly answered: no script picks partners; `TASK_CHAT_TO_PED` has only 10 calls in 5 scripts, each pairing two script-chosen peds both ways (flag 16 in 8). Ambient pairing is the engine's (`CTaskChat`, hang-outs within 2 m). Left: the engine rule (leftovers pass, [ambient life 36.3](/docs/ai/ambient-life.md#363-what-scripts-do)) |
-| AI-009 | The animal models by kind and where each spawns | Second pass with R4.2's scenario types | Open |
+| AI-009 | The animal models by kind and where each spawns | Second pass with R4.2's scenario types | Answered: 32 base models and the DLC variants with their AI, and the 47 scenario types and population groups that spawn them (PC data pass, [ambient life 36.3.1](/docs/ai/ambient-life.md#3631-the-animals-and-where-they-spawn-pc-data-pass)) |
 
 ### [Combat and AI (first pass)](/docs/ai/combat-and-perception.md) (R3.2)
 
@@ -393,7 +394,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | AI-011 | Decode `pedpersonality.ymt` (binary PSO): personalities, bravery, driving ability | R17.3 | Answered: decoded in [decisions and personalities](/docs/ai/decisions-and-personalities.md) (R17.3); the leftovers pass named all 18 bravery types and 69 of 96 personalities |
 | AI-012 | Cover: how cover points are found and scored, `TASK_SEEK_COVER_*` | R17 | Open |
 | AI-013 | How aim assist and lock-on work for the player | R3.2 second pass | Open |
-| AI-014 | The full meaning of `taskdata.meta` and `scriptedguntasks.meta` | R17.1 | Open |
+| AI-014 | The full meaning of `taskdata.meta` and `scriptedguntasks.meta` | R17.1 | Answered: the 10 task data sets and their flags, the default tasks, the 11 scripted gun tasks and the 4 missions that use them (PC data pass, [combat 5.8.1](/docs/ai/combat-and-perception.md#581-task-data-sets-and-scripted-gun-tasks-pc-data-pass)) |
 | AI-015 | Whether the modded `events.meta` really drops gunfight reactions, in game | Test card | Open |
 | AI-016 | Decode `pedpersonality.ymt` (binary PSO; not decoded in the first pass) *(from the guide's text)* | R17.3 | Answered with AI-011 ([decisions and personalities](/docs/ai/decisions-and-personalities.md)) |
 
@@ -418,7 +419,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| AI-024 | AI profiles of every DLC vehicle (all `handling.meta` files) | Second pass, with the DLC scan | Open |
+| AI-024 | AI profiles of every DLC vehicle (all `handling.meta` files) | Second pass, with the DLC scan | Answered: 566 DLC handling entries, 477 `AVERAGE`, 60 `SPORTS_CAR`, 25 `TRUCK`, 4 `CRAP`, with names (PC data pass, [driving 18.2](/docs/ai/driving.md#182-the-ai-handling-profiles)) |
 | AI-025 | How `SET_DRIVER_ABILITY` and `_AGGRESSIVENESS` change the curve or braking | In-game test | Open |
 | AI-026 | What `TASK_VEHICLE_TEMP_ACTION`'s action numbers mean, with Rockstar's counts | Second pass | Answered: the 15 literal action numbers Rockstar uses, with counts, matched to NativeDB's community meanings (**Known**: 24 and 1 brake, 4 and 5 turn while braking, 30 burnout, 6 hard brake, 9 gentle acceleration ...). The in-game check stays AI-021 (leftovers pass, [driving AI](/docs/ai/driving-ai.md)) |
 | AI-027 | Road nodes and how routes are planned | R17.5 (navigation) | Partly answered: node, link and junction counts; route planning is engine code (leftovers pass, [navigation](/docs/ai/navigation.md#3441-navmesh-and-road-node-counts-leftovers-pass)) |
@@ -437,7 +438,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | AI-031 | The three other unnamed shocking events | Second pass, more name guesses | Open |
 | AI-032 | Which `SET_PED_CONFIG_FLAG` numbers scripts set most, and what they do | Second pass, R17.10 | Partly answered: the same count as ENT-014, 190 flags with the top 20 by scripts (36, 34, 208, 118, 185 ...). Left: what each does ([peds](/docs/entities/peds/peds.md#the-config-flags-rockstar-sets-most-leftovers-pass)) |
-| AI-033 | How decision makers map each event to a response | R17.3 second pass | Open |
+| AI-033 | How decision makers map each event to a response | R17.3 second pass | Mostly answered: the three lists in `events.meta`, the chances, distances, flags and parents (PC data pass, [perception and events 33.4.1](/docs/ai/perception-and-events.md#3341-from-event-to-response-decision-makers-pc-data-pass)); left: the exact selection rule (the executable) |
 
 ### [Police and service AI](/docs/ai/police-and-services.md) (R17.7)
 
@@ -864,7 +865,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | UI-007 | Movies loaded through variables (not counted), and DLC pack movies | Second pass, DLC scan | Answered: [Scaleform 22.5](/docs/ui/scaleform.md#225-every-movie-its-methods-and-who-names-it) |
 | UI-008 | Each movie's full method list | Second pass, read the `.gfx` action scripts | Answered (rebuilt from the `.gfx` files; summary and examples, not the full list): [Scaleform 22.5](/docs/ui/scaleform.md#225-every-movie-its-methods-and-who-names-it) |
-| UI-009 | Which interior map `int<number>` belongs to which interior | Second pass with R4.5 | Partly answered: 221 of 282 named ([Scaleform 22.5](/docs/ui/scaleform.md#225-every-movie-its-methods-and-who-names-it)); 61 left |
+| UI-009 | Which interior map `int<number>` belongs to which interior | Second pass with R4.5 | Partly answered: 230 of 282 named, 9 of them from game files in the PC data pass ([Scaleform 22.5](/docs/ui/scaleform.md#225-every-movie-its-methods-and-who-names-it)); 52 left |
 
 ### [Server-backed Online screens](/docs/ui/server-backed-screens.md) (R8.5)
 
@@ -941,7 +942,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | REN-008 | The 50 shake names and other camera names that didn't resolve | Second pass with more name sources | Partly answered: three spline cameras named; 28 shakes named by the sources tried, the rest need another source (leftovers pass, [cameras](/docs/rendering/cameras.md#camera-names-leftovers-pass)) |
 | REN-009 | Which `CREATE_CAMERA` hashes scripts use (the hashed form of `CREATE_CAM`) | Second pass: resolve the hashes in the decompile | Answered: six camera hashes, all named (leftovers pass, [cameras](/docs/rendering/cameras.md#camera-names-leftovers-pass)) |
 | REN-010 | The view mode contexts and modes as numbers | R6.4 | Answered by GP-044 (P4.9): contexts 0 to 7 and mode 4 first person ([controls and camera](/docs/gameplay/player/controls-and-camera.md#the-view-mode-first-and-third-person)) |
-| REN-011 | How the first-person car interior camera is chosen per vehicle (`camVehicleCustomSettingsMetadata`) | R14.1 | Open |
+| REN-011 | How the first-person car interior camera is chosen per vehicle (`camVehicleCustomSettingsMetadata`) | R14.1 | Answered: `povCameraName` and offsets per model, and per-seat cameras for 130 models through the gameplay director's list (PC data pass, [cameras](/docs/rendering/cameras.md#the-first-person-car-camera-per-vehicle-and-per-seat-pc-data-pass)) |
 
 ### [Particles and decals](/docs/rendering/particles-and-decals.md) (R13.3)
 

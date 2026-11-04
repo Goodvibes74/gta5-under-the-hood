@@ -2,10 +2,12 @@
 
 The work left in [`OPEN_QUESTIONS.md`](/OPEN_QUESTIONS.md) that a cloud session can't do, gathered in one place so that one sitting at the game PC covers as much as possible. It was built on 2026-11-04 from the tracker (192 answered, 49 mostly, 57 partly, 144 open of 442), [`DATA-NEEDS.md`](/DATA-NEEDS.md) and the lists in [`HANDOFF.md`](/HANDOFF.md). Each row links to the guide (and its test cards) that holds the details; this page only says what to do and in which order. When a row is done, update its guide and its tracker row as usual, and delete it here.
 
+**Progress.** Batch PC1 (2026-11-04, Part 1) worked 15 data rows: 8 answered and deleted here (AI-024, ENT-038, REN-011, PHY-001, PHY-004, ENT-019, AI-014, AI-009); ENT-017, ENT-039 and UI-009 stay in Part 1 with what is left; ENT-020, PHY-013, AI-033 and ENT-025 moved to Part 2, because what is left of them is in the executable. Tracker after PC1: 200 answered, 53 mostly, 59 partly, 130 open.
+
 Three kinds of work:
 
-1. **Data files** (one CodeWalker run, no game running): 69 rows.
-2. **The executable** (read-only reverse engineering of `GTA5.exe`): 33 rows.
+1. **Data files** (one CodeWalker run, no game running): 57 rows.
+2. **The executable** (read-only reverse engineering of `GTA5.exe`): 37 rows.
 3. **In-game tests** (story mode): 122 rows, 11 of them also listed for the executable.
 
 ## Before you start
@@ -24,14 +26,10 @@ Extract everything below in one pass into a scratch folder, then pack the folder
 
 | IDs | Status | What to find | Extract |
 | --- | --- | --- | --- |
-| AI-024 | open | The AI handling profile of every DLC vehicle | the same `handling.meta` files |
 | PHY-011 | open | Bit names of the model, handling, damage and advanced flags | the same files, compared across known vehicles; then an in-game check |
-| PHY-013 | open | What each `statMods` modifier changes | the same files (`CCarHandlingData` / sub-handling blocks) |
 | PHY-014 | open | How `vehicles.meta` fields (`handlingId`, wheel scale, `flags`) interact with handling | `common:/data/levels/gta5/vehicles.meta` and every DLC `vehicles.meta`, with `handling.meta` |
 | ENT-037 | mostly | The less common vehicle flags | every `vehicles.meta` `flags` |
-| ENT-038 | open | Light and siren id ranges per DLC pack | every `carcols` file (*find*: `carcols.ymt`/`carcols.meta`) |
-| ENT-039 | open | Which `carcols` mod parts each kit links | the same, plus `carvariations.meta` |
-| REN-011 | open | How the first-person car interior camera is chosen per vehicle | `update:/x64/data/metadata/cameras.ymt` and `vehicles.meta` (`camVehicleCustomSettingsMetadata`) |
+| ENT-039 | mostly (PC1: counts done; a per-kit table left) | Which `carcols` mod parts each kit links | the same, plus `carvariations.meta` |
 
 #### Weapons, explosions, physics
 
@@ -40,11 +38,7 @@ Extract everything below in one pass into a scratch folder, then pack the folder
 | GP-078 | partly | How story stats and Online rank change the ammo cap | `common:/data/ai/weapons.meta` and DLC weapon files (`AmmoMax`, `AmmoMax50`, `AmmoMax100`, `AmmoMaxMP` ...) |
 | GP-079, PHY-009 | mostly | Damage and radius per explosion type, base and the 16 DLC files | `common:/data/explosion.meta` and every DLC explosion file |
 | PHY-008 | mostly | The unnamed boolean fields | `update:/x64/data/metadata/explosion.ymt` |
-| PHY-001 | open | The two unnamed columns (0.95, 0.0) | `materials.dat` (*find*) |
-| PHY-004 | open | The ragdoll and `NATURAL_MOTION` materials | `materials.dat` and the ragdoll / NM files (*find*) |
-| ENT-017 | open | Which ragdoll tuning set applies to which weapon and vehicle; three hashed set names | NM tuning files and weapon / vehicle data (*find*) |
-| ENT-019 | open | What `nm_blend_out_sets.meta` sets for getting up | `nm_blend_out_sets.meta` (*find*) |
-| ENT-020 | open | Where fall damage is set | ped and player data files (`playerinfo.ymt`, ped tuning) |
+| ENT-017 | mostly (PC1: two `CGrabHelper` set names left) | Which ragdoll tuning set applies to which weapon and vehicle; three hashed set names | NM tuning files and weapon / vehicle data (*find*) |
 
 #### Water
 
@@ -67,7 +61,7 @@ Extract everything below in one pass into a scratch folder, then pack the folder
 | WLD-001 | mostly | Each IPL name and the building it controls | every `.ymap` (match names to IPLs) |
 | WLD-005 | partly | How many entities the story map loads | every `.ymap`, filtered by IPL state |
 | AI-027, AI-029 | partly | Road nodes, routes; node and link counts, update vs base | `.ynd` files |
-| UI-009 | open | Which `int<number>` interior map belongs to which interior | interior `.ytyp` / ymaps, with the text labels |
+| UI-009 | partly (PC1: 230 of 282 named, 52 left) | Which `int<number>` interior map belongs to which interior | interior `.ytyp` / ymaps, with the text labels |
 
 #### Peds, population, AI behaviour
 
@@ -77,12 +71,8 @@ Extract everything below in one pass into a scratch folder, then pack the folder
 | AI-019 | partly | How `MotivationMin/Max` is used | the same file |
 | AI-020 | still open | How driving ranges map onto driving tasks | the same file, with the driving guides |
 | ENT-013 | mostly | 23 personality hashes and relationship groups that didn't resolve | `pedpersonality.ymt`, the peds and relationship files |
-| AI-014 | open | The full meaning of `taskdata.meta` and `scriptedguntasks.meta` | both files (*find*) |
-| AI-033 | open | How decision makers map each event to a response | `common:/data/events.meta` and the decision-maker files |
 | AI-034, AI-035 | partly | The 9 crime-info entries; crime points per crime | `common:/data/ai/crimeinformation.meta` |
-| AI-009 | open | Animal models by kind and where each spawns | scenario types and the peds file |
 | ENT-024 | partly | The unnamed zone fields (`hash_7111AC8A`, three flags) | `common:/data/levels/gta5/popzone.ipl` and the zone data |
-| ENT-025 | open | How bird and fish groups spawn | `popcycle.dat`, population groups |
 | GP-073 | partly | The 5 non-story entries in `PlayerStatInfos` | `update:/x64/data/tune/playerinfo.ymt` (hash candidate names) |
 
 #### Character appearance and shops
@@ -157,6 +147,7 @@ Read-only reverse engineering of `GTA5.exe` (build 1.0.3725.0): look, never patc
 | AI-003 | How primary and secondary task slots are numbered | open | [The AI architecture](/docs/ai/ai-architecture.md) |
 | AI-004 | The distances where ped AI LOD changes | open | [AI cost and level of detail](/docs/ai/ai-cost-and-lod.md) |
 | AI-020 | How the driving ranges map onto the driving tasks (R3.3, R17.6) | open | [Decisions and personalities](/docs/ai/decisions-and-personalities.md) |
+| AI-033 | The rule a decision maker uses to pick one decision for an event (first valid one in order, or weighted?) | mostly (PC1: the data side) | [Perception and events](/docs/ai/perception-and-events.md#3341-from-event-to-response-decision-makers-pc-data-pass) |
 | AI-040 | How the wanted level overrides the `COP`–`PLAYER` relationship | partly | [Relationships and groups](/docs/ai/relationships-and-groups.md) |
 | CORE-002 | The exact load phases for each change-set group | partly | [Archives and the content system](/docs/core/archives-and-content.md) |
 | CORE-015 | Memory cost of each raised pool (bytes per slot) | open | [Memory, pools and limits](/docs/core/memory-and-pools.md) |
@@ -166,6 +157,8 @@ Read-only reverse engineering of `GTA5.exe` (build 1.0.3725.0): look, never patc
 | CORE-027 | The streaming memory budget (how the engine splits RAM between stores), and what HeapAdjuster changes in it | open | [Streaming: how assets get into memory](/docs/core/streaming.md) |
 | CORE-031 | Which brain set the engine gives the random-ped brains added with `ADD_SCRIPT_TO_RANDOM_PED` (no script registers into sets 2 or 4) | open | [Surviving game updates](/docs/core/surviving-updates.md) |
 | CORE-032 | What the engine raises force-cleanup bits 16 and 32 for (no script raises them; [runtime scripts … | open | [Runtime scripts: the scripts that keep the game running](/docs/core/runtime-scripts.md) |
+| ENT-020 | Where and how fall damage is computed (no data file sets it) | partly (PC1: data ruled out) | [Ped physics and ragdoll](/docs/entities/peds/ragdoll.md#174-falling) |
+| ENT-025 | How the engine places the aerial, aquatic and wildlife population groups | mostly (PC1: the data side) | [Population](/docs/entities/spawning/population.md#birds-and-fish-pc-data-pass) |
 | GP-021 | What the mission triggerers build before a mission starts (lead-in scenes, from guide 2) | partly | [Anatomy of a story mission](/docs/gameplay/missions/mission-anatomy.md) |
 | GP-023 | What exactly NoEditorRestrictions patches, and the vanilla limits it lifts (free camera distance, restricted areas) | open | [Replay, director mode and the Rockstar Editor](/docs/gameplay/missions/replay-director-and-editor.md) |
 | GP-025 | The `REPLAY_START_EVENT` and `REPLAY_RECORD_BACK_FOR_TIME` type numbers | partly | [Replay, director mode and the Rockstar Editor](/docs/gameplay/missions/replay-director-and-editor.md) |
@@ -179,6 +172,7 @@ Read-only reverse engineering of `GTA5.exe` (build 1.0.3725.0): look, never patc
 | ON-052 | How migration chooses a new owner and host | open | [Sessions and sync](/docs/online/sessions-and-sync.md) |
 | ON-060 | How bits 16, 32 and 64 in these masks are raised (they end some systems on other occasions) | mostly | [Story systems that clash with an Online mode](/docs/online/story-systems-in-online-mode.md) |
 | PERF-016 | How much of the 1,950 MB heap is used (HeapAdjuster only logs the size) | open | [Streaming, memory and video memory](/docs/performance/memory-and-vram.md) |
+| PHY-013 | What each `statMods` modifier value scales (percent of drive force, brake force, shift speed; suspension units) | partly (PC1: every value read) | [Vehicle handling](/docs/physics/vehicle-handling.md#47-speed-grip-and-upgrades) |
 | REN-007 | The director priorities and exactly when the cinematic director takes over | open | [Cameras](/docs/rendering/cameras.md) |
 | REN-012 | The exact decal limit in build 3725 and what limit patches change | open | [Particles and decals](/docs/rendering/particles-and-decals.md) |
 | SCR-004 | What `0x8F5D1AD832AEB06C` and `0x0F7082C60FB479EF` do (not in NativeDB) | partly | [Native usage: which scripts call which natives](/scripting/native-usage.md) |

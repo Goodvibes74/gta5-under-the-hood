@@ -116,6 +116,10 @@ Almost every screen movie also has `INITIALISE(mc)` and `SET_DISPLAY_CONFIG(_scr
 | `xs_*`, `imp_*`, `h4_*`, `sf_*`, `tr_*`, `ba_*` | 4, 4, 4, 4, 3, 3 | Arena, Import/Export, Cayo Perico (vault, submarine), the agency, Tuners, nightclubs |
 | others | 15 | `reh_*`, `po1_08_warehouseint*`, `hei_dlc_garage_*`, `gr_grdlc_*`, `lr_supermod_int`, `dt1_03_carpark`, `cs6_08_mine_int` |
 
+**Nine more names from the game files** (PC data pass, **Verified**). Hashing every file name in the archives (389,555 entries) and every name in 2,134 extracted data files names 9 maps that neither a script literal nor `frontend.xml` names: `v_bank`, `v_apartment_high` and `v_firedept` (from `sp_manifest.meta`), `v_cia` (from `timecycle_mods_3.xml`), and `h4_dlc_island_store_1`, `_2`, `_3`, `h4_dlc_island_office` and `m24_1_dlc_int_mod` (the names of collision `.ybn` files). The count goes from 221 to **230 of 282**. The `mpheist` pack's 8 maps are not among the 282; 5 of them are named (`hei_dlc_apart_high_new`, `hei_dlc_apart_high2_new`, `hei_generic_bank_dlc`, `hei_heist_police_dlc`, `hei_heist_ornate_bank`).
+
+The 52 still unnamed (hex `joaat` values): `0879B8D1`, `0D43ABC1`, `0DD87056`, `0FAD5D34`, `11DF24E1`, `14DF18D3`, `16C97868`, `1F3777B4`, `20E0FF9B`, `215E8096`, `24FD87D8`, `2D02219C`, `31DADDD2`, `326C22B5`, `3C744177`, `401BD41E`, `43CE4625`, `48234E23`, `4CEE62A7`, `4E43AE05`, `5290E3AA`, `55D8E98E`, `5817FC84`, `610B80AF`, `646C0DB9`, `6B280D51`, `6EEA4742`, `7646AB25`, `8122410C`, `86CBCE67`, `928CE5E9`, `93709CFB`, `9741B225`, `A0FCF3BF`, `A27795E8`, `A32E872C`, `A41F0619`, `A6410896`, `B0EC22A7`, `C0A90510`, `C73FD30B`, `C965728E`, `D5D9698D`, `D78EDD8E`, `D9AAF7E1`, `DBF3F8B6`, `EA1A1502`, `EB1A940F`, `EBEF98E1`, `F08EE012`, `F7F1B0B1`, `FDB63C6E`; and in `mpheist`, `5527D6D5`, `5F2D1B2F`, `71A4A62D`.
+
 ## 22.6 What this means for modders
 
 - **Showing a Rockstar movie from a mod is safe in story mode:** request it, wait until loaded, call its methods, draw it every frame, release it. `mp_big_message_freemode`, `midsized_message`, `instructional_buttons` and `countdown` work the same in story mode.
@@ -127,7 +131,7 @@ Almost every screen movie also has `INITIALISE(mc)` and `SET_DISPLAY_CONFIG(_scr
 
 | Question | Where it goes |
 | --- | --- |
-| The 61 interior maps whose name is not a literal in any script | Next pass: names from the map data (`.ymap` entity names) or the DLC `.ytyp` files |
+| The 61 interior maps whose name is not a literal in any script | Partly answered in [22.5](#225-every-movie-its-methods-and-who-names-it) (PC data pass): 9 more named from the game files, 52 left; next source: room or entity names inside the interior `.ytyp` and `.ymap` files |
 | Which cutscene or prop draws each of the 138 never-named screen movies | Next pass, with the cutscene files (R5.6) and render-target names |
 
 Answered in the second pass ([22.5](#225-every-movie-its-methods-and-who-names-it)): the movies loaded through variables and the DLC movies, every movie's methods (rebuilt from the `.gfx` files; 712 of the 723 names scripts call are defined), and 221 of the 282 interior maps.

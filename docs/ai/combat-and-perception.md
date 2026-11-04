@@ -49,7 +49,7 @@ Scripts change it per ped: `SET_PED_SEEING_RANGE` (524 calls), `SET_PED_HEARING_
 
 ## 5.4 Events and decision makers
 
-`events.meta` (`update.rpf` copy, **Verified**): 1,095 items, of which 25 decision makers and 219 decision responses, covering 73 event types. The most-handled events are `EVENT_SHOT_FIRED` (12 responses), `EVENT_SHOT_FIRED_WHIZZED_BY` (10), `EVENT_ENCROACHING_PED` (10), `EVENT_SHOT_FIRED_BULLET_IMPACT` (9), `EVENT_SHOCKING_INJURED_PED` (9), `EVENT_EXPLOSION` (9), `EVENT_SHOCKING_SEEN_MELEE_ACTION` (8), `EVENT_SHOCKING_CAR_CRASH` (8), `EVENT_SHOCKING_SEEN_PED_KILLED`, `EVENT_SHOCKING_PED_RUN_OVER`, `EVENT_SHOCKING_DEAD_BODY` and `EVENT_DAMAGE` (6 each).
+`events.meta` (`update.rpf` copy, **Verified**): 1,095 items, of which 25 decision makers and 219 decision responses, covering 73 event types (a recount in the PC data pass finds 223 response blocks with distinct names and 74 event names; how they fit together is in [perception and events 33.4.1](/docs/ai/perception-and-events.md#3341-from-event-to-response-decision-makers-pc-data-pass)). The most-handled events are `EVENT_SHOT_FIRED` (12 responses), `EVENT_SHOT_FIRED_WHIZZED_BY` (10), `EVENT_ENCROACHING_PED` (10), `EVENT_SHOT_FIRED_BULLET_IMPACT` (9), `EVENT_SHOCKING_INJURED_PED` (9), `EVENT_EXPLOSION` (9), `EVENT_SHOCKING_SEEN_MELEE_ACTION` (8), `EVENT_SHOCKING_CAR_CRASH` (8), `EVENT_SHOCKING_SEEN_PED_KILLED`, `EVENT_SHOCKING_PED_RUN_OVER`, `EVENT_SHOCKING_DEAD_BODY` and `EVENT_DAMAGE` (6 each).
 
 The decision makers are named by role: `PLAYER`, `COP`, `FIREMAN`, `MEDIC`, `OFFDUTY_EMT`, `Security`, `SWAT`, `EMPTY`, `BASE`, `DEFAULT`, `GANG`, `FAMILY`, the animals (`GULL`, `HEN`, `RAT`, `FISH`, `Shark`, `HORSE`, `DomesticAnimal`, `DOG`, `WildAnimal`, `Cougar`, `SmallAnimal`, `Cat`, `Rabbit`). The responses they point to are tasks: `RESPONSE_TASK_COWER`, `_FLEE`, `_HANDS_UP`, `_TURN_TO_FACE`, `_COMBAT`, `_THREAT`, `_DUCK_AND_COVER`, `_ESCAPE_BLAST`, `_AGITATED`, the shocking-event family (`_SHOCKING_EVENT_WATCH`, `_STOP_AND_STARE`, `_HURRY_AWAY`, `_BACK_AWAY`, `_SHOCKING_POLICE_INVESTIGATE`) and `RESPONSE_POLICE_TASK_WANTED` / `RESPONSE_SWAT_TASK_WANTED`, which is how cops join a wanted-level chase.
 
@@ -114,6 +114,32 @@ The usual recipe in Rockstar's missions (**Verified** natives and counts; the pa
 
 `SET_PED_CONFIG_FLAG` is the most used ped native of all (36,119 calls); flags 427, 184, 36, 398 and 34 make up most of them (flag names are community knowledge, e.g. 32 "can fly through windscreen", 184 "don't shuffle to driver's seat"; **Known**).
 
+### 5.8.1 Task data sets and scripted gun tasks (PC data pass)
+
+**Verified** (`taskdata.meta` and `defaulttaskdata.meta` in `common.rpf\data` with the update's copy of `taskdata.meta`, and `common.rpf\data\ai\scriptedguntasks.meta`, build 1.0.3725.0, read with CodeWalker; script use counted in the build-3725 decompile).
+
+**`taskdata.meta`** (`CTaskDataInfoManager`, 10 sets, default `STANDARD_PED`) gives each kind of ped its ambient behaviour switches. A ped model picks its set with `TaskDataName` in `peds.ymt`. Each set has the wander clip group (`WANDER`, or `WANDER_ANIMAL`), `ScenarioAttractionDistance` (10 m for `STANDARD_PED` and `Fish`, 30 m for the other animals), `SurfaceSwimmingDepthOffset` 0.9, `SwimmingWanderPointRange` 10, and a list of flags (45 different ones):
+
+| Set | Flags | What stands out |
+| --- | ---: | --- |
+| `STANDARD_PED` | 5 | `PreferFleeOnPavements`, `CanScreamDuringFlee`, `CanBeShoved`, `CanBeTalkedTo`, `CanShove` |
+| `Animal` | 20 | Turns off human behaviour: `DisableCover`, `DisableCower`, `DisableHandsUp`, `DisableVehicleUsage`, `DontInfluenceWantedLevel`, `DiesInstantlyToFire`, `UseSimpleWander`, `AlwaysSprintWhenFleeingInThreatResponse` ... |
+| `Dog` | 24 | The animal flags plus `DependentAmbientFriend`, `IgnoreDelaysOnGunshotEvents`, looser melee and crowd metrics |
+| `Cat` | 22 | Plus `DiesInstantlyToMelee`, `ForceSlowChaseInAnimalMelee` |
+| `Fish`, `LargeFish`, `KillerWhale`, `Whale`, `TigerShark`, `Stingray` | 21 to 23 | Plus swimming switches: `UseAquaticRoamMode`, `ConsiderAsInWaterInLowLodPhysics`, `AlignPitchToWavesInFishLocomotion`, `SwimStraightInSwimmingWander` ... |
+
+`defaulttaskdata.meta` (`CDefaultTaskDataManager`, picked by `DefaultTaskDataSetName`) gives the task a ped falls back to on foot: `STANDARD_PED` wanders, `ANIMAL` does nothing (`DO_NOTHING`) until a scenario or an event moves it.
+
+**`scriptedguntasks.meta`** (`CScriptedGunTaskMetadataMgr`, 11 entries) holds presets for aiming from a pose a script sets up: the heading and pitch sweep limits, a clip set, an idle camera, an aim camera and flags (`AllowWrapping`, `ForcedAiming`, `UseAdditiveFiring`, `TrackRopeOrientation`, `ForceFireFromCamera`, `AbortOnIdle`, `UseDirectionalBreatheAdditives`). Scripts pass an entry's name as a hash to `TASK_AIM_GUN_SCRIPTED`, which 4 story missions call (8 calls):
+
+| Entry | Sweep (heading, pitch) | Used by |
+| --- | --- | --- |
+| `SCRIPTED_GUN_TASK_HANGING_UPSIDE_DOWN` | ±90°, −45° to 55°, forced aiming | `michael2` (3 calls) |
+| `SCRIPTED_GUN_TASK_PLANE_WING` | ±180°, −30° to 25° | `trevor2` (3) |
+| `SCRIPTED_GUN_TASK_ON_ROPE` | ±180°, −20° to 30°, follows the rope | `fbi2` (1) |
+| `SCRIPTED_GUN_TASK_DINGY_RPG` | ±180°, −15° to 45°, camera `EXILE_THREE_DINGHY_AIM_CAMERA` | `exile3` (1) |
+| `_ON_CRATE`, `_CRATE_RPG`, `_CRATE_BUDDY`, `_PRONE_BACK`, `_PRONE_BACK_RIFLE`, `_WRITHE`, `_BIKE` | ±135° to ±180° | No call in the scripts |
+
 ## 5.9 How mods change it
 
 All of the files above are plain data, so police and realism overhauls replace them wholesale: more combat profiles (federal agents, mercenaries, heavily armoured units, K9), lower NPC accuracy with stronger weapons, wider perception, new loadouts. When a mod replaces `events.meta` or another file with a copy from an older game build, it also silently removes the event types and fields added since; compare by name before installing.
@@ -134,5 +160,5 @@ All of the files above are plain data, so police and realism overhauls replace t
 | Decode `pedpersonality.ymt` (binary PSO): personalities, bravery, driving ability | R17.3 |
 | Cover: how cover points are found and scored, `TASK_SEEK_COVER_*` | R17 |
 | How aim assist and lock-on work for the player | R3.2 second pass |
-| The full meaning of `taskdata.meta` and `scriptedguntasks.meta` | R17.1 |
+| The full meaning of `taskdata.meta` and `scriptedguntasks.meta` | Answered in [5.8.1](#581-task-data-sets-and-scripted-gun-tasks-pc-data-pass) |
 | Whether the modded `events.meta` really drops gunfight reactions, in game | Test card |

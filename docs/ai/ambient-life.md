@@ -51,6 +51,34 @@ From `defaulttasks.ymt` and `motiontasks.ymt` (**Verified**):
 
 The pattern for a mission set piece: clear the area, stop the scenarios and models that would wander in, lower the densities every frame, and give the mission's own peds tasks with ambient clips off; at cleanup put a released ped back with a wander task so it lives on as an ambient ped.
 
+### 36.3.1 The animals and where they spawn (PC data pass)
+
+**Verified** (`update:/x64/data/peds.ymt`, the DLC `peds.meta` files, `ambientpedmodelsets.meta`, `scenarios.meta` and `popgroups.ymt`, build 1.0.3725.0; hashed names in `peds.ymt` resolved with `joaat`).
+
+The base `peds.ymt` has 32 `A_C_*` models. Their AI comes by reference (decision maker [R17.2](/docs/ai/perception-and-events.md#3341-from-event-to-response-decision-makers-pc-data-pass) / task data [R3.2](/docs/ai/combat-and-perception.md#581-task-data-sets-and-scripted-gun-tasks-pc-data-pass) / relationship group / combat info):
+
+| Kind | Models | Decision maker / task data / relationship group |
+| --- | --- | --- |
+| Birds | `A_C_Chickenhawk`, `A_C_Crow`, `A_C_Cormorant`, `A_C_Pigeon`, `A_C_Seagull` | `GULL` / `animal` / `WILD_ANIMAL` |
+| Hen | `A_C_Hen` | `HEN` / `animal` / `HEN` |
+| Wild land animals | `A_C_Boar`, `A_C_Coyote`, `A_C_Deer` (group `DEER`), `A_C_Rabbit_01` (decision maker `RABBIT`), `A_C_Rat` (`RAT`) | `WildAnimal` / `animal` / `WILD_ANIMAL` |
+| Mountain lion | `A_C_MtLion` | `COUGAR` / `animal` / `COUGAR`, combat info `COUGAR` |
+| Farm animals | `A_C_Cow`, `A_C_Pig` | `DomesticAnimal` / `animal` / `DOMESTIC_ANIMAL` |
+| Big dogs | `A_C_Retriever`, `A_C_Rottweiler`, `A_C_shepherd`, `A_C_Husky` | `DOG` / `DOG` / `GUARD_DOG`, combat info `ROTTWEILER` |
+| Small dogs | `A_C_Poodle`, `A_C_Pug`, `A_C_Westy` | `SmallAnimal` / `DOG` / `DOMESTIC_ANIMAL` |
+| Chop | `A_C_Chop` | `DOG` / `DOG` / `civmale`, combat info `CHOP` |
+| Cat | `A_C_Cat_01` | `CAT` / `CAT` / `CAT` |
+| Sea | `A_C_Fish` (`FISH`), `A_C_Dolphin` and `A_C_SharkHammer` (`LargeFish`), `A_C_KillerWhale` (`KILLERWHALE`), `A_C_Stingray` (`STINGRAY`), `A_C_HumpBack` (decision maker `EMPTY`, `Whale`), `A_C_SharkTiger` (decision maker `SHARK`, `TigerShark`) | Mostly `FISH` / own task data; all use combat info `SCARED_ANIMAL_IN_WATER` |
+| Monkeys | `A_C_Chimp`, `A_C_Rhesus` | Ped type `civmale` and decision maker `DEFAULT`: treated like a civilian man |
+
+DLC packs add `_02` variants (`mp2023_01`: boar, coyote, deer, mountain lion, pug; `mpchristmas3`: chimp, rabbit; `mpsecurity`: Chop; `mp2025_01`: rottweiler; `mp2025_02`: cat) and `A_C_Panther` (`mpheist4`).
+
+**Where they spawn.** Two routes:
+- **Population groups**, for birds and fish only ([population](/docs/entities/spawning/population.md#birds-and-fish-pc-data-pass)).
+- **Scenarios**, for everything else: `ambientpedmodelsets.meta` has 34 animal model sets (`ANIMAL_DEER`, `ANIMAL_RABBIT`, `ANIMAL_DOG_SMALL` ...), and `scenarios.meta` ties 47 scenario types to them with `ForceModel`. `WORLD_DEER_GRAZING` uses `ANIMAL_DEER`; `WORLD_RABBIT_EATING` and `_FLEE` rabbits; `WORLD_COYOTE_HOWL`, `_REST`, `_WALK` and `_WANDER` coyotes; `WORLD_MOUNTAIN_LION_REST` and `_WANDER`; `WORLD_BOAR_GRAZING`, `WORLD_COW_GRAZING`, `WORLD_PIG_GRAZING`; `WORLD_CAT_SLEEPING_GROUND` and `_LEDGE`; `WORLD_DOG_BARKING_*` and `WORLD_DOG_SITTING_*` for `RETRIEVER`, `ROTTWEILER`, `SHEPHERD` and `SMALL`; `WORLD_HEN_FLEE`, `_PECKING` and `_STANDING`; `WORLD_CHICKENHAWK_`, `WORLD_CROW_`, `WORLD_GULL_` and `WORLD_PIGEON_` `FEEDING` and `STANDING`; `WORLD_CORMORANT_STANDING`; `WORLD_RATS_EATING` and `_FLEEING`; `WORLD_FISH_IDLE` and `_FLEE`; the `_SWIM` types for dolphin, orca, whale, stingray, hammerhead and (`WORLD_SHARK_SWIM`) tiger shark; and `PROP_BIRD_IN_TREE` (crow, pigeon) and `PROP_BIRD_TELEGRAPH_POLE` (crow, pigeon, seagull). How many points each type has is in [scenarios](/docs/entities/spawning/scenarios.md).
+
+The husky appears only in `ANIMAL_DOG_RETRIEVER` (shared with the retriever); poodle, pug and westy only through `ANIMAL_DOG_SMALL`. No scenario type uses the chimp, the rhesus, Chop or any DLC animal, so those appear only when a script creates them.
+
 ## 36.4 What this means for modders
 
 - **Release a ped properly:** `TASK_WANDER_STANDARD` then mark it no longer needed; a released ped without a task stands still.
@@ -64,7 +92,7 @@ The pattern for a mission set piece: clear the area, stop the scenarios and mode
 | --- | --- |
 | How far from the player ambient peds despawn | R17.9, in-game test |
 | How peds pick partners for chats | Partly answered (leftovers pass, 36.3): no script picks them; the 10 `TASK_CHAT_TO_PED` calls pair two peds chosen by the script. Left: the engine's pairing rule (the executable, or a test) |
-| The animal models by kind and where each spawns | Second pass with R4.2's scenario types |
+| The animal models by kind and where each spawns | Answered in [36.3.1](#3631-the-animals-and-where-they-spawn-pc-data-pass) |
 
 ## 36.6 Test cards (story mode)
 
