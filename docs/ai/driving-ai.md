@@ -90,7 +90,7 @@ The same list says 16 to 18 crash the game, so a mod shouldn't use them.
 | --- | --- |
 | The name of each temp action number, checked in game | In-game test, one action at a time |
 | How the flee mission picks a route | R17.5 second pass |
-| Mission numbers passed in variables (about a quarter of the calls) | Second pass, follow the variables |
+| Mission numbers passed in variables (about a quarter of the calls) | Partly answered (leftovers pass, **Verified**): a script followed each variable to the function's callers, to literal assignments, and to the literals a lookup function returns. Of 1,131 variable calls (vehicle 99, ped target 98, coords target 93, heli 283, plane 279, boat 279), only about ten resolve: to 10, 11, 12, 0 and 6. Most of the rest come from one shared vehicle-task helper compiled into about 95 `fm_content_*` scripts (3 calls each). It takes the mission from a value the decompiler shows only as `StackVal`, the result of a function-pointer call into the job's content data. So the numbers are chosen at run time and can't be read from the decompile; a YSC reader or a runtime log would be needed |
 
 ## 39.8 Test cards (story mode, a script mod)
 

@@ -412,7 +412,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | AI-021 | The name of each temp action number, checked in game | In-game test, one action at a time | Open |
 | AI-022 | How the flee mission picks a route | R17.5 second pass | Open |
-| AI-023 | Mission numbers passed in variables (about a quarter of the calls) | Second pass, follow the variables | Open |
+| AI-023 | Mission numbers passed in variables (about a quarter of the calls) | Second pass, follow the variables | Partly answered: of 1,131 variable mission calls, only about ten resolve statically (to 10, 11, 12, 0, 6). Most come from a shared vehicle-task helper in about 95 `fm_content_*` scripts that gets the mission from a function-pointer call into the job's content data (`StackVal` in the decompile), so they are chosen at run time. Left: a YSC reader or runtime log ([driving AI](/docs/ai/driving-ai.md)) |
 
 ### [Driving and AI driving](/docs/ai/driving.md) (R3.3)
 
