@@ -9,7 +9,7 @@ A public, Markdown-only reference on how GTA V (PC, Legacy, build 1.0.3725.0) wo
 ## Status
 
 - **Everything is on `main`, nothing is in flight.** The last merges are #127 (second-pass phases 1 to 4), #128 (data batches D1 to D6), #129 (D7 to D12) and #130 (this file).
-- **Tracker:** 442 question rows: 189 answered, 48 mostly, 57 partly, 148 open (after the leftovers pass on branch `research/pass2-leftovers`, PR #132). A row's last column is its status and links to the guide section with the answer. The table "Leftovers: the data-file batches" in `OPEN_QUESTIONS.md` says what each batch read and settled.
+- **Tracker:** 442 question rows: 192 answered, 49 mostly, 57 partly, 144 open (after the leftovers pass on branch `research/pass2-leftovers`, PR #132). A row's last column is its status and links to the guide section with the answer. The table "Leftovers: the data-file batches" in `OPEN_QUESTIONS.md` says what each batch read and settled.
 - **The data batches are finished, but not every row in [`DATA-NEEDS.md`](/DATA-NEEDS.md) was worked.** Each group had a batch, and each row a batch touched carries its result (*done*, *mostly*, *partly* or *still open*). The 25 rows with no tag were never attempted; they are listed below.
 - **The knowledge graph is current as of PR #132** (2026-11-04). The 80 docs changed in #127, #128, #129 and #132 were re-extracted, giving 4,716 nodes, 10,010 edges and 193 communities. Refresh it again after the next phase.
 
@@ -115,7 +115,7 @@ GS-004, GP-025 and GP-087 (replay type numbers), GP-069 and GP-092 (ability entr
 
 ### Docs housekeeping from the knowledge graph
 
-KG-001 to KG-004 in `OPEN_QUESTIONS.md`: tie in 722 weakly connected nodes (most in the global map, server-backed screens, boot, properties and economy guides), give the 72 facts described in two docs a single owner page, decide whether to split the loosest hub clusters, and whether to keep workflow YAML and example-mod types out of the graph. Needs only the repo and `/graphify`.
+Done in the KG housekeeping pass (branch `docs/kg-housekeeping`). KG-002, KG-003 and KG-004 are answered and KG-001 is mostly answered; see their rows in `OPEN_QUESTIONS.md`. The graph now covers Markdown only, with the excludes in `graphify-out/.graphify_build.json`.
 
 ### Ask the contributor or the community
 
