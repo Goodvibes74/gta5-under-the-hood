@@ -43,6 +43,21 @@ Started any other way it shows a warning (`FBR_BENCHMARK`) and quits when you ac
 
 It holds five scenes, each with a player position, a camera position and rotation, and a second camera: around (-10, -1474) in south Los Santos, (806, 1101, 306) in the Vinewood hills, (2006, 3804) in Sandy Shores, (-1713, -1077) at the Del Perro pier, and (-664, 4484) in the forest near Mount Chiliad (**Verified** coordinates; place names **Known**). It spawns fixed models (Armenian gang peds `g_m_m_armboss_01`, `g_m_m_armgoon_01`, `g_m_m_armlieut_01`, a `phantom` truck and a `boxville` van with workers) so every run has the same load. Recording is bracketed by `START_END_USER_BENCHMARK` and `STOP_END_USER_BENCHMARK`, then `SAVE_END_USER_BENCHMARK` writes the results and `RESET_END_USER_BENCHMARK` clears them (**Verified**). The main loop is an 8-state switch: the five passes and the stages around them.
 
+**The eight states** (*leftovers pass*, **Verified**; times are the script's own constants, and a full run is pass -1):
+
+| State | What happens | How long |
+| --- | --- | --- |
+| 0. Set-up | Saves the story game with a mission-repeat save first, if one is needed (quits if the save fails), and cleans up running missions. Makes the player invincible and ignored, takes control away, fades out, loads `BMARK`, reads the iteration and pass counts, and sets the scene positions and models | Until loaded |
+| 1. Scene set-up | Moves the player to the scene and hides their vehicle. Clears 100 m around, waits for a 100 m load scene (up to 15 s), sets the clock to 12:00. Before the 5th scene it also loads the `lazer` jet and its vehicle recording `pc_bench` | Until loaded |
+| 2. Camera | Builds a spline camera between the scene's two camera points over 15,000 ms, and works out a time 23 hours ahead | One frame |
+| 3. Scene | Fades in and starts recording at 5% of the spline. Plays a time-lapse to `EXTRASUNNY` with `cirrocumulus` clouds while the camera moves. For scenes 1 to 4, stops recording at 88% of the spline. It then goes to the next scene (state 1); after scene 5 it goes on to state 4. With a single pass chosen (0 to 4) it jumps to state 7 instead, except after scene 5 | About 15 s each; 0.83 of it recorded (about 12.5 s) |
+| 4. Flight | Plays the `lazer` recording at 2× speed, with cinematic mode between 32,000 and 100,000 ms of the recording | Ends at 104,000 ms of recording: about 52 s |
+| 5. Drive set-up | Blends the camera over 10,000 ms to a street view near (295, 169) and puts the player in a `patriot` at (295.6, 175.1, 103.1). Requests the three Armenian gang models and the convoy's recording | 10 s |
+| 6. Chase | Wanted level 2 with police dispatched. The gang gets micro SMGs once in their car, and the convoy (`phantom`, `boxville`, `tanker`) drives. The `patriot` is blown up after 70,000 ms, or earlier if it touches the tanker or the lead truck, or stops near the tanker. Recording stops 5 s after the explosion | Up to about 75 s |
+| 7. Results | `SAVE_END_USER_BENCHMARK`. If iterations remain, back to state 1 with the first scene; otherwise reset, restore the game (`QUEUE_MISSION_REPEAT_LOAD`) and end | One frame |
+
+So a full run records five passes. Passes 1 to 4 are the first four scenes, about 12.5 s each. Pass 5 runs from the fifth scene through the flight, the drive and the chase: roughly 2.5 minutes. One iteration takes about 3.5 minutes plus load times. The `BMARK_EXIT` help offers a way out at any time: it saves what was recorded and ends the run. These lengths come from the script's timers; the real length of each pass (load scenes, the chase) needs a timed run.
+
 **Known** (community, not checked here): the command-line switches are `-benchmark`, `-benchmarkIterations <n>` and `-benchmarkPass <n>` (in `commandline.txt` in the game folder or the launcher's arguments), and each run writes `Benchmark-<date>.txt` with per-pass minimum, maximum and average FPS and frame-time percentiles.
 
 **For mods:** the benchmark runs with every ASI and script mod loaded. Two benchmark runs, one with a mod set and one without, are the cleanest way to price a mod set, because the scenes and spawns are identical every time.
@@ -116,7 +131,7 @@ So the rule for reading a hitch: find its second in every log and ask whether th
 | Question | Where it goes |
 | --- | --- |
 | Confirm the benchmark switches and results file, and record a baseline with and without mods | Test card below, R18.5 |
-| What happens in each of the 8 states of the benchmark loop, and how long each pass lasts | Second pass of this topic |
+| What happens in each of the 8 states of the benchmark loop, and how long each pass lasts | Answered in [the game's benchmark](#the-games-benchmark) (leftovers pass): the eight states, with the script's timings; passes 1 to 4 about 12.5 s recorded each, pass 5 about 2.5 minutes. A timed run would confirm the real lengths |
 | Why `ON_ENTER_MP` blocks for about 9 s: which map data it swaps | R1.5 streaming, R18.8 load times |
 
 ## Test cards
