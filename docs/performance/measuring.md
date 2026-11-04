@@ -76,6 +76,17 @@ A monitoring script should use the stopwatch: the real time between its own tick
 
 Rockstar's scripts use `GET_FRAME_COUNT` mainly to spread work over frames: `GET_FRAME_COUNT() % 60` appears 5,030 times in the decompile, `% 10` 788 times, `% 5` 531, `% 120` 330, `% 2` 294 and `% 30` 84 (**Verified**, `git grep -o` count). "Once a second at 60 FPS" is the house pattern, and also the cheapest pattern for mods ([script VM](/scripting/script-vm.md) on script cost).
 
+### What `ON_ENTER_MP` does (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in the decompile: `ON_ENTER_MP` and `ON_ENTER_SP` are `DLC` natives, not map or streaming natives. Three scripts call them, all through the same small helper: `maintransition` (joining and leaving Online) and the two creators (`creator`, `fm_survival_creator`). The helper keeps a global flag for the current mode and calls `ON_ENTER_MP` only when going from story to Online, `ON_ENTER_SP` only the other way. `maintransition` makes the call once the screen has faded out, then waits until both `HAVE_ALL_STREAMING_REQUESTS_COMPLETED` and `ARE_ANY_CCS_PENDING` (content change sets still pending) report done before it moves on.
+
+So the swap is the DLC packs' **content change sets** ([archives and content](/docs/core/archives-and-content.md)). Our reading: these are the change sets in `GROUP_ON_DEMAND` (43 packs), which switch pack files between their story and Online versions, map data among them. The 8.6 s frame is the engine applying those change sets in one blocking step. The scripts don't say which files change.
+
+Two things are still missing:
+
+- **Which files the swap touches** needs local game files: the `contentChangeSets` in the `content.xml` of the 43 `GROUP_ON_DEMAND` packs (see [DATA-NEEDS](/DATA-NEEDS.md)).
+- **Why it takes about 9 s** needs a profiler on the running game.
+
 ## Reading a session: an example from a low-end test PC
 
 Two 10-minute sessions with about 15 script mods and an Online-style mod, half-rate VSync:
@@ -132,7 +143,7 @@ So the rule for reading a hitch: find its second in every log and ask whether th
 | --- | --- |
 | Confirm the benchmark switches and results file, and record a baseline with and without mods | Test card below, R18.5 |
 | What happens in each of the 8 states of the benchmark loop, and how long each pass lasts | Answered in [the game's benchmark](#the-games-benchmark) (leftovers pass): the eight states, with the script's timings; passes 1 to 4 about 12.5 s recorded each, pass 5 about 2.5 minutes. A timed run would confirm the real lengths |
-| Why `ON_ENTER_MP` blocks for about 9 s: which map data it swaps | R1.5 streaming, R18.8 load times |
+| Why `ON_ENTER_MP` blocks for about 9 s: which map data it swaps | Partly answered in [what `ON_ENTER_MP` does](#what-on_enter_mp-does-leftovers-pass) (leftovers pass): a `DLC` native that applies the packs' content change sets, waited on with `ARE_ANY_CCS_PENDING`. Left: which files (the `content.xml` of the 43 `GROUP_ON_DEMAND` packs, game files) and the time per step (a profiler) |
 
 ## Test cards
 

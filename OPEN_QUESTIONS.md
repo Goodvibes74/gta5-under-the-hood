@@ -1007,7 +1007,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 | --- | --- | --- | --- |
 | PERF-011 | Confirm the benchmark switches and results file, and record a baseline with and without mods | Test card below, R18.5 | Open |
 | PERF-012 | What happens in each of the 8 states of the benchmark loop, and how long each pass lasts | Second pass of this topic | Answered: set-up (mission-repeat save), scene set-up, spline camera, scene with time-lapse, `lazer` flight, drive set-up, police chase, results. Scenes are 15 s splines recorded from 5% to 88% (passes 1 to 4, about 12.5 s each). Pass 5 is scene 5 plus a 52 s flight, a 10 s set-up and a chase of up to 75 s (about 2.5 min); one iteration is about 3.5 min plus loading (leftovers pass, [measuring performance](/docs/performance/measuring.md#the-games-benchmark)) |
-| PERF-013 | Why `ON_ENTER_MP` blocks for about 9 s: which map data it swaps | R1.5 streaming, R18.8 load times | Open |
+| PERF-013 | Why `ON_ENTER_MP` blocks for about 9 s: which map data it swaps | R1.5 streaming, R18.8 load times | Partly answered: a `DLC` native, called once per story-to-Online switch by `maintransition` and the two creators behind a faded screen, followed by a wait on `ARE_ANY_CCS_PENDING`; it applies the DLC packs' content change sets (our reading: the 43 `GROUP_ON_DEMAND` packs). Left: which files, **needs local game files** (`content.xml`, in DATA-NEEDS), and the time per step (a profiler) (leftovers pass, [measuring performance](/docs/performance/measuring.md#what-on_enter_mp-does-leftovers-pass)) |
 
 ### [Streaming, memory and video memory](/docs/performance/memory-and-vram.md) (R18.3)
 
