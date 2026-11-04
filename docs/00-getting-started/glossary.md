@@ -5,7 +5,7 @@ Words used across the guides.
 | Term | Meaning |
 | --- | --- |
 | **ASI** | A native plug-in (`.asi`, really a DLL) loaded into the game by an ASI loader (`dinput8.dll`) |
-| **ScriptHookV (SHV)** | The plug-in every script mod depends on: it lets mods call natives from the game's script thread. C++ mods use it directly |
+| **ScriptHookV (SHV)** | The plug-in every script mod depends on: it lets mods call natives from the game's script thread. C++ mods use it directly ([install](setup.md)) |
 | **ScriptHookVDotNet (SHVDN)** | A ScriptHookV plug-in that runs C# and VB mods (`scripts\*.dll`, `*.cs`). API versions v2 (legacy) and v3 |
 | **Native** | One of about 6,700 engine functions that scripts and mods call (`ENTITY::SET_ENTITY_COORDS`). Identified by a 64-bit hash |
 | **YSC** | A compiled game script (`.ysc`), bytecode for the game's script VM. 1,143 of them in build 3725 |
@@ -16,7 +16,7 @@ Words used across the guides.
 | **Static / local** | Memory private to one script |
 | **Broadcast data** | Globals synced between players in Online: player broadcast data (per player) and server or host broadcast data |
 | **Tunables** | Values Rockstar's servers send to Online scripts (prices, switches). Read by scripts from a global block |
-| **Force cleanup** | A signal that asks scripts to stop, as a bit mask (bit 2 ends story mode on the way to Online) |
+| **Force cleanup** | A signal that asks scripts to stop, as a bit mask (bit 2 ends story mode on the way to Online); every bit: [runtime scripts](/docs/core/runtime-scripts.md#every-force-cleanup-bit-second-pass) |
 | **Script brain** | A rule that starts a script when the player comes near a place, object or ped |
 | **Flow / strand** | The story mode program that unlocks missions: 32 strands of commands run by `flow_controller` |
 | **RPF** | Rockstar's archive format. `common.rpf` holds base data, `update\update.rpf` newer copies, `x64*.rpf` the world and models |

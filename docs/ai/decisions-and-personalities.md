@@ -22,7 +22,7 @@ What makes one ped brave and another a coward, a careful driver or a maniac, a g
 | `common:/data/ai/combatbehaviour.meta` | Combat profiles (`CombatInfo`) | 16 ([R3.2](/docs/ai/combat-and-perception.md)) |
 | `common:/data/events.meta` | Decision makers and responses to events | 25 decision makers ([R3.2](/docs/ai/combat-and-perception.md)) |
 | `common:/data/ai/agitatedpersonalities.meta`, `agitatedresponses.meta`, `agitatedtriggers.meta` | The agitation system (bumping, following, territory) | |
-| `common:/data/ai/crimeinformation.meta`, `witnessinformation.meta` | What counts as a crime and who reports it | R3.7 |
+| `common:/data/ai/crimeinformation.meta`, `witnessinformation.meta` | What counts as a crime and who reports it | [R3.7](/docs/ai/wanted-level-and-police.md) |
 
 ### The player characters
 

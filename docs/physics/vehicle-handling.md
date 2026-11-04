@@ -9,7 +9,7 @@ How GTA V decides how a vehicle drives, breaks and responds to upgrades: the `ha
 - **One entry per handling name.** Every vehicle model names a handling entry (`handlingId` in `vehicles.meta`); the entry is a `CHandlingData` with about 50 fields: mass, drag, centre of mass, drive bias, gears, drive force and top speed, brakes, steering, traction curve, suspension, anti-roll, damage multipliers, fuel and oil, value, three flag words and an AI driving style.
 - **Sub-handling blocks** add what only some vehicles need: `CCarHandlingData` (cars), `CBikeHandlingData` (lean and wheelies), `CFlyingHandlingData` (planes and helicopters), `CBoatHandlingData`, `CSubmarineHandlingData`, `CTrailerHandlingData`, `CVehicleWeaponHandlingData` (turrets) and `CAdvancedData` (per-mod tuning tweaks). Each entry has three sub-handling slots, mostly `NULL`.
 - **DLC packs add their own `handling.meta`.** The base game file holds 254 entries; 38 DLC packs add 544 more, and `dlc_patch` folders inside `update.rpf` patch older entries.
-- **Upgrades are data too.** The mod kits in `carcols.meta` give each engine, brakes, gearbox, suspension and armour level a *modifier* value that the engine applies on top of the handling entry.
+- **Upgrades are data too.** The mod kits in `carcols.meta` ([vehicles](/docs/entities/vehicles/vehicles.md)) give each engine, brakes, gearbox, suspension and armour level a *modifier* value that the engine applies on top of the handling entry.
 - **Scripts rarely touch handling.** No native edits a handling field directly. Scripts use about 30 vehicle natives that scale speed, grip, damage and strength on one vehicle (`MODIFY_VEHICLE_TOP_SPEED`, `SET_VEHICLE_DAMAGE_SCALE`, `SET_DRIFT_TYRES` ...). Mods that change handling per vehicle at run time write to the handling memory directly.
 
 ## 4.2 Where handling comes from
@@ -20,7 +20,7 @@ How GTA V decides how a vehicle drives, breaks and responds to upgrades: the `ha
 | `update\update.rpf\common\data\handling.meta` | The current base file | 254 `CHandlingData` (**Verified**) |
 | `update\update.rpf\dlc_patch\<pack>\common\data\handling.meta` | Rockstar's later fixes to entries from seven Online packs (`mpapartment`, `mpbiker`, `mpchristmas2018`, `mpjanuary2016`, `mpluxe`, `mpspecialraces`, `mpstunt`) | 99 between them |
 | `update\x64\dlcpacks\<pack>\dlc.rpf\...\handling.meta` | Each DLC pack's own vehicles | see 4.8 |
-| `common.rpf\data\ai\vehicleaihandlinginfo.meta` | Four AI driving styles: `AVERAGE`, `CRAP`, `SPORTS_CAR`, `TRUCK`, each with braking distances and cornering speeds by curve angle | 4 |
+| `common.rpf\data\ai\vehicleaihandlinginfo.meta` | Four AI driving styles (how AI drivers use them: [driving](/docs/ai/driving.md)): `AVERAGE`, `CRAP`, `SPORTS_CAR`, `TRUCK`, each with braking distances and cornering speeds by curve angle | 4 |
 
 A vehicle's `vehicles.meta` entry picks its handling by name, so several models can share one entry. The `AIHandling` field picks which of the four AI styles NPC drivers use with it: 193 base entries are `AVERAGE`, 35 `TRUCK`, 19 `SPORTS_CAR`, 7 `CRAP` (**Verified**). How NPCs drive is R17.6.
 

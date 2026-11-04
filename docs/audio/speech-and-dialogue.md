@@ -11,7 +11,7 @@ Where GTA V's spoken lines live and how scripts make peds talk: the scripted-spe
 - **Named characters are in `S_MISC`** (150 containers): Michael, Franklin and Trevor each have `_1_normal`, `_2_normal`, `_3_normal`, `_angry` and `_drunk` sets; Lamar, Amanda, Jimmy, Tracey, Dave, Steve, Lester, Simeon, Wade, Barry, Abigail and the strangers, Ammu-Nation clerks and others have their own.
 - **Ambient lines are played by context name:** `PLAY_PED_AMBIENT_SPEECH_WITH_VOICE_NATIVE` (370 scripts, 1,121 calls), `PLAY_PED_AMBIENT_SPEECH_NATIVE` (291, 642), with 202 different contexts named literally. The commonest are `BOUNCER_EJECT_GENERIC` (742), `GENERIC_SHOCKED_HIGH`, `GENERIC_CURSE_MED`, shop lines (`SHOP_GREET`, `SHOP_SELL`, `SHOP_NO_COPS`, `SHOP_GOODBYE`), `KIFFLOM_GREET`, `BUMP`, `GENERIC_HI`.
 - **Scripts give peds a voice** with `SET_AMBIENT_VOICE_NAME` (102 scripts, 98 different voices named) and `SET_PED_VOICE_GROUP` (104), and silence them with `STOP_PED_SPEAKING` (126) and `DISABLE_PED_PAIN_AUDIO` (175).
-- **Conversations stop more than they start:** `STOP_SCRIPTED_CONVERSATION` is in 822 scripts and `IS_SCRIPTED_CONVERSATION_ONGOING` in 585, while starting is done in one place, `dialogue_handler` ([R5.6](/docs/gameplay/missions/cutscenes-and-dialogue.md)).
+- **Conversations stop more than they start:** `STOP_SCRIPTED_CONVERSATION` is in 822 scripts and `IS_SCRIPTED_CONVERSATION_ONGOING` in 585, while starting is done in one place, `dialogue_handler` ([R5.6](/docs/gameplay/missions/cutscenes-and-dialogue.md); the script's card is in [runtime scripts](/docs/core/runtime-scripts.md#always-running-story-and-online)).
 
 ## 28.2 The speech archives
 

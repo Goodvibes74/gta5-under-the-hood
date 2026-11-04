@@ -6,7 +6,7 @@ How GTA Online's character creator is built: where it lives, its seven menus, ho
 
 ## Short version
 
-- **There is no separate creator script.** The character creator is part of `maintransition`, the script that also moves the player into and out of Online. It is drawn on the frontend as `FE_MENU_VERSION_MP_CHARACTER_CREATION` and filled with scaleform `SET_DATA_SLOT` / `UPDATE_SLOT` calls.
+- **There is no separate creator script.** The character creator is part of `maintransition`, the script that also moves the player into and out of Online ([boot 3.5](/docs/00-getting-started/boot.md#35-launching-into-online)). It is drawn on the frontend as `FE_MENU_VERSION_MP_CHARACTER_CREATION` and filled with scaleform `SET_DATA_SLOT` / `UPDATE_SLOT` calls.
 - **Seven top menu items, in this order:** Sex (`FACE_SEX`), Heritage (`FACE_HERI`), Features (`FACE_FEAT`), Appearance (`FACE_APP`), Apparel (`FACE_APPA`), Stats (`FACE_STATS`) and Save & Continue (`FACE_SAVE`).
 - **Heritage is a head blend of a Mom and a Dad** with two 0 to 100 sliders, Resemblance (`FACE_H_DOM`) and Skin Tone (`FACE_H_STON`), both starting at 50. The portraits come from the texture dictionary `CHAR_CREATOR_PORTRAITS` (`Female_<n>`, `Male_<n>`, plus `Special_Female_<n>` / `Special_Male_<n>` for heads past the normal count).
 - **Features are 20 face-shape sliders on 11 items,** each item a 1D or 2D grid that drives one or two micro-morph indices (0 to 19). The table below gives the exact index for every axis.

@@ -10,7 +10,7 @@ What Online reads that is actually on disk in the PC game, where it is, and what
 | Local mission files (UGC) | `update\update2.rpf\common\data\ugc\` | 1,001 |
 | Stats definitions | `update\update.rpf\common\data\mpstatssetup.xml` (+ `mpstatscharactermappingdata.xml`, `ui\mpstatssetupui.xml`) | 17,933 stats |
 | Preset outfits, apparel and property elements | `update\update.rpf\common\data\scriptmetadata.meta` | 3,868 outfits |
-| Property and activity trigger points | `update\update.rpf\common\data\levels\gta5\ambient_mp.ipl` | 90 points |
+| Property and activity trigger points | `update\update.rpf\common\data\levels\gta5\ambient_mp.ipl` ([properties](/docs/online/properties.md)) | 90 points |
 | Vehicle mod catalogue (prices, unlocks) | `update\update.rpf\common\data\shop_vehicle.meta` | |
 | Clothing catalogues (prices, unlocks) | each DLC's `mp_m_freemode_01_*_shop.meta` / `mp_f_freemode_01_*_shop.meta` (DLC packs and `update.rpf\dlc_patch\*`) | 3,395 items in Mercenaries alone |
 | Vehicles | each DLC's `vehicles.meta` | 581 DLC models ([DLC packs](/docs/entities/vehicles/dlc-packs.md)) |

@@ -10,7 +10,7 @@ Where GTA V's water is (the ocean, lakes, rivers and pools as rectangles in `wat
 - **Calming quads damp the waves** near shores, harbours and inland water (`fDampening`, for example 0.05 over the reservoir).
 - **Wave size comes from the weather:** each weather type sets ocean wave amplitude, shore waves, ripples and foam ([R2.6](/docs/world/time-and-weather.md)); storms lower the base amplitude (2.03) but raise wind-driven waves.
 - **Floating is per vehicle:** every vehicle's `fPercentSubmerged` in `handling.meta` sets how deep it sits (254 base entries, from 45 to 200%, median 85). Boats add a `CBoatHandlingData` section (10 base, 9 DLC) with keel, rudder, impeller, prow-raise and aquaplane values; submarines a `CSubmarineHandlingData` (1 base, 4 DLC); seaplanes a `CSeaPlaneHandlingData` (3 DLC).
-- **Scripts probe and calm the water:** `TEST_PROBE_AGAINST_WATER` (301 scripts), `GET_WATER_HEIGHT_NO_WAVES` (257), `ADD_EXTRA_CALMING_QUAD` (17), `SET_DEEP_OCEAN_SCALER` (11), `MODIFY_WATER` (3), and the `WATER_OVERRIDE_SET_*` natives that set the sea directly.
+- **Scripts probe and calm the water:** `TEST_PROBE_AGAINST_WATER` (301 scripts; the other shape tests are in [collision 5.4](/docs/physics/collision-and-materials.md#54-shape-tests)), `GET_WATER_HEIGHT_NO_WAVES` (257), `ADD_EXTRA_CALMING_QUAD` (17), `SET_DEEP_OCEAN_SCALER` (11), `MODIFY_WATER` (3), and the `WATER_OVERRIDE_SET_*` natives that set the sea directly.
 
 ## Where it lives
 

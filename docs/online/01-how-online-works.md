@@ -31,7 +31,7 @@ GTA V is one engine (RAGE) running two modes on the same map: story mode and Onl
 
 ## 1.4 Stats: where the save lives
 
-- Online progress is stored as **stats**, defined in `update.rpf\common\data\mpstatssetup.xml`: **17,933 stats**, of which **13,630 are `ServerAuthoritative="true"`** and 17,177 are per-character (`characterStat="true"`). Examples: `CHAR_XP_FM` (RP), `PROPERTY_HOUSE`, packed booleans like `MP_PSTAT_BOOL0` (64 flags each). **Verified.**
+- Online progress is stored as **stats**, defined in `update.rpf\common\data\mpstatssetup.xml` ([Online data files](/docs/online/03-online-data-files.md)): **17,933 stats**, of which **13,630 are `ServerAuthoritative="true"`** and 17,177 are per-character (`characterStat="true"`). Examples: `CHAR_XP_FM` (RP), `PROPERTY_HOUSE`, packed booleans like `MP_PSTAT_BOOL0` (64 flags each). **Verified.**
 - `mpstatscharactermappingdata.xml` maps per-character stats to the two character slots (`MP0_`, `MP1_`). **Verified** (file); **Known** (purpose).
 - Online stats are loaded from and saved to Rockstar's servers, not the local save folder. Story-mode stats are in `spstatssetup.xml` and save locally. **Known.**
 - Offline consequence: every unlock, property, vehicle, cash value and mission flag Online keeps in stats has to be kept in the mod's own save files instead.

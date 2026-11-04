@@ -24,7 +24,7 @@ How GTA V stores every piece of on-screen text (help text, subtitles, mission ob
 | `<block>.gxt2` | Per-mission, per-activity and per-system text, loaded on demand | 609 blocks |
 | `<block>aud.gxt2` | Subtitles for a dialogue block | Most mission blocks have one |
 | DLC packs → `x64/data/lang/americandlc.rpf/*.gxt2` | DLC text: a `global.gxt2` per pack plus mission blocks | 316 files, 186,875 labels |
-| DLC packs → `common:/data/dlctext.meta` | Tells the game the pack has text (`hasGlobalTextFile`, `hasAdditionalText`, `isTitleUpdate`) | 38 packs |
+| DLC packs → `common:/data/dlctext.meta` | Tells the game the pack has text ([text and names](/docs/entities/objects/text-and-names.md)) (`hasGlobalTextFile`, `hasAdditionalText`, `isTitleUpdate`) | 38 packs |
 
 The biggest blocks:
 

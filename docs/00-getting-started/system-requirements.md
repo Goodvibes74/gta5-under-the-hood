@@ -11,7 +11,7 @@ powershell -ExecutionPolicy Bypass -File tools\check-system.ps1 -Dev   # also th
 
 It only reads: it prints OK or MISSING for each item below, and what to install.
 
-Where to download each item: [the [setup page](setup.md)](setup.md). On Linux, these go into the game's Wine/Proton prefix instead: see [`LINUX.md`](LINUX.md).
+Where to download each item: [the setup page](setup.md). On Linux, these go into the game's Wine/Proton prefix instead: see [Linux](linux.md).
 
 > **Sources:** the import table of every `.exe`, `.asi` and `.dll` in the game folder and `scripts/` (`dumpbin /dependents`, Visual Studio Build Tools), minus the DLLs the game folder ships itself. Installed versions from the Windows registry and `System32` on 2026-10-09.
 

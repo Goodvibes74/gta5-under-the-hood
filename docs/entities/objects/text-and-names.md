@@ -44,7 +44,7 @@ How a model gets the name players see ("Obey 9F" rather than `ninef`): the label
 **Verified (data):** a pack that adds named content ships three pieces:
 
 1. Its `vehicles.meta` (or weapon file) with `gameName` / `HumanNameHash` set to a label.
-2. A `global.gxt2` in `x64/data/lang/americandlc.rpf` (and one per other language) with that label. 42 vanilla packs carry a DLC `global.gxt2`.
+2. A `global.gxt2` in `x64/data/lang/americandlc.rpf` (and one per other language) with that label ([text labels](/docs/ui/text-labels.md)). 42 vanilla packs carry a DLC `global.gxt2`.
 3. A `dlctext.meta` (`hasGlobalTextFile` true) listed in `content.xml` as `TEXTFILE_METAFILE` (38 packs have the file, 40 entries use the type), so the game loads the pack's text.
 
 **Known (engine):** when a label isn't found, the HUD shows the word "NULL" for a vehicle name, and the weapon wheel shows an empty name. `GET_DISPLAY_NAME_FROM_VEHICLE_MODEL` returns the label name ("CARNOTFOUND" when the model isn't known), never the text; scripts and mods turn it into text with a second call.
