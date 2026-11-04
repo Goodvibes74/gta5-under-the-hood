@@ -42,6 +42,13 @@ The order Rockstar uses, with how many scripts use each step (**Verified** count
 3. `ADD_PATROL_ROUTE_LINK(1, 2)`, `(2, 3)`, `(3, 4)`, `(4, 1)`: a closed loop.
 4. `CLOSE_PATROL_ROUTE`, `CREATE_PATROL_ROUTE`, then `TASK_PATROL(ped, name, 0, true, true)`.
 
+**Patrols in `fm_content_*` scripts** (*leftovers pass*, **Verified** in all 92 of the 97 `fm_content_*` scripts that build routes; the other five are `fm_content_mp_intro`, `_drone`, `_hsw_setup`, `_hsw_time_trial` and `_test`):
+
+- **The data.** Each script carries a "patrol" block in its mission data. A validator in the same script names it `data.Patrol.iCount`, bounded by `MAX_NUM_PATROLS`, beside `data.Ped`, `data.Prop`, `data.TriggerArea` and the other blocks. Each patrol entry names the ped it belongs to (one route per ped) and holds a list of nodes: a position, a look-at position and a wait time. The script's variation set-up fills these through per-mission function pointers (`Call_Loc`), so, as for GP-021, the decompile shows the reader but not the values.
+- **Node limit per route** is a constant compiled into each script: 1 node in 55 scripts, 2 in 6, 3 in 4, 4 in 3, 5 in 10, 6 in 4, 7 in 2, 8 and 9 in one each, 10 in 5, and 14 in one.
+- **The route.** Named `miss_<mission id>_<script instance>_<patrol index>`. The nodes are added with no scenario (an empty name in all 92) and linked in a closed loop (last node back to the first), then `TASK_PATROL(ped, name, alert state, can chat, true)`. The alert state defaults to 0 and "can chat" to true, unless the mission's own callback returns something else.
+- **A second mode without the engine's patrol.** If another callback says so, the script walks the ped itself: `TASK_GO_STRAIGHT_TO_COORD` to the current node, and on arriving within 2 m moves to the next. At the last node it turns round and walks the list back the other way (a back-and-forth route, not a loop). A last callback can skip single nodes.
+
 Across all scripts the literal node scenarios are `WORLD_HUMAN_GUARD_STAND` (67) and `StandGuard` (4). Guards that should not move get a scenario (`TASK_START_SCENARIO_IN_PLACE`, 342 scripts) or a defensive area instead; the dedicated guard tasks are nearly unused: `TASK_GUARD_CURRENT_POSITION` 4 scripts, `TASK_GUARD_SPHERE_DEFENSIVE_AREA` 4, `TASK_GUARD_ASSIGNED_DEFENSIVE_AREA` 3, `TASK_STAND_GUARD` 1.
 
 **Enemy groups and alerts** (`agency_heist3b`, **Verified** structure, *probable* intent). Enemies sit in an array of 20-field structs. Each frame the script checks groups: when any member is in combat (`IS_PED_IN_COMBAT`) or a counter of noticed events passes 3, it gives the other members of that group combat tasks. The engine's own "inform friends" (`SET_PED_TO_INFORM_RESPECTED_FRIENDS`, 20 scripts) is used less than this hand-made spreading.
@@ -167,7 +174,7 @@ The casino, nightclubs, arcade, penthouse and other properties fill themselves w
 | What hackers' and drivers' stats do in each heist | Mostly answered (leftovers pass, 44.7): they count only through a skill tier that is recomputed when a finale passes; the table in 44.7 lists every tier check. Left: what the `agency_heist3b` hacker's counter and `finale_heist2a`'s slot 3 driver branch do in play (an in-game test) |
 | When the crew stat raise is called (every survived heist, or only some) | Answered (leftovers pass): once at the end of each of the six crew finales, for every surviving member chosen for that heist; each stat rises by a quarter of its cap |
 | The `TASK_COMBAT_PED` flag values (16, 67108864, 201326592) | In-game test |
-| How `fm_content_*` scripts set up patrols from content data | R7.7, R7.9 |
+| How `fm_content_*` scripts set up patrols from content data | Mostly answered (leftovers pass, 44.3): the `data.Patrol` block, node limits per script, the route name, the loop, `TASK_PATROL` defaults and the script-walked back-and-forth mode. Left: the values each variation puts in, which are set through function pointers (a YSC reader, as for GP-021) |
 | Buddy behaviour in vehicles (driver choice, drive-bys) | Mostly answered (leftovers pass, 44.6 "Buddies in vehicles"): scripts seat buddies explicitly, group members choose their own seat with a script-set preference, friends are set up for drive-bys that the engine runs. Left: what the passenger index values mean, and how the engine picks a group member's seat (a test) |
 
 ## 44.12 Test cards
