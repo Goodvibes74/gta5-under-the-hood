@@ -93,7 +93,7 @@ GS-004, GP-025 and GP-087 (replay type numbers), GP-069 and GP-092 (ability entr
 | ON-006 | Leftovers pass: type 4 is set by six creators from `goto.atrig`, and nothing writes 31. Left: the names (a text or engine source) |
 | ON-069 | Partly done: greying layers, per-page counts, Preferences, armour and vehicle pages (21.3.2). Left: the other pages' checks, helper by helper |
 | ON-070 | Leftovers pass: `.f_2` is traced to the corona request; lobby bit 1 is "joined another player's transition". Left: `.f_880`'s exact meaning, `main_persistent`'s four setter branches |
-| ON-065 | Slot 30 and property indices 119 to 134 (the `freemode` slot-to-index function); slot 33 to 35 names need `mpstatscharactermappingdata.xml` |
+| ON-065 | Leftovers pass: all slots and indices tied (slot 30 never owned, 33 to 35 the mansions). Left: indices 130, 131 and 134, which no slot is given |
 | ON-001, ON-005 | `freemode`'s 183 running-state functions; the host-state counter |
 | ON-010 to ON-014, ON-017 | Creator prop writers (`func_189` sparse vs full), race checkpoint fields (`chs`, `cpbs*`), dynamic props in the DM and mission controllers, the other creators' placement, the flow stats, the After Hours / Doomsday / 2015 flows |
 | ON-024, ON-040 | Heist story arcs and contacts; business battles and `fm_content_*` business missions |
