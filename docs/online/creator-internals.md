@@ -258,6 +258,18 @@ When a race starts, `fm_race_controler` loops over the prop list in the globals 
 
 Checkpoints are drawn with `CREATE_CHECKPOINT` (14 calls in the controller) from the `chl`/`chh` arrays.
 
+### 12.11.2 Dynamic props in the deathmatch and mission controllers (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in `fm_deathmatch_controler` and `fm_mission_controller_2020`. Both read the same dynamic-prop array as the race (`Global_4980736.f_49393`, 258 fields per prop, with the count in `.f_49391` and the model in `.f_7`), and both go through it once, in their "create the job's entities" step:
+
+- **The budget comes first.** The deathmatch step asks `CAN_REGISTER_MISSION_ENTITIES` for the job's peds, vehicles and objects. The object count is the static objects plus the dynamic props, or the dynamic props alone in one mode. If that fails, nothing is created this frame and the step tries again later.
+- **Props that are skipped:** those with model 0, `prop_container_ld_pu`, and (in the mission controller) props whose `.f_8` link is set. Our reading of `.f_8`: the prop belongs to another entity and is created with it.
+- **Per-prop conditions.** The mission controller, and the deathmatch controller in one job mode, first run a per-prop check. It reads the prop's team, rule and spawn-group fields (`.f_12` to `.f_14`, `.f_45`, `.f_145`) and a "spawn later" field (`.f_188`), so a prop can appear only for a rule or team.
+- **The model can be swapped.** The mission controller takes the model from a per-prop override list when one is set, and from `.f_7` otherwise.
+- **Creating it.** A shared helper checks `CAN_REGISTER_MISSION_OBJECTS(1)`, creates the object with networking on (`CREATE_OBJECT` or `CREATE_OBJECT_NO_OFFSET`), converts it with `OBJ_TO_NET` and marks it as existing on all machines. The created object then gets its position and rotation, its tint and, depending on the prop, the not-targettable, invincible, proof and frozen settings. The mission controller also sets `SET_ENTITY_DYNAMIC`, health and max health, a draw distance and high-precision rotation.
+- **A per-frame cap.** While a lobby flag is set (and the lobby mode isn't 1), the mission controller creates at most 6 props per frame, or 2 in lobby mode 2, and carries on the next frame.
+- After creation, a per-frame update in the deathmatch controller keeps each prop inside the job's interior and runs handlers for each prop type. Some of those handlers run only on the host, or when no network game is running.
+
 ### 12.11.1 The Mission Creator's limits (second pass)
 
 *Second pass, 2026-10-30.* **Verified** in `public_mission_creator`. One function gives the maximum count for each kind of placed item, and a second gives the matching "Maximum ... placed" message:
@@ -295,7 +307,7 @@ Checkpoints are drawn with `CREATE_CHECKPOINT` (14 calls in the controller) from
 | What `GET_USED_CREATOR_BUDGET` measures inside the engine | Reverse engineering, R1.5 (streaming) |
 | Which jobs are saved by the full prop writer and which by the sparse one (`func_189`) | Answered in [12.10](#1210-saving-and-publishing) (leftovers pass): the short writers are used whenever `public_mission_creator` is running; they cover 14 sections, and 7 more sections are left out. Every other creator saves the full form |
 | Meaning of `chs`, `chs2`, `chpp` and the `cpbs1` to `cpbs3` bits | Partly answered in [12.10](#1210-saving-and-publishing) (leftovers pass): `chs`/`chs2` are size scales, `chpp` is a pitch angle, the key-to-field map, the primary and secondary bit pairs, and the effects of about a dozen bits. Left: the other bits' names (the creator's menu table) |
-| How the deathmatch and mission controllers create dynamic props (the race is in 12.11) | Next pass |
+| How the deathmatch and mission controllers create dynamic props (the race is in 12.11) | Answered in [12.11.2](#12112-dynamic-props-in-the-deathmatch-and-mission-controllers-leftovers-pass) (leftovers pass): one creation pass behind the entity budget, the skipped models, the per-prop rule and team checks, networked creation through a shared helper, and a per-frame cap while a lobby flag is set |
 | The other creators' own placement (spawn points, enemy waves, capture objects) | Second pass per creator |
 
 ## 12.14 Test cards (story mode, a script mod)
