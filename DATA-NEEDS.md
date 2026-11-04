@@ -19,7 +19,7 @@ How to read the tables:
 | PHY-013 | What each `statMods` modifier changes | the same files (`CCarHandlingData` / sub-handling blocks) | no |
 | PHY-014 | How `vehicles.meta` fields (`handlingId`, wheel scale, `flags`) interact with handling | `common:/data/levels/gta5/vehicles.meta` and every DLC `vehicles.meta`, with `handling.meta` | no |
 | GP-046 (*done, D1*) | What the `SPMED` and `SPSMALL` handling entries belong to | every `vehicles.meta` (`handlingId` column) | no |
-| ON-068 (*still open, D1*) | Which models the website items 323, 324, 357, 402 are: hashes −994826917, 886151985, −1242692076, −451225720 | every `vehicles.meta` `modelName`, hashed with `joaat` | no (hashes already read from `standard_global_init`) |
+| ON-068 (*answered from the scripts in the leftovers pass: the four package items, see the tracker*) | Which models the website items 323, 324, 357, 402 are: hashes −994826917, 886151985, −1242692076, −451225720 | every `vehicles.meta` `modelName`, hashed with `joaat` | no (hashes already read from `standard_global_init`) |
 | ENT-036 (*done, D1*) | Why 901 models here vs 879 in R14.4 | every `vehicles.meta` | no |
 | ENT-037 (*mostly, D1*) | The less common vehicle flags | every `vehicles.meta` `flags` | no |
 | ENT-038 | Light and siren id ranges per DLC pack | every `carcols` file (*find*: `carcols.ymt`/`carcols.meta`) | no |
