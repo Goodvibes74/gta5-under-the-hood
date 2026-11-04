@@ -57,6 +57,18 @@ Flows with text outside the main text files (`XM4V_FLW` 22, `S25R_FLW` 6, `SR2CH
 
 The call-to-pack mapping follows from which pack's `americandlc.rpf` holds each block (**Verified**). The update names are **Known**.
 
+### 48.2.2 After Hours, Doomsday and the 2015 heists (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in `freemode`. These three have no `*_FLOW` label family because their story beats are mostly phone calls from a dialogue block, plus help messages with other prefixes:
+
+| Update | Calls (dialogue block) | Texts and help | Progress kept in |
+| --- | --- | --- | --- |
+| After Hours (`mpbattle`) | 143 conversation roots `BATFM_*` in block `BATFMAU`. Their name groups include `BATFM_SGN*`, `BATFM_RESIN*`, `BATFM_REMLT*`, `BATFM_MGENF*`, `BATFM_LP*` (four, each used twice), `BATFM_TUCALL` and `BATFM_BMCALL`, plus four 16-call grids (`BATFM_CF*`, `HU*`, `ME*`, `SM*` followed by one of B/D/S/T, then one of A/D/O/P). One function returns the root for an index, and three more 20-entry tables pick among them | Texts `BATFM_REMLT1T`/`2T` and `BATFM_RESIN1T` to `3T`, sent by one function with sender id 153 | Character stat 7229 (bits 0, 5 to 7, 29 and 30), plus session flags |
+| The Doomsday Heist (`mpchristmas2017`) | 64 roots `XMFM_*` in block `XMFMAUD`. The facility-buy call has four versions, `XMFM_FBUYA1` to `D1`, with sender id 12. It plays when the player stands within 8.5 m of 1211.7, -1758.6, 39.4 and the conditions pass; which version plays depends on what the player already owns. The other groups include `XMFM_PIA*`, `XMFM_PSI*`, `XMFM_PSU*`, `XMFM_RIV*` and `XMFM_GEN*` | Help `GOPS_BASE_HELP`, `GOPS_BASE_OWN`, `GOPS_LESTBLIP`, `GOPS_R_READY`, `GOPS_H_AVENG`, and replay help per act (`GO_IAA_FIN_R`, `GO_SUB_STR_R`, `GO_SUB_FIN_R`, `GO_SIL_STR_R`, `GO_SIL_OC_R`, `GO_SIL_FIN_R`); texts `GOTXT_RIVAL*` | The call's own memory and session flags; one help function reads and writes character stat 6156 |
+| The 2015 heists (`mpheist`) | Lester (contact name `LESTER`, 4 uses) | Help `HEIST_TUTSMS`, `HEIST_PRE_VIEW`, `HEIST_PRE_DONE`, `HEIST_NOTE_2`, `HEIST_READY_HLP`, `HEIST_NEXT_SOON`, `HEIST_FULL`, `HEIST_WARN_2`, and replay help `HEIST_REPLAY`, `_L`, `_FIN` | Spread over about ten small `freemode` functions; the heist planning itself runs in the planning scripts ([R7.8](/docs/online/heists.md)) |
+
+The call subtitles are in each pack's dialogue block, as in 48.2.1. They aren't read for this pass, so what each `BATFM` and `XMFM` call says is still open. Our reading of the name parts (`FBUY` facility purchase, `RIV` rival, `GEN` generic) comes only from the labels.
+
 ## 48.3 How a flow works
 
 Each flow is a function in `freemode`'s running state ([R7.1](/docs/online/07-freemode.md)), called every frame (**Verified** placement; **Known** behaviour):
@@ -172,5 +184,5 @@ The other seven blocks (`X25AFAU`, `X25CBAU`, `X25DSAU`, `X25FBAU`, `X25MAAU`, `
 | Which stats each flow keys on, step by step | Partly answered in [48.3.1](#4831-where-each-flow-keeps-its-progress-leftovers-pass) (leftovers pass): the progress stat or packed bools of 18 flows, and `EXEC_FLW` step by step. Left: the other flows step by step, and six flows whose storage is further away |
 | The text of the voice-only flows (`XM4V_FLW`, `S25R_FLW`, `SR2CH_FLW` ...) | Answered in [48.2.1](#4821-the-phone-call-flows-second-pass): 40 phone calls in six DLC dialogue blocks |
 | Which update each `fm_content_*` script arrived in (compare decompile commits by build) | Answered in [48.6.1](#4861-when-each-fm_content_-script-arrived-second-pass) |
-| The flows for After Hours, Doomsday and the 2015 heists (no flow label family found) | Next pass |
+| The flows for After Hours, Doomsday and the 2015 heists (no flow label family found) | Partly answered in [48.2.2](#4822-after-hours-doomsday-and-the-2015-heists-leftovers-pass) (leftovers pass): they are phone-call blocks (`BATFMAU` 143 roots, `XMFMAUD` 64 roots) plus help families (`GOPS_*`, `GO_*_R`, `HEIST_*`), with the triggers and stats found. Left: the call subtitles (data) |
 | The mp2025_02 update's name and story | Mostly answered: the name is A Safehouse in the Hills (second pass); the story, KnoWay Out, is summarised in [48.6.2](#4862-the-mp2025_02-story-leftovers-pass). Missions 2, 5 and 6 are not tied to their titles |
