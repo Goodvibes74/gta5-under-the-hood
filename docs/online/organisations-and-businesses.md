@@ -237,7 +237,18 @@ The winner's sum is then worked out in this order, rounding after each step: (ca
 - **The units column.** It is multiplied by a global multiplier and an event multiplier (both 1 by default). That makes it the amount added per production step (*probable*).
 - **Not traced.** How long a step takes, and how technicians are assigned to types. That is third-pass question ON-077.
 
-### 46.5.4 Business Battles (leftovers pass)
+### 46.5.4 How production time is kept (leftovers pass)
+
+*Leftovers pass, 2026-11-04.* **Verified** in `freemode` for the biker businesses and the bunker; the claim about time spent offline is our reading, and it agrees with **Known** player experience.
+
+- **One unit takes the production-time tunable** (`biker_weed_production_time` 360,000 ms, `biker_meth_production_time` 1,800,000, `biker_crack_production_time` 3,000,000, `biker_fakeids_production_time` 300,000, `biker_countercash_production_time` 720,000, `biker_acid_production_time` 135,000; `gr_manu_production_time` 600,000 and `gr_research_production_time` 300,000 for the bunker). Upgrades subtract tunable amounts from it.
+- **The timer runs on network time in script memory.** Each business slot has a timer started with the network clock (`GET_NETWORK_TIME`, or the game timer outside a network game). The time left to the next unit is kept in two places: a per-slot value in `freemode`'s memory, and the player's broadcast data (field `.f_9` of each of the seven business slots in `Global_1845250[player].f_260.f_205`, plus `.f_298` for a second line). When the timer restarts, the time already done is subtracted from the full production time, so a part-finished unit isn't lost.
+- **Time while offline isn't counted** (our reading). Nothing in this path reads a clock that keeps running outside the session. Only the time left to the next unit carries over, through the broadcast data, which is filled when the session starts.
+- **A second, real-time timer.** Each biker business also has a "delay" timer kept in seconds of cloud time (`GET_CLOUD_TIME_AS_INT`), with lengths from the `biker_*_delay_production_time` tunables (600 s; meth 1,200 s; halved with an upgrade; ×13 or ×5 in two special cases). When a slot's start time is first set and the business already holds more than one unit, the start is moved back by (units − 1) × delay, so those units count as already made. This timer is the one that uses real time.
+
+Where the broadcast fields are loaded from and saved to in the stats isn't traced here.
+
+### 46.5.5 Business Battles (leftovers pass)
 
 *Leftovers pass, 2026-11-04.* **Verified** in the build 1.0.3725.0 decompile; the meaning of the cargo label abbreviations is our reading.
 
@@ -280,8 +291,8 @@ These are Online systems: read them, never mod them in Online. For an offline or
 | The nightclub's production and popularity numbers (their tunable names are hashed) | Mostly answered in [46.5.3](#4653-the-nightclubs-safe-and-warehouse-second-pass): the safe pay bands, cap and timer, and each goods type's value, capacity and units per step |
 | How long a nightclub production step takes and how technicians are assigned (ON-077) | Third pass, the business hub code in `freemode` |
 | Special cargo warehouse capacities (16, 42 and 111 crates are **Known**) and where the scripts keep them | Answered in [46.5.1](#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass) |
-| How production is stored in stats and advanced while offline or in another session | Next pass, with the stats file |
+| How production is stored in stats and advanced while offline or in another session | Partly answered in [46.5.4](#4654-how-production-time-is-kept-leftovers-pass) (leftovers pass): production runs on a network-time timer, and only the time left to the next unit carries over (broadcast data `.f_9`), so offline time isn't counted (our reading). A second biker timer runs on cloud time and is backdated by the units already held. Left: the stat load and save |
 | What `gb_bosscost` and `gb_bosssetupcost` charge | Answered in [46.5.1](#4651-warehouse-sizes-boss-costs-and-the-apps-transactions-second-pass): nothing in this build (no script reads them) |
 | Where registering as a boss is charged now (ON-075) | Third pass, the boss registration code in `freemode` and `am_pi_menu` |
 | The MC challenge and VIP challenge rules (cash, RP, time) | Answered in [46.5.2](#4652-vip-and-mc-challenges-second-pass): the 11 challenges, their scripts and their tunables. Leftovers pass: one shared routine picks a single cash and RP factor per case, and the VIP challenges never use the rival or solo percentages |
-| Business battles and the `fm_content_*` business missions | Partly answered in [46.5.4](#4654-business-battles-leftovers-pass) (leftovers pass): the four scripts, the 34 variations with their locations and enemies, the cargo types and the event-cargo chance, and the delivery target. Left: the payouts, and the other `fm_content_*` business missions |
+| Business battles and the `fm_content_*` business missions | Partly answered in [46.5.5](#4655-business-battles-leftovers-pass) (leftovers pass): the four scripts, the 34 variations with their locations and enemies, the cargo types and the event-cargo chance, and the delivery target. Left: the payouts, and the other `fm_content_*` business missions |
