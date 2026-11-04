@@ -19,7 +19,7 @@ How GTA V defines a weapon: `weapons.meta` and its DLC additions, components and
 | --- | --- | --- |
 | `update.rpf\common\data\ai\weapons.meta` | Base weapons, ammo, aiming profiles, vehicle weapons | 91 `CWeaponInfo`, 36 `CAmmoInfo` (+3 projectile, 6 rocket, 8 thrown), 16 `CAimingInfo`, 6 `CVehicleWeaponInfo` |
 | `update.rpf\common\data\ai\weaponcomponents.meta` | Components | 42 clips, 7 scopes, 5 suppressors, 3 flashlights, 45 variant models, 8 reload data, 3 plain components, 2 swap data |
-| `update.rpf\common\data\weaponarchetypes.meta` | Weapon models (archetypes) | |
+| `update.rpf\common\data\weaponarchetypes.meta` | Weapon models (archetypes); the file format: [weapons meta](/file-formats/weapons-meta.md) | |
 | `update.rpf\common\data\ai\weaponanimations.meta` | Which animation sets each weapon uses per movement style | |
 | `update.rpf\common\data\ai\weapontargetsequences.meta` | Target sequences for lock-on | |
 | `update.rpf\dlc_patch\<pack>\common\data\ai\weapon<name>.meta` | Later fixes and weapons added by early Online packs (`weaponrevolver`, `weaponswitchblade`, `weaponheavypistol`, `weaponspecialcarbine`, `weaponbullpuprifle`, `weaponsnspistol`, `weaponhominglauncher`, `weaponproxmine`, `weaponsnowball`, `weaponpipebomb` ...) | |
