@@ -948,7 +948,7 @@ Started 2026-11-03 on branch `research/second-pass-leftovers-data`. Each batch e
 
 | ID | Question | Where it goes | Status |
 | --- | --- | --- | --- |
-| REN-012 | The exact decal limit in build 3725 and what limit patches change | Second pass with the executable; R18 | Open |
+| REN-012 | The exact decal limit in build 3725 and what limit patches change | Second pass with the executable; R18 | Partly answered: the limit is the size of the decal-definition table (80-byte entries) that patches move and enlarge; vanilla 512 is **Known** from a patch, to confirm with a mod-free copy (PC executable pass, [particles and decals](/docs/rendering/particles-and-decals.md#the-decal-definition-limit-in-the-executable-pc-executable-pass)) |
 | REN-013 | How the particle quality setting picks between `ptfx`, `ptfx_hi` and `ptfx_lo` | Test card 2; R18.2 | Open |
 | REN-014 | The format of `entityfx.dat`, `materialfx.dat` and `wheelfx.dat` row by row | Second pass | Answered: sections and columns of all three files (leftovers pass, [particles](/docs/rendering/particles-and-decals.md#effect-files-dictionaries-and-mounting-leftovers-pass)) |
 | REN-015 | Which DLC dictionaries are mounted in story mode | R1.6 second pass | Answered: all 33 DLC particle archives are switched on in `GROUP_STARTUP` change sets (leftovers pass, [particles](/docs/rendering/particles-and-decals.md#effect-files-dictionaries-and-mounting-leftovers-pass)) |

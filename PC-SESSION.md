@@ -4,7 +4,7 @@ The work left in [`OPEN_QUESTIONS.md`](/OPEN_QUESTIONS.md) that a cloud session 
 
 **Progress.** Batch PC1 (2026-11-04, Part 1) worked 15 data rows: 8 answered and deleted here (AI-024, ENT-038, REN-011, PHY-001, PHY-004, ENT-019, AI-014, AI-009); ENT-017, ENT-039 and UI-009 stay in Part 1 with what is left; ENT-020, PHY-013, AI-033 and ENT-025 moved to Part 2, because what is left of them is in the executable. Tracker after PC1: 200 answered, 53 mostly, 59 partly, 130 open.
 
-Batch PC2 (2026-11-04, Part 2 started): `GTA5.exe` is encrypted on disk, so its decrypted image was copied read-only from the running game (story mode) and analysed in Ghidra. GS-004 answered and deleted here; CORE-018 partly (the engine starts `startup` by name); SCR-005 notes added. Tracker after PC2: 201 answered, 53 mostly, 59 partly, 129 open.
+Batch PC2 (2026-11-04, Part 2 started): `GTA5.exe` is encrypted on disk, so its decrypted image was copied read-only from the running game (story mode) and analysed in Ghidra. GS-004 answered and deleted here; CORE-018 partly (the engine starts `startup` by name); SCR-005 notes added; REN-012 partly (the decal-definition table; the copy was taken with mods, so vanilla limits need a mod-free copy). Tracker after PC2: 201 answered, 53 mostly, 60 partly, 128 open.
 
 Three kinds of work:
 
@@ -143,7 +143,7 @@ Extract everything below in one pass into a scratch folder, then pack the folder
 
 Read-only reverse engineering of `GTA5.exe` (build 1.0.3725.0): look, never patch. Rows that also appear in Part 3 can often be settled faster by a test.
 
-**The code is encrypted on disk** (entropy 8.0 in every megabyte of both code sections), so Ghidra on `GTA5.exe` itself sees nothing. Analyse a read-only copy of the decrypted image instead, read from the running game in story mode (an administrator PowerShell is needed, because the game runs elevated). The main code section is readable in that copy; the second, anti-tamper code section stays scrambled. Keep the copy outside the repo.
+**The code is encrypted on disk** (entropy 8.0 in every megabyte of both code sections), so Ghidra on `GTA5.exe` itself sees nothing. Analyse a read-only copy of the decrypted image instead, read from the running game in story mode (an administrator PowerShell is needed, because the game runs elevated). The main code section is readable in that copy; the second, anti-tamper code section stays scrambled. Keep the copy outside the repo. **Take it with no mods loaded** for the limit rows (REN-012, CORE-015, CORE-016, PERF-016): limit patches change the very checks and arrays those rows ask about (the first copy, taken with mods, shows the decal patch's 620 instead of vanilla). For the native rows, the copy also needs the native hash table's heap nodes, not only the module image.
 
 | ID | What to find out | Status | Guide |
 | --- | --- | --- | --- |
@@ -177,7 +177,7 @@ Read-only reverse engineering of `GTA5.exe` (build 1.0.3725.0): look, never patc
 | PERF-016 | How much of the 1,950 MB heap is used (HeapAdjuster only logs the size) | open | [Streaming, memory and video memory](/docs/performance/memory-and-vram.md) |
 | PHY-013 | What each `statMods` modifier value scales (percent of drive force, brake force, shift speed; suspension units) | partly (PC1: every value read) | [Vehicle handling](/docs/physics/vehicle-handling.md#47-speed-grip-and-upgrades) |
 | REN-007 | The director priorities and exactly when the cinematic director takes over | open | [Cameras](/docs/rendering/cameras.md) |
-| REN-012 | The exact decal limit in build 3725 and what limit patches change | open | [Particles and decals](/docs/rendering/particles-and-decals.md) |
+| REN-012 | The exact decal limit in build 3725 and what limit patches change | partly (PC2: the definition table; vanilla size needs a mod-free copy) | [Particles and decals](/docs/rendering/particles-and-decals.md) |
 | SCR-004 | What `0x8F5D1AD832AEB06C` and `0x0F7082C60FB479EF` do (not in NativeDB) | partly | [Native usage: which scripts call which natives](/scripting/native-usage.md) |
 | SCR-005 | Whether the 29 "build 3889" natives exist in 3725 (`IS_NATIVE...` style check from a mod, or ScriptHookV's native table) | partly | [Native usage: which scripts call which natives](/scripting/native-usage.md) |
 | SCR-007 | What the table order is (not first use; maybe first use in compiled code order) | open | [Native usage: which scripts call which natives](/scripting/native-usage.md) |
