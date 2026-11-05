@@ -47,6 +47,8 @@ A public reference on how **Grand Theft Auto V (PC, Legacy edition, build 1.0.37
 - Decompiler names (`func_878`, `Global_102429`, `Local_3133`) change every build. Use them only as pointers, always with the build.
 - Base data is in `common.rpf`, newer copies in `update\update.rpf`, DLC data in `update\x64\dlcpacks\<pack>\dlc.rpf`; `dlc_patch` folders in `update.rpf` patch older packs.
 - PC build 1.0.3725.0's scripts match the decompile commit "Update for 1.72-3725.0" byte for byte.
+- `GTA5.exe`'s code is encrypted on disk; static tools need a read-only copy of the decrypted image from the running game, and limit values need that copy taken with no mods loaded ([`CLEAN-BUILD.md`](/CLEAN-BUILD.md), [research tools](/docs/00-getting-started/research-tools.md#reading-the-executable-pc-executable-pass)). Many native handlers jump into the anti-tamper code, which stays scrambled even in memory.
+- Most natives are re-hashed per build: the game's native table uses build hashes, NativeDB and the decompile's `native_tables` the original ones; pairing a compiled script's native table with the decompile's gives the map ([native usage 9.6](/scripting/native-usage.md#96-natives-no-script-uses)). 71 natives are empty on PC (every `DRAW_DEBUG_*` among them).
 
 ## Repo map
 

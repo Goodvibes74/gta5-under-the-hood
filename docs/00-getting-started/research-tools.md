@@ -66,6 +66,19 @@ These came out of the second round of topics (R2.5, R2.6, R3.5, R3.8, R4.3, R5.8
 | Name a numbered enum the game doesn't ship | Read it from an API's assembly metadata (for example ScriptHookVDotNet's `GTA.Control` with `ReflectionOnlyLoadFrom`) without running anything; say which version and where its list ends | Control IDs (R6.4) |
 | Compare base and update | Extract the same path from `common.rpf` and `update\update.rpf` (or the `x64` base archive and `update2.rpf`) and diff; the update copy wins | Every data topic |
 
+## Reading the executable (PC executable pass)
+
+How the PC executable pass read `GTA5.exe` (build 1.0.3725.0), as techniques to repeat. Everything here is read-only: nothing is patched or injected, and the copies stay in a scratch folder outside the repo. Story mode only.
+
+| Need | How | Used for |
+| --- | --- | --- |
+| Know whether the file can be read | Measure the byte entropy of each PE section, megabyte by megabyte: plain x86 code sits around 6, encrypted data at 8.0. Both code sections of the 3725 executable read 8.0 everywhere, so static tools see nothing in the file | Deciding to work from a copy |
+| A readable copy | With the game in story mode and the player able to move, read the main module's image from the running process with `ReadProcessMemory` (query and read rights only), from an administrator PowerShell because the game runs elevated, then set each section's raw offset and size to its virtual ones so a disassembler loads the copy. The main code section is normal code in the copy; the second, anti-tamper section stays scrambled. Take it with **no mods loaded** for anything about limits ([`CLEAN-BUILD.md`](/CLEAN-BUILD.md)) | GS-004, CORE-018, REN-012 |
+| Analyse the copy | Ghidra 12.1.x, headless, imported once into a saved project (about 50 minutes for the 67 MB copy), then queried with small read-only scripts: strings and who uses them, decompile at an address, references, a run of pointers or dwords. Driving it per call through a fresh import times out on a binary this size | Every executable row |
+| The native table | Walk the game's native hash table (256 buckets in `.data`) in the running process; its entries are XOR-scrambled with their own addresses as the community has documented, and decoding is right when `WAIT` turns up with the handler the static registration code names. 3725 holds 6,673 natives | SCR-005 |
+| Name the native table | A compiled script's native table (in `update2.rpf`) stores this build's hashes, each entry rotated left by the script's code length plus its index; the decompile's `native_tables` list the original hashes in the same order. Pair them over every script for a one-to-one map, then names from NativeDB's data | SCR-005, the 71 empty natives |
+| Find a native's code | Native name → original hash → build hash → handler address, then decompile there. A handler that is `ret 0` is an empty native; a short stub that jumps into the anti-tamper section can't be read from the copy | GP-025, GP-087, and the blocked rows |
+
 ## Research a topic in an hour
 
 1. **Read the row and what exists (5 min).** The roadmap row's "What to find out", the folder README, and every guide that mentions the topic ID (`git grep -n "R4.3"`). Note what is already answered.
