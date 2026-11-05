@@ -4,7 +4,7 @@ The work left in [`OPEN_QUESTIONS.md`](/OPEN_QUESTIONS.md) that a cloud session 
 
 **Progress.** Batch PC1 (2026-11-04, Part 1) worked 15 data rows: 8 answered and deleted here (AI-024, ENT-038, REN-011, PHY-001, PHY-004, ENT-019, AI-014, AI-009); ENT-017, ENT-039 and UI-009 stay in Part 1 with what is left; ENT-020, PHY-013, AI-033 and ENT-025 moved to Part 2, because what is left of them is in the executable. Tracker after PC1: 200 answered, 53 mostly, 59 partly, 130 open.
 
-Batch PC2 (2026-11-04, Part 2 started): `GTA5.exe` is encrypted on disk, so its decrypted image was copied read-only from the running game (story mode) and analysed in Ghidra. GS-004 answered and deleted here; CORE-018 partly (the engine starts `startup` by name); SCR-005 notes added; REN-012 partly (the decal-definition table; the copy was taken with mods, so vanilla limits need a mod-free copy). Tracker after PC2: 201 answered, 53 mostly, 60 partly, 128 open.
+Batch PC2 (2026-11-04, Part 2 started): `GTA5.exe` is encrypted on disk, so its decrypted image was copied read-only from the running game (story mode) and analysed in Ghidra. GS-004 answered and deleted here; CORE-018 partly (the engine starts `startup` by name); SCR-005 notes added; REN-012 partly (the decal-definition table; the copy was taken with mods, so vanilla limits need a mod-free copy); SCR-005 mostly (the native table read at run time, 6,673 natives, and a 1-to-1 crossmap of the 6,575 script natives). Tracker after PC2: 201 answered, 54 mostly, 59 partly, 128 open.
 
 Three kinds of work:
 
@@ -179,7 +179,7 @@ Read-only reverse engineering of `GTA5.exe` (build 1.0.3725.0): look, never patc
 | REN-007 | The director priorities and exactly when the cinematic director takes over | open | [Cameras](/docs/rendering/cameras.md) |
 | REN-012 | The exact decal limit in build 3725 and what limit patches change | partly (PC2: the definition table; vanilla size needs a mod-free copy) | [Particles and decals](/docs/rendering/particles-and-decals.md) |
 | SCR-004 | What `0x8F5D1AD832AEB06C` and `0x0F7082C60FB479EF` do (not in NativeDB) | partly | [Native usage: which scripts call which natives](/scripting/native-usage.md) |
-| SCR-005 | Whether the 29 "build 3889" natives exist in 3725 (`IS_NATIVE...` style check from a mod, or ScriptHookV's native table) | partly | [Native usage: which scripts call which natives](/scripting/native-usage.md) |
+| SCR-005 | Whether the 29 "build 3889" natives exist in 3725 (`IS_NATIVE...` style check from a mod, or ScriptHookV's native table) | mostly (PC2: native table read at run time; a one-native in-game check would settle it) | [Native usage: which scripts call which natives](/scripting/native-usage.md) |
 | SCR-007 | What the table order is (not first use; maybe first use in compiled code order) | open | [Native usage: which scripts call which natives](/scripting/native-usage.md) |
 | SCR-011 | Meaning of force-cleanup bits 4, 16 and 32 (engine-raised) | open | [The script VM: how GTA V runs its scripts, and how mods run beside them](/scripting/script-vm.md) |
 | UI-020 | What the stat and Social Club inbox natives return when signed out, which decides what `mp_awards`, `mp_unlocks` and `appmpemail` show … | open | [Server-backed Online screens](/docs/ui/server-backed-screens.md) |
@@ -239,7 +239,7 @@ Suggested order: **A** first, on a clean install and then with your usual mod se
 | ON-060 | How bits 16, 32 and 64 in these masks are raised (they end some systems on other occasions) | mostly | [Story systems that clash with an Online mode](/docs/online/story-systems-in-online-mode.md#76-test-cards) | the executable |
 | ON-073 | Whether the two `SaveCategory` groups are saved as separate cloud files | open | [Stats, tunables and the server's role](/docs/online/stats-and-tunables.md#108-test-cards) |  |
 | SCR-002 | Which natives are reached only through shared helper code and never called in practice | partly | [Native namespace map](/scripting/native-namespace-map.md) |  |
-| SCR-005 | Whether the 29 "build 3889" natives exist in 3725 (`IS_NATIVE...` style check from a mod, or ScriptHookV's native table) | partly | [Native usage: which scripts call which natives](/scripting/native-usage.md#910-test-cards) | the executable |
+| SCR-005 | Whether the 29 "build 3889" natives exist in 3725 (`IS_NATIVE...` style check from a mod, or ScriptHookV's native table) | mostly (PC2: native table read at run time; a one-native in-game check would settle it) | [Native usage: which scripts call which natives](/scripting/native-usage.md#910-test-cards) | the executable |
 | SCR-008 | Measured cost of the heavy natives (synchronous shape test, `GET_CLOSEST_*`, load scenes) on a low-end PC | open | [Natives as the engine API: kinds, contracts and costs](/scripting/natives-engine-api.md#148-test-cards-story-mode-a-script-mod) |  |
 | SCR-009 | Which natives crash on a stale handle and which fail quietly | open | [Natives as the engine API: kinds, contracts and costs](/scripting/natives-engine-api.md#148-test-cards-story-mode-a-script-mod) |  |
 | SCR-010 | The size limits of the nearby-entity arrays | open | [Natives as the engine API: kinds, contracts and costs](/scripting/natives-engine-api.md#148-test-cards-story-mode-a-script-mod) |  |
