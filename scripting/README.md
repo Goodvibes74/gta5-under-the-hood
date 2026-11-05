@@ -7,7 +7,7 @@ The script language the game is written in, the natives, and the ways mods run c
 | ID | Topic | Status |
 | --- | --- | --- |
 | R1.1 | **The script VM** | **Done** (first pass): [guide](/scripting/script-vm.md) |
-| R0.3 | **Native names for the native tables** | **Done** (first pass; second pass, phase 4 leftovers): [guide](/scripting/native-usage.md), [index](/scripting/native-usage-index.md) |
+| R0.3 | **Native names for the native tables** | **Done** (first pass; second pass, phase 4 leftovers; PC executable pass): [guide](/scripting/native-usage.md), [index](/scripting/native-usage-index.md) |
 | R0.5 | **Script launch graph** | **Done** (first pass; second pass, phase 2): [guide](/scripting/script-launch-graph.md) |
 | R0.8 | **Native namespace coverage map** | **Done** (first pass): [guide](/scripting/native-namespace-map.md) |
 | R1.3 | **Natives as the engine API** | **Done** (first pass): [guide](/scripting/natives-engine-api.md) |

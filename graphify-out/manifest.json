@@ -1,9 +1,9 @@
 {
   "CLAUDE.md": {
-    "mtime": 1793811590.1445632,
-    "seen": 1793812389.2873785,
-    "ast_hash": "e01f5fc4d94a832379dfb0b30d28148e",
-    "semantic_hash": "e01f5fc4d94a832379dfb0b30d28148e"
+    "mtime": 1793899958.5641575,
+    "seen": 1793900677.711471,
+    "ast_hash": "e333aca1d01a6aa8352440319c26279a",
+    "semantic_hash": "e333aca1d01a6aa8352440319c26279a"
   },
   "CONTRIBUTING.md": {
     "mtime": 1793662658.6967552,
@@ -18,22 +18,22 @@
     "semantic_hash": "e8c326deccd5ad357ff28c29fd8f1323"
   },
   "OPEN_QUESTIONS.md": {
-    "mtime": 1793819985.73621,
-    "seen": 1793820291.529934,
-    "ast_hash": "bed11ab34e3321db70fc80dcea665368",
-    "semantic_hash": "bed11ab34e3321db70fc80dcea665368"
+    "mtime": 1793899915.0795376,
+    "seen": 1793900677.7114882,
+    "ast_hash": "0c29289d172b6c70174a7ab4edff8a8c",
+    "semantic_hash": "0c29289d172b6c70174a7ab4edff8a8c"
   },
   "README.md": {
-    "mtime": 1793802338.6185532,
-    "seen": 1793810416.2563822,
-    "ast_hash": "7269a605fba4597767dc5894160edb81",
-    "semantic_hash": "7269a605fba4597767dc5894160edb81"
+    "mtime": 1793899861.7167377,
+    "seen": 1793900677.7114925,
+    "ast_hash": "c1b391fe9e69f309afa0f3debb0ba5a2",
+    "semantic_hash": "c1b391fe9e69f309afa0f3debb0ba5a2"
   },
   "ROADMAP.md": {
-    "mtime": 1793802338.6185532,
-    "seen": 1793810416.2563837,
-    "ast_hash": "70a94e95c6e199eabe2697521df70d48",
-    "semantic_hash": "70a94e95c6e199eabe2697521df70d48"
+    "mtime": 1793899981.5158412,
+    "seen": 1793900677.7115085,
+    "ast_hash": "48fa23ec95523c1fb9dc53e201b3018d",
+    "semantic_hash": "48fa23ec95523c1fb9dc53e201b3018d"
   },
   "SECURITY.md": {
     "mtime": 1793662658.6967552,
@@ -42,16 +42,16 @@
     "semantic_hash": "f2934a443d5317f9565306b3cb1d48a2"
   },
   "docs/00-getting-started/README.md": {
-    "mtime": 1793819985.73621,
-    "seen": 1793820291.5299444,
-    "ast_hash": "394be2bbd7b43ac78728bb5c4db4bf58",
-    "semantic_hash": "394be2bbd7b43ac78728bb5c4db4bf58"
+    "mtime": 1793899981.5198457,
+    "seen": 1793900677.7115102,
+    "ast_hash": "e17b1f431bc71ffa7b1b0cc8fb89933d",
+    "semantic_hash": "e17b1f431bc71ffa7b1b0cc8fb89933d"
   },
   "docs/00-getting-started/boot.md": {
-    "mtime": 1793811590.1471016,
-    "seen": 1793812389.2873912,
-    "ast_hash": "520000ee6b2fffdcee7015a623793f3d",
-    "semantic_hash": "520000ee6b2fffdcee7015a623793f3d"
+    "mtime": 1793899641.8791454,
+    "seen": 1793900677.711512,
+    "ast_hash": "596bb3bf9fc0104e451152954fedda51",
+    "semantic_hash": "596bb3bf9fc0104e451152954fedda51"
   },
   "docs/00-getting-started/decompiled-scripts.md": {
     "mtime": 1793662658.6990309,
@@ -72,10 +72,10 @@
     "semantic_hash": "a4845284232c805769f2be6ac1467535"
   },
   "docs/00-getting-started/research-tools.md": {
-    "mtime": 1793662658.6990309,
-    "seen": 1793688378.7468948,
-    "ast_hash": "c4312cfa50728d109734afd49885da50",
-    "semantic_hash": "c4312cfa50728d109734afd49885da50"
+    "mtime": 1793899943.690783,
+    "seen": 1793900677.711514,
+    "ast_hash": "104e1236651224961165d5419e719ac9",
+    "semantic_hash": "104e1236651224961165d5419e719ac9"
   },
   "docs/00-getting-started/setup.md": {
     "mtime": 1793662658.6990309,
@@ -90,16 +90,16 @@
     "semantic_hash": "01d807951f5b75c255598fe03cd24f54"
   },
   "docs/00-getting-started/toolbox.md": {
-    "mtime": 1793811590.1471016,
-    "seen": 1793812389.287395,
-    "ast_hash": "13557904a5e3deb8024006d84916c62f",
-    "semantic_hash": "13557904a5e3deb8024006d84916c62f"
+    "mtime": 1793899641.8856924,
+    "seen": 1793900677.7115164,
+    "ast_hash": "846a8f9c4daae0894b44d35070e17151",
+    "semantic_hash": "846a8f9c4daae0894b44d35070e17151"
   },
   "docs/ai/README.md": {
-    "mtime": 1793662658.6990309,
-    "seen": 1793688378.7469094,
-    "ast_hash": "9b79dd96e69c195760b3d58250bb3ae7",
-    "semantic_hash": "9b79dd96e69c195760b3d58250bb3ae7"
+    "mtime": 1793899801.784094,
+    "seen": 1793900677.7115183,
+    "ast_hash": "c4c37b8e42f4a0eb1a5761ea3a841d7c",
+    "semantic_hash": "c4c37b8e42f4a0eb1a5761ea3a841d7c"
   },
   "docs/ai/ai-architecture.md": {
     "mtime": 1793662658.700147,
@@ -204,10 +204,10 @@
     "semantic_hash": "3bd4b568c88898dbcb8ca86625600e1f"
   },
   "docs/core/README.md": {
-    "mtime": 1793802338.6235023,
-    "seen": 1793810416.2564082,
-    "ast_hash": "461615bb2403080e1732d82f32b21e15",
-    "semantic_hash": "461615bb2403080e1732d82f32b21e15"
+    "mtime": 1793899801.83462,
+    "seen": 1793900677.7115204,
+    "ast_hash": "7ab7b88fc191552ca884baf5a0f49f1d",
+    "semantic_hash": "7ab7b88fc191552ca884baf5a0f49f1d"
   },
   "docs/core/archives-and-content.md": {
     "mtime": 1793662658.7019107,
@@ -234,10 +234,10 @@
     "semantic_hash": "709fd85bccf1857840128f214cce4edf"
   },
   "docs/core/runtime-scripts.md": {
-    "mtime": 1793802338.6238403,
-    "seen": 1793810416.2564142,
-    "ast_hash": "c88be756398e6fb82b706bc7bf4bf734",
-    "semantic_hash": "c88be756398e6fb82b706bc7bf4bf734"
+    "mtime": 1793899641.9067574,
+    "seen": 1793900677.7115223,
+    "ast_hash": "42f6aa893f990e0de9bef7975f926b9d",
+    "semantic_hash": "42f6aa893f990e0de9bef7975f926b9d"
   },
   "docs/core/saves.md": {
     "mtime": 1793662658.7019107,
@@ -258,10 +258,10 @@
     "semantic_hash": "6bf395c6f54e769806eb9b3233a32ccb"
   },
   "docs/entities/README.md": {
-    "mtime": 1793662658.7019107,
-    "seen": 1793688378.7469804,
-    "ast_hash": "97001c610c6bf2075be1c6f72d5e3623",
-    "semantic_hash": "97001c610c6bf2075be1c6f72d5e3623"
+    "mtime": 1793899801.7750876,
+    "seen": 1793900677.711524,
+    "ast_hash": "0934455eb37972c72a3299198c385708",
+    "semantic_hash": "0934455eb37972c72a3299198c385708"
   },
   "docs/entities/objects/README.md": {
     "mtime": 1793662658.7034526,
@@ -282,10 +282,10 @@
     "semantic_hash": "1bf66ea38b75367da1835d0b77b18093"
   },
   "docs/entities/peds/README.md": {
-    "mtime": 1793662658.7034984,
-    "seen": 1793688378.74699,
-    "ast_hash": "3deb509ee100ea1a87ad5124cc6bad13",
-    "semantic_hash": "3deb509ee100ea1a87ad5124cc6bad13"
+    "mtime": 1793899801.7179005,
+    "seen": 1793900677.7115262,
+    "ast_hash": "8795169f8ac34c3ba6a4bea27875791a",
+    "semantic_hash": "8795169f8ac34c3ba6a4bea27875791a"
   },
   "docs/entities/peds/appearance-and-clothing.md": {
     "mtime": 1793802338.6266372,
@@ -306,10 +306,10 @@
     "semantic_hash": "60251162ff7edc748f5e0d41669bd10f"
   },
   "docs/entities/spawning/README.md": {
-    "mtime": 1793662658.70372,
-    "seen": 1793688378.7470002,
-    "ast_hash": "6d59e17538ad47c667edf6e064d4c566",
-    "semantic_hash": "6d59e17538ad47c667edf6e064d4c566"
+    "mtime": 1793899801.7461143,
+    "seen": 1793900677.7115283,
+    "ast_hash": "7dd9767735a2287975f618df80e75bf5",
+    "semantic_hash": "7dd9767735a2287975f618df80e75bf5"
   },
   "docs/entities/spawning/population.md": {
     "mtime": 1793819985.74421,
@@ -330,10 +330,10 @@
     "semantic_hash": "a1042af05d5e8d61a4160185ef7c1b73"
   },
   "docs/entities/vehicles/README.md": {
-    "mtime": 1793662658.7043722,
-    "seen": 1793688378.7470102,
-    "ast_hash": "cf869467e72adabebb889dc745f53f9f",
-    "semantic_hash": "cf869467e72adabebb889dc745f53f9f"
+    "mtime": 1793899801.776089,
+    "seen": 1793900677.7115304,
+    "ast_hash": "0f91291d77fb0cd539948595efbc2ea6",
+    "semantic_hash": "0f91291d77fb0cd539948595efbc2ea6"
   },
   "docs/entities/vehicles/dlc-packs.md": {
     "mtime": 1793662658.704685,
@@ -366,10 +366,10 @@
     "semantic_hash": "b4624066e89a5aa5c2c5a99b2799eeb7"
   },
   "docs/gameplay/missions/README.md": {
-    "mtime": 1793802338.6279578,
-    "seen": 1793810416.256433,
-    "ast_hash": "84e30eec3266bc41620263332f533d42",
-    "semantic_hash": "84e30eec3266bc41620263332f533d42"
+    "mtime": 1793899801.882614,
+    "seen": 1793900677.7115326,
+    "ast_hash": "1f47bd06511c47416d469bcfa5222634",
+    "semantic_hash": "1f47bd06511c47416d469bcfa5222634"
   },
   "docs/gameplay/missions/cutscenes-and-dialogue.md": {
     "mtime": 1793687153.306429,
@@ -390,10 +390,10 @@
     "semantic_hash": "5de2e9992d097b6923178771af7d3f26"
   },
   "docs/gameplay/missions/replay-director-and-editor.md": {
-    "mtime": 1793802338.6282365,
-    "seen": 1793810416.2564373,
-    "ast_hash": "011d463cb4aaab0de5461ce56692bf21",
-    "semantic_hash": "011d463cb4aaab0de5461ce56692bf21"
+    "mtime": 1793899641.9354124,
+    "seen": 1793900677.7115345,
+    "ast_hash": "3b53703178553b22e694977c236cb599",
+    "semantic_hash": "3b53703178553b22e694977c236cb599"
   },
   "docs/gameplay/missions/story-flow.md": {
     "mtime": 1793687100.0030365,
@@ -654,10 +654,10 @@
     "semantic_hash": "7f5d258c97618e1cad88299ff52f7487"
   },
   "docs/physics/README.md": {
-    "mtime": 1793662658.7101104,
-    "seen": 1793688378.7471366,
-    "ast_hash": "4203a41b6b5a4566e7daa52b7d9f4a4a",
-    "semantic_hash": "4203a41b6b5a4566e7daa52b7d9f4a4a"
+    "mtime": 1793900398.6244044,
+    "seen": 1793900677.7115371,
+    "ast_hash": "7c49a69e2ef1f79379718edc36651116",
+    "semantic_hash": "7c49a69e2ef1f79379718edc36651116"
   },
   "docs/physics/collision-and-materials.md": {
     "mtime": 1793819985.75621,
@@ -684,10 +684,10 @@
     "semantic_hash": "eb411189a8318b27f0e2eedd0bebc747"
   },
   "docs/rendering/README.md": {
-    "mtime": 1793662658.7113187,
-    "seen": 1793688378.747146,
-    "ast_hash": "e0b123e3d7da3e173d1e3b770bb73344",
-    "semantic_hash": "e0b123e3d7da3e173d1e3b770bb73344"
+    "mtime": 1793899801.872613,
+    "seen": 1793900677.7115395,
+    "ast_hash": "a573e8fb8eed1db14ec67319a8ea702a",
+    "semantic_hash": "a573e8fb8eed1db14ec67319a8ea702a"
   },
   "docs/rendering/animation.md": {
     "mtime": 1793802338.6374965,
@@ -702,10 +702,10 @@
     "semantic_hash": "e1d5abcbeefb3eceebd76fb8a31516a1"
   },
   "docs/rendering/particles-and-decals.md": {
-    "mtime": 1793802338.6374965,
-    "seen": 1793810416.25648,
-    "ast_hash": "5e9a12264ceaede1c7512bc8e4206619",
-    "semantic_hash": "5e9a12264ceaede1c7512bc8e4206619"
+    "mtime": 1793899641.9977322,
+    "seen": 1793900677.7115414,
+    "ast_hash": "9cd4c92bb9823f7fc684286b3b9492d8",
+    "semantic_hash": "9cd4c92bb9823f7fc684286b3b9492d8"
   },
   "docs/rendering/rendering-and-visual-settings.md": {
     "mtime": 1793802338.6374965,
@@ -720,10 +720,10 @@
     "semantic_hash": "d8c917a778b1eff31f206c2464a1d581"
   },
   "docs/ui/README.md": {
-    "mtime": 1793802338.6374965,
-    "seen": 1793810416.2564838,
-    "ast_hash": "d761b09509608afa1413971209cf651d",
-    "semantic_hash": "d761b09509608afa1413971209cf651d"
+    "mtime": 1793899801.8156126,
+    "seen": 1793900677.7115436,
+    "ast_hash": "1057d4db68e83f210d1e64d2cd983602",
+    "semantic_hash": "1057d4db68e83f210d1e64d2cd983602"
   },
   "docs/ui/hud-colours-blips.md": {
     "mtime": 1793662658.712525,
@@ -984,10 +984,10 @@
     "semantic_hash": "0399ff1b3117d241e1058426aa5ca375"
   },
   "scripting/README.md": {
-    "mtime": 1793802338.7995374,
-    "seen": 1793810416.2564933,
-    "ast_hash": "b4e74b63e5f697d07f5a0c37403a4bd9",
-    "semantic_hash": "b4e74b63e5f697d07f5a0c37403a4bd9"
+    "mtime": 1793899801.861614,
+    "seen": 1793900677.7115457,
+    "ast_hash": "316a9915b41d1c6fe373207e0cf6d268",
+    "semantic_hash": "316a9915b41d1c6fe373207e0cf6d268"
   },
   "scripting/csharp-shvdn3.md": {
     "mtime": 1793662658.9388492,
@@ -1032,10 +1032,10 @@
     "semantic_hash": "9e73bfc2c53208d0cfc9f0591c43cbe2"
   },
   "scripting/native-usage.md": {
-    "mtime": 1793806231.0941033,
-    "seen": 1793810416.2564971,
-    "ast_hash": "63e50f40cd08f10ce5db69f645788871",
-    "semantic_hash": "63e50f40cd08f10ce5db69f645788871"
+    "mtime": 1793899642.7339003,
+    "seen": 1793900677.711548,
+    "ast_hash": "61dc962734971b5d431ba4d93ba233c2",
+    "semantic_hash": "61dc962734971b5d431ba4d93ba233c2"
   },
   "scripting/native-usage/APPS.md": {
     "mtime": 1793819986.14821,
@@ -1350,22 +1350,22 @@
     "semantic_hash": "8f1a5109e04ade4840b0922262191bbb"
   },
   "DATA-NEEDS.md": {
-    "mtime": 1793819985.7322102,
-    "seen": 1793820291.5299153,
-    "ast_hash": "f630aefb10fbb1acbadca10e915693bb",
-    "semantic_hash": "f630aefb10fbb1acbadca10e915693bb"
+    "mtime": 1793899919.4914277,
+    "seen": 1793900677.7114828,
+    "ast_hash": "856871d3152ecb980adbd0ae2fb81df6",
+    "semantic_hash": "856871d3152ecb980adbd0ae2fb81df6"
   },
   "HANDOFF.md": {
-    "mtime": 1793819985.7322102,
-    "seen": 1793820291.529928,
-    "ast_hash": "c633cb2776a8c611afe3cceec8f5951e",
-    "semantic_hash": "c633cb2776a8c611afe3cceec8f5951e"
+    "mtime": 1793899896.1221433,
+    "seen": 1793900677.7114856,
+    "ast_hash": "09ac7550606e5af6246f6fc19deda249",
+    "semantic_hash": "09ac7550606e5af6246f6fc19deda249"
   },
   "PC-SESSION.md": {
-    "mtime": 1793819985.73621,
-    "seen": 1793820291.529939,
-    "ast_hash": "c16c20164b2b43b06ab4464403ef18a8",
-    "semantic_hash": "c16c20164b2b43b06ab4464403ef18a8"
+    "mtime": 1793899641.8731284,
+    "seen": 1793900677.7114904,
+    "ast_hash": "4a716681bcbd6dda421671fafef6dc89",
+    "semantic_hash": "4a716681bcbd6dda421671fafef6dc89"
   },
   "docs/00-getting-started/obsidian.md": {
     "mtime": 1793819985.74021,
@@ -1373,10 +1373,10 @@
     "ast_hash": "c0c39f1c77b8df148011c3e98c6c9daf",
     "semantic_hash": "c0c39f1c77b8df148011c3e98c6c9daf"
   },
-  "pc-session-results-part1.md": {
-    "mtime": 1793819986.14821,
-    "seen": 1793820291.5299914,
-    "ast_hash": "11757ae1ba11a85f1ad525bb9e2e4d64",
-    "semantic_hash": "11757ae1ba11a85f1ad525bb9e2e4d64"
+  "CLEAN-BUILD.md": {
+    "mtime": 1793899641.862587,
+    "seen": 1793900677.7114787,
+    "ast_hash": "184ffe9e3a329b28495931ec6f37e4f1",
+    "semantic_hash": "184ffe9e3a329b28495931ec6f37e4f1"
   }
 }

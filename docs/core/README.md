@@ -6,7 +6,7 @@ The game loop and the scripts that keep it running, memory pools and limits, str
 
 | ID | Topic | Status |
 | --- | --- | --- |
-| R0.2 | **Script cards for the runtime scripts** | **Done** (first pass; second pass, phase 2): [guide](/docs/core/runtime-scripts.md) |
+| R0.2 | **Script cards for the runtime scripts** | **Done** (first pass; second pass, phase 2; PC executable pass): [guide](/docs/core/runtime-scripts.md) |
 | R0.4 | **Global variable map** | **Done** (first pass; second pass, phase 2): [guide](/docs/core/global-map.md) |
 | R1.3 | **Natives as the engine API** | **Done** (first pass): [guide](/scripting/natives-engine-api.md) |
 | R1.4 | **Memory, pools and limits** | **Done** (first pass; second pass, phase 2): [guide](/docs/core/memory-and-pools.md) |

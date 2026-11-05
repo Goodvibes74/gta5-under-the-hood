@@ -32,14 +32,19 @@ The [modding path](modding/README.md) walks you through it step by step, from in
 | Write a mod | [Modding path](modding/README.md), [scripting](scripting/README.md) and [examples](examples/README.md) |
 | Look up a file format | [File formats](file-formats/README.md) |
 | Help | [Roadmap](ROADMAP.md) (pick an open topic), [CONTRIBUTING.md](CONTRIBUTING.md) |
-| Research the next pass | The "Open questions" table at the end of any guide ([why](#status)), then [CONTRIBUTING.md](CONTRIBUTING.md) |
+| Research the next pass | The "Open questions" table at the end of any guide ([why](#status)), all collected in [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md); where things stand is in [HANDOFF.md](HANDOFF.md); then [CONTRIBUTING.md](CONTRIBUTING.md) |
+| Work at the game PC | [PC-SESSION.md](PC-SESSION.md) (data files, the executable, in-game tests) and [CLEAN-BUILD.md](CLEAN-BUILD.md) (what needs the game with no mods) |
 | Share a tool, site or trick that sped up your work | Add it to [tools and resources](docs/00-getting-started/toolbox.md#contributed-tools-and-resources) |
 
 ## What's inside
 
 ```text
 gta5-under-the-hood/
-├── README.md, ROADMAP.md, CONTRIBUTING.md, CLAUDE.md, CREDITS.md
+├── README.md, ROADMAP.md, CONTRIBUTING.md, CLAUDE.md, CREDITS.md, SECURITY.md
+├── OPEN_QUESTIONS.md            every open question, numbered, with its status (the pass tracker)
+├── HANDOFF.md                   where the work stands and what to do next
+├── DATA-NEEDS.md, PC-SESSION.md, CLEAN-BUILD.md   what the remaining questions need: game files, the game PC, a game without mods
+├── graphify-out/                the knowledge graph of every doc (generated, committed)
 ├── templates/entry-template.md   every page follows it
 ├── docs/
 │   ├── 00-getting-started/      setup, toolbox, glossary, boot, research tools, reading decompiled scripts
@@ -65,7 +70,7 @@ gta5-under-the-hood/
 
 > **This is a first pass.** Every one of the 109 research topics has been worked through once, to map the ground: where each system lives, how it works, what a mod can change, and the numbers behind it. A first pass is not the last word. Some claims are still **Known** rather than **Verified**, some systems were only sampled, and few findings have been checked in game yet.
 >
-> **The second pass is under way.** Its first four phases are done: the user interface, the core engine, GTA Online and story mode (46 topics; the [roadmap](ROADMAP.md) marks each one). They answered or narrowed most of those guides' open questions from the build 1.0.3725.0 decompile, and found, among other things, that **build 3717 renumbered every control ID from 257 up** (+37), which matters to any mod that uses those controls ([controls and camera](docs/gameplay/player/controls-and-camera.md#the-numbering-changed-in-build-3717-second-pass)). What is left, and what each question needs to be answered, is in [HANDOFF.md](HANDOFF.md) and [DATA-NEEDS.md](DATA-NEEDS.md).
+> **The second pass is under way.** Its first four phases are done: the user interface, the core engine, GTA Online and story mode (46 topics; the [roadmap](ROADMAP.md) marks each one). They answered or narrowed most of those guides' open questions from the build 1.0.3725.0 decompile, and found, among other things, that **build 3717 renumbered every control ID from 257 up** (+37), which matters to any mod that uses those controls ([controls and camera](docs/gameplay/player/controls-and-camera.md#the-numbering-changed-in-build-3717-second-pass)). A leftovers pass then worked the questions that need the game's data files, and two passes at the game PC followed: the data files (PC1) and the executable (PC2). The executable's code turned out to be encrypted on disk, so it was read from a decrypted copy of the running game; that pass found the level list behind the scripts' "level 5" (a network test bed whose folder isn't shipped), read the game's native table (6,673 natives, most re-hashed for this build) and found **71 natives that do nothing on PC**, every `DRAW_DEBUG_*` and the automatic replay-clip natives among them ([native usage](scripting/native-usage.md#96-natives-no-script-uses)). The tracker stands at 203 of 442 questions answered, 54 mostly, 59 partly, 126 open. Where things stand is in [HANDOFF.md](HANDOFF.md); what each remaining question needs is in [DATA-NEEDS.md](DATA-NEEDS.md), [PC-SESSION.md](PC-SESSION.md) and [CLEAN-BUILD.md](CLEAN-BUILD.md).
 >
 > **Nearly every guide ends with an "Open questions" table** (about 95 of them). Each row is a question the first pass found but couldn't settle, with where it should go next: a second pass of the same topic, another topic, or an in-game test. Taken together, those tables are the research agenda for the next passes, and they're the place to start if you want to go deeper into how the game works. Pick a row, claim it as [CONTRIBUTING.md](CONTRIBUTING.md) explains, answer it, and update the guide and its table.
 
@@ -86,7 +91,7 @@ Alongside the 109 first-pass guides there's a [step-by-step modding path](moddin
 
 ## Large jobs (priority): pick one
 
-Every large topic now has a first pass (each took a week or more; R6.7 was added and written on 2026-10-26). They are listed in the order they were taken, easiest first, by how much of the groundwork the earlier guides covered. Second passes are welcome: each guide ends with an "Open questions" table, and all of them are collected in [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md) (phases 1 to 4 of the second pass are done; the AI, entities, physics, world, audio, rendering and performance phases are next); claim one as [CONTRIBUTING.md](CONTRIBUTING.md) explains and work on it in its own branch.
+Every large topic now has a first pass (each took a week or more; R6.7 was added and written on 2026-10-26). They are listed in the order they were taken, easiest first, by how much of the groundwork the earlier guides covered. Second passes are welcome: each guide ends with an "Open questions" table, and all of them are collected in [OPEN_QUESTIONS.md](OPEN_QUESTIONS.md) (phases 1 to 4 of the second pass, the leftovers pass and the PC data and executable passes are done; the AI, entities, physics, world, audio, rendering and performance phases are next); claim one as [CONTRIBUTING.md](CONTRIBUTING.md) explains and work on it in its own branch.
 
 | # | Job | Why it's at this place |
 | ---: | --- | --- |
