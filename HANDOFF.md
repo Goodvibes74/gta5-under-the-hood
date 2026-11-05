@@ -9,7 +9,7 @@ A public, Markdown-only reference on how GTA V (PC, Legacy, build 1.0.3725.0) wo
 ## Status
 
 - **Everything is on `main`, nothing is in flight.** The last merges are #127 (second-pass phases 1 to 4), #128 (data batches D1 to D6), #129 (D7 to D12) and #130 (this file).
-- **Tracker:** 442 question rows: 200 answered, 53 mostly, 59 partly, 130 open (after batch PC1 at the game PC, branch `research/pc1-data-files`). A row's last column is its status and links to the guide section with the answer. The table "Leftovers: the data-file batches" in `OPEN_QUESTIONS.md` says what each batch read and settled.
+- **Tracker:** 442 question rows: 203 answered, 54 mostly, 59 partly, 126 open (after batch PC2, the executable, branch `research/pc2-executable`). A row's last column is its status and links to the guide section with the answer. The table "Leftovers: the data-file batches" in `OPEN_QUESTIONS.md` says what each batch read and settled.
 - **The data batches are finished, but not every row in [`DATA-NEEDS.md`](/DATA-NEEDS.md) was worked.** Each group had a batch, and each row a batch touched carries its result (*done*, *mostly*, *partly* or *still open*). The 25 rows with no tag were never attempted; they are listed below.
 - **The knowledge graph is current as of PR #132** (2026-11-04). The 80 docs changed in #127, #128, #129 and #132 were re-extracted, giving 4,716 nodes, 10,010 edges and 193 communities. Refresh it again after the next phase.
 
@@ -31,7 +31,7 @@ Decide first what your environment can do. **The game install, CodeWalker and th
 1. **Refresh the graph after each phase:** in a cloud session graphify isn't installed: run `pip install graphifyy`, then `graphify install --platform claude`, and the `/graphify` skill becomes available; then run `/graphify . --update`. Docs are extracted by subagents, about 140k tokens per 120 KB of Markdown. If the export refuses because saved nodes are missing, check that all the missing nodes come from the re-extracted files, then export with `force=True`. Watch for node IDs that collide with a page's ID (a concept on `native-usage.md` named after a namespace page). Before committing, check that `grep -r "/home/\|C:\\\\Users" graphify-out` is empty; set `graphify-out/.graphify_root` back to `.` first, because graphify writes its absolute scan path there. On a CRLF checkout graphify sees every file as changed; normalise the hashes rather than converting the tree to LF.
 2. **Links are checked:** every relative link and heading anchor in the repo resolves (the 105 anchor links #129 added included). One stale anchor in `scripting/script-vm.md` was fixed. Re-run a link check after each phase.
 3. **Work through the scripts-only table below,** one branch per phase, batches pushed as you go. Rebuild what you need of the working method below.
-4. **When the maintainer is at the PC:** follow [`PC-SESSION.md`](/PC-SESSION.md). It has one list each for the data-file run (69 rows), the executable (33) and the in-game tests (122, in a suggested order), each row linked to its guide and test card.
+4. **When the maintainer is at the PC:** follow [`PC-SESSION.md`](/PC-SESSION.md). It has one list each for the data-file run (57 rows), the executable (34) and the in-game tests (122, in a suggested order), each row linked to its guide and test card. The questions that need the game with no mods loaded are gathered in [`CLEAN-BUILD.md`](/CLEAN-BUILD.md).
 
 ## Rules of this workflow that aren't in `CLAUDE.md`
 

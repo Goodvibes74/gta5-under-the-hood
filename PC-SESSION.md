@@ -4,10 +4,12 @@ The work left in [`OPEN_QUESTIONS.md`](/OPEN_QUESTIONS.md) that a cloud session 
 
 **Progress.** Batch PC1 (2026-11-04, Part 1) worked 15 data rows: 8 answered and deleted here (AI-024, ENT-038, REN-011, PHY-001, PHY-004, ENT-019, AI-014, AI-009); ENT-017, ENT-039 and UI-009 stay in Part 1 with what is left; ENT-020, PHY-013, AI-033 and ENT-025 moved to Part 2, because what is left of them is in the executable. Tracker after PC1: 200 answered, 53 mostly, 59 partly, 130 open.
 
+Batch PC2 (2026-11-04, Part 2 started): `GTA5.exe` is encrypted on disk, so its decrypted image was copied read-only from the running game (story mode) and analysed in Ghidra. GS-004 answered and deleted here; CORE-018 partly (the engine starts `startup` by name); SCR-005 notes added; REN-012 partly (the decal-definition table; the copy was taken with mods, so vanilla limits need a mod-free copy); SCR-005 mostly (the native table read at run time, 6,673 natives, and a 1-to-1 crossmap of the 6,575 script natives). GP-025 and GP-087 answered (the replay natives are empty on PC, as are 71 natives in all); SCR-007 partly (no order recoverable); ON-009, CORE-031, CORE-032 and SCR-011 blocked by handlers in the anti-tamper code. Tracker after PC2: 203 answered, 54 mostly, 59 partly, 126 open.
+
 Three kinds of work:
 
 1. **Data files** (one CodeWalker run, no game running): 57 rows.
-2. **The executable** (read-only reverse engineering of `GTA5.exe`): 37 rows.
+2. **The executable** (read-only reverse engineering of `GTA5.exe`): 34 rows.
 3. **In-game tests** (story mode): 122 rows, 11 of them also listed for the executable.
 
 ## Before you start
@@ -141,6 +143,8 @@ Extract everything below in one pass into a scratch folder, then pack the folder
 
 Read-only reverse engineering of `GTA5.exe` (build 1.0.3725.0): look, never patch. Rows that also appear in Part 3 can often be settled faster by a test.
 
+**The code is encrypted on disk** (entropy 8.0 in every megabyte of both code sections), so Ghidra on `GTA5.exe` itself sees nothing. Analyse a read-only copy of the decrypted image instead, read from the running game in story mode (an administrator PowerShell is needed, because the game runs elevated). The main code section is readable in that copy; the second, anti-tamper code section stays scrambled. Keep the copy outside the repo. **Take it with no mods loaded** for the limit rows: limit patches change the very checks and arrays those rows ask about (the first copy, taken with mods, shows the decal patch's 620 instead of vanilla). [`CLEAN-BUILD.md`](/CLEAN-BUILD.md) lists every question that needs a clean game and how to set one up. For the native rows, the copy also needs the native hash table's heap nodes, not only the module image.
+
 | ID | What to find out | Status | Guide |
 | --- | --- | --- | --- |
 | AI-001 | The full list of task classes the engine has (not only tuned ones) | open | [The AI architecture](/docs/ai/ai-architecture.md) |
@@ -152,33 +156,30 @@ Read-only reverse engineering of `GTA5.exe` (build 1.0.3725.0): look, never patc
 | CORE-002 | The exact load phases for each change-set group | partly | [Archives and the content system](/docs/core/archives-and-content.md) |
 | CORE-015 | Memory cost of each raised pool (bytes per slot) | open | [Memory, pools and limits](/docs/core/memory-and-pools.md) |
 | CORE-016 | The vanilla built-in sizes of the weapon arrays that WeaponLimitsAdjuster raises | partly | [Memory, pools and limits](/docs/core/memory-and-pools.md) |
-| CORE-018 | What exactly the engine does to start `main`, `initial` and `startup`, and in which order | partly | [Runtime scripts: the scripts that keep the game running](/docs/core/runtime-scripts.md) |
+| CORE-018 | What exactly the engine does to start `main`, `initial` and `startup`, and in which order | partly (PC2: `startup` by name; `main`, `initial` open) | [Runtime scripts: the scripts that keep the game running](/docs/core/runtime-scripts.md) |
 | CORE-024 | The save file's on-disk format and how names map to it | open | [Saves: what the story save holds and how scripts write it](/docs/core/saves.md) |
 | CORE-027 | The streaming memory budget (how the engine splits RAM between stores), and what HeapAdjuster changes in it | open | [Streaming: how assets get into memory](/docs/core/streaming.md) |
-| CORE-031 | Which brain set the engine gives the random-ped brains added with `ADD_SCRIPT_TO_RANDOM_PED` (no script registers into sets 2 or 4) | open | [Surviving game updates](/docs/core/surviving-updates.md) |
-| CORE-032 | What the engine raises force-cleanup bits 16 and 32 for (no script raises them; [runtime scripts … | open | [Runtime scripts: the scripts that keep the game running](/docs/core/runtime-scripts.md) |
+| CORE-031 | Which brain set the engine gives the random-ped brains added with `ADD_SCRIPT_TO_RANDOM_PED` (no script registers into sets 2 or 4) | open (PC2: its natives' handlers sit in the anti-tamper code) | [Surviving game updates](/docs/core/surviving-updates.md) |
+| CORE-032 | What the engine raises force-cleanup bits 16 and 32 for (no script raises them; [runtime scripts … | open (PC2: its natives' handlers sit in the anti-tamper code) | [Runtime scripts: the scripts that keep the game running](/docs/core/runtime-scripts.md) |
 | ENT-020 | Where and how fall damage is computed (no data file sets it) | partly (PC1: data ruled out) | [Ped physics and ragdoll](/docs/entities/peds/ragdoll.md#174-falling) |
 | ENT-025 | How the engine places the aerial, aquatic and wildlife population groups | mostly (PC1: the data side) | [Population](/docs/entities/spawning/population.md#birds-and-fish-pc-data-pass) |
 | GP-021 | What the mission triggerers build before a mission starts (lead-in scenes, from guide 2) | partly | [Anatomy of a story mission](/docs/gameplay/missions/mission-anatomy.md) |
 | GP-023 | What exactly NoEditorRestrictions patches, and the vanilla limits it lifts (free camera distance, restricted areas) | open | [Replay, director mode and the Rockstar Editor](/docs/gameplay/missions/replay-director-and-editor.md) |
-| GP-025 | The `REPLAY_START_EVENT` and `REPLAY_RECORD_BACK_FOR_TIME` type numbers | partly | [Replay, director mode and the Rockstar Editor](/docs/gameplay/missions/replay-director-and-editor.md) |
 | GP-069 | Which ability type each entry 3 to 16 is | partly | [Player skills and abilities](/docs/gameplay/player/skills-and-abilities.md) |
 | GP-078 | How story stats and Online rank change `AmmoMax` | partly | [Weapons](/docs/gameplay/weapons/weapons.md) |
 | GP-080 | How aim assist and lock-on work for the player versus AI | open | [Weapons](/docs/gameplay/weapons/weapons.md) |
-| GP-087 | What the engine does with the type number of `REPLAY_RECORD_BACK_FOR_TIME` and `REPLAY_START_EVENT` (values 0 to 4) | open | [Replay, director mode and the Rockstar Editor](/docs/gameplay/missions/replay-director-and-editor.md) |
 | GP-092 | What selects special ability entries 8 to 16, which have no `SAT_*` type | open | [Player skills and abilities](/docs/gameplay/player/skills-and-abilities.md) |
-| GS-004 | Which folder level index 5 loads: confirm that the testbed level is `common:/data/levels/stripped` (only **Known** in [boot … | open | [Boot and script control: from launch to control, and between story and Online](/docs/00-getting-started/boot.md) |
-| ON-009 | What `GET_USED_CREATOR_BUDGET` measures inside the engine | open | [Rockstar Creator internals: how tracks and maps are built from props](/docs/online/creator-internals.md) |
+| ON-009 | What `GET_USED_CREATOR_BUDGET` measures inside the engine | open (PC2: its natives' handlers sit in the anti-tamper code) | [Rockstar Creator internals: how tracks and maps are built from props](/docs/online/creator-internals.md) |
 | ON-052 | How migration chooses a new owner and host | open | [Sessions and sync](/docs/online/sessions-and-sync.md) |
 | ON-060 | How bits 16, 32 and 64 in these masks are raised (they end some systems on other occasions) | mostly | [Story systems that clash with an Online mode](/docs/online/story-systems-in-online-mode.md) |
 | PERF-016 | How much of the 1,950 MB heap is used (HeapAdjuster only logs the size) | open | [Streaming, memory and video memory](/docs/performance/memory-and-vram.md) |
 | PHY-013 | What each `statMods` modifier value scales (percent of drive force, brake force, shift speed; suspension units) | partly (PC1: every value read) | [Vehicle handling](/docs/physics/vehicle-handling.md#47-speed-grip-and-upgrades) |
 | REN-007 | The director priorities and exactly when the cinematic director takes over | open | [Cameras](/docs/rendering/cameras.md) |
-| REN-012 | The exact decal limit in build 3725 and what limit patches change | open | [Particles and decals](/docs/rendering/particles-and-decals.md) |
+| REN-012 | The exact decal limit in build 3725 and what limit patches change | partly (PC2: the definition table; vanilla size needs a mod-free copy) | [Particles and decals](/docs/rendering/particles-and-decals.md) |
 | SCR-004 | What `0x8F5D1AD832AEB06C` and `0x0F7082C60FB479EF` do (not in NativeDB) | partly | [Native usage: which scripts call which natives](/scripting/native-usage.md) |
-| SCR-005 | Whether the 29 "build 3889" natives exist in 3725 (`IS_NATIVE...` style check from a mod, or ScriptHookV's native table) | partly | [Native usage: which scripts call which natives](/scripting/native-usage.md) |
-| SCR-007 | What the table order is (not first use; maybe first use in compiled code order) | open | [Native usage: which scripts call which natives](/scripting/native-usage.md) |
-| SCR-011 | Meaning of force-cleanup bits 4, 16 and 32 (engine-raised) | open | [The script VM: how GTA V runs its scripts, and how mods run beside them](/scripting/script-vm.md) |
+| SCR-005 | Whether the 29 "build 3889" natives exist in 3725 (`IS_NATIVE...` style check from a mod, or ScriptHookV's native table) | mostly (PC2: native table read at run time; a one-native in-game check would settle it) | [Native usage: which scripts call which natives](/scripting/native-usage.md) |
+| SCR-007 | What the table order is (not first use; maybe first use in compiled code order) | partly (PC2: every testable order ruled out) | [Native usage: which scripts call which natives](/scripting/native-usage.md) |
+| SCR-011 | Meaning of force-cleanup bits 4, 16 and 32 (engine-raised) | open (PC2: its natives' handlers sit in the anti-tamper code) | [The script VM: how GTA V runs its scripts, and how mods run beside them](/scripting/script-vm.md) |
 | UI-020 | What the stat and Social Club inbox natives return when signed out, which decides what `mp_awards`, `mp_unlocks` and `appmpemail` show … | open | [Server-backed Online screens](/docs/ui/server-backed-screens.md) |
 
 ## Part 3: in-game test session (story mode)
@@ -230,17 +231,17 @@ Suggested order: **A** first, on a clean install and then with your usual mod se
 | CORE-015 | Memory cost of each raised pool (bytes per slot) | open | [Memory, pools and limits](/docs/core/memory-and-pools.md#78-test-cards) | the executable |
 | CORE-026 | How `TextureQuality` values map to the menu, and how much memory each level takes on shared graphics | open | [Streaming: how assets get into memory](/docs/core/streaming.md#109-test-cards) |  |
 | CORE-029 | Measure a pop-in case: drive fast through the city at `LodScale` 0 and 0.5 with a frame-time log, compare hitches and memory | open | [Streaming: how assets get into memory](/docs/core/streaming.md#109-test-cards) |  |
-| CORE-032 | What the engine raises force-cleanup bits 16 and 32 for (no script raises them; [runtime scripts … | open | [Runtime scripts: the scripts that keep the game running](/docs/core/runtime-scripts.md) | the executable |
+| CORE-032 | What the engine raises force-cleanup bits 16 and 32 for (no script raises them; [runtime scripts … | open (PC2: its natives' handlers sit in the anti-tamper code) | [Runtime scripts: the scripts that keep the game running](/docs/core/runtime-scripts.md) | the executable |
 | GS-003 | Whether the return to story mode restarts every script (test card 2) | open | [Boot and script control: from launch to control, and between story and Online](/docs/00-getting-started/boot.md#38-test-cards) |  |
 | ON-058 | What exactly `clothes_shop_sp` does with a freemode ped (refuses, shows story stock, or breaks) | open | [Story systems that clash with an Online mode](/docs/online/story-systems-in-online-mode.md#76-test-cards) |  |
 | ON-060 | How bits 16, 32 and 64 in these masks are raised (they end some systems on other occasions) | mostly | [Story systems that clash with an Online mode](/docs/online/story-systems-in-online-mode.md#76-test-cards) | the executable |
 | ON-073 | Whether the two `SaveCategory` groups are saved as separate cloud files | open | [Stats, tunables and the server's role](/docs/online/stats-and-tunables.md#108-test-cards) |  |
 | SCR-002 | Which natives are reached only through shared helper code and never called in practice | partly | [Native namespace map](/scripting/native-namespace-map.md) |  |
-| SCR-005 | Whether the 29 "build 3889" natives exist in 3725 (`IS_NATIVE...` style check from a mod, or ScriptHookV's native table) | partly | [Native usage: which scripts call which natives](/scripting/native-usage.md#910-test-cards) | the executable |
+| SCR-005 | Whether the 29 "build 3889" natives exist in 3725 (`IS_NATIVE...` style check from a mod, or ScriptHookV's native table) | mostly (PC2: native table read at run time; a one-native in-game check would settle it) | [Native usage: which scripts call which natives](/scripting/native-usage.md#910-test-cards) | the executable |
 | SCR-008 | Measured cost of the heavy natives (synchronous shape test, `GET_CLOSEST_*`, load scenes) on a low-end PC | open | [Natives as the engine API: kinds, contracts and costs](/scripting/natives-engine-api.md#148-test-cards-story-mode-a-script-mod) |  |
 | SCR-009 | Which natives crash on a stale handle and which fail quietly | open | [Natives as the engine API: kinds, contracts and costs](/scripting/natives-engine-api.md#148-test-cards-story-mode-a-script-mod) |  |
 | SCR-010 | The size limits of the nearby-entity arrays | open | [Natives as the engine API: kinds, contracts and costs](/scripting/natives-engine-api.md#148-test-cards-story-mode-a-script-mod) |  |
-| SCR-011 | Meaning of force-cleanup bits 4, 16 and 32 (engine-raised) | open | [The script VM: how GTA V runs its scripts, and how mods run beside them](/scripting/script-vm.md#29-test-card-which-rockstar-scripts-really-run) | the executable |
+| SCR-011 | Meaning of force-cleanup bits 4, 16 and 32 (engine-raised) | open (PC2: its natives' handlers sit in the anti-tamper code) | [The script VM: how GTA V runs its scripts, and how mods run beside them](/scripting/script-vm.md#29-test-card-which-rockstar-scripts-really-run) | the executable |
 | SCR-012 | What thread priority values change | mostly | [The script VM: how GTA V runs its scripts, and how mods run beside them](/scripting/script-vm.md#29-test-card-which-rockstar-scripts-really-run) |  |
 | UI-002 | What the `listId` draw lists and depths do | partly | [HUD, colours and blips](/docs/ui/hud-colours-blips.md#248-test-cards-story-mode-a-script-mod) |  |
 | UI-017 | How DLC global blocks are merged and which wins on a clash | open | [Text labels](/docs/ui/text-labels.md#test-cards) |  |

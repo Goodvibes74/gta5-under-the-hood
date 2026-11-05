@@ -42,6 +42,12 @@ On that PC the engine's part (0 to 68 s) is the loading screen; the mods' part (
 
 How the engine starts them (which call, whether it runs `startup` to its end before starting `initial`, and whether `main` and `initial` start in the same frame) isn't visible in the scripts and needs the executable (engine reverse engineering).
 
+**What the executable shows** (third pass, **Verified** in the decrypted executable, read in Ghidra; see 3.4.1 for how it was read):
+
+- **The engine starts `startup` by name, and only `startup`.** One engine function picks the name `startup`, or `startup_install` when an install-mode flag is off, looks it up in the script store, requests it, and once it is loaded starts a thread with a stack size taken from a setting and registers the thread. If the script is missing or not loaded it raises an error code instead (`0x4E153176`, `0x403E95C9`).
+- **`startup` owns the main global block.** Two more engine functions compare a thread's script name with `startup`; a thread that matches is tied to the global block the engine calls `Globals`.
+- **`main` and `initial` are not started by name or hash in the engine code.** Neither name appears as a string, and their `joaat` hashes (`main` `0x27EB33D7`, `initial` `0x8C56D5FD`) appear only as unrelated constants (`main`'s also in a sorted allow-list of about 130 script names whose use is unknown). Since no script starts them either, the start must happen in code that the copy doesn't show in readable form (the anti-tamper section stays encrypted even in memory) or through a name built at run time. This stays open.
+
 **`startup`** (**Verified**):
 
 1. Marks itself safe for network games; turns off director mode and animal form; removes the prologue's distant-lights IPLs.
@@ -81,7 +87,25 @@ What level 5 changes (**Verified**):
 - **`maintransition` goes to the testbed states.** When the transition picks its first state and the level is 5, it jumps to state 40, `TRANSITION_STATE_LOOK_FOR_FRESH_JOIN_TESTBED`, where every other launch goes to state 16, `TRANSITION_STATE_PREJOINING_FM_SESSION_CHECKS` (the state names are the script's own strings). Its three other level-5 checks change transition settings whose meaning wasn't decoded. States 39 to 52 are the testbed states 39 to 52 of the [transitions guide](/docs/online/transitions-and-sessions.md).
 - **`initial` starts no story controllers**, so no flow, no mission triggers, no story blips.
 
-So level 5 is a development level that goes straight into a network "testbed" session with no story mode. Which folder it loads is **Known**, not proven: the game data has only one level folder besides `gta5`, `common:/data/levels/stripped`. Its `stripped.meta` loads `platform:/levels/testbed/script/script.rpf` (a separate set of scripts for the testbed) and a small test map (`levels/tools_test/paths.rpf`, `levels/stripped/stripped.rpf`). Neither `.rpf` ships in the PC install, and the level list itself isn't in a data file (it sits in the executable, where its strings are protected), so the number 5 can't be tied to a folder name from the files alone. A retail game always runs level 1. Mods never need the level-5 branches.
+So level 5 is a development level that goes straight into a network "testbed" session with no story mode. A retail game always runs level 1. Mods never need the level-5 branches.
+
+**The level list** (third pass, **Verified** in the files and in the decrypted executable). The list is a data file after all: `x64a.rpf\data\levels.ymt` (`CLevelData`, an `aLevelsData` array of `sLevelData` entries, each with `cFriendlyName`, `cTitle`, `cFilename` and `cBugstarName`). The engine loads it as `platformcrc:/data/levels`. Its 14 levels, in order:
+
+| Index | Name | File |
+| ---: | --- | --- |
+| 1 | `gta5` | `commoncrc:/data/levels/gta5/gta5.meta` |
+| 2 | `testbed` | `common:/data/levels/testbed/testbed` |
+| 3 | `vfx_test` | `common:/data/levels/vfx_test/vfx_test` |
+| 4 | `nm_test` | `common:/data/levels/nm_test/nm_test` |
+| **5** | **`nettestbed`** | `common:/data/levels/nettestbed/nettestbed` (title label `MO_JIM_L10`) |
+| 6 | `anim_test` | `common:/data/levels/anim_test/anim_test` |
+| 7 | `cptestbed` | `common:/data/levels/cptestbed/cptestbed` |
+| 8 | `stripped` | `common:/data/levels/stripped/stripped` |
+| 9 to 14 | `tools_test`, `env_test`, `waterbed`, `gfx_test`, `ip_testbed`, `concept_test` | the same pattern |
+
+The scripts' level 1 is the normal map and `gta5` is the first entry, so the index counts from 1, and **level 5 is `nettestbed`**, the network test bed, which fits the scripts' jump into the testbed transition states. It is not `stripped` (level 8), which the first pass guessed. No archive in the PC install has a `levels/nettestbed/` folder (none of the 389,555 archive entries; `levels/stripped/` has 13), so level 5 cannot load in the retail game. The engine also keeps a script called `mptestbed` and requests and starts it in one network state, so the testbed session has a script of its own.
+
+How this was read: the executable's code is encrypted on disk, so its decrypted image was copied read-only from the running game (story mode) and analysed in Ghidra; the string `platformcrc:/data/levels` and the function that loads it are in that image. The list itself was then extracted with CodeWalker.
 
 ### 3.4.2 From a new game to `prologue1` (second pass)
 
@@ -134,9 +158,9 @@ There are two ways in, and both end in the same place (**Verified**):
 
 | Question | Where it goes |
 | --- | --- |
-| Which level index 5 is | Answered in [3.4.1](#341-the-level-indexes-second-pass): the network testbed level (no story controllers, testbed transition states). Which folder it loads stays **Known** |
+| Which level index 5 is | Answered in [3.4.1](#341-the-level-indexes-second-pass): the network testbed level `nettestbed` (no story controllers, testbed transition states) |
 | The exact path from a new game to `prologue1` | Answered in [3.4.2](#342-from-a-new-game-to-prologue1-second-pass) |
-| How exactly the engine starts `startup`, `initial` and `main` | Partly answered in [3.3](#33-inside-the-boot-scripts): no script starts them, and the order is forced by what each one reads and waits for; the engine call itself needs the executable |
+| How exactly the engine starts `startup`, `initial` and `main` | Partly answered in [3.3](#33-inside-the-boot-scripts): no script starts them, and the order is forced by what each one reads and waits for; the engine starts `startup` (or `startup_install`) by name (third pass). How `main` and `initial` start is still open |
 | What the numbers in the story mission table mean | Answered in [core guide 2](/docs/gameplay/missions/story-flow.md#22-the-mission-table) |
 | Whether the return to story mode restarts every script (test card 2) | R7.2 |
-| Which folder level index 5 loads (`common:/data/levels/stripped` is **Known**, not proven; GS-004) | Third pass, the executable's level list |
+| Which folder level index 5 loads (GS-004) | Answered in [3.4.1](#341-the-level-indexes-second-pass) (third pass): `nettestbed`, from `levels.ymt`; not `stripped`, and not shipped |

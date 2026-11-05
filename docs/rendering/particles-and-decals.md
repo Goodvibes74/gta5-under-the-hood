@@ -103,6 +103,12 @@ So a wheel on a surface picks one of the four wheel tables (normal, burst tyre, 
 
 **Mounting.** All 33 DLC packs that ship particles (a `ptfx.rpf`) switch it on in their `*_AUTOGEN` change set, and every one of those change sets is in the pack's `GROUP_STARTUP` group. None is in `GROUP_ON_DEMAND`. So DLC particle dictionaries are mounted at start-up, before story mode or Online is chosen, and a story-mode script can request them (*our reading*, from the group names in [change-set groups](/docs/core/archives-and-content.md#861-the-change-set-groups-second-pass); the moment each group runs is **Known**, not checked).
 
+### The decal-definition limit in the executable (PC executable pass)
+
+**Verified** in a read-only copy of the decrypted executable, analysed in Ghidra ([boot 3.4.1](/docs/00-getting-started/boot.md#341-the-level-indexes-second-pass) says how it was taken). One engine function reads `decals.dat` (the `decal` file, between `DECAL_DEF_START` and `DECAL_DEF_END`, skipping `#` comment lines) into a fixed array of 80-byte decal definitions, and simply stops adding rows once a counter reaches the array's size. So the "decal limit" that patches raise is this definition table, not the number of decals on screen.
+
+The copy was taken with mods loaded, including a decal-limit patch, and in it the check reads 620 and the array sits outside the game's own memory: that is the patch's setting (`DecalDefs = 620`) and its moved array, not Rockstar's. The patch's own config gives 512 as the minimum it accepts, which is the vanilla size (**Known**, from the patch). Vanilla `decals.dat` has 259 rows, so an add-on pack with more than about 250 extra decal definitions needs such a patch. The vanilla number itself needs a copy taken with no mods loaded.
+
 ## What this means for modders
 
 - **Play an effect:** `REQUEST_NAMED_PTFX_ASSET("core")`, wait for `HAS_NAMED_PTFX_ASSET_LOADED`, then `USE_PARTICLE_FX_ASSET("core")` right before `START_PARTICLE_FX_NON_LOOPED_AT_COORD(effectName, ...)` or a looped call, with an effect name from that dictionary. Keep the handle of a looped effect and `STOP_PARTICLE_FX_LOOPED` it; `REMOVE_NAMED_PTFX_ASSET` when done.
@@ -116,7 +122,7 @@ So a wheel on a surface picks one of the four wheel tables (normal, burst tyre, 
 
 | Question | Where it goes |
 | --- | --- |
-| The exact decal limit in build 3725 and what limit patches change | Second pass with the executable; R18 |
+| The exact decal limit in build 3725 and what limit patches change | Partly answered in [the decal-definition limit](#the-decal-definition-limit-in-the-executable-pc-executable-pass): the limit is the size of the definition table (80-byte entries) that patches move and enlarge; vanilla 512 is **Known** from the patch, to confirm with a mod-free copy of the executable |
 | How the particle quality setting picks between `ptfx`, `ptfx_hi` and `ptfx_lo` | Test card 2; R18.2 |
 | The format of `entityfx.dat`, `materialfx.dat` and `wheelfx.dat` row by row | Answered in [effect files, dictionaries and mounting](#effect-files-dictionaries-and-mounting-leftovers-pass) |
 | Which DLC dictionaries are mounted in story mode | Answered in [effect files, dictionaries and mounting](#effect-files-dictionaries-and-mounting-leftovers-pass): all of them, at start-up (`GROUP_STARTUP`) |
