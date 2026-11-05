@@ -41,7 +41,7 @@ Three systems that share the word "replay" and are easy to mix up: the **mission
 | `REGISTER_EFFECT_FOR_REPLAY_EDITOR` | 1 | 10 | `startup` registers 10 post effects the editor may use |
 | `REPLAY_SYSTEM_HAS_REQUESTED_A_SCRIPT_CLEANUP`, `SET_SCRIPTS_HAVE_CLEANED_UP_FOR_REPLAY_SYSTEM` | 6, 1 | 10, 1 | Scripts tidy up before the editor takes over (`main`, the taxi and friend scripts) |
 
-**Verified (arguments):** `REPLAY_RECORD_BACK_FOR_TIME(back, forward, type)` is called most often with 5 s back and 5 s forward (86 calls), 3 and 2 (60), 5 and 10 (46), 3 and 5 (44), 0 and 10 (40). `REPLAY_START_EVENT` takes a type: 4 (274 calls), 1 (50), 3 (35), 0 (5). **Known:** these become the "Action Replay" and mission clips the editor offers without the player pressing record.
+**Verified (arguments):** `REPLAY_RECORD_BACK_FOR_TIME(back, forward, type)` is called most often with 5 s back and 5 s forward (86 calls), 3 and 2 (60), 5 and 10 (46), 3 and 5 (44), 0 and 10 (40). `REPLAY_START_EVENT` takes a type: 4 (274 calls), 1 (50), 3 (35), 0 (5). **Known:** on consoles these became the "Action Replay" and mission clips the editor offered without the player pressing record; on PC they are empty (below).
 
 **The type numbers (second pass).** Neither Rockstar's names nor NativeDB's give the type argument a meaning (NativeDB calls it `p2` and `p0`). Who passes which value, counted over the build-3725 decompile with `git grep -o` (**Verified**):
 
@@ -53,7 +53,9 @@ Three systems that share the word "replay" and are easy to mix up: the **mission
 | 0 | 90 (28) | 5 (5 scripts) | Strangers and freaks (`josh1` to `josh4`, `minute1`, `nigel2`, `paparazzo1` ...) |
 | 2 | 9 (6) | none | Six story missions: `agency_heist3a`, `armenian1`, `carsteal3`, `fbi1`, `prologue1`, `trevor1` |
 
-The split (4 and 3 for story missions, 1 and 0 for side missions, 2 in only six scripts) suggests a priority or a clip category that the engine uses to rank automatic clips. What it really does needs the executable (third pass, GP-087).
+The split (4 and 3 for story missions, 1 and 0 for side missions, 2 in only six scripts) suggests a priority or a clip category that the engine uses to rank automatic clips.
+
+**On PC these natives do nothing** (PC executable pass, **Verified** in the game's native table, read at run time, and a read-only copy of the decrypted executable). `REPLAY_START_EVENT`, `REPLAY_STOP_EVENT`, `REPLAY_RECORD_BACK_FOR_TIME`, `REPLAY_CANCEL_EVENT`, `REPLAY_CHECK_FOR_EVENT_THIS_FRAME`, `RECORD_GREATEST_MOMENT` and `REGISTER_EFFECT_FOR_REPLAY_EDITOR` are all registered with the same handler, an empty function that returns at once (`ret 0`). So the type numbers above are never read in build 3725 on PC: they are left over from the console versions' automatic clips ("Action Replay", **Known**), and the 1,246 `REPLAY_RECORD_BACK_FOR_TIME` calls in Rockstar's scripts have no effect here. The PC editor's clips come from the player's own recording (`selector`'s `START_REPLAY_RECORDING` and the record keys). The natives that do work include `REPLAY_PREVENT_RECORDING_THIS_FRAME`, `IS_REPLAY_RECORDING` and `START_REPLAY_RECORDING` (they have real handlers). The same empty handler serves 71 natives in all ([native usage](/scripting/native-usage.md#96-natives-no-script-uses)).
 
 **Known (engine):** recording keeps a rolling buffer of the world's state (entity positions, animations, effects, sounds), not video; the editor replays it through the replay director and its cameras ([cameras](/docs/rendering/cameras.md)). Scripts don't run during playback, which is why the game asks scripts to clean up first.
 
@@ -70,7 +72,7 @@ The split (4 and 3 for story missions, 1 and 0 for side missions, 2 in only six 
 
 ## What this means for modders
 
-- **Let your mod's moments be recorded:** call `REPLAY_RECORD_BACK_FOR_TIME(5.0, 5.0, 4)` at a big moment, like Rockstar's missions, or bracket a sequence with `REPLAY_START_EVENT(4)` and `REPLAY_STOP_EVENT()`.
+- **Don't rely on automatic clips:** `REPLAY_RECORD_BACK_FOR_TIME`, `REPLAY_START_EVENT` and `REPLAY_STOP_EVENT` do nothing on PC (build 3725), so a mod's big moments are only in the editor if the player is recording. Calling them is harmless.
 - **Keep your menus out of clips** with `REPLAY_PREVENT_RECORDING_THIS_FRAME()` every frame while a menu or a debug overlay is up.
 - **Expect cleanup requests:** before the editor opens, scripts may be asked to clean up (`REPLAY_SYSTEM_HAS_REQUESTED_A_SCRIPT_CLEANUP`); a mod that keeps entities alive should release them then.
 - **Don't drive `replay_controller`'s state** from a mod mission; keep your own retry logic ([mission anatomy](/docs/gameplay/missions/mission-anatomy.md)).
@@ -83,14 +85,14 @@ The split (4 and 3 for story missions, 1 and 0 for side missions, 2 in only six 
 | --- | --- |
 | What exactly NoEditorRestrictions patches, and the vanilla limits it lifts (free camera distance, restricted areas) | Second pass with the executable; test card 3 |
 | The meaning of `replay_controller` states 1 to 6 and 11 to 13 | Answered in [mission anatomy 3.6](/docs/gameplay/missions/mission-anatomy.md#36-checkpoints-retry-and-skip) |
-| The `REPLAY_START_EVENT` and `REPLAY_RECORD_BACK_FOR_TIME` type numbers | Partly answered in [the clip recorder](#the-clip-recorder): who uses each value; what the engine does with it is third pass (GP-087) |
+| The `REPLAY_START_EVENT` and `REPLAY_RECORD_BACK_FOR_TIME` type numbers | Answered in [the clip recorder](#the-clip-recorder): who uses each value; on PC both natives are empty, so the numbers mean nothing in this build |
 | Where director mode's restricted places (the prison and others) are defined | Answered in [director mode](#director-mode-director_mode): the prison circle is the only one |
-| What the engine does with the type number of `REPLAY_RECORD_BACK_FOR_TIME` and `REPLAY_START_EVENT` (GP-087) | Third pass, the executable |
+| What the engine does with the type number of `REPLAY_RECORD_BACK_FOR_TIME` and `REPLAY_START_EVENT` (GP-087) | Answered in [the clip recorder](#the-clip-recorder) (PC executable pass): nothing; both natives return at once on PC |
 | The 10 post effects `startup` registers for the editor | Answered in [timecycle](/docs/rendering/timecycle-and-post-effects.md#modifier-values-flags-and-post-effect-names-leftovers-pass): `No_Filter` and nine `phone_cam` modifiers |
 
 ## Test cards
 
-1. **Automatic clip.** Call `REPLAY_RECORD_BACK_FOR_TIME(5.0, 5.0, 4)` after an explosion, then open the Rockstar Editor. Expected: a 10-second clip around the explosion.
+1. **Automatic clip.** Call `REPLAY_RECORD_BACK_FOR_TIME(5.0, 5.0, 4)` after an explosion, without recording, then open the Rockstar Editor. Expected on PC: no new clip (the native is empty on PC).
 2. **Blocked recording.** Start recording, then call `REPLAY_PREVENT_RECORDING_THIS_FRAME` every frame for 5 s. Expected: a gap in the clip.
 3. **Editor limits.** In the editor's free camera, fly away from the player until it stops; note the distance, with and without the community patch.
 4. **Director rules.** In director mode, open the shortlist while swimming. Expected: "Unable to select from shortlist while in water."
