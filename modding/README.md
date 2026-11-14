@@ -27,6 +27,8 @@ You need a legitimately purchased copy of GTA V for PC. Everything else on this 
 
 **Building a particular kind of mod?** The [cookbook](cookbook/README.md) has one page per kind (spawning and AI, missions, menus, shops, vehicles, weapons, world, UI, audio) with the natives, files, traps and a minimal pattern.
 
+**Making a big mod work alongside others?** [Techniques from established mods](techniques-from-mods.md) covers script-running checks, the mission-flag guard, spawn queues, native hooks and where mods most often collide.
+
 Steps 5, 6 and 7 are alternatives. Most people do 5 and stop there for a while; 6 is a quick detour; 7 is for when you need speed or low-level access. Step 4 needs no programming and is a good first win.
 
 ## Which step for which idea
@@ -62,6 +64,7 @@ These pages link into the existing guides instead of copying them:
 | ID | Topic | Status |
 | --- | --- | --- |
 | R12.6 | **Modding path for beginners** | **Done** (first pass): this folder |
+| R10.2 | **Techniques worth learning from established mods** | **Done** (first pass): [techniques from mods](techniques-from-mods.md) |
 
 ## Help improve this path
 
