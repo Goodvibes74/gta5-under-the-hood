@@ -68,6 +68,17 @@ gta5-under-the-hood/
 
 ## Status
 
+Progress at a glance (build 1.0.3725.0, as of 2026-11-14):
+
+| Stage | Where it stands |
+| --- | --- |
+| First pass | **Done** for all 110 research topics, the latest being [techniques from established mods](modding/techniques-from-mods.md) (R10.2) |
+| Second pass, phases 1 to 4 | **Done**: user interface (7 topics), core engine (9), GTA Online (14), story mode (16) |
+| Leftovers pass (data-file batches D1 to D12) | **Done**; 11 data rows were never attempted ([HANDOFF.md](HANDOFF.md#data-rows-not-attempted-and-gaps-the-batches-left)) |
+| PC passes | **Done**: data files (PC1, 11 topics) and the executable (PC2, 6 topics); limit values still need a mod-free copy ([CLEAN-BUILD.md](CLEAN-BUILD.md)) |
+| Open questions | 445 tracked: **203 answered**, 54 mostly, 59 partly, 129 open ([OPEN_QUESTIONS.md](OPEN_QUESTIONS.md)) |
+| Next | Second-pass phases for AI, entities, physics, the world, audio, rendering and performance; in-game tests at the PC ([PC-SESSION.md](PC-SESSION.md)) |
+
 > **This is a first pass.** Every one of the 110 research topics has been worked through once, to map the ground: where each system lives, how it works, what a mod can change, and the numbers behind it. A first pass is not the last word. Some claims are still **Known** rather than **Verified**, some systems were only sampled, and few findings have been checked in game yet.
 >
 > **The second pass is under way.** Its first four phases are done: the user interface, the core engine, GTA Online and story mode (46 topics; the [roadmap](ROADMAP.md) marks each one). They answered or narrowed most of those guides' open questions from the build 1.0.3725.0 decompile, and found, among other things, that **build 3717 renumbered every control ID from 257 up** (+37), which matters to any mod that uses those controls ([controls and camera](docs/gameplay/player/controls-and-camera.md#the-numbering-changed-in-build-3717-second-pass)). A leftovers pass then worked the questions that need the game's data files, and two passes at the game PC followed: the data files (PC1) and the executable (PC2). The executable's code turned out to be encrypted on disk, so it was read from a decrypted copy of the running game; that pass found the level list behind the scripts' "level 5" (a network test bed whose folder isn't shipped), read the game's native table (6,673 natives, most re-hashed for this build) and found **71 natives that do nothing on PC**, every `DRAW_DEBUG_*` and the automatic replay-clip natives among them ([native usage](scripting/native-usage.md#96-natives-no-script-uses)). The tracker stands at 203 of 445 questions answered, 54 mostly, 59 partly, 129 open. Where things stand is in [HANDOFF.md](HANDOFF.md); what each remaining question needs is in [DATA-NEEDS.md](DATA-NEEDS.md), [PC-SESSION.md](PC-SESSION.md) and [CLEAN-BUILD.md](CLEAN-BUILD.md).
@@ -87,6 +98,7 @@ Alongside the 110 first-pass guides there's a [step-by-step modding path](moddin
 - Audio: [how audio is organised](docs/audio/how-audio-is-organised.md) and [speech and dialogue](docs/audio/speech-and-dialogue.md).
 - AI: [perception and events](docs/ai/perception-and-events.md), [navigation](docs/ai/navigation.md), [driving](docs/ai/driving.md), [police and services](docs/ai/police-and-services.md), [ambient life](docs/ai/ambient-life.md), [AI cost](docs/ai/ai-cost-and-lod.md).
 - Tools: the read-only [research tools](tools/README.md), including the update-check tool that shows what a game update changed and which of a mod's assets it removed, and [how to protect a working install](docs/core/surviving-updates.md#83a-protecting-a-working-install-r113) (backup, delaying updates, rollback).
+- Modding technique: [techniques worth learning from established mods](modding/techniques-from-mods.md): script-running checks, the mission-flag guard, restarting Rockstar scripts, spawn queues, per-script native hooks, and where mods most often collide.
 - Ideas: an [ideas list](modding/ideas.md) of 22 story-mode mods the research shows are possible, each linked to its guide.
 
 ## Large jobs (priority): pick one
